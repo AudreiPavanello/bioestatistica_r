@@ -6,16 +6,17 @@
 
 > Material didático interativo para o curso de **Bioestatística Aplicada à Saúde utilizando o Software R**
 
-## 📖 Sobre o Livro
+## Sobre o Livro
 
 Este livro foi desenvolvido como material didático para o curso de pós-graduação em Bioestatística Aplicada à Saúde. Ele combina teoria estatística com aplicações práticas usando R, focando em dados reais da área da saúde.
 
 **Autores:**
+
 - Prof. Dr. Audrei Pavanello
 - Profa. Dra. Karina Miura Costa
 - Prof. Dr. Leonardo Pestillo de Oliveira
 
-## 🎯 Objetivos
+## Objetivos
 
 - Ensinar conceitos fundamentais de bioestatística
 - Desenvolver habilidades práticas em R e RStudio
@@ -23,9 +24,10 @@ Este livro foi desenvolvido como material didático para o curso de pós-gradua�
 - Criar visualizações informativas e profissionais
 - Interpretar e comunicar resultados de análises
 
-## 📚 Conteúdo
+## Conteúdo
 
 ### Capítulo 1: Introdução ao R e RStudio
+
 - O que é o R?
 - Instalação e configuração
 - Interface do RStudio
@@ -33,6 +35,7 @@ Este livro foi desenvolvido como material didático para o curso de pós-gradua�
 - Boas práticas de codificação
 
 ### Capítulo 2: Manipulação de Dados com Tidyverse
+
 - Introdução ao Tidyverse
 - Importação de dados
 - Transformação de dados (select, filter, mutate, etc.)
@@ -40,6 +43,7 @@ Este livro foi desenvolvido como material didático para o curso de pós-gradua�
 - Trabalhando com dados tidy
 
 ### Capítulo 3: Análise Exploratória de Dados
+
 - Visualização de dados com ggplot2
 - Estatística descritiva
 - Testes estatísticos
@@ -49,13 +53,14 @@ Este livro foi desenvolvido como material didático para o curso de pós-gradua�
   - Teste qui-quadrado
 
 ### Capítulo 4: Regressão Linear e Logística
+
 - Regressão linear simples e múltipla
 - Regressão logística
 - Interpretação de coeficientes
 - Odds ratio
 - Diagnóstico de modelos
 
-## 🚀 Como Usar Este Livro
+## Como Usar Este Livro
 
 ### Pré-requisitos
 
@@ -90,26 +95,27 @@ install.packages(setdiff(packages, rownames(installed.packages())))
 
 ### Visualizando o Livro Online
 
-🌐 **Acesse o livro publicado em**: [URL será adicionado após publicação no GitHub Pages]
+**Acesse o livro publicado em**: [URL será adicionado após publicação no GitHub Pages]
 
 ### Renderizando Localmente
 
 1. Clone este repositório:
+
 ```bash
 git clone https://github.com/[usuario]/book-bioestatistica-r.git
 cd book-bioestatistica-r
 ```
 
 2. Abra o RStudio e configure o projeto
-
 3. Renderize o livro:
+
 ```bash
 quarto preview
 ```
 
 O livro será aberto automaticamente no seu navegador padrão.
 
-## 📊 Dados
+## Dados
 
 Os dados utilizados neste livro são de **internações hospitalares em Maringá-PR (2024)**, obtidos do Sistema de Informações Hospitalares do SUS (SIH/SUS).
 
@@ -140,7 +146,7 @@ book-bioestatistica-r/
 └── README.md                     # Este arquivo
 ```
 
-## 🤝 Como Contribuir
+## Como Contribuir
 
 Contribuições são bem-vindas! Se você encontrou um erro, tem sugestões ou quer adicionar conteúdo:
 
@@ -152,33 +158,21 @@ Contribuições são bem-vindas! Se você encontrou um erro, tem sugestões ou q
 
 Ou simplesmente abra uma [Issue](https://github.com/[usuario]/book-bioestatistica-r/issues) descrevendo o problema ou sugestão.
 
-## 📝 Licença
+## Licença
 
 **Conteúdo**: [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
 Você é livre para:
+
 - **Compartilhar** — copiar e redistribuir o material
 - **Adaptar** — remixar, transformar e criar a partir do material
 
 Sob os seguintes termos:
+
 - **Atribuição** — Você deve dar crédito apropriado
 - **Não Comercial** — Você não pode usar para fins comerciais
 - **Compartilha Igual** — Distribuições devem usar a mesma licença
 
 **Código**: [MIT License](https://opensource.org/licenses/MIT)
-
-## 📧 Contato
-
-Para dúvidas, sugestões ou mais informações sobre o curso, entre em contato com os autores.
-
-## 🙏 Agradecimentos
-
-- À comunidade R e desenvolvedores dos pacotes utilizados
-- Ao DATASUS pela disponibilização dos dados
-- Aos alunos do curso que contribuíram com feedback
-
----
-
-**Criado com** ❤️ **usando [Quarto](https://quarto.org/)**
 
 **Última atualização**: Janeiro 2026
