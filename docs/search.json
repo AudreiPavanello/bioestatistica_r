@@ -24,7 +24,7 @@
     "href": "index.html#como-usar-este-livro",
     "title": "Bioestatística Aplicada à Saúde usando R",
     "section": "Como Usar este Livro",
-    "text": "Como Usar este Livro\n\nCódigos Executáveis: Todos os códigos apresentados são executáveis e podem ser reproduzidos em seu próprio ambiente R\nDados Disponíveis: Os dados utilizados nos exemplos estão disponíveis na pasta data/\nEstrutura Progressiva: O conteúdo é apresentado de forma progressiva, desde conceitos básicos até análises avançadas\nExemplos Práticos: Cada capítulo contém exemplos práticos aplicados a dados reais de saúde pública",
+    "text": "Como Usar este Livro\n\nCódigos Executáveis: Todos os códigos apresentados são executáveis e podem ser reproduzidos em seu próprio ambiente R\nEstrutura Progressiva: O conteúdo é apresentado de forma progressiva, desde conceitos básicos até análises avançadas\nExemplos Práticos: Cada capítulo contém exemplos práticos aplicados a dados reais de saúde pública",
     "crumbs": [
       "Prefácio"
     ]

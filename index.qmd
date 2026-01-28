@@ -15,7 +15,6 @@ Todos os exemplos utilizam dados reais de internações hospitalares de Maringá
 ## Como Usar este Livro
 
 - **Códigos Executáveis**: Todos os códigos apresentados são executáveis e podem ser reproduzidos em seu próprio ambiente R
-- **Dados Disponíveis**: Os dados utilizados nos exemplos estão disponíveis na pasta `data/`
 - **Estrutura Progressiva**: O conteúdo é apresentado de forma progressiva, desde conceitos básicos até análises avançadas
 - **Exemplos Práticos**: Cada capítulo contém exemplos práticos aplicados a dados reais de saúde pública
 
