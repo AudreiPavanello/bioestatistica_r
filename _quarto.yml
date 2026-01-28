@@ -1,0 +1,55 @@
+project:
+  type: book
+  output-dir: _docs
+
+book:
+  title: "Bioestatística Aplicada à Saúde usando R"
+  author:
+    - name: "Prof. Dr. Audrei Pavanello"
+    - name: "Profa. Dra. Karina Miura Costa"
+    - name: "Prof. Dr. Leonardo Pestillo de Oliveira"
+
+  date: today
+  language: pt
+
+  chapters:
+    - index.qmd
+    - introducao-r.qmd
+    - manipulacao-dados.qmd
+    - analise-exploratoria.qmd
+    - testes-estatisticos.qmd
+    - regressao.qmd
+    - psicometria.qmd
+    - analise-texto.qmd
+    - references.qmd
+
+  sidebar:
+    style: "docked"
+    search: true
+    collapse-level: 1
+
+format:
+  html:
+    theme:
+      light: flatly
+      dark: darkly
+    code-copy: true
+    code-fold: false
+    code-link: true
+    code-overflow: wrap
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    fig-width: 8
+    fig-height: 6
+    fig-align: center
+    df-print: paged
+    highlight-style: github
+    css: styles.css
+
+execute:
+  freeze: auto
+  warning: false
+  message: false
+  echo: true
+  eval: true

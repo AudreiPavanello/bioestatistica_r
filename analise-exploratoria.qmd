@@ -1,0 +1,721 @@
+# Análise Exploratória de Dados
+
+## Introdução
+
+A **Análise Exploratória de Dados (EDA)** é uma etapa fundamental em qualquer projeto de análise estatística. Consiste em investigar os dados usando estatísticas descritivas e visualizações para:
+
+-   Compreender a distribuição das variáveis
+-   Identificar padrões e tendências
+-   Detectar valores atípicos (outliers)
+-   Formular hipóteses para análises posteriores
+-   Verificar a qualidade dos dados
+
+Neste capítulo, abordaremos dois componentes essenciais da AED:
+
+1.  **Estatística Descritiva**: Resumir dados usando tabelas e medidas
+2.  **Visualização de Dados**: Criar gráficos informativos com ggplot2
+
+::: callout-note
+## Sobre Testes Estatísticos
+
+Os **testes estatísticos** (teste t, ANOVA, qui-quadrado, correlações) foram movidos para um capítulo dedicado. Consulte o **Capítulo 4 - Testes Estatísticos** para aprender sobre testes de hipóteses paramétricos e não-paramétricos.
+:::
+
+## Preparação dos Dados
+
+Antes de iniciar a análise exploratória, precisamos carregar os pacotes necessários e preparar os dados.
+
+### Carregando Pacotes
+
+```{r}
+#| label: carregar-pacotes-aed
+#| message: false
+#| warning: false
+
+library(tidyverse)    # Manipulação e visualização
+library(readxl)       # Leitura de Excel
+library(janitor)      # Limpeza de dados
+library(gtsummary)    # Tabelas descritivas
+library(officer)      # Exportação para Word
+library(flextable)    # Tabelas formatadas
+library(ggpubr)       # Gráficos de publicação
+library(sjPlot)       # Tabelas e gráficos
+library(vcd)          # Visualização de dados categóricos
+
+# Remover notação científica
+options(scipen = 999)
+```
+
+### Importando e Limpando Dados
+
+```{r}
+#| label: importar-limpar-dados
+#| eval: false
+
+# Carregar banco de dados
+dados <- read_excel("data/dados_internacoes_maringa_2024.xlsx")
+
+# Pipeline de limpeza
+dados_limpos <- dados |>
+  clean_names() |>                              # Padronizar nomes das colunas
+  filter(cod_idade == "Anos") |>               # Filtrar apenas idades em anos
+  select(sexo, val_tot, raca_cor, idade,       # Selecionar colunas relevantes
+         morte, dias_perm, mes_cmpt) |>
+  mutate(                                       # Recodificar raça/cor
+    raca_cor = case_when(
+      raca_cor == '01' ~ "Branca",
+      raca_cor == "02" ~ "Preta",
+      raca_cor == "03" ~ "Parda",
+      raca_cor == "04" ~ "Amarela",
+      raca_cor == "05" ~ "Indígena"
+    )
+  ) |>
+  mutate(across(c(val_tot, idade, dias_perm), as.numeric)) |>  # Converter para numérico
+  mutate(across(c(sexo, raca_cor, morte, mes_cmpt), as.factor))  # Converter para fator
+```
+
+## Estatística Descritiva
+
+A estatística descritiva resume e apresenta as características principais dos dados.
+
+### Medidas de Tendência Central
+
+-   **Média**: Valor médio dos dados
+-   **Mediana**: Valor central quando os dados estão ordenados
+-   **Moda**: Valor mais frequente
+
+### Medidas de Dispersão
+
+-   **Desvio Padrão (DP)**: Variabilidade em torno da média
+-   **Variância**: Quadrado do desvio padrão
+-   **Amplitude**: Diferença entre máximo e mínimo
+-   **Intervalo Interquartil (IQR)**: Diferença entre o 3º e 1º quartil
+
+### Criando Tabelas Descritivas com gtsummary
+
+O pacote **gtsummary** facilita a criação de tabelas descritivas profissionais.
+
+#### Tabela Básica
+
+```{r}
+#| label: tabela-basica
+#| eval: false
+
+# Tabela descritiva simples
+dados_limpos |>
+  tbl_summary()
+```
+
+#### Tabela Estratificada
+
+```{r}
+#| label: tabela-estratificada
+#| eval: false
+
+# Tabela estratificada por desfecho (morte)
+tabela_1 <- dados_limpos |>
+  tbl_summary(
+    by = morte,                                                # Estratificar por morte
+    statistic = list(all_continuous() ~ "{mean} ({sd})"),    # Média (DP) para contínuas
+    label = list(                                             # Renomear variáveis
+      idade ~ "Idade (anos)",
+      sexo ~ "Sexo",
+      val_tot ~ "Valor da internação (Reais)",
+      raca_cor ~ "Raça/Cor",
+      dias_perm ~ "Dias de permanência"
+    )
+  ) |>
+  add_overall(col_label = "**Total**") |>                    # Adicionar coluna total
+  bold_labels() |>                                            # Negrito nos rótulos
+  modify_header(label = "**Características avaliadas**")     # Customizar cabeçalho
+
+tabela_1
+```
+
+#### Personalizando Estatísticas
+
+Você pode especificar diferentes estatísticas para diferentes tipos de variáveis:
+
+```{r}
+#| label: tabela-customizada
+#| eval: false
+
+dados_limpos |>
+  tbl_summary(
+    by = sexo,
+    statistic = list(
+      all_continuous() ~ "{mean} ({sd}) | {median} [{p25}, {p75}]",
+      all_categorical() ~ "{n} ({p}%)"
+    ),
+    digits = all_continuous() ~ 2
+  ) |>
+  add_p() |>                   # Adicionar p-valores
+  add_overall() |>             # Adicionar coluna total
+  bold_p(t = 0.05) |>          # Negrito em p < 0.05
+  bold_labels()
+```
+
+### Exportando Tabelas
+
+#### Exportação para Word
+
+```{r}
+#| label: exportar-word
+#| eval: false
+
+# Converter para flextable
+ft <- tabela_1 |>
+  as_flex_table()
+
+# Criar documento Word
+doc <- read_docx() |>
+  body_add_par(
+    "Tabela 1: Estatísticas descritivas das internações de Maringá em 2024",
+    style = "heading 1"
+  ) |>
+  body_add_flextable(ft)
+
+# Salvar arquivo
+print(doc, target = "tabela_1.docx")
+```
+
+#### Exportação para Excel
+
+```{r}
+#| label: exportar-excel
+#| eval: false
+
+library(openxlsx)
+
+# Criar workbook
+wb <- createWorkbook()
+addWorksheet(wb, "Tabela Descritiva")
+
+# Adicionar tabela
+writeData(wb, sheet = 1, x = tabela_1)
+
+# Salvar
+saveWorkbook(wb, "tabela_1.xlsx", overwrite = TRUE)
+```
+
+## Testes Estatísticos
+
+Testes estatísticos nos permitem fazer inferências sobre a população a partir da amostra.
+
+### Teste de Correlação
+
+A correlação mede a força e direção da associação entre duas variáveis contínuas.
+
+#### Coeficiente de Correlação
+
+-   **Pearson**: Para relações lineares (dados normais)
+-   **Spearman**: Para relações monotônicas (dados não normais ou ordinais)
+-   **Kendall**: Alternativa robusta ao Spearman
+
+Valores variam de -1 (correlação negativa perfeita) a +1 (correlação positiva perfeita).
+
+```{r}
+#| label: correlacao
+#| eval: false
+
+# Correlação de Spearman entre valor total e idade
+cor(x = dados_limpos$val_tot,
+    y = dados_limpos$idade,
+    method = "spearman")
+```
+
+#### Visualizando Correlação
+
+```{r}
+#| label: grafico-correlacao
+#| eval: false
+#| fig-cap: "Correlação entre valor total da internação e idade do paciente"
+
+# Gráfico de dispersão com linha de regressão
+correlation_plot <- ggscatter(
+  dados_limpos,
+  x = "val_tot",
+  y = "idade",
+  add = "reg.line",                             # Adicionar linha de regressão
+  add.params = list(color = "navyblue"),        # Customizar linha
+  conf.int = TRUE,                              # Intervalo de confiança
+  cor.coef = TRUE,                              # Mostrar coeficiente
+  cor.method = "spearman"                       # Método de correlação
+) +
+  labs(
+    title = "Correlação entre Valor Total e Idade",
+    x = "Valor total da internação (R$)",
+    y = "Idade (anos)"
+  ) +
+  theme_minimal()
+
+correlation_plot
+```
+
+#### Matriz de Correlação
+
+```{r}
+#| label: matriz-correlacao
+#| eval: false
+
+# Selecionar apenas variáveis numéricas
+dados_numericos <- dados_limpos |>
+  select(where(is.numeric))
+
+# Calcular matriz de correlação
+matriz_cor <- cor(dados_numericos, method = "spearman", use = "complete.obs")
+
+# Visualizar com corrplot
+library(corrplot)
+corrplot(matriz_cor,
+         method = "color",
+         type = "upper",
+         addCoef.col = "black",
+         tl.col = "black",
+         tl.srt = 45,
+         diag = FALSE)
+```
+
+### Teste do Qui-Quadrado
+
+O teste qui-quadrado avalia a associação entre duas variáveis categóricas.
+
+**Hipóteses:**
+
+-   H₀: As variáveis são independentes
+-   H₁: As variáveis são associadas
+
+```{r}
+#| label: qui-quadrado
+#| eval: false
+
+# Teste qui-quadrado: sexo vs. morte
+resultado_chi <- chisq.test(dados_limpos$sexo, dados_limpos$morte)
+resultado_chi
+```
+
+#### Tabela de Contingência
+
+```{r}
+#| label: tabela-contingencia
+#| eval: false
+
+# Tabela cruzada com percentuais
+sjt.xtab(
+  var.row = dados_limpos$sexo,
+  var.col = dados_limpos$morte,
+  show.cell.prc = TRUE,              # Mostrar percentuais
+  show.row.prc = TRUE,               # Percentuais por linha
+  show.col.prc = TRUE                # Percentuais por coluna
+)
+```
+
+#### Gráfico de Mosaico
+
+Gráficos de mosaico visualizam a relação entre variáveis categóricas:
+
+```{r}
+#| label: mosaic-plot
+#| eval: false
+#| fig-cap: "Relação entre sexo e mortalidade - gráfico de mosaico"
+
+mosaic(~ sexo + morte,
+       data = dados_limpos,
+       shade = TRUE,                  # Colorir por resíduos
+       legend = TRUE,                 # Mostrar legenda
+       main = "Associação entre Sexo e Mortalidade")
+```
+
+### Teste t de Student
+
+Compara médias entre dois grupos independentes.
+
+```{r}
+#| label: teste-t
+#| eval: false
+
+# Comparar idade média entre sexos
+t.test(idade ~ sexo, data = dados_limpos)
+
+# Teste t pareado (para dados pareados)
+# t.test(antes, depois, paired = TRUE)
+```
+
+### ANOVA (Análise de Variância)
+
+Compara médias entre três ou mais grupos.
+
+```{r}
+#| label: anova
+#| eval: false
+
+# ANOVA: idade entre categorias de raça/cor
+modelo_anova <- aov(idade ~ raca_cor, data = dados_limpos)
+summary(modelo_anova)
+
+# Teste post-hoc (Tukey) para comparações múltiplas
+TukeyHSD(modelo_anova)
+```
+
+## Visualização de Dados com ggplot2
+
+O **ggplot2** é o sistema de visualização mais popular do R, baseado na "Gramática de Gráficos".
+
+### Estrutura Básica do ggplot2
+
+Todos os gráficos ggplot2 seguem esta estrutura:
+
+``` r
+ggplot(data = <DATA>, mapping = aes(<MAPPINGS>)) +
+  <GEOM_FUNCTION>() +
+  <CUSTOMIZATIONS>
+```
+
+### Tipos de Gráficos
+
+#### Gráfico de Barras
+
+Ideal para variáveis categóricas:
+
+```{r}
+#| label: grafico-barras-basico
+#| eval: false
+#| fig-cap: "Distribuição de mortalidade hospitalar"
+
+# Gráfico de barras simples
+ggplot(data = dados_limpos, mapping = aes(x = morte)) +
+  geom_bar() +
+  labs(
+    title = "Distribuição de Mortalidade",
+    x = "Óbito",
+    y = "Frequência"
+  ) +
+  theme_minimal()
+```
+
+#### Gráfico de Barras Agrupadas
+
+```{r}
+#| label: grafico-barras-agrupado
+#| eval: false
+#| fig-cap: "Mortalidade por sexo em pacientes internados"
+
+ggplot(data = dados_limpos, mapping = aes(x = sexo, fill = morte)) +
+  geom_bar() +
+  labs(
+    x = "Sexo",
+    y = "Contagem",
+    title = "Mortalidade por Sexo em pacientes internados em Maringá",
+    subtitle = "Dados de 2024",
+    caption = "Fonte: SIH"
+  ) +
+  scale_fill_manual(
+    name = "Óbito",
+    values = c("Sim" = "darkred", "Não" = "navy")
+  ) +
+  theme_minimal()
+```
+
+#### Gráfico de Barras Empilhadas (Proporções)
+
+```{r}
+#| label: grafico-barras-proporcao
+#| eval: false
+#| fig-cap: "Percentual de mortalidade por sexo e raça/cor"
+
+ggplot(data = dados_limpos, mapping = aes(x = sexo, fill = morte)) +
+  geom_bar(position = "fill") +                # position = "fill" para proporções
+  labs(
+    x = "Sexo",
+    y = "Proporção",
+    title = "Percentual de Mortalidade por Sexo em pacientes internados em Maringá",
+    subtitle = "Dados de 2024",
+    caption = "Fonte: SIH"
+  ) +
+  scale_fill_manual(
+    name = "Óbito",
+    values = c("Sim" = "darkred", "Não" = "navy")
+  ) +
+  scale_y_continuous(labels = scales::percent) +  # Formatar eixo Y como percentual
+  facet_grid(~ raca_cor) +                        # Separar por raça/cor
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotacionar rótulos
+```
+
+#### Boxplot
+
+Mostra a distribuição de variáveis contínuas:
+
+```{r}
+#| label: boxplot
+#| eval: false
+#| fig-cap: "Distribuição de idade por sexo"
+
+ggplot(data = dados_limpos, mapping = aes(x = sexo, y = idade)) +
+  geom_boxplot(fill = "lightblue", outlier.color = "red") +
+  labs(
+    title = "Distribuição de Idade por Sexo",
+    x = "Sexo",
+    y = "Idade (anos)"
+  ) +
+  theme_minimal()
+```
+
+**Interpretação do Boxplot:**
+
+-   **Linha central**: Mediana
+-   **Caixa**: Intervalo interquartil (IQR) - contém 50% dos dados
+-   **Linhas (whiskers)**: Extensão até 1.5 × IQR
+-   **Pontos**: Valores atípicos (outliers)
+
+#### Histograma
+
+Mostra a distribuição de frequências de uma variável contínua:
+
+```{r}
+#| label: histograma
+#| eval: false
+#| fig-cap: "Distribuição de idades dos pacientes internados"
+
+ggplot(data = dados_limpos, mapping = aes(x = idade)) +
+  geom_histogram(bins = 30, fill = "navy", color = "white") +
+  labs(
+    title = "Distribuição de Idade dos Pacientes",
+    x = "Idade (anos)",
+    y = "Frequência"
+  ) +
+  theme_minimal()
+```
+
+Você pode ajustar o número de bins ou especificar a largura:
+
+```{r}
+#| label: histograma-customizado
+#| eval: false
+
+# Com binwidth específica
+ggplot(data = dados_limpos, mapping = aes(x = idade)) +
+  geom_histogram(binwidth = 5, fill = "navy", color = "white")
+```
+
+#### Gráfico de Dispersão (Scatter Plot)
+
+Mostra a relação entre duas variáveis contínuas:
+
+```{r}
+#| label: scatter-plot
+#| eval: false
+#| fig-cap: "Relação entre idade e dias de permanência"
+
+ggplot(data = dados_limpos, mapping = aes(x = idade, y = dias_perm)) +
+  geom_point(alpha = 0.5, color = "navy") +   # alpha para transparência
+  geom_smooth(method = "lm", color = "red") + # Linha de tendência
+  labs(
+    title = "Relação entre Idade e Dias de Permanência",
+    x = "Idade (anos)",
+    y = "Dias de permanência"
+  ) +
+  theme_minimal()
+```
+
+#### Gráfico Hexagonal (para muitos pontos)
+
+```{r}
+#| label: hex-plot
+#| eval: false
+#| fig-cap: "Correlação entre dias de permanência e valor total (hexbin)"
+
+ggplot(data = dados_limpos, mapping = aes(x = dias_perm, y = val_tot)) +
+  geom_hex() +                                # Hexágonos para densidade
+  geom_smooth(method = "glm", color = "red") +
+  labs(
+    x = "Dias de Permanência",
+    y = "Valor Total (R$)",
+    title = "Correlação entre Dias de Permanência e Valor Total",
+    subtitle = "Dados de 2024",
+    caption = "Fonte: SIH"
+  ) +
+  scale_fill_viridis_c() +                    # Escala de cores viridis
+  theme_minimal()
+```
+
+### Gráficos de Tendência Temporal
+
+Visualizando tendências ao longo do tempo:
+
+```{r}
+#| label: tendencia-temporal-prep
+#| eval: false
+
+# Preparar dados: ordenar meses corretamente
+meses_pt <- c("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+              "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro")
+
+dados_limpos$mes_cmpt <- factor(dados_limpos$mes_cmpt,
+                                levels = 1:12,
+                                labels = meses_pt)
+```
+
+```{r}
+#| label: grafico-temporal
+#| eval: false
+#| fig-cap: "Tendência do valor médio de internações ao longo de 2024"
+
+ggplot(data = dados_limpos, aes(x = mes_cmpt, y = val_tot)) +
+  stat_summary(fun = mean, geom = "line", aes(group = 1), color = "navy", size = 1) +
+  stat_summary(fun = mean, geom = "point", color = "darkred", size = 3) +
+  labs(
+    title = "Valor Médio de Internações por Mês",
+    subtitle = "Maringá-PR, 2024",
+    x = "Mês",
+    y = "Valor médio (R$)",
+    caption = "Fonte: SIH"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+### Faceting: Múltiplos Gráficos
+
+O faceting permite criar múltiplos gráficos baseados em uma variável categórica:
+
+#### facet_wrap()
+
+```{r}
+#| label: facet-wrap
+#| eval: false
+#| fig-cap: "Distribuição de idade por raça/cor"
+
+ggplot(data = dados_limpos, aes(x = idade)) +
+  geom_histogram(bins = 30, fill = "navy") +
+  facet_wrap(~ raca_cor, ncol = 2) +
+  labs(
+    title = "Distribuição de Idade por Raça/Cor",
+    x = "Idade (anos)",
+    y = "Frequência"
+  ) +
+  theme_minimal()
+```
+
+#### facet_grid()
+
+```{r}
+#| label: facet-grid
+#| eval: false
+#| fig-cap: "Boxplot de idade por sexo e mortalidade"
+
+ggplot(data = dados_limpos, aes(x = sexo, y = idade, fill = sexo)) +
+  geom_boxplot() +
+  facet_grid(morte ~ raca_cor) +
+  labs(
+    title = "Idade por Sexo, Raça/Cor e Mortalidade",
+    x = "Sexo",
+    y = "Idade (anos)"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+### Customizando Temas
+
+O ggplot2 oferece vários temas prontos:
+
+```{r}
+#| label: temas
+#| eval: false
+
+# Temas disponíveis
+theme_minimal()     # Minimalista (recomendado)
+theme_classic()     # Clássico
+theme_bw()          # Preto e branco
+theme_light()       # Leve
+theme_dark()        # Escuro
+theme_void()        # Vazio (sem eixos)
+```
+
+#### Criando Tema Personalizado
+
+```{r}
+#| label: tema-custom
+#| eval: false
+
+# Tema personalizado para publicação
+tema_publicacao <- theme_minimal() +
+  theme(
+    plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
+    plot.subtitle = element_text(size = 12, hjust = 0.5),
+    axis.title = element_text(size = 12, face = "bold"),
+    axis.text = element_text(size = 10),
+    legend.title = element_text(size = 11, face = "bold"),
+    legend.text = element_text(size = 10),
+    panel.grid.minor = element_blank()
+  )
+
+# Aplicar ao gráfico
+ggplot(dados_limpos, aes(x = sexo, y = idade)) +
+  geom_boxplot() +
+  tema_publicacao
+```
+
+### Salvando Gráficos
+
+```{r}
+#| label: salvar-graficos
+#| eval: false
+
+# Criar gráfico
+p <- ggplot(dados_limpos, aes(x = sexo, fill = morte)) +
+  geom_bar() +
+  theme_minimal()
+
+# Salvar como PNG
+ggsave("grafico_mortalidade.png", plot = p, width = 10, height = 6, dpi = 300)
+
+# Salvar como PDF (vetorial)
+ggsave("grafico_mortalidade.pdf", plot = p, width = 10, height = 6)
+
+# Salvar como TIFF (para publicação)
+ggsave("grafico_mortalidade.tiff", plot = p, width = 10, height = 6, dpi = 600)
+```
+
+## Resumo do Capítulo
+
+Neste capítulo, você aprendeu:
+
+-   **Estatística Descritiva**:
+    -   Criar tabelas descritivas profissionais com `gtsummary`
+    -   Estratificar análises por grupos
+    -   Exportar tabelas para Word e Excel
+-   **Testes Estatísticos**:
+    -   Teste de correlação (Pearson, Spearman)
+    -   Teste qui-quadrado para variáveis categóricas
+    -   Teste t para comparação de médias
+    -   ANOVA para comparação de múltiplos grupos
+-   **Visualização com ggplot2**:
+    -   Gráficos de barras (simples, agrupados, empilhados)
+    -   Boxplots e histogramas
+    -   Gráficos de dispersão e hexagonais
+    -   Gráficos de tendência temporal
+    -   Faceting para múltiplos gráficos
+    -   Customização de temas e cores
+    -   Exportação de gráficos em diferentes formatos
+
+No próximo capítulo, você aprenderá sobre **modelos de regressão linear e logística**, ferramentas essenciais para análise preditiva em saúde.
+
+## Exercícios Práticos
+
+1.  Crie uma tabela descritiva estratificada por sexo, incluindo p-valores para testar diferenças entre grupos
+
+2.  Teste se existe correlação significativa entre dias de permanência e valor total da internação
+
+3.  Realize um teste qui-quadrado para verificar se existe associação entre raça/cor e mortalidade
+
+4.  Crie um gráfico de barras mostrando a distribuição de internações por mês, colorido por mortalidade
+
+5.  Faça um boxplot comparando dias de permanência entre pacientes que foram a óbito e os que sobreviveram
+
+6.  Crie um gráfico de dispersão mostrando a relação entre idade e valor total, com pontos coloridos por sexo
+
+7.  Desenvolva um painel com 4 gráficos usando faceting para comparar diferentes variáveis
+
+8.  Exporte sua melhor tabela descritiva para Word e seu melhor gráfico como PNG de alta resolução (300 dpi)

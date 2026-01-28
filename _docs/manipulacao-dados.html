@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>2&nbsp; Manipulação de Dados com Tidyverse – Bioestatística Aplicada à Saúde usando R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./analise-exploratoria.html" rel="next">
+<link href="./introducao-r.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-4a990d8dcb58f517c7c86712b8f2ac7c.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-46f4cc9626f044588a66931b604fc9c8.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-4a990d8dcb58f517c7c86712b8f2ac7c.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-1ea2f1ca8430a0e4b2b18d49b51ad2af.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-90005ebdada80aaf03d6f48ec6c0ecfe.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-1ea2f1ca8430a0e4b2b18d49b51ad2af.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script><link rel="stylesheet" href="styles.css">
+</head>
+<body class="nav-sidebar docked quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./manipulacao-dados.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Manipulação de Dados com Tidyverse</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Bioestatística Aplicada à Saúde usando R</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prefácio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introducao-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução ao R e RStudio</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./manipulacao-dados.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Manipulação de Dados com Tidyverse</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analise-exploratoria.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Análise Exploratória de Dados</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./testes-estatisticos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Testes Estatísticos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./regressao.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Regressão Linear, Logística e Multinomial</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./psicometria.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Análise Psicométrica</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analise-texto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Análise de Dados Textuais e Mineração de Texto</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referências</span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li>
+<a href="#o-que-%C3%A9-o-tidyverse" id="toc-o-que-é-o-tidyverse" class="nav-link active" data-scroll-target="#o-que-%C3%A9-o-tidyverse"><span class="header-section-number">2.1</span> O que é o Tidyverse?</a>
+  <ul class="collapse">
+<li><a href="#pacotes-principais-do-tidyverse" id="toc-pacotes-principais-do-tidyverse" class="nav-link" data-scroll-target="#pacotes-principais-do-tidyverse"><span class="header-section-number">2.1.1</span> Pacotes Principais do Tidyverse</a></li>
+  <li><a href="#por-que-usar-o-tidyverse" id="toc-por-que-usar-o-tidyverse" class="nav-link" data-scroll-target="#por-que-usar-o-tidyverse"><span class="header-section-number">2.1.2</span> Por que usar o Tidyverse?</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#instala%C3%A7%C3%A3o-e-carregamento-de-pacotes" id="toc-instalação-e-carregamento-de-pacotes" class="nav-link" data-scroll-target="#instala%C3%A7%C3%A3o-e-carregamento-de-pacotes"><span class="header-section-number">2.2</span> Instalação e Carregamento de Pacotes</a>
+  <ul class="collapse">
+<li><a href="#instalando-pacotes" id="toc-instalando-pacotes" class="nav-link" data-scroll-target="#instalando-pacotes"><span class="header-section-number">2.2.1</span> Instalando Pacotes</a></li>
+  <li><a href="#carregando-pacotes" id="toc-carregando-pacotes" class="nav-link" data-scroll-target="#carregando-pacotes"><span class="header-section-number">2.2.2</span> Carregando Pacotes</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#importando-dados" id="toc-importando-dados" class="nav-link" data-scroll-target="#importando-dados"><span class="header-section-number">2.3</span> Importando Dados</a>
+  <ul class="collapse">
+<li><a href="#leitura-de-arquivos-excel" id="toc-leitura-de-arquivos-excel" class="nav-link" data-scroll-target="#leitura-de-arquivos-excel"><span class="header-section-number">2.3.1</span> Leitura de Arquivos Excel</a></li>
+  <li><a href="#explorando-os-dados-importados" id="toc-explorando-os-dados-importados" class="nav-link" data-scroll-target="#explorando-os-dados-importados"><span class="header-section-number">2.3.2</span> Explorando os Dados Importados</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#principais-fun%C3%A7%C3%B5es-do-tidyverse" id="toc-principais-funções-do-tidyverse" class="nav-link" data-scroll-target="#principais-fun%C3%A7%C3%B5es-do-tidyverse"><span class="header-section-number">2.4</span> Principais Funções do Tidyverse</a>
+  <ul class="collapse">
+<li><a href="#select-selecionando-colunas" id="toc-select-selecionando-colunas" class="nav-link" data-scroll-target="#select-selecionando-colunas"><span class="header-section-number">2.4.1</span> select(): Selecionando Colunas</a></li>
+  <li><a href="#filter-filtrando-linhas" id="toc-filter-filtrando-linhas" class="nav-link" data-scroll-target="#filter-filtrando-linhas"><span class="header-section-number">2.4.2</span> filter(): Filtrando Linhas</a></li>
+  <li><a href="#mutate-criando-e-modificando-colunas" id="toc-mutate-criando-e-modificando-colunas" class="nav-link" data-scroll-target="#mutate-criando-e-modificando-colunas"><span class="header-section-number">2.4.3</span> mutate(): Criando e Modificando Colunas</a></li>
+  <li><a href="#rename-renomeando-colunas" id="toc-rename-renomeando-colunas" class="nav-link" data-scroll-target="#rename-renomeando-colunas"><span class="header-section-number">2.4.4</span> rename(): Renomeando Colunas</a></li>
+  <li><a href="#group_by-e-summarise-sumarizando-dados" id="toc-group_by-e-summarise-sumarizando-dados" class="nav-link" data-scroll-target="#group_by-e-summarise-sumarizando-dados"><span class="header-section-number">2.4.5</span> group_by() e summarise(): Sumarizando Dados</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#o-operador-pipe" id="toc-o-operador-pipe" class="nav-link" data-scroll-target="#o-operador-pipe"><span class="header-section-number">2.5</span> O Operador Pipe |&gt;</a>
+  <ul class="collapse">
+<li><a href="#como-ler-o-pipe" id="toc-como-ler-o-pipe" class="nav-link" data-scroll-target="#como-ler-o-pipe"><span class="header-section-number">2.5.1</span> Como Ler o Pipe</a></li>
+  <li><a href="#atalho-de-teclado" id="toc-atalho-de-teclado" class="nav-link" data-scroll-target="#atalho-de-teclado"><span class="header-section-number">2.5.2</span> Atalho de Teclado</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#encadeamento-de-opera%C3%A7%C3%B5es" id="toc-encadeamento-de-operações" class="nav-link" data-scroll-target="#encadeamento-de-opera%C3%A7%C3%B5es"><span class="header-section-number">2.6</span> Encadeamento de Operações</a>
+  <ul class="collapse">
+<li><a href="#exemplo-completo-de-pipeline" id="toc-exemplo-completo-de-pipeline" class="nav-link" data-scroll-target="#exemplo-completo-de-pipeline"><span class="header-section-number">2.6.1</span> Exemplo Completo de Pipeline</a></li>
+  <li><a href="#vantagens-do-encadeamento" id="toc-vantagens-do-encadeamento" class="nav-link" data-scroll-target="#vantagens-do-encadeamento"><span class="header-section-number">2.6.2</span> Vantagens do Encadeamento</a></li>
+  <li><a href="#dica-para-debug" id="toc-dica-para-debug" class="nav-link" data-scroll-target="#dica-para-debug"><span class="header-section-number">2.6.3</span> Dica para Debug</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#outras-fun%C3%A7%C3%B5es-%C3%BAteis-do-dplyr" id="toc-outras-funções-úteis-do-dplyr" class="nav-link" data-scroll-target="#outras-fun%C3%A7%C3%B5es-%C3%BAteis-do-dplyr"><span class="header-section-number">2.7</span> Outras Funções Úteis do dplyr</a>
+  <ul class="collapse">
+<li><a href="#arrange-ordenando-dados" id="toc-arrange-ordenando-dados" class="nav-link" data-scroll-target="#arrange-ordenando-dados"><span class="header-section-number">2.7.1</span> arrange(): Ordenando Dados</a></li>
+  <li><a href="#count-contagem-r%C3%A1pida" id="toc-count-contagem-rápida" class="nav-link" data-scroll-target="#count-contagem-r%C3%A1pida"><span class="header-section-number">2.7.2</span> count(): Contagem Rápida</a></li>
+  <li><a href="#distinct-valores-%C3%BAnicos" id="toc-distinct-valores-únicos" class="nav-link" data-scroll-target="#distinct-valores-%C3%BAnicos"><span class="header-section-number">2.7.3</span> distinct(): Valores Únicos</a></li>
+  <li><a href="#slice-sele%C3%A7%C3%A3o-por-posi%C3%A7%C3%A3o" id="toc-slice-seleção-por-posição" class="nav-link" data-scroll-target="#slice-sele%C3%A7%C3%A3o-por-posi%C3%A7%C3%A3o"><span class="header-section-number">2.7.4</span> slice(): Seleção por Posição</a></li>
+  </ul>
+</li>
+  <li><a href="#pacote-janitor-limpeza-de-nomes" id="toc-pacote-janitor-limpeza-de-nomes" class="nav-link" data-scroll-target="#pacote-janitor-limpeza-de-nomes"><span class="header-section-number">2.8</span> Pacote janitor: Limpeza de Nomes</a></li>
+  <li><a href="#resumo-do-cap%C3%ADtulo" id="toc-resumo-do-capítulo" class="nav-link" data-scroll-target="#resumo-do-cap%C3%ADtulo"><span class="header-section-number">2.9</span> Resumo do Capítulo</a></li>
+  <li><a href="#exerc%C3%ADcios-pr%C3%A1ticos" id="toc-exercícios-práticos" class="nav-link" data-scroll-target="#exerc%C3%ADcios-pr%C3%A1ticos"><span class="header-section-number">2.10</span> Exercícios Práticos</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Manipulação de Dados com Tidyverse</span>
+</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><section id="o-que-é-o-tidyverse" class="level2" data-number="2.1"><h2 data-number="2.1" class="anchored" data-anchor-id="o-que-é-o-tidyverse">
+<span class="header-section-number">2.1</span> O que é o Tidyverse?</h2>
+<p>O <strong>tidyverse</strong> é uma coleção de pacotes R projetados para ciência de dados. Todos os pacotes compartilham uma filosofia de design, gramática e estruturas de dados subjacentes, tornando o trabalho com dados mais intuitivo e eficiente.</p>
+<section id="pacotes-principais-do-tidyverse" class="level3" data-number="2.1.1"><h3 data-number="2.1.1" class="anchored" data-anchor-id="pacotes-principais-do-tidyverse">
+<span class="header-section-number">2.1.1</span> Pacotes Principais do Tidyverse</h3>
+<ul>
+<li>
+<strong>dplyr</strong>: Manipulação de dados (filtrar, selecionar, agrupar, sumarizar)</li>
+<li>
+<strong>ggplot2</strong>: Criação de gráficos elegantes</li>
+<li>
+<strong>tidyr</strong>: Organização e limpeza de dados</li>
+<li>
+<strong>readr</strong>: Leitura rápida de dados retangulares (CSV, TSV)</li>
+<li>
+<strong>purrr</strong>: Programação funcional</li>
+<li>
+<strong>tibble</strong>: Versão moderna de data frames</li>
+<li>
+<strong>stringr</strong>: Manipulação de strings</li>
+<li>
+<strong>forcats</strong>: Manipulação de fatores</li>
+</ul></section><section id="por-que-usar-o-tidyverse" class="level3" data-number="2.1.2"><h3 data-number="2.1.2" class="anchored" data-anchor-id="por-que-usar-o-tidyverse">
+<span class="header-section-number">2.1.2</span> Por que usar o Tidyverse?</h3>
+<ul>
+<li>
+<strong>Código mais legível</strong>: Sintaxe intuitiva e consistente</li>
+<li>
+<strong>Pipe operator</strong>: Encadeamento de operações de forma natural</li>
+<li>
+<strong>Eficiência</strong>: Otimizado para grandes volumes de dados</li>
+<li>
+<strong>Comunidade</strong>: Ampla documentação e suporte</li>
+<li>
+<strong>Integração</strong>: Pacotes funcionam perfeitamente juntos</li>
+</ul></section></section><section id="instalação-e-carregamento-de-pacotes" class="level2" data-number="2.2"><h2 data-number="2.2" class="anchored" data-anchor-id="instalação-e-carregamento-de-pacotes">
+<span class="header-section-number">2.2</span> Instalação e Carregamento de Pacotes</h2>
+<section id="instalando-pacotes" class="level3" data-number="2.2.1"><h3 data-number="2.2.1" class="anchored" data-anchor-id="instalando-pacotes">
+<span class="header-section-number">2.2.1</span> Instalando Pacotes</h3>
+<p>Para instalar um pacote no R, usamos a função <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages()</a></code>:</p>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Instalando um pacote individual</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"tidyverse"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Instalando múltiplos pacotes</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"tidyverse"</span>, <span class="st">"readxl"</span>, <span class="st">"janitor"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Importante</strong>: Você só precisa instalar um pacote uma vez. Após a instalação, o pacote fica disponível permanentemente.</p>
+</section><section id="carregando-pacotes" class="level3" data-number="2.2.2"><h3 data-number="2.2.2" class="anchored" data-anchor-id="carregando-pacotes">
+<span class="header-section-number">2.2.2</span> Carregando Pacotes</h3>
+<p>Após instalados, os pacotes precisam ser carregados em cada sessão usando <code><a href="https://rdrr.io/r/base/library.html">library()</a></code>:</p>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Carregando os pacotes necessários</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>  <span class="co"># Manipulação e visualização de dados</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org">readxl</a></span><span class="op">)</span>     <span class="co"># Leitura de arquivos Excel</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section></section><section id="importando-dados" class="level2" data-number="2.3"><h2 data-number="2.3" class="anchored" data-anchor-id="importando-dados">
+<span class="header-section-number">2.3</span> Importando Dados</h2>
+<section id="leitura-de-arquivos-excel" class="level3" data-number="2.3.1"><h3 data-number="2.3.1" class="anchored" data-anchor-id="leitura-de-arquivos-excel">
+<span class="header-section-number">2.3.1</span> Leitura de Arquivos Excel</h3>
+<p>A função <code><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel()</a></code> do pacote <strong>readxl</strong> permite importar dados de arquivos Excel:</p>
+<div class="cell">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Importando dados de internações hospitalares</span></span>
+<span><span class="va">dados</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"data/dados_internacoes_maringa_2024.xlsx"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Nota sobre os Dados
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Os dados utilizados neste livro são de internações hospitalares de Maringá-PR referentes ao ano de 2024, disponibilizados pelo Sistema de Informações Hospitalares (SIH) do SUS. O arquivo <code>dados_internacoes_maringa_2024.xlsx</code> deve estar na pasta <code>data/</code> do seu projeto.</p>
+</div>
+</div>
+</section><section id="explorando-os-dados-importados" class="level3" data-number="2.3.2"><h3 data-number="2.3.2" class="anchored" data-anchor-id="explorando-os-dados-importados">
+<span class="header-section-number">2.3.2</span> Explorando os Dados Importados</h3>
+<p>Após importar, é importante explorar a estrutura dos dados:</p>
+<div class="cell">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Resumo estatístico das variáveis</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">dados</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Visão geral da estrutura (tidyverse)</span></span>
+<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">dados</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Estrutura detalhada (R base)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">dados</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Essas funções fornecem informações sobre:</p>
+<ul>
+<li>Número de linhas e colunas</li>
+<li>Tipos de dados de cada variável</li>
+<li>Primeiros valores de cada coluna</li>
+<li>Valores ausentes (NAs)</li>
+</ul></section></section><section id="principais-funções-do-tidyverse" class="level2" data-number="2.4"><h2 data-number="2.4" class="anchored" data-anchor-id="principais-funções-do-tidyverse">
+<span class="header-section-number">2.4</span> Principais Funções do Tidyverse</h2>
+<p>O tidyverse oferece um conjunto de funções poderosas para manipulação de dados:</p>
+<table class="caption-top table">
+<thead><tr class="header">
+<th>Função</th>
+<th>Descrição</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code></td>
+<td>Seleciona colunas específicas</td>
+</tr>
+<tr class="even">
+<td><code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code></td>
+<td>Filtra linhas baseado em condições</td>
+</tr>
+<tr class="odd">
+<td><code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code></td>
+<td>Cria ou modifica colunas</td>
+</tr>
+<tr class="even">
+<td><code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code></td>
+<td>Renomeia colunas</td>
+</tr>
+<tr class="odd">
+<td><code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code></td>
+<td>Agrupa dados por variáveis</td>
+</tr>
+<tr class="even">
+<td><code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code></td>
+<td>Calcula estatísticas resumidas</td>
+</tr>
+</tbody>
+</table>
+<p>Vamos explorar cada uma dessas funções em detalhes.</p>
+<section id="select-selecionando-colunas" class="level3" data-number="2.4.1"><h3 data-number="2.4.1" class="anchored" data-anchor-id="select-selecionando-colunas">
+<span class="header-section-number">2.4.1</span> select(): Selecionando Colunas</h3>
+<p>A função <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> permite escolher quais colunas manter no seu data frame:</p>
+<div class="cell">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Selecionando apenas as colunas SEXO e IDADE</span></span>
+<span><span class="va">dados_selecionados</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">dados</span>, <span class="va">SEXO</span>, <span class="va">IDADE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">dados_selecionados</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="excluindo-colunas" class="level4" data-number="2.4.1.1"><h4 data-number="2.4.1.1" class="anchored" data-anchor-id="excluindo-colunas">
+<span class="header-section-number">2.4.1.1</span> Excluindo Colunas</h4>
+<p>Você pode também remover colunas específicas usando o sinal de menos <code>-</code>:</p>
+<div class="cell">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Removendo a coluna CEP</span></span>
+<span><span class="va">dados2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">dados</span>, <span class="op">-</span><span class="va">CEP</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="seleção-avançada" class="level4" data-number="2.4.1.2"><h4 data-number="2.4.1.2" class="anchored" data-anchor-id="seleção-avançada">
+<span class="header-section-number">2.4.1.2</span> Seleção Avançada</h4>
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Selecionar colunas que começam com determinado texto</span></span>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">dados</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"VAL"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Selecionar colunas que terminam com determinado texto</span></span>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">dados</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="st">"_TOT"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Selecionar colunas que contêm determinado texto</span></span>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">dados</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"IDADE"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Selecionar colunas numéricas</span></span>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">dados</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html">where</a></span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section></section><section id="filter-filtrando-linhas" class="level3" data-number="2.4.2"><h3 data-number="2.4.2" class="anchored" data-anchor-id="filter-filtrando-linhas">
+<span class="header-section-number">2.4.2</span> filter(): Filtrando Linhas</h3>
+<p>A função <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> permite selecionar linhas que atendem a determinadas condições:</p>
+<section id="filtro-simples" class="level4" data-number="2.4.2.1"><h4 data-number="2.4.2.1" class="anchored" data-anchor-id="filtro-simples">
+<span class="header-section-number">2.4.2.1</span> Filtro Simples</h4>
+<div class="cell">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Filtrando apenas pacientes do sexo masculino</span></span>
+<span><span class="va">dados_masculino</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">dados</span>, <span class="va">SEXO</span> <span class="op">==</span> <span class="st">"Masculino"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Filtrando pacientes que NÃO são do sexo masculino</span></span>
+<span><span class="va">dados_feminino</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">dados</span>, <span class="va">SEXO</span> <span class="op">!=</span> <span class="st">"Masculino"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="múltiplas-condições" class="level4" data-number="2.4.2.2"><h4 data-number="2.4.2.2" class="anchored" data-anchor-id="múltiplas-condições">
+<span class="header-section-number">2.4.2.2</span> Múltiplas Condições</h4>
+<p>Use o operador <code>&amp;</code> (E) para combinar condições:</p>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Homens que foram a óbito</span></span>
+<span><span class="va">dados_masculino_morte</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">dados</span>, <span class="va">SEXO</span> <span class="op">==</span> <span class="st">"Masculino"</span> <span class="op">&amp;</span> <span class="va">MORTE</span> <span class="op">==</span> <span class="st">"Sim"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Homens idosos (&gt;=60 anos) que foram a óbito</span></span>
+<span><span class="va">dados_masculino_morte_idosos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span></span>
+<span>  <span class="va">dados</span>,</span>
+<span>  <span class="va">SEXO</span> <span class="op">==</span> <span class="st">"Masculino"</span> <span class="op">&amp;</span> <span class="va">MORTE</span> <span class="op">==</span> <span class="st">"Sim"</span> <span class="op">&amp;</span> <span class="va">IDADE</span> <span class="op">&gt;=</span> <span class="fl">60</span></span>
+<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="outros-operadores-lógicos" class="level4" data-number="2.4.2.3"><h4 data-number="2.4.2.3" class="anchored" data-anchor-id="outros-operadores-lógicos">
+<span class="header-section-number">2.4.2.3</span> Outros Operadores Lógicos</h4>
+<div class="cell">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Operador OU (|): pacientes com idade menor que 18 OU maior que 60</span></span>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">dados</span>, <span class="va">IDADE</span> <span class="op">&lt;</span> <span class="fl">18</span> <span class="op">|</span> <span class="va">IDADE</span> <span class="op">&gt;</span> <span class="fl">60</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Operador %in%: selecionar múltiplos valores</span></span>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">dados</span>, <span class="va">RACA_COR</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Branca"</span>, <span class="st">"Parda"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Valores ausentes</span></span>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">dados</span>, <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">IDADE</span><span class="op">)</span><span class="op">)</span>  <span class="co"># Linhas com idade ausente</span></span>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">dados</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">IDADE</span><span class="op">)</span><span class="op">)</span>  <span class="co"># Linhas SEM idade ausente</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section></section><section id="mutate-criando-e-modificando-colunas" class="level3" data-number="2.4.3"><h3 data-number="2.4.3" class="anchored" data-anchor-id="mutate-criando-e-modificando-colunas">
+<span class="header-section-number">2.4.3</span> mutate(): Criando e Modificando Colunas</h3>
+<p>A função <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> é usada para criar novas colunas ou modificar existentes:</p>
+<section id="criando-nova-coluna" class="level4" data-number="2.4.3.1"><h4 data-number="2.4.3.1" class="anchored" data-anchor-id="criando-nova-coluna">
+<span class="header-section-number">2.4.3.1</span> Criando Nova Coluna</h4>
+<div class="cell">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Criando nova coluna com valor total multiplicado por 1000</span></span>
+<span><span class="va">dados_valor_1000</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">dados</span>, VAL_TOT_1000 <span class="op">=</span> <span class="va">VAL_TOT</span> <span class="op">*</span> <span class="fl">1000</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="modificando-tipo-de-dados" class="level4" data-number="2.4.3.2"><h4 data-number="2.4.3.2" class="anchored" data-anchor-id="modificando-tipo-de-dados">
+<span class="header-section-number">2.4.3.2</span> Modificando Tipo de Dados</h4>
+<p>A função <code><a href="https://dplyr.tidyverse.org/reference/across.html">across()</a></code> permite aplicar uma transformação a múltiplas colunas:</p>
+<div class="cell">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Convertendo IDADE e DIAS_PERM para numérico</span></span>
+<span><span class="va">dados</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">dados</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">IDADE</span>, <span class="va">DIAS_PERM</span><span class="op">)</span>, <span class="va">as.numeric</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Convertendo múltiplas colunas para fator</span></span>
+<span><span class="va">dados</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">dados</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">SEXO</span>, <span class="va">RACA_COR</span>, <span class="va">MORTE</span><span class="op">)</span>, <span class="va">as.factor</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="recodificando-variáveis-com-case_when" class="level4" data-number="2.4.3.3"><h4 data-number="2.4.3.3" class="anchored" data-anchor-id="recodificando-variáveis-com-case_when">
+<span class="header-section-number">2.4.3.3</span> Recodificando Variáveis com case_when()</h4>
+<p>A função <code><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a></code> é útil para criar categorias baseadas em múltiplas condições:</p>
+<div class="cell">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Recodificando códigos numéricos de raça/cor para texto descritivo</span></span>
+<span><span class="va">dados</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>  <span class="va">dados</span>,</span>
+<span>  RACA_COR <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span></span>
+<span>    <span class="va">RACA_COR</span> <span class="op">==</span> <span class="st">'01'</span> <span class="op">~</span> <span class="st">"Branca"</span>,</span>
+<span>    <span class="va">RACA_COR</span> <span class="op">==</span> <span class="st">"02"</span> <span class="op">~</span> <span class="st">"Preta"</span>,</span>
+<span>    <span class="va">RACA_COR</span> <span class="op">==</span> <span class="st">"03"</span> <span class="op">~</span> <span class="st">"Parda"</span>,</span>
+<span>    <span class="va">RACA_COR</span> <span class="op">==</span> <span class="st">"04"</span> <span class="op">~</span> <span class="st">"Amarela"</span>,</span>
+<span>    <span class="va">RACA_COR</span> <span class="op">==</span> <span class="st">"05"</span> <span class="op">~</span> <span class="st">"Indígena"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Outros exemplos de <code><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a></code>:</p>
+<div class="cell">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Classificando faixas etárias</span></span>
+<span><span class="va">dados</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>  <span class="va">dados</span>,</span>
+<span>  faixa_etaria <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span></span>
+<span>    <span class="va">IDADE</span> <span class="op">&lt;</span> <span class="fl">18</span> <span class="op">~</span> <span class="st">"Criança/Adolescente"</span>,</span>
+<span>    <span class="va">IDADE</span> <span class="op">&gt;=</span> <span class="fl">18</span> <span class="op">&amp;</span> <span class="va">IDADE</span> <span class="op">&lt;</span> <span class="fl">60</span> <span class="op">~</span> <span class="st">"Adulto"</span>,</span>
+<span>    <span class="va">IDADE</span> <span class="op">&gt;=</span> <span class="fl">60</span> <span class="op">~</span> <span class="st">"Idoso"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Classificando permanência hospitalar</span></span>
+<span><span class="va">dados</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>  <span class="va">dados</span>,</span>
+<span>  tempo_internacao <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span></span>
+<span>    <span class="va">DIAS_PERM</span> <span class="op">&lt;=</span> <span class="fl">3</span> <span class="op">~</span> <span class="st">"Curta"</span>,</span>
+<span>    <span class="va">DIAS_PERM</span> <span class="op">&gt;</span> <span class="fl">3</span> <span class="op">&amp;</span> <span class="va">DIAS_PERM</span> <span class="op">&lt;=</span> <span class="fl">7</span> <span class="op">~</span> <span class="st">"Média"</span>,</span>
+<span>    <span class="va">DIAS_PERM</span> <span class="op">&gt;</span> <span class="fl">7</span> <span class="op">~</span> <span class="st">"Longa"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section></section><section id="rename-renomeando-colunas" class="level3" data-number="2.4.4"><h3 data-number="2.4.4" class="anchored" data-anchor-id="rename-renomeando-colunas">
+<span class="header-section-number">2.4.4</span> rename(): Renomeando Colunas</h3>
+<p>A função <code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code> permite alterar nomes de colunas:</p>
+<div class="cell">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Renomeando a coluna ESPEC para ESPECIALIDADE</span></span>
+<span><span class="va">dados</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span><span class="va">dados</span>, ESPECIALIDADE <span class="op">=</span> <span class="va">ESPEC</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Sintaxe: novo_nome = nome_antigo</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Renomeando múltiplas colunas:</p>
+<div class="cell">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dados</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span></span>
+<span>  <span class="va">dados</span>,</span>
+<span>  especialidade <span class="op">=</span> <span class="va">ESPEC</span>,</span>
+<span>  diagnostico <span class="op">=</span> <span class="va">DIAG_PRINC</span>,</span>
+<span>  idade_anos <span class="op">=</span> <span class="va">IDADE</span></span>
+<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="group_by-e-summarise-sumarizando-dados" class="level3" data-number="2.4.5"><h3 data-number="2.4.5" class="anchored" data-anchor-id="group_by-e-summarise-sumarizando-dados">
+<span class="header-section-number">2.4.5</span> group_by() e summarise(): Sumarizando Dados</h3>
+<p>Estas funções trabalham em conjunto para calcular estatísticas agrupadas.</p>
+<section id="agrupamento-e-sumarização-básica" class="level4" data-number="2.4.5.1"><h4 data-number="2.4.5.1" class="anchored" data-anchor-id="agrupamento-e-sumarização-básica">
+<span class="header-section-number">2.4.5.1</span> Agrupamento e Sumarização Básica</h4>
+<div class="cell">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Calculando idade média por sexo e raça/cor</span></span>
+<span><span class="va">dados_agrupados</span> <span class="op">&lt;-</span> <span class="va">dados</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">SEXO</span>, <span class="va">RACA_COR</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>mean_idade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">IDADE</span><span class="op">)</span>, .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">dados_agrupados</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="múltiplas-estatísticas" class="level4" data-number="2.4.5.2"><h4 data-number="2.4.5.2" class="anchored" data-anchor-id="múltiplas-estatísticas">
+<span class="header-section-number">2.4.5.2</span> Múltiplas Estatísticas</h4>
+<div class="cell">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Calculando várias estatísticas ao mesmo tempo</span></span>
+<span><span class="va">estatisticas</span> <span class="op">&lt;-</span> <span class="va">dados</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">SEXO</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span></span>
+<span>    n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span>,                          <span class="co"># Contagem</span></span>
+<span>    idade_media <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">IDADE</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    idade_dp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">IDADE</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    idade_mediana <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">IDADE</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    idade_min <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">IDADE</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    idade_max <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">IDADE</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    .groups <span class="op">=</span> <span class="st">"drop"</span></span>
+<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section></section></section><section id="o-operador-pipe" class="level2" data-number="2.5"><h2 data-number="2.5" class="anchored" data-anchor-id="o-operador-pipe">
+<span class="header-section-number">2.5</span> O Operador Pipe |&gt;</h2>
+<p>O <strong>pipe operator</strong> <code>|&gt;</code> é uma das características mais poderosas do tidyverse. Ele permite encadear múltiplas operações de forma legível.</p>
+<section id="como-ler-o-pipe" class="level3" data-number="2.5.1"><h3 data-number="2.5.1" class="anchored" data-anchor-id="como-ler-o-pipe">
+<span class="header-section-number">2.5.1</span> Como Ler o Pipe</h3>
+<p>O símbolo <code>|&gt;</code> pode ser lido como <strong>“E ENTÃO”</strong> ou <strong>“PASSE PARA”</strong>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Sem pipe (difícil de ler)</span></span>
+<span><span class="va">resultado</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">dados</span>, <span class="va">SEXO</span> <span class="op">==</span> <span class="st">"Masculino"</span><span class="op">)</span>,</span>
+<span>    <span class="va">RACA_COR</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  media_idade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">IDADE</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Com pipe (fácil de ler)</span></span>
+<span><span class="va">resultado</span> <span class="op">&lt;-</span> <span class="va">dados</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">SEXO</span> <span class="op">==</span> <span class="st">"Masculino"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">RACA_COR</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>media_idade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">IDADE</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Leitura</strong>: “Pegue os dados E ENTÃO filtre para sexo masculino E ENTÃO agrupe por raça/cor E ENTÃO calcule a média de idade”</p>
+</section><section id="atalho-de-teclado" class="level3" data-number="2.5.2"><h3 data-number="2.5.2" class="anchored" data-anchor-id="atalho-de-teclado">
+<span class="header-section-number">2.5.2</span> Atalho de Teclado</h3>
+<ul>
+<li>
+<strong>Windows/Linux</strong>: <code>Ctrl + Shift + M</code>
+</li>
+<li>
+<strong>Mac</strong>: <code>Cmd + Shift + M</code>
+</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Pipe Nativo vs.&nbsp;Pipe do magrittr
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>O R possui dois operadores pipe:</p>
+<ul>
+<li>
+<code>|&gt;</code> - Pipe nativo do R (versão 4.1+) - usado neste livro</li>
+<li>
+<code>%&gt;%</code> - Pipe do pacote magrittr</li>
+</ul>
+<p>Ambos funcionam de forma similar. Usamos <code>|&gt;</code> por ser nativo e não requerer pacotes adicionais.</p>
+</div>
+</div>
+</section></section><section id="encadeamento-de-operações" class="level2" data-number="2.6"><h2 data-number="2.6" class="anchored" data-anchor-id="encadeamento-de-operações">
+<span class="header-section-number">2.6</span> Encadeamento de Operações</h2>
+<p>O verdadeiro poder do tidyverse aparece quando combinamos múltiplas operações:</p>
+<section id="exemplo-completo-de-pipeline" class="level3" data-number="2.6.1"><h3 data-number="2.6.1" class="anchored" data-anchor-id="exemplo-completo-de-pipeline">
+<span class="header-section-number">2.6.1</span> Exemplo Completo de Pipeline</h3>
+<div class="cell">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Pipeline complexo de limpeza e análise de dados</span></span>
+<span><span class="va">dados_limpos</span> <span class="op">&lt;-</span> <span class="va">dados</span> <span class="op">|&gt;</span></span>
+<span>  <span class="co"># 1. Selecionar colunas relevantes</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">SEXO</span>, <span class="va">RACA_COR</span>, <span class="va">IDADE</span>, <span class="va">MORTE</span>, <span class="va">COD_IDADE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="co"># 2. Filtrar apenas idades em anos</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">COD_IDADE</span> <span class="op">==</span> <span class="st">"Anos"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="co"># 3. Remover coluna COD_IDADE (não mais necessária)</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">COD_IDADE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="co"># 4. Converter IDADE para numérico</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="va">IDADE</span>, <span class="va">as.numeric</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="co"># 5. Converter variáveis categóricas para fator</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">SEXO</span>, <span class="va">RACA_COR</span>, <span class="va">MORTE</span><span class="op">)</span>, <span class="va">as.factor</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="co"># 6. Recodificar raça/cor</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>RACA_COR <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span></span>
+<span>    <span class="va">RACA_COR</span> <span class="op">==</span> <span class="st">'01'</span> <span class="op">~</span> <span class="st">"Branca"</span>,</span>
+<span>    <span class="va">RACA_COR</span> <span class="op">==</span> <span class="st">"02"</span> <span class="op">~</span> <span class="st">"Preta"</span>,</span>
+<span>    <span class="va">RACA_COR</span> <span class="op">==</span> <span class="st">"03"</span> <span class="op">~</span> <span class="st">"Parda"</span>,</span>
+<span>    <span class="va">RACA_COR</span> <span class="op">==</span> <span class="st">"04"</span> <span class="op">~</span> <span class="st">"Amarela"</span>,</span>
+<span>    <span class="va">RACA_COR</span> <span class="op">==</span> <span class="st">"05"</span> <span class="op">~</span> <span class="st">"Indígena"</span></span>
+<span>  <span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="co"># 7. Renomear colunas para minúsculas</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span></span>
+<span>    sexo <span class="op">=</span> <span class="va">SEXO</span>,</span>
+<span>    raca_cor <span class="op">=</span> <span class="va">RACA_COR</span>,</span>
+<span>    idade <span class="op">=</span> <span class="va">IDADE</span>,</span>
+<span>    morte <span class="op">=</span> <span class="va">MORTE</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="co"># 8. Agrupar por raça/cor e sexo</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">raca_cor</span>, <span class="va">sexo</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="co"># 9. Calcular idade média por grupo</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>mean_idade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">idade</span><span class="op">)</span>, .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">dados_limpos</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="vantagens-do-encadeamento" class="level3" data-number="2.6.2"><h3 data-number="2.6.2" class="anchored" data-anchor-id="vantagens-do-encadeamento">
+<span class="header-section-number">2.6.2</span> Vantagens do Encadeamento</h3>
+<ol type="1">
+<li>
+<strong>Legibilidade</strong>: Código lido de cima para baixo, como uma receita</li>
+<li>
+<strong>Manutenção</strong>: Fácil adicionar, remover ou modificar etapas</li>
+<li>
+<strong>Eficiência</strong>: Evita criar múltiplos objetos intermediários</li>
+<li>
+<strong>Debug</strong>: Fácil testar executando até determinado ponto</li>
+</ol></section><section id="dica-para-debug" class="level3" data-number="2.6.3"><h3 data-number="2.6.3" class="anchored" data-anchor-id="dica-para-debug">
+<span class="header-section-number">2.6.3</span> Dica para Debug</h3>
+<p>Você pode executar o pipeline até qualquer ponto selecionando o código desejado:</p>
+<div class="cell">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Selecione e execute até a linha que deseja inspecionar</span></span>
+<span><span class="va">dados</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">SEXO</span>, <span class="va">RACA_COR</span>, <span class="va">IDADE</span>, <span class="va">MORTE</span>, <span class="va">COD_IDADE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">COD_IDADE</span> <span class="op">==</span> <span class="st">"Anos"</span><span class="op">)</span>  <span class="co"># Execute até aqui para ver o resultado</span></span>
+<span><span class="co"># |&gt; select(-COD_IDADE)          # Não será executado</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section></section><section id="outras-funções-úteis-do-dplyr" class="level2" data-number="2.7"><h2 data-number="2.7" class="anchored" data-anchor-id="outras-funções-úteis-do-dplyr">
+<span class="header-section-number">2.7</span> Outras Funções Úteis do dplyr</h2>
+<section id="arrange-ordenando-dados" class="level3" data-number="2.7.1"><h3 data-number="2.7.1" class="anchored" data-anchor-id="arrange-ordenando-dados">
+<span class="header-section-number">2.7.1</span> arrange(): Ordenando Dados</h3>
+<div class="cell">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Ordenar por idade (crescente)</span></span>
+<span><span class="va">dados</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">IDADE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Ordenar por idade (decrescente)</span></span>
+<span><span class="va">dados</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">IDADE</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Ordenar por múltiplas colunas</span></span>
+<span><span class="va">dados</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">SEXO</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">IDADE</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="count-contagem-rápida" class="level3" data-number="2.7.2"><h3 data-number="2.7.2" class="anchored" data-anchor-id="count-contagem-rápida">
+<span class="header-section-number">2.7.2</span> count(): Contagem Rápida</h3>
+<div class="cell">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Contar frequências de uma variável</span></span>
+<span><span class="va">dados</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">SEXO</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Contar combinações</span></span>
+<span><span class="va">dados</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">SEXO</span>, <span class="va">MORTE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Ordenar por frequência</span></span>
+<span><span class="va">dados</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">RACA_COR</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="distinct-valores-únicos" class="level3" data-number="2.7.3"><h3 data-number="2.7.3" class="anchored" data-anchor-id="distinct-valores-únicos">
+<span class="header-section-number">2.7.3</span> distinct(): Valores Únicos</h3>
+<div class="cell">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Valores únicos de uma coluna</span></span>
+<span><span class="va">dados</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="va">SEXO</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Remover linhas duplicadas completas</span></span>
+<span><span class="va">dados</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="slice-seleção-por-posição" class="level3" data-number="2.7.4"><h3 data-number="2.7.4" class="anchored" data-anchor-id="slice-seleção-por-posição">
+<span class="header-section-number">2.7.4</span> slice(): Seleção por Posição</h3>
+<div class="cell">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Primeiras 10 linhas</span></span>
+<span><span class="va">dados</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Linhas específicas</span></span>
+<span><span class="va">dados</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Top 5 idades mais altas</span></span>
+<span><span class="va">dados</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span><span class="va">IDADE</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Bottom 5 idades mais baixas</span></span>
+<span><span class="va">dados</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_min</a></span><span class="op">(</span><span class="va">IDADE</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section></section><section id="pacote-janitor-limpeza-de-nomes" class="level2" data-number="2.8"><h2 data-number="2.8" class="anchored" data-anchor-id="pacote-janitor-limpeza-de-nomes">
+<span class="header-section-number">2.8</span> Pacote janitor: Limpeza de Nomes</h2>
+<p>O pacote <strong>janitor</strong> oferece funções úteis para limpeza de dados, especialmente nomes de colunas:</p>
+<div class="cell">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/sfirke/janitor">janitor</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Limpar nomes de colunas (remove acentos, espaços, caracteres especiais)</span></span>
+<span><span class="va">dados</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sfirke.github.io/janitor/reference/clean_names.html">clean_names</a></span><span class="op">(</span><span class="va">dados</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Antes: "Nome da Variável"</span></span>
+<span><span class="co"># Depois: "nome_da_variavel"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="resumo-do-capítulo" class="level2" data-number="2.9"><h2 data-number="2.9" class="anchored" data-anchor-id="resumo-do-capítulo">
+<span class="header-section-number">2.9</span> Resumo do Capítulo</h2>
+<p>Neste capítulo, você aprendeu:</p>
+<ul>
+<li>
+<strong>O que é o tidyverse</strong> e seus principais pacotes</li>
+<li>Como <strong>instalar e carregar pacotes</strong> no R</li>
+<li>
+<strong>Importar dados</strong> de arquivos Excel com <code><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel()</a></code>
+</li>
+<li>
+<strong>Explorar dados</strong> com <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>, <code><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse()</a></code> e <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code>
+</li>
+<li>
+<strong>Principais funções do dplyr</strong>:
+<ul>
+<li>
+<code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> - Selecionar colunas</li>
+<li>
+<code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> - Filtrar linhas</li>
+<li>
+<code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> - Criar/modificar colunas</li>
+<li>
+<code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code> - Renomear colunas</li>
+<li>
+<code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> e <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> - Agrupar e sumarizar</li>
+</ul>
+</li>
+<li>
+<strong>Usar o pipe operator</strong> <code>|&gt;</code> para encadear operações</li>
+<li>
+<strong>Criar pipelines complexos</strong> de limpeza e análise de dados</li>
+<li>
+<strong>Funções adicionais</strong> como <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice()</a></code>
+</li>
+</ul>
+<p>No próximo capítulo, você aprenderá a realizar <strong>análises exploratórias de dados</strong>, incluindo estatística descritiva, testes estatísticos e visualização com ggplot2.</p>
+</section><section id="exercícios-práticos" class="level2" data-number="2.10"><h2 data-number="2.10" class="anchored" data-anchor-id="exercícios-práticos">
+<span class="header-section-number">2.10</span> Exercícios Práticos</h2>
+<ol type="1">
+<li><p>Carregue o arquivo <code>dados_internacoes_maringa_2024.xlsx</code> e explore sua estrutura</p></li>
+<li>
+<p>Crie um pipeline que:</p>
+<ul>
+<li>Selecione as colunas SEXO, IDADE, DIAS_PERM, VAL_TOT, MORTE</li>
+<li>Filtre apenas pacientes adultos (IDADE &gt;= 18)</li>
+<li>Crie uma coluna categorizando o tempo de permanência (curta: ≤3 dias, média: 4-7 dias, longa: &gt;7 dias)</li>
+<li>Calcule a idade média e o valor total médio por sexo e categoria de permanência</li>
+</ul>
+</li>
+<li><p>Identifique as 10 especialidades médicas com maior número de internações</p></li>
+<li><p>Calcule a taxa de mortalidade (%) por faixa etária (use intervalos de 10 anos)</p></li>
+<li><p>Crie um data frame limpo contendo apenas internações de pacientes idosos (≥60 anos) com todas as variáveis categóricas recodificadas de forma descritiva</p></li>
+</ol>
+
+
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./introducao-r.html" class="pagination-link" aria-label="Introdução ao R e RStudio">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução ao R e RStudio</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./analise-exploratoria.html" class="pagination-link" aria-label="Análise Exploratória de Dados">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Análise Exploratória de Dados</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

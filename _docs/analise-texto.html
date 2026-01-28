@@ -1,0 +1,1709 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>7&nbsp; Análise de Dados Textuais e Mineração de Texto – Bioestatística Aplicada à Saúde usando R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./references.html" rel="next">
+<link href="./psicometria.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-4a990d8dcb58f517c7c86712b8f2ac7c.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-46f4cc9626f044588a66931b604fc9c8.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-4a990d8dcb58f517c7c86712b8f2ac7c.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-1ea2f1ca8430a0e4b2b18d49b51ad2af.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-90005ebdada80aaf03d6f48ec6c0ecfe.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-1ea2f1ca8430a0e4b2b18d49b51ad2af.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script><link rel="stylesheet" href="styles.css">
+</head>
+<body class="nav-sidebar docked quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./analise-texto.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Análise de Dados Textuais e Mineração de Texto</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Bioestatística Aplicada à Saúde usando R</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prefácio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introducao-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução ao R e RStudio</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./manipulacao-dados.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Manipulação de Dados com Tidyverse</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analise-exploratoria.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Análise Exploratória de Dados</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./testes-estatisticos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Testes Estatísticos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./regressao.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Regressão Linear, Logística e Multinomial</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./psicometria.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Análise Psicométrica</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analise-texto.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Análise de Dados Textuais e Mineração de Texto</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referências</span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li>
+<a href="#introdu%C3%A7%C3%A3o-%C3%A0-minera%C3%A7%C3%A3o-de-texto" id="toc-introdução-à-mineração-de-texto" class="nav-link active" data-scroll-target="#introdu%C3%A7%C3%A3o-%C3%A0-minera%C3%A7%C3%A3o-de-texto"><span class="header-section-number">7.1</span> Introdução à Mineração de Texto</a>
+  <ul class="collapse">
+<li><a href="#aplica%C3%A7%C3%B5es-em-sa%C3%BAde" id="toc-aplicações-em-saúde" class="nav-link" data-scroll-target="#aplica%C3%A7%C3%B5es-em-sa%C3%BAde"><span class="header-section-number">7.1.1</span> Aplicações em Saúde</a></li>
+  <li><a href="#estrutura-do-cap%C3%ADtulo" id="toc-estrutura-do-capítulo" class="nav-link" data-scroll-target="#estrutura-do-cap%C3%ADtulo"><span class="header-section-number">7.1.2</span> Estrutura do Capítulo</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#prepara%C3%A7%C3%A3o-do-ambiente" id="toc-preparação-do-ambiente" class="nav-link" data-scroll-target="#prepara%C3%A7%C3%A3o-do-ambiente"><span class="header-section-number">7.2</span> Preparação do Ambiente</a>
+  <ul class="collapse">
+<li><a href="#carregando-pacotes" id="toc-carregando-pacotes" class="nav-link" data-scroll-target="#carregando-pacotes"><span class="header-section-number">7.2.1</span> Carregando Pacotes</a></li>
+  <li><a href="#sobre-os-datasets" id="toc-sobre-os-datasets" class="nav-link" data-scroll-target="#sobre-os-datasets"><span class="header-section-number">7.2.2</span> Sobre os Datasets</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#tokeniza%C3%A7%C3%A3o-e-an%C3%A1lise-de-frequ%C3%AAncia" id="toc-tokenização-e-análise-de-frequência" class="nav-link" data-scroll-target="#tokeniza%C3%A7%C3%A3o-e-an%C3%A1lise-de-frequ%C3%AAncia"><span class="header-section-number">7.3</span> Tokenização e Análise de Frequência</a>
+  <ul class="collapse">
+<li><a href="#importando-dados-de-entrevistas" id="toc-importando-dados-de-entrevistas" class="nav-link" data-scroll-target="#importando-dados-de-entrevistas"><span class="header-section-number">7.3.1</span> Importando Dados de Entrevistas</a></li>
+  <li><a href="#tokeniza%C3%A7%C3%A3o-por-senten%C3%A7as" id="toc-tokenização-por-sentenças" class="nav-link" data-scroll-target="#tokeniza%C3%A7%C3%A3o-por-senten%C3%A7as"><span class="header-section-number">7.3.2</span> Tokenização por Sentenças</a></li>
+  <li><a href="#tokeniza%C3%A7%C3%A3o-por-palavras" id="toc-tokenização-por-palavras" class="nav-link" data-scroll-target="#tokeniza%C3%A7%C3%A3o-por-palavras"><span class="header-section-number">7.3.3</span> Tokenização por Palavras</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#remo%C3%A7%C3%A3o-de-stopwords" id="toc-remoção-de-stopwords" class="nav-link" data-scroll-target="#remo%C3%A7%C3%A3o-de-stopwords"><span class="header-section-number">7.4</span> Remoção de Stopwords</a>
+  <ul class="collapse">
+<li><a href="#criando-lista-de-stopwords-em-portugu%C3%AAs" id="toc-criando-lista-de-stopwords-em-português" class="nav-link" data-scroll-target="#criando-lista-de-stopwords-em-portugu%C3%AAs"><span class="header-section-number">7.4.1</span> Criando Lista de Stopwords em Português</a></li>
+  <li><a href="#calculando-frequ%C3%AAncia-de-palavras" id="toc-calculando-frequência-de-palavras" class="nav-link" data-scroll-target="#calculando-frequ%C3%AAncia-de-palavras"><span class="header-section-number">7.4.2</span> Calculando Frequência de Palavras</a></li>
+  <li><a href="#visualizando-frequ%C3%AAncia-com-gr%C3%A1fico-de-barras" id="toc-visualizando-frequência-com-gráfico-de-barras" class="nav-link" data-scroll-target="#visualizando-frequ%C3%AAncia-com-gr%C3%A1fico-de-barras"><span class="header-section-number">7.4.3</span> Visualizando Frequência com Gráfico de Barras</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#visualiza%C3%A7%C3%A3o-com-word-clouds" id="toc-visualização-com-word-clouds" class="nav-link" data-scroll-target="#visualiza%C3%A7%C3%A3o-com-word-clouds"><span class="header-section-number">7.5</span> Visualização com Word Clouds</a>
+  <ul class="collapse">
+<li><a href="#criando-uma-fun%C3%A7%C3%A3o-para-word-cloud" id="toc-criando-uma-função-para-word-cloud" class="nav-link" data-scroll-target="#criando-uma-fun%C3%A7%C3%A3o-para-word-cloud"><span class="header-section-number">7.5.1</span> Criando uma Função para Word Cloud</a></li>
+  <li><a href="#aplicando-a-fun%C3%A7%C3%A3o" id="toc-aplicando-a-função" class="nav-link" data-scroll-target="#aplicando-a-fun%C3%A7%C3%A3o"><span class="header-section-number">7.5.2</span> Aplicando a Função</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#an%C3%A1lise-de-sentimento-abordagem-baseada-em-l%C3%A9xico" id="toc-análise-de-sentimento-abordagem-baseada-em-léxico" class="nav-link" data-scroll-target="#an%C3%A1lise-de-sentimento-abordagem-baseada-em-l%C3%A9xico"><span class="header-section-number">7.6</span> Análise de Sentimento: Abordagem Baseada em Léxico</a>
+  <ul class="collapse">
+<li><a href="#sobre-o-l%C3%A9xico-sentilex-pt" id="toc-sobre-o-léxico-sentilex-pt" class="nav-link" data-scroll-target="#sobre-o-l%C3%A9xico-sentilex-pt"><span class="header-section-number">7.6.1</span> Sobre o Léxico SentiLex-PT</a></li>
+  <li><a href="#importando-dados-de-percep%C3%A7%C3%A3o-de-marca" id="toc-importando-dados-de-percepção-de-marca" class="nav-link" data-scroll-target="#importando-dados-de-percep%C3%A7%C3%A3o-de-marca"><span class="header-section-number">7.6.2</span> Importando Dados de Percepção de Marca</a></li>
+  <li><a href="#carregando-o-l%C3%A9xico-de-sentimentos" id="toc-carregando-o-léxico-de-sentimentos" class="nav-link" data-scroll-target="#carregando-o-l%C3%A9xico-de-sentimentos"><span class="header-section-number">7.6.3</span> Carregando o Léxico de Sentimentos</a></li>
+  <li><a href="#pr%C3%A9-processamento-do-texto" id="toc-pré-processamento-do-texto" class="nav-link" data-scroll-target="#pr%C3%A9-processamento-do-texto"><span class="header-section-number">7.6.4</span> Pré-processamento do Texto</a></li>
+  <li><a href="#atribuindo-polaridade-%C3%A0s-palavras" id="toc-atribuindo-polaridade-às-palavras" class="nav-link" data-scroll-target="#atribuindo-polaridade-%C3%A0s-palavras"><span class="header-section-number">7.6.5</span> Atribuindo Polaridade às Palavras</a></li>
+  <li><a href="#calculando-sentimento-total-por-resposta" id="toc-calculando-sentimento-total-por-resposta" class="nav-link" data-scroll-target="#calculando-sentimento-total-por-resposta"><span class="header-section-number">7.6.6</span> Calculando Sentimento Total por Resposta</a></li>
+  <li><a href="#classificando-em-categorias" id="toc-classificando-em-categorias" class="nav-link" data-scroll-target="#classificando-em-categorias"><span class="header-section-number">7.6.7</span> Classificando em Categorias</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#an%C3%A1lise-de-sentimento-abordagem-com-llms" id="toc-análise-de-sentimento-abordagem-com-llms" class="nav-link" data-scroll-target="#an%C3%A1lise-de-sentimento-abordagem-com-llms"><span class="header-section-number">7.7</span> Análise de Sentimento: Abordagem com LLMs</a>
+  <ul class="collapse">
+<li><a href="#sobre-ollama-e-o-pacote-mall" id="toc-sobre-ollama-e-o-pacote-mall" class="nav-link" data-scroll-target="#sobre-ollama-e-o-pacote-mall"><span class="header-section-number">7.7.1</span> Sobre Ollama e o Pacote mall</a></li>
+  <li><a href="#instala%C3%A7%C3%A3o-do-ollama-passo-a-passo" id="toc-instalação-do-ollama-passo-a-passo" class="nav-link" data-scroll-target="#instala%C3%A7%C3%A3o-do-ollama-passo-a-passo"><span class="header-section-number">7.7.2</span> Instalação do Ollama (Passo a Passo)</a></li>
+  <li><a href="#configurando-o-modelo-llm" id="toc-configurando-o-modelo-llm" class="nav-link" data-scroll-target="#configurando-o-modelo-llm"><span class="header-section-number">7.7.3</span> Configurando o Modelo LLM</a></li>
+  <li><a href="#an%C3%A1lise-de-sentimento-com-llm" id="toc-análise-de-sentimento-com-llm" class="nav-link" data-scroll-target="#an%C3%A1lise-de-sentimento-com-llm"><span class="header-section-number">7.7.4</span> Análise de Sentimento com LLM</a></li>
+  <li><a href="#visualizando-resultados-do-llm" id="toc-visualizando-resultados-do-llm" class="nav-link" data-scroll-target="#visualizando-resultados-do-llm"><span class="header-section-number">7.7.5</span> Visualizando Resultados do LLM</a></li>
+  <li><a href="#outras-capacidades-dos-llms" id="toc-outras-capacidades-dos-llms" class="nav-link" data-scroll-target="#outras-capacidades-dos-llms"><span class="header-section-number">7.7.6</span> Outras Capacidades dos LLMs</a></li>
+  <li><a href="#vantagens-e-desvantagens-l%C3%A9xico-vs.-llm" id="toc-vantagens-e-desvantagens-léxico-vs.-llm" class="nav-link" data-scroll-target="#vantagens-e-desvantagens-l%C3%A9xico-vs.-llm"><span class="header-section-number">7.7.7</span> Vantagens e Desvantagens: Léxico vs.&nbsp;LLM</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#regress%C3%A3o-multinomial" id="toc-regressão-multinomial" class="nav-link" data-scroll-target="#regress%C3%A3o-multinomial"><span class="header-section-number">7.8</span> Regressão Multinomial</a>
+  <ul class="collapse">
+<li><a href="#quando-usar" id="toc-quando-usar" class="nav-link" data-scroll-target="#quando-usar"><span class="header-section-number">7.8.1</span> Quando Usar?</a></li>
+  <li><a href="#preparando-dados-para-regress%C3%A3o" id="toc-preparando-dados-para-regressão" class="nav-link" data-scroll-target="#preparando-dados-para-regress%C3%A3o"><span class="header-section-number">7.8.2</span> Preparando Dados para Regressão</a></li>
+  <li><a href="#ajustando-o-modelo-multinomial" id="toc-ajustando-o-modelo-multinomial" class="nav-link" data-scroll-target="#ajustando-o-modelo-multinomial"><span class="header-section-number">7.8.3</span> Ajustando o Modelo Multinomial</a></li>
+  <li><a href="#interpreta%C3%A7%C3%A3o-dos-coeficientes" id="toc-interpretação-dos-coeficientes" class="nav-link" data-scroll-target="#interpreta%C3%A7%C3%A3o-dos-coeficientes"><span class="header-section-number">7.8.4</span> Interpretação dos Coeficientes</a></li>
+  <li><a href="#odds-ratios-raz%C3%B5es-de-chance" id="toc-odds-ratios-razões-de-chance" class="nav-link" data-scroll-target="#odds-ratios-raz%C3%B5es-de-chance"><span class="header-section-number">7.8.5</span> Odds Ratios (Razões de Chance)</a></li>
+  <li><a href="#verificando-multicolinearidade" id="toc-verificando-multicolinearidade" class="nav-link" data-scroll-target="#verificando-multicolinearidade"><span class="header-section-number">7.8.6</span> Verificando Multicolinearidade</a></li>
+  <li><a href="#predi%C3%A7%C3%B5es-do-modelo" id="toc-predições-do-modelo" class="nav-link" data-scroll-target="#predi%C3%A7%C3%B5es-do-modelo"><span class="header-section-number">7.8.7</span> Predições do Modelo</a></li>
+  <li><a href="#visualizando-probabilidades-preditas" id="toc-visualizando-probabilidades-preditas" class="nav-link" data-scroll-target="#visualizando-probabilidades-preditas"><span class="header-section-number">7.8.8</span> Visualizando Probabilidades Preditas</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#considera%C3%A7%C3%B5es-%C3%A9ticas" id="toc-considerações-éticas" class="nav-link" data-scroll-target="#considera%C3%A7%C3%B5es-%C3%A9ticas"><span class="header-section-number">7.9</span> Considerações Éticas</a>
+  <ul class="collapse">
+<li><a href="#privacidade-e-anonimiza%C3%A7%C3%A3o" id="toc-privacidade-e-anonimização" class="nav-link" data-scroll-target="#privacidade-e-anonimiza%C3%A7%C3%A3o"><span class="header-section-number">7.9.1</span> Privacidade e Anonimização</a></li>
+  <li><a href="#vi%C3%A9s-em-an%C3%A1lise-de-sentimento" id="toc-viés-em-análise-de-sentimento" class="nav-link" data-scroll-target="#vi%C3%A9s-em-an%C3%A1lise-de-sentimento"><span class="header-section-number">7.9.2</span> Viés em Análise de Sentimento</a></li>
+  <li><a href="#considera%C3%A7%C3%B5es-culturais-para-portugu%C3%AAs" id="toc-considerações-culturais-para-português" class="nav-link" data-scroll-target="#considera%C3%A7%C3%B5es-culturais-para-portugu%C3%AAs"><span class="header-section-number">7.9.3</span> Considerações Culturais para Português</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#aplica%C3%A7%C3%B5es-pr%C3%A1ticas-em-sa%C3%BAde" id="toc-aplicações-práticas-em-saúde" class="nav-link" data-scroll-target="#aplica%C3%A7%C3%B5es-pr%C3%A1ticas-em-sa%C3%BAde"><span class="header-section-number">7.10</span> Aplicações Práticas em Saúde</a>
+  <ul class="collapse">
+<li><a href="#an%C3%A1lise-de-feedback-de-pacientes" id="toc-análise-de-feedback-de-pacientes" class="nav-link" data-scroll-target="#an%C3%A1lise-de-feedback-de-pacientes"><span class="header-section-number">7.10.1</span> 1. Análise de Feedback de Pacientes</a></li>
+  <li><a href="#pesquisa-qualitativa" id="toc-pesquisa-qualitativa" class="nav-link" data-scroll-target="#pesquisa-qualitativa"><span class="header-section-number">7.10.2</span> 2. Pesquisa Qualitativa</a></li>
+  <li><a href="#monitoramento-de-redes-sociais" id="toc-monitoramento-de-redes-sociais" class="nav-link" data-scroll-target="#monitoramento-de-redes-sociais"><span class="header-section-number">7.10.3</span> 3. Monitoramento de Redes Sociais</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#exerc%C3%ADcios-pr%C3%A1ticos" id="toc-exercícios-práticos" class="nav-link" data-scroll-target="#exerc%C3%ADcios-pr%C3%A1ticos"><span class="header-section-number">7.11</span> Exercícios Práticos</a>
+  <ul class="collapse">
+<li><a href="#exerc%C3%ADcio-1-an%C3%A1lise-de-frequ%C3%AAncia" id="toc-exercício-1-análise-de-frequência" class="nav-link" data-scroll-target="#exerc%C3%ADcio-1-an%C3%A1lise-de-frequ%C3%AAncia"><span class="header-section-number">7.11.1</span> Exercício 1: Análise de Frequência</a></li>
+  <li><a href="#exerc%C3%ADcio-2-compara%C3%A7%C3%A3o-l%C3%A9xico-vs.-llm" id="toc-exercício-2-comparação-léxico-vs.-llm" class="nav-link" data-scroll-target="#exerc%C3%ADcio-2-compara%C3%A7%C3%A3o-l%C3%A9xico-vs.-llm"><span class="header-section-number">7.11.2</span> Exercício 2: Comparação Léxico vs.&nbsp;LLM</a></li>
+  <li><a href="#exerc%C3%ADcio-3-regress%C3%A3o-multinomial" id="toc-exercício-3-regressão-multinomial" class="nav-link" data-scroll-target="#exerc%C3%ADcio-3-regress%C3%A3o-multinomial"><span class="header-section-number">7.11.3</span> Exercício 3: Regressão Multinomial</a></li>
+  <li><a href="#exerc%C3%ADcio-4-an%C3%A1lise-tem%C3%A1tica" id="toc-exercício-4-análise-temática" class="nav-link" data-scroll-target="#exerc%C3%ADcio-4-an%C3%A1lise-tem%C3%A1tica"><span class="header-section-number">7.11.4</span> Exercício 4: Análise Temática</a></li>
+  <li><a href="#exerc%C3%ADcio-5-aplica%C3%A7%C3%A3o-em-sa%C3%BAde" id="toc-exercício-5-aplicação-em-saúde" class="nav-link" data-scroll-target="#exerc%C3%ADcio-5-aplica%C3%A7%C3%A3o-em-sa%C3%BAde"><span class="header-section-number">7.11.5</span> Exercício 5: Aplicação em Saúde</a></li>
+  </ul>
+</li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Análise de Dados Textuais e Mineração de Texto</span>
+</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><section id="introdução-à-mineração-de-texto" class="level2" data-number="7.1"><h2 data-number="7.1" class="anchored" data-anchor-id="introdução-à-mineração-de-texto">
+<span class="header-section-number">7.1</span> Introdução à Mineração de Texto</h2>
+<p>A <strong>mineração de texto (text mining)</strong> e a <strong>análise de sentimento</strong> são técnicas cada vez mais importantes em pesquisas de saúde, permitindo extrair informações valiosas de dados não estruturados como narrativas de pacientes, respostas abertas em questionários, postagens em redes sociais, registros médicos, e transcrições de entrevistas.</p>
+<section id="aplicações-em-saúde" class="level3" data-number="7.1.1"><h3 data-number="7.1.1" class="anchored" data-anchor-id="aplicações-em-saúde">
+<span class="header-section-number">7.1.1</span> Aplicações em Saúde</h3>
+<ul>
+<li>
+<strong>Análise de feedback de pacientes</strong>: Avaliar satisfação através de comentários abertos</li>
+<li>
+<strong>Pesquisa qualitativa</strong>: Processar transcrições de entrevistas e grupos focais</li>
+<li>
+<strong>Monitoramento de redes sociais</strong>: Acompanhar discussões públicas sobre saúde</li>
+<li>
+<strong>Análise de registros médicos</strong>: Extrair informações de notas clínicas</li>
+<li>
+<strong>Pesquisas de percepção</strong>: Avaliar atitudes em relação a medicamentos, tratamentos, ou políticas de saúde</li>
+</ul></section><section id="estrutura-do-capítulo" class="level3" data-number="7.1.2"><h3 data-number="7.1.2" class="anchored" data-anchor-id="estrutura-do-capítulo">
+<span class="header-section-number">7.1.2</span> Estrutura do Capítulo</h3>
+<p>Neste capítulo, abordaremos:</p>
+<ol type="1">
+<li>
+<strong>Preparação e limpeza</strong> de dados textuais</li>
+<li>
+<strong>Tokenização</strong> e análise de frequência</li>
+<li>
+<strong>Visualização</strong> com word clouds</li>
+<li>
+<strong>Análise de sentimento</strong> usando dois métodos:
+<ul>
+<li>Abordagem baseada em <strong>léxico</strong> (dicionário)</li>
+<li>Abordagem baseada em <strong>LLMs</strong> (Large Language Models)</li>
+</ul>
+</li>
+<li>
+<strong>Regressão multinomial</strong> para modelar sentimento</li>
+</ol></section></section><section id="preparação-do-ambiente" class="level2" data-number="7.2"><h2 data-number="7.2" class="anchored" data-anchor-id="preparação-do-ambiente">
+<span class="header-section-number">7.2</span> Preparação do Ambiente</h2>
+<section id="carregando-pacotes" class="level3" data-number="7.2.1"><h3 data-number="7.2.1" class="anchored" data-anchor-id="carregando-pacotes">
+<span class="header-section-number">7.2.1</span> Carregando Pacotes</h3>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>      <span class="co"># Manipulação de dados</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org">readxl</a></span><span class="op">)</span>         <span class="co"># Leitura de Excel</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/sfirke/janitor">janitor</a></span><span class="op">)</span>        <span class="co"># Limpeza de nomes</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://juliasilge.github.io/tidytext/">tidytext</a></span><span class="op">)</span>       <span class="co"># Mineração de texto (tokenização)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://blog.fellstat.com/?cat=11">wordcloud</a></span><span class="op">)</span>      <span class="co"># Nuvens de palavras</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://quanteda.io">quanteda</a></span><span class="op">)</span>       <span class="co"># Análise quantitativa de texto</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">lexiconPT</span><span class="op">)</span>      <span class="co"># Léxico de sentimentos em português</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tm.r-forge.r-project.org/">tm</a></span><span class="op">)</span>             <span class="co"># Text mining básico</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://mlverse.github.io/mall/">mall</a></span><span class="op">)</span>           <span class="co"># Interface para LLMs locais</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.stats.ox.ac.uk/pub/MASS4/">nnet</a></span><span class="op">)</span>           <span class="co"># Regressão multinomial</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ddsjoberg/gtsummary">gtsummary</a></span><span class="op">)</span>      <span class="co"># Tabelas de regressão</span></span>
+<span></span>
+<span><span class="co"># Remover notação científica</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>scipen <span class="op">=</span> <span class="fl">999</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="sobre-os-datasets" class="level3" data-number="7.2.2"><h3 data-number="7.2.2" class="anchored" data-anchor-id="sobre-os-datasets">
+<span class="header-section-number">7.2.2</span> Sobre os Datasets</h3>
+<p>Utilizaremos dois conjuntos de dados neste capítulo:</p>
+<ol type="1">
+<li>
+<strong>entrevistas.xlsx</strong>: Respostas abertas sobre impacto de tecnologias digitais na educação</li>
+<li>
+<strong>respostas_questionario.xlsx</strong>: Dados de percepção de marca com variáveis demográficas</li>
+</ol></section></section><section id="tokenização-e-análise-de-frequência" class="level2" data-number="7.3"><h2 data-number="7.3" class="anchored" data-anchor-id="tokenização-e-análise-de-frequência">
+<span class="header-section-number">7.3</span> Tokenização e Análise de Frequência</h2>
+<p>A <strong>tokenização</strong> é o processo de dividir texto em unidades menores chamadas <strong>tokens</strong> (palavras, frases, ou n-gramas).</p>
+<section id="importando-dados-de-entrevistas" class="level3" data-number="7.3.1"><h3 data-number="7.3.1" class="anchored" data-anchor-id="importando-dados-de-entrevistas">
+<span class="header-section-number">7.3.1</span> Importando Dados de Entrevistas</h3>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Importar dados de entrevistas</span></span>
+<span><span class="va">dados_entrevistas</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"data/entrevistas.xlsx"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Visualizar estrutura</span></span>
+<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">dados_entrevistas</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="tokenização-por-sentenças" class="level3" data-number="7.3.2"><h3 data-number="7.3.2" class="anchored" data-anchor-id="tokenização-por-sentenças">
+<span class="header-section-number">7.3.2</span> Tokenização por Sentenças</h3>
+<p>Primeiro, vamos segmentar o texto em <strong>sentenças</strong> para facilitar análises posteriores:</p>
+<div class="cell">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Tokenizar em sentenças</span></span>
+<span><span class="va">entrevistas_frases</span> <span class="op">&lt;-</span> <span class="va">dados_entrevistas</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># Segmentar em frases (sentences)</span></span>
+<span>  <span class="fu"><a href="https://juliasilge.github.io/tidytext/reference/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span>output <span class="op">=</span> <span class="va">frase</span>,</span>
+<span>                input <span class="op">=</span> <span class="va">`Como você avalia o impacto das tecnologias digitais na qualidade do ensino?`</span>,</span>
+<span>                token <span class="op">=</span> <span class="st">"sentences"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># Agrupar por ID da entrevista</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">ID</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># Criar identificador de frase dentro de cada entrevista</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>id_frase_entrevista <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/row_number.html">row_number</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># Selecionar colunas relevantes</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">ID</span>, <span class="va">id_frase_entrevista</span>, <span class="va">frase</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Visualizar resultado</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">entrevistas_frases</span>, <span class="fl">10</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Explicação:</strong></p>
+<ul>
+<li>
+<code><a href="https://juliasilge.github.io/tidytext/reference/unnest_tokens.html">unnest_tokens()</a></code>: Função do tidytext que separa texto em tokens</li>
+<li>
+<code>token = "sentences"</code>: Especifica tokenização por sentenças</li>
+<li>
+<code><a href="https://dplyr.tidyverse.org/reference/row_number.html">row_number()</a></code>: Cria ID sequencial para cada frase dentro de cada entrevista</li>
+</ul></section><section id="tokenização-por-palavras" class="level3" data-number="7.3.3"><h3 data-number="7.3.3" class="anchored" data-anchor-id="tokenização-por-palavras">
+<span class="header-section-number">7.3.3</span> Tokenização por Palavras</h3>
+<p>Para análise de frequência, tokenizamos em <strong>palavras</strong>:</p>
+<div class="cell">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Tokenizar em palavras</span></span>
+<span><span class="va">palavras_tokens</span> <span class="op">&lt;-</span> <span class="va">dados_entrevistas</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://juliasilge.github.io/tidytext/reference/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span>output <span class="op">=</span> <span class="va">word</span>,</span>
+<span>                input <span class="op">=</span> <span class="va">`Como você avalia o impacto das tecnologias digitais na qualidade do ensino?`</span>,</span>
+<span>                token <span class="op">=</span> <span class="st">"words"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">ID</span>, <span class="va">word</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Visualizar</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">palavras_tokens</span>, <span class="fl">20</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section></section><section id="remoção-de-stopwords" class="level2" data-number="7.4"><h2 data-number="7.4" class="anchored" data-anchor-id="remoção-de-stopwords">
+<span class="header-section-number">7.4</span> Remoção de Stopwords</h2>
+<p><strong>Stopwords</strong> são palavras muito comuns que geralmente não carregam significado importante para análise (ex: “a”, “o”, “que”, “de”, “em”).</p>
+<section id="criando-lista-de-stopwords-em-português" class="level3" data-number="7.4.1"><h3 data-number="7.4.1" class="anchored" data-anchor-id="criando-lista-de-stopwords-em-português">
+<span class="header-section-number">7.4.1</span> Criando Lista de Stopwords em Português</h3>
+<div class="cell">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Stopwords em português (lista customizada)</span></span>
+<span><span class="va">stop_words_pt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
+<span>  word <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"o"</span>, <span class="st">"que"</span>, <span class="st">"e"</span>, <span class="st">"do"</span>, <span class="st">"da"</span>, <span class="st">"em"</span>, <span class="st">"um"</span>, <span class="st">"para"</span>, <span class="st">"é"</span>,</span>
+<span>           <span class="st">"com"</span>, <span class="st">"não"</span>, <span class="st">"uma"</span>, <span class="st">"os"</span>, <span class="st">"no"</span>, <span class="st">"se"</span>, <span class="st">"na"</span>, <span class="st">"por"</span>, <span class="st">"mais"</span>, <span class="st">"as"</span>,</span>
+<span>           <span class="st">"dos"</span>, <span class="st">"como"</span>, <span class="st">"mas"</span>, <span class="st">"foi"</span>, <span class="st">"ao"</span>, <span class="st">"ele"</span>, <span class="st">"das"</span>, <span class="st">"tem"</span>, <span class="st">"à"</span>, <span class="st">"seu"</span>,</span>
+<span>           <span class="st">"sua"</span>, <span class="st">"ou"</span>, <span class="st">"ser"</span>, <span class="st">"quando"</span>, <span class="st">"muito"</span>, <span class="st">"há"</span>, <span class="st">"nos"</span>, <span class="st">"já"</span>, <span class="st">"está"</span>,</span>
+<span>           <span class="st">"eu"</span>, <span class="st">"também"</span>, <span class="st">"só"</span>, <span class="st">"pelo"</span>, <span class="st">"pela"</span>, <span class="st">"até"</span>, <span class="st">"isso"</span>, <span class="st">"ela"</span>, <span class="st">"entre"</span>,</span>
+<span>           <span class="st">"era"</span>, <span class="st">"depois"</span>, <span class="st">"sem"</span>, <span class="st">"mesmo"</span>, <span class="st">"aos"</span>, <span class="st">"ter"</span>, <span class="st">"seus"</span>, <span class="st">"quem"</span>, <span class="st">"nas"</span>,</span>
+<span>           <span class="st">"me"</span>, <span class="st">"esse"</span>, <span class="st">"eles"</span>, <span class="st">"estão"</span>, <span class="st">"você"</span>, <span class="st">"tinha"</span>, <span class="st">"foram"</span>, <span class="st">"essa"</span>,</span>
+<span>           <span class="st">"num"</span>, <span class="st">"nem"</span>, <span class="st">"suas"</span>, <span class="st">"meu"</span>, <span class="st">"às"</span>, <span class="st">"minha"</span>, <span class="st">"têm"</span>, <span class="st">"numa"</span>, <span class="st">"pelos"</span>,</span>
+<span>           <span class="st">"elas"</span>, <span class="st">"havia"</span>, <span class="st">"seja"</span>, <span class="st">"qual"</span>, <span class="st">"será"</span>, <span class="st">"nós"</span>, <span class="st">"tenho"</span>, <span class="st">"lhe"</span>,</span>
+<span>           <span class="st">"deles"</span>, <span class="st">"essas"</span>, <span class="st">"esses"</span>, <span class="st">"pelas"</span>, <span class="st">"este"</span>, <span class="st">"fosse"</span>, <span class="st">"dele"</span>, <span class="st">"tu"</span>,</span>
+<span>           <span class="st">"te"</span>, <span class="st">"vocês"</span>, <span class="st">"vos"</span>, <span class="st">"lhes"</span>, <span class="st">"meus"</span>, <span class="st">"minhas"</span>, <span class="st">"teu"</span>, <span class="st">"tua"</span>, <span class="st">"teus"</span>,</span>
+<span>           <span class="st">"tuas"</span>, <span class="st">"nosso"</span>, <span class="st">"nossa"</span>, <span class="st">"nossos"</span>, <span class="st">"nossas"</span>, <span class="st">"dela"</span>, <span class="st">"delas"</span>,</span>
+<span>           <span class="st">"esta"</span>, <span class="st">"estes"</span>, <span class="st">"estas"</span>, <span class="st">"aquele"</span>, <span class="st">"aquela"</span>, <span class="st">"aqueles"</span>, <span class="st">"aquelas"</span>,</span>
+<span>           <span class="st">"isto"</span>, <span class="st">"aquilo"</span>, <span class="st">"sabe"</span>, <span class="st">"acho"</span>, <span class="st">"pode"</span>, <span class="st">"podem"</span>, <span class="st">"então"</span>, <span class="st">"vai"</span>,</span>
+<span>           <span class="st">"são"</span>, <span class="st">"ainda"</span>, <span class="st">"bem"</span>, <span class="st">"só"</span>, <span class="st">"cada"</span>, <span class="st">"cada"</span>, <span class="st">"onde"</span>, <span class="st">"muitos"</span>,</span>
+<span>           <span class="st">"alguma"</span>, <span class="st">"alguns"</span>, <span class="st">"tudo"</span>, <span class="st">"toda"</span>, <span class="st">"todos"</span>, <span class="st">"todas"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Alternativamente, usar pacote stopwords</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/quanteda/stopwords">stopwords</a></span><span class="op">)</span></span>
+<span><span class="va">stopwords_pt_pacote</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>word <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stopwords/man/stopwords.html">stopwords</a></span><span class="op">(</span><span class="st">"pt"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="calculando-frequência-de-palavras" class="level3" data-number="7.4.2"><h3 data-number="7.4.2" class="anchored" data-anchor-id="calculando-frequência-de-palavras">
+<span class="header-section-number">7.4.2</span> Calculando Frequência de Palavras</h3>
+<div class="cell">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Calcular frequência, removendo stopwords</span></span>
+<span><span class="va">palavras_frequentes</span> <span class="op">&lt;-</span> <span class="va">dados_entrevistas</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://juliasilge.github.io/tidytext/reference/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">`Como você avalia o impacto das tecnologias digitais na qualidade do ensino?`</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">anti_join</a></span><span class="op">(</span><span class="va">stop_words_pt</span>, by <span class="op">=</span> <span class="st">"word"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  <span class="co"># Remove stopwords</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">word</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>                <span class="co"># Conta frequência</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span>                               <span class="co"># Remove palavras únicas</span></span>
+<span></span>
+<span><span class="co"># Visualizar top 20 palavras</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">palavras_frequentes</span>, n <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="visualizando-frequência-com-gráfico-de-barras" class="level3" data-number="7.4.3"><h3 data-number="7.4.3" class="anchored" data-anchor-id="visualizando-frequência-com-gráfico-de-barras">
+<span class="header-section-number">7.4.3</span> Visualizando Frequência com Gráfico de Barras</h3>
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Top 20 palavras mais frequentes</span></span>
+<span><span class="va">palavras_frequentes</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span><span class="va">n</span>, n <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>word <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">n</span>, y <span class="op">=</span> <span class="va">word</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"steelblue"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"20 Palavras Mais Frequentes"</span>,</span>
+<span>       x <span class="op">=</span> <span class="st">"Frequência"</span>,</span>
+<span>       y <span class="op">=</span> <span class="st">"Palavra"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section></section><section id="visualização-com-word-clouds" class="level2" data-number="7.5"><h2 data-number="7.5" class="anchored" data-anchor-id="visualização-com-word-clouds">
+<span class="header-section-number">7.5</span> Visualização com Word Clouds</h2>
+<p><strong>Word clouds (nuvens de palavras)</strong> são representações visuais onde o tamanho da palavra é proporcional à sua frequência.</p>
+<section id="criando-uma-função-para-word-cloud" class="level3" data-number="7.5.1"><h3 data-number="7.5.1" class="anchored" data-anchor-id="criando-uma-função-para-word-cloud">
+<span class="header-section-number">7.5.1</span> Criando uma Função para Word Cloud</h3>
+<div class="cell">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Função para criar word cloud</span></span>
+<span><span class="va">criar_wordcloud</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">coluna</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="co"># Processar texto</span></span>
+<span>  <span class="va">palavras</span> <span class="op">&lt;-</span> <span class="va">coluna</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://stringr.tidyverse.org/reference/case.html">str_to_lower</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>                         <span class="co"># Minúsculas</span></span>
+<span>    <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace_all</a></span><span class="op">(</span><span class="st">"[[:punct:]]"</span>, <span class="st">""</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>     <span class="co"># Remover pontuação</span></span>
+<span>    <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace_all</a></span><span class="op">(</span><span class="st">"[[:digit:]]"</span>, <span class="st">""</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>     <span class="co"># Remover números</span></span>
+<span>    <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_split.html">str_split</a></span><span class="op">(</span><span class="st">"\\s+"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>                      <span class="co"># Dividir por espaços</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="co"># Remover stopwords e palavras curtas</span></span>
+<span>  <span class="va">stopwords_pt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/stopwords/man/stopwords.html">stopwords</a></span><span class="op">(</span><span class="st">"portuguese"</span><span class="op">)</span></span>
+<span>  <span class="va">palavras</span> <span class="op">&lt;-</span> <span class="va">palavras</span><span class="op">[</span><span class="op">!</span><span class="va">palavras</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">stopwords_pt</span> <span class="op">&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/nchar.html">nchar</a></span><span class="op">(</span><span class="va">palavras</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">2</span><span class="op">]</span></span>
+<span></span>
+<span>  <span class="co"># Contar frequência</span></span>
+<span>  <span class="va">freq_palavras</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">palavras</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">Freq</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Freq</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span>  <span class="co"># Apenas palavras que aparecem mais de 1 vez</span></span>
+<span></span>
+<span>  <span class="co"># Plotar word cloud</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/wordcloud/man/wordcloud.html">wordcloud</a></span><span class="op">(</span>words <span class="op">=</span> <span class="va">freq_palavras</span><span class="op">$</span><span class="va">palavras</span>,</span>
+<span>            freq <span class="op">=</span> <span class="va">freq_palavras</span><span class="op">$</span><span class="va">Freq</span>,</span>
+<span>            max.words <span class="op">=</span> <span class="fl">100</span>,              <span class="co"># Máximo de palavras</span></span>
+<span>            scale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">0.5</span><span class="op">)</span>,            <span class="co"># Escala de tamanho</span></span>
+<span>            random.order <span class="op">=</span> <span class="cn">FALSE</span>,         <span class="co"># Palavras mais frequentes no centro</span></span>
+<span>            rot.per <span class="op">=</span> <span class="fl">0.35</span>,               <span class="co"># 35% de palavras rotacionadas</span></span>
+<span>            colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html">brewer.pal</a></span><span class="op">(</span><span class="fl">8</span>, <span class="st">"Dark2"</span><span class="op">)</span><span class="op">)</span>  <span class="co"># Paleta de cores</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="aplicando-a-função" class="level3" data-number="7.5.2"><h3 data-number="7.5.2" class="anchored" data-anchor-id="aplicando-a-função">
+<span class="header-section-number">7.5.2</span> Aplicando a Função</h3>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Word cloud para primeira pergunta</span></span>
+<span><span class="fu">criar_wordcloud</span><span class="op">(</span><span class="va">dados_entrevistas</span><span class="op">$</span><span class="va">`Como você avalia o impacto das tecnologias digitais na qualidade do ensino?`</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Word cloud para segunda pergunta</span></span>
+<span><span class="fu">criar_wordcloud</span><span class="op">(</span><span class="va">dados_entrevistas</span><span class="op">$</span><span class="va">`Quais são os principais desafios para a implementação dessas tecnologias nas instituições de ensino?`</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Interpretação:</strong></p>
+<ul>
+<li>Palavras <strong>maiores</strong> aparecem com maior frequência</li>
+<li>Palavras <strong>centrais</strong> geralmente são as mais frequentes</li>
+<li>
+<strong>Cores</strong> ajudam a diferenciar grupos de palavras</li>
+<li>Útil para identificar temas principais rapidamente</li>
+</ul></section></section><section id="análise-de-sentimento-abordagem-baseada-em-léxico" class="level2" data-number="7.6"><h2 data-number="7.6" class="anchored" data-anchor-id="análise-de-sentimento-abordagem-baseada-em-léxico">
+<span class="header-section-number">7.6</span> Análise de Sentimento: Abordagem Baseada em Léxico</h2>
+<p>A <strong>análise de sentimento baseada em léxico</strong> usa dicionários pré-definidos que atribuem polaridade (positiva, negativa, neutra) a palavras.</p>
+<section id="sobre-o-léxico-sentilex-pt" class="level3" data-number="7.6.1"><h3 data-number="7.6.1" class="anchored" data-anchor-id="sobre-o-léxico-sentilex-pt">
+<span class="header-section-number">7.6.1</span> Sobre o Léxico SentiLex-PT</h3>
+<p>O <strong>SentiLex-PT</strong> é um léxico de sentimentos para português que atribui:</p>
+<ul>
+<li>
+<strong>Polaridade</strong>: -1 (negativo), 0 (neutro), +1 (positivo)</li>
+<li>
+<strong>Scores contínuos</strong>: Valores intermediários indicam intensidade</li>
+</ul></section><section id="importando-dados-de-percepção-de-marca" class="level3" data-number="7.6.2"><h3 data-number="7.6.2" class="anchored" data-anchor-id="importando-dados-de-percepção-de-marca">
+<span class="header-section-number">7.6.2</span> Importando Dados de Percepção de Marca</h3>
+<div class="cell">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Importar dados de questionário sobre percepção de marca</span></span>
+<span><span class="va">dados_marca</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"data/respostas_questionario.xlsx"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Limpar nomes e preparar dados</span></span>
+<span><span class="va">dados_marca</span> <span class="op">&lt;-</span> <span class="va">dados_marca</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/clean_names.html">clean_names</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">genero</span>, <span class="va">estado</span>, <span class="va">nivel_de_escolaridade</span>,</span>
+<span>                  <span class="va">avaliacao_da_marca_1_5</span><span class="op">)</span>, <span class="va">as.factor</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Visualizar estrutura</span></span>
+<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">dados_marca</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="carregando-o-léxico-de-sentimentos" class="level3" data-number="7.6.3"><h3 data-number="7.6.3" class="anchored" data-anchor-id="carregando-o-léxico-de-sentimentos">
+<span class="header-section-number">7.6.3</span> Carregando o Léxico de Sentimentos</h3>
+<div class="cell">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Carregar léxico SentiLex-PT</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"sentiLex_lem_PT02"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Visualizar estrutura do léxico</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">sentiLex_lem_PT02</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="pré-processamento-do-texto" class="level3" data-number="7.6.4"><h3 data-number="7.6.4" class="anchored" data-anchor-id="pré-processamento-do-texto">
+<span class="header-section-number">7.6.4</span> Pré-processamento do Texto</h3>
+<div class="cell">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Pré-processar texto e tokenizar</span></span>
+<span><span class="va">dados_tokens</span> <span class="op">&lt;-</span> <span class="va">dados_marca</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>percepcao_da_marca <span class="op">=</span> <span class="va">percepcao_da_marca</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>           <span class="fu"><a href="https://rdrr.io/r/base/chartr.html">tolower</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>              <span class="co"># Converter para minúsculas</span></span>
+<span>           <span class="fu"><a href="https://rdrr.io/pkg/tm/man/removePunctuation.html">removePunctuation</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>   <span class="co"># Remover pontuação</span></span>
+<span>  <span class="fu"><a href="https://juliasilge.github.io/tidytext/reference/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">term</span>, <span class="va">percepcao_da_marca</span><span class="op">)</span>  <span class="co"># Tokenizar</span></span>
+<span></span>
+<span><span class="co"># Remover stopwords</span></span>
+<span><span class="va">stopwords_pt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/stopwords/man/stopwords.html">stopwords</a></span><span class="op">(</span><span class="st">"pt"</span><span class="op">)</span></span>
+<span><span class="va">dados_tokens</span> <span class="op">&lt;-</span> <span class="va">dados_tokens</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">term</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">stopwords_pt</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Visualizar tokens</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">dados_tokens</span>, <span class="fl">20</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="atribuindo-polaridade-às-palavras" class="level3" data-number="7.6.5"><h3 data-number="7.6.5" class="anchored" data-anchor-id="atribuindo-polaridade-às-palavras">
+<span class="header-section-number">7.6.5</span> Atribuindo Polaridade às Palavras</h3>
+<div class="cell">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Juntar tokens com o léxico de sentimentos</span></span>
+<span><span class="va">dados_sent</span> <span class="op">&lt;-</span> <span class="va">dados_tokens</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">sentiLex_lem_PT02</span>, by <span class="op">=</span> <span class="st">"term"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Visualizar resultado (mostra polaridade para cada palavra)</span></span>
+<span><span class="va">dados_sent</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">term</span>, <span class="va">polarity</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">polarity</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  <span class="co"># Apenas palavras com polaridade</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">20</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="calculando-sentimento-total-por-resposta" class="level3" data-number="7.6.6"><h3 data-number="7.6.6" class="anchored" data-anchor-id="calculando-sentimento-total-por-resposta">
+<span class="header-section-number">7.6.6</span> Calculando Sentimento Total por Resposta</h3>
+<div class="cell">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Calcular sentimento total por ID (somar polaridades)</span></span>
+<span><span class="va">sentimentos_lexicon</span> <span class="op">&lt;-</span> <span class="va">dados_sent</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>sentimento_total <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">polarity</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>            n_palavras_sentimento <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">polarity</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Visualizar distribuição</span></span>
+<span><span class="va">sentimentos_lexicon</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sentimento_total</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">30</span>, fill <span class="op">=</span> <span class="st">"steelblue"</span>, color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="fl">0</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>, color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Distribuição do Sentimento (Léxico)"</span>,</span>
+<span>       x <span class="op">=</span> <span class="st">"Escore de Sentimento"</span>,</span>
+<span>       y <span class="op">=</span> <span class="st">"Frequência"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Interpretação:</strong></p>
+<ul>
+<li>
+<strong>Sentimento total &gt; 0</strong>: Sentimento predominantemente positivo</li>
+<li>
+<strong>Sentimento total &lt; 0</strong>: Sentimento predominantemente negativo</li>
+<li>
+<strong>Sentimento total ≈ 0</strong>: Sentimento neutro ou misto</li>
+</ul></section><section id="classificando-em-categorias" class="level3" data-number="7.6.7"><h3 data-number="7.6.7" class="anchored" data-anchor-id="classificando-em-categorias">
+<span class="header-section-number">7.6.7</span> Classificando em Categorias</h3>
+<div class="cell">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Classificar em categorias</span></span>
+<span><span class="va">sentimentos_lexicon</span> <span class="op">&lt;-</span> <span class="va">sentimentos_lexicon</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>categoria_sentimento <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span></span>
+<span>    <span class="va">sentimento_total</span> <span class="op">&gt;</span> <span class="fl">0</span> <span class="op">~</span> <span class="st">"Positivo"</span>,</span>
+<span>    <span class="va">sentimento_total</span> <span class="op">&lt;</span> <span class="fl">0</span> <span class="op">~</span> <span class="st">"Negativo"</span>,</span>
+<span>    <span class="cn">TRUE</span> <span class="op">~</span> <span class="st">"Neutro"</span></span>
+<span>  <span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Contar categorias</span></span>
+<span><span class="va">sentimentos_lexicon</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">categoria_sentimento</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>percentual <span class="op">=</span> <span class="va">n</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section></section><section id="análise-de-sentimento-abordagem-com-llms" class="level2" data-number="7.7"><h2 data-number="7.7" class="anchored" data-anchor-id="análise-de-sentimento-abordagem-com-llms">
+<span class="header-section-number">7.7</span> Análise de Sentimento: Abordagem com LLMs</h2>
+<p>Os <strong>Large Language Models (LLMs)</strong> oferecem uma abordagem mais sofisticada para análise de sentimento, capturando nuances contextuais que léxicos não conseguem.</p>
+<section id="sobre-ollama-e-o-pacote-mall" class="level3" data-number="7.7.1"><h3 data-number="7.7.1" class="anchored" data-anchor-id="sobre-ollama-e-o-pacote-mall">
+<span class="header-section-number">7.7.1</span> Sobre Ollama e o Pacote mall</h3>
+<p><strong>Ollama</strong> é uma ferramenta que permite rodar LLMs localmente (sem necessidade de APIs pagas ou conexão com internet após download do modelo).</p>
+<p><strong>mall</strong> é um pacote R que fornece interface para interagir com LLMs através do Ollama.</p>
+</section><section id="instalação-do-ollama-passo-a-passo" class="level3" data-number="7.7.2"><h3 data-number="7.7.2" class="anchored" data-anchor-id="instalação-do-ollama-passo-a-passo">
+<span class="header-section-number">7.7.2</span> Instalação do Ollama (Passo a Passo)</h3>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Configuração Necessária
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Esta seção requer instalação prévia do Ollama no seu computador. Siga os passos:</p>
+<ol type="1">
+<li><p><strong>Baixe o Ollama</strong>: <a href="https://ollama.com/download">https://ollama.com/download</a></p></li>
+<li><p><strong>Instale</strong> seguindo instruções para seu sistema operacional</p></li>
+<li>
+<p><strong>Baixe um modelo</strong> (recomendado: llama3.2):</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> pull llama3.2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</li>
+<li>
+<p><strong>Verifique</strong> se está rodando:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</li>
+</ol>
+<p><strong>Alternativa:</strong> Se não puder instalar Ollama, pule esta seção e use apenas a abordagem baseada em léxico.</p>
+</div>
+</div>
+</section><section id="configurando-o-modelo-llm" class="level3" data-number="7.7.3"><h3 data-number="7.7.3" class="anchored" data-anchor-id="configurando-o-modelo-llm">
+<span class="header-section-number">7.7.3</span> Configurando o Modelo LLM</h3>
+<div class="cell">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Escolher modelo (deve estar instalado via Ollama)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/mall/man/llm_use.html">llm_use</a></span><span class="op">(</span>model <span class="op">=</span> <span class="st">"llama3.2"</span>, seed <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>  <span class="co"># seed para reprodutibilidade</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Modelos disponíveis no Ollama:</strong></p>
+<ul>
+<li>
+<strong>llama3.2</strong> (3B parâmetros): Rápido, bom para tarefas simples</li>
+<li>
+<strong>llama3.1</strong> (8B parâmetros): Balanceado entre velocidade e qualidade</li>
+<li>
+<strong>mistral</strong> (7B parâmetros): Alternativa de alta qualidade</li>
+<li>
+<strong>gemma2</strong> (9B parâmetros): Desenvolvido pelo Google</li>
+</ul></section><section id="análise-de-sentimento-com-llm" class="level3" data-number="7.7.4"><h3 data-number="7.7.4" class="anchored" data-anchor-id="análise-de-sentimento-com-llm">
+<span class="header-section-number">7.7.4</span> Análise de Sentimento com LLM</h3>
+<div class="cell">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Realizar análise de sentimento usando LLM</span></span>
+<span><span class="va">dados_marca_llm</span> <span class="op">&lt;-</span> <span class="va">dados_marca</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/mall/man/llm_sentiment.html">llm_sentiment</a></span><span class="op">(</span><span class="va">percepcao_da_marca</span>,</span>
+<span>                pred_name <span class="op">=</span> <span class="st">"sentimento_resposta"</span>,</span>
+<span>                additional_prompt <span class="op">=</span> <span class="st">"Realize uma análise de sentimento em cada linha, que corresponde a uma resposta de uma entrevista sobre a percepção de uma marca. Classifique como positivo, negativo ou neutro."</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Mover coluna de sentimento para melhor visualização</span></span>
+<span><span class="va">dados_marca_llm</span> <span class="op">&lt;-</span> <span class="va">dados_marca_llm</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/relocate.html">relocate</a></span><span class="op">(</span><span class="va">sentimento_resposta</span>, .before <span class="op">=</span> <span class="va">sugestoes_de_melhoria</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Converter para fator</span></span>
+<span><span class="va">dados_marca_llm</span><span class="op">$</span><span class="va">sentimento_resposta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">dados_marca_llm</span><span class="op">$</span><span class="va">sentimento_resposta</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Visualizar resultado</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">dados_marca_llm</span><span class="op">$</span><span class="va">sentimento_resposta</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="visualizando-resultados-do-llm" class="level3" data-number="7.7.5"><h3 data-number="7.7.5" class="anchored" data-anchor-id="visualizando-resultados-do-llm">
+<span class="header-section-number">7.7.5</span> Visualizando Resultados do LLM</h3>
+<div class="cell">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Gráfico de barras - contagens</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">dados_marca_llm</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sentimento_resposta</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"steelblue"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Distribuição de Sentimentos (LLM)"</span>,</span>
+<span>       x <span class="op">=</span> <span class="st">"Sentimento"</span>,</span>
+<span>       y <span class="op">=</span> <span class="st">"Frequência"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Gráfico de barras - proporções</span></span>
+<span><span class="va">dados_prop</span> <span class="op">&lt;-</span> <span class="va">dados_marca_llm</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">sentimento_resposta</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>percent <span class="op">=</span> <span class="va">n</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">dados_prop</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sentimento_resposta</span>, y <span class="op">=</span> <span class="va">percent</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span>, fill <span class="op">=</span> <span class="st">"lightblue"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">percent</span>, <span class="fl">1</span><span class="op">)</span>, <span class="st">"%"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>            vjust <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Proporção de Sentimentos (LLM)"</span>,</span>
+<span>       x <span class="op">=</span> <span class="st">"Sentimento"</span>,</span>
+<span>       y <span class="op">=</span> <span class="st">"Porcentagem (%)"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="outras-capacidades-dos-llms" class="level3" data-number="7.7.6"><h3 data-number="7.7.6" class="anchored" data-anchor-id="outras-capacidades-dos-llms">
+<span class="header-section-number">7.7.6</span> Outras Capacidades dos LLMs</h3>
+<section id="sumarização-de-texto" class="level4" data-number="7.7.6.1"><h4 data-number="7.7.6.1" class="anchored" data-anchor-id="sumarização-de-texto">
+<span class="header-section-number">7.7.6.1</span> Sumarização de Texto</h4>
+<div class="cell">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Sumarizar respostas longas</span></span>
+<span><span class="va">dados_sumarizados</span> <span class="op">&lt;-</span> <span class="va">dados_entrevistas</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/mall/man/llm_summarize.html">llm_summarize</a></span><span class="op">(</span><span class="va">`Como você avalia o impacto das tecnologias digitais na qualidade do ensino?`</span>,</span>
+<span>                pred_name <span class="op">=</span> <span class="st">"resumo"</span>,</span>
+<span>                max_words <span class="op">=</span> <span class="fl">50</span><span class="op">)</span>  <span class="co"># Resumo em até 50 palavras</span></span>
+<span></span>
+<span><span class="co"># Ver resumos</span></span>
+<span><span class="va">dados_sumarizados</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">ID</span>, <span class="va">resumo</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="classificação-customizada" class="level4" data-number="7.7.6.2"><h4 data-number="7.7.6.2" class="anchored" data-anchor-id="classificação-customizada">
+<span class="header-section-number">7.7.6.2</span> Classificação Customizada</h4>
+<div class="cell">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Classificar em categorias customizadas</span></span>
+<span><span class="va">dados_classificados</span> <span class="op">&lt;-</span> <span class="va">dados_entrevistas</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/mall/man/llm_classify.html">llm_classify</a></span><span class="op">(</span><span class="va">`Quais são os principais desafios para a implementação dessas tecnologias nas instituições de ensino?`</span>,</span>
+<span>               labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"infraestrutura"</span>, <span class="st">"capacitação"</span>, <span class="st">"resistência"</span>, <span class="st">"custos"</span><span class="op">)</span>,</span>
+<span>               pred_name <span class="op">=</span> <span class="st">"categoria_desafio"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Ver distribuição de categorias</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">dados_classificados</span><span class="op">$</span><span class="va">categoria_desafio</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section></section><section id="vantagens-e-desvantagens-léxico-vs.-llm" class="level3" data-number="7.7.7"><h3 data-number="7.7.7" class="anchored" data-anchor-id="vantagens-e-desvantagens-léxico-vs.-llm">
+<span class="header-section-number">7.7.7</span> Vantagens e Desvantagens: Léxico vs.&nbsp;LLM</h3>
+<table class="caption-top table">
+<thead><tr class="header">
+<th><strong>Aspecto</strong></th>
+<th><strong>Abordagem Léxico</strong></th>
+<th><strong>Abordagem LLM</strong></th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><strong>Velocidade</strong></td>
+<td>Muito rápida</td>
+<td>Mais lenta</td>
+</tr>
+<tr class="even">
+<td><strong>Recursos computacionais</strong></td>
+<td>Mínimos</td>
+<td>Requer GPU ou espera</td>
+</tr>
+<tr class="odd">
+<td><strong>Precisão</strong></td>
+<td>Moderada</td>
+<td>Alta</td>
+</tr>
+<tr class="even">
+<td><strong>Nuances contextuais</strong></td>
+<td>Não captura</td>
+<td>Captura bem</td>
+</tr>
+<tr class="odd">
+<td><strong>Ironia/Sarcasmo</strong></td>
+<td>Não detecta</td>
+<td>Pode detectar</td>
+</tr>
+<tr class="even">
+<td><strong>Configuração</strong></td>
+<td>Simples</td>
+<td>Requer instalação Ollama</td>
+</tr>
+<tr class="odd">
+<td><strong>Reprodutibilidade</strong></td>
+<td>Alta</td>
+<td>Alta (com seed)</td>
+</tr>
+<tr class="even">
+<td><strong>Custo</strong></td>
+<td>Gratuito</td>
+<td>Gratuito (local)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Recomendação:</strong> Use léxico para análises exploratórias rápidas e LLM para análises finais onde precisão é crítica.</p>
+</section></section><section id="regressão-multinomial" class="level2" data-number="7.8"><h2 data-number="7.8" class="anchored" data-anchor-id="regressão-multinomial">
+<span class="header-section-number">7.8</span> Regressão Multinomial</h2>
+<p>A <strong>regressão multinomial</strong> é uma extensão da regressão logística para variáveis resposta <strong>categóricas com 3+ níveis não ordenados</strong>.</p>
+<section id="quando-usar" class="level3" data-number="7.8.1"><h3 data-number="7.8.1" class="anchored" data-anchor-id="quando-usar">
+<span class="header-section-number">7.8.1</span> Quando Usar?</h3>
+<ul>
+<li>
+<strong>Variável resposta</strong>: Categórica com 3+ categorias (ex: positivo, neutro, negativo)</li>
+<li>
+<strong>Variáveis preditoras</strong>: Numéricas e/ou categóricas</li>
+<li>
+<strong>Objetivo</strong>: Modelar a probabilidade de cada categoria em função das preditoras</li>
+</ul></section><section id="preparando-dados-para-regressão" class="level3" data-number="7.8.2"><h3 data-number="7.8.2" class="anchored" data-anchor-id="preparando-dados-para-regressão">
+<span class="header-section-number">7.8.2</span> Preparando Dados para Regressão</h3>
+<div class="cell">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Remover NAs (regressão não aceita valores faltantes)</span></span>
+<span><span class="va">dados_modelo</span> <span class="op">&lt;-</span> <span class="va">dados_marca_llm</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="va">sentimento_resposta</span>, <span class="va">idade</span>, <span class="va">genero</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Converter sentimento para fator (se ainda não for)</span></span>
+<span><span class="va">dados_modelo</span><span class="op">$</span><span class="va">sentimento_resposta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">dados_modelo</span><span class="op">$</span><span class="va">sentimento_resposta</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Verificar níveis da variável resposta</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">dados_modelo</span><span class="op">$</span><span class="va">sentimento_resposta</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="ajustando-o-modelo-multinomial" class="level3" data-number="7.8.3"><h3 data-number="7.8.3" class="anchored" data-anchor-id="ajustando-o-modelo-multinomial">
+<span class="header-section-number">7.8.3</span> Ajustando o Modelo Multinomial</h3>
+<div class="cell">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.stats.ox.ac.uk/pub/MASS4/">nnet</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Ajustar modelo multinomial</span></span>
+<span><span class="co"># "neutro" será a categoria de referência (por padrão, a primeira)</span></span>
+<span><span class="va">modelo_multi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/nnet/man/multinom.html">multinom</a></span><span class="op">(</span><span class="va">sentimento_resposta</span> <span class="op">~</span> <span class="va">idade</span> <span class="op">+</span> <span class="va">genero</span>,</span>
+<span>                         data <span class="op">=</span> <span class="va">dados_modelo</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Resumo do modelo</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">modelo_multi</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="interpretação-dos-coeficientes" class="level3" data-number="7.8.4"><h3 data-number="7.8.4" class="anchored" data-anchor-id="interpretação-dos-coeficientes">
+<span class="header-section-number">7.8.4</span> Interpretação dos Coeficientes</h3>
+<p>A regressão multinomial estima coeficientes para cada categoria <strong>em relação a uma categoria de referência</strong>.</p>
+<p><strong>Exemplo de output:</strong></p>
+<pre><code>Call:
+multinom(formula = sentimento_resposta ~ idade + genero, data = dados_modelo)
+
+Coefficients:
+           (Intercept)      idade  generoMasculino
+negativo     -0.234      0.012         -0.456
+positivo      1.123     -0.008          0.234</code></pre>
+<p><strong>Interpretação:</strong></p>
+<ul>
+<li>
+<strong>Categoria de referência</strong>: “neutro” (não aparece no output)</li>
+<li>
+<strong>Coeficientes para “negativo”</strong>: Log-odds de negativo vs.&nbsp;neutro
+<ul>
+<li>
+<code>idade = 0.012</code>: Para cada ano adicional, log-odds de negativo vs.&nbsp;neutro aumenta 0.012</li>
+<li>
+<code>generoMasculino = -0.456</code>: Homens têm log-odds menores de negativo vs.&nbsp;neutro (comparado a mulheres)</li>
+</ul>
+</li>
+<li>
+<strong>Coeficientes para “positivo”</strong>: Log-odds de positivo vs.&nbsp;neutro</li>
+</ul></section><section id="odds-ratios-razões-de-chance" class="level3" data-number="7.8.5"><h3 data-number="7.8.5" class="anchored" data-anchor-id="odds-ratios-razões-de-chance">
+<span class="header-section-number">7.8.5</span> Odds Ratios (Razões de Chance)</h3>
+<div class="cell">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Calcular odds ratios (exponentiate os coeficientes)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">modelo_multi</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Ou usar gtsummary para tabela formatada</span></span>
+<span><span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_regression.html">tbl_regression</a></span><span class="op">(</span><span class="va">modelo_multi</span>, exponentiate <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Interpretação de OR:</strong></p>
+<ul>
+<li>
+<strong>OR = 1</strong>: Sem efeito</li>
+<li>
+<strong>OR &gt; 1</strong>: Aumenta a chance daquela categoria (vs.&nbsp;referência)</li>
+<li>
+<strong>OR &lt; 1</strong>: Diminui a chance daquela categoria (vs.&nbsp;referência)</li>
+</ul></section><section id="verificando-multicolinearidade" class="level3" data-number="7.8.6"><h3 data-number="7.8.6" class="anchored" data-anchor-id="verificando-multicolinearidade">
+<span class="header-section-number">7.8.6</span> Verificando Multicolinearidade</h3>
+<div class="cell">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-forge.r-project.org/projects/car/">car</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Calcular VIF (Variance Inflation Factor)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/car/man/vif.html">vif</a></span><span class="op">(</span><span class="va">modelo_multi</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Interpretação:</strong></p>
+<ul>
+<li>
+<strong>VIF &lt; 5</strong>: Multicolinearidade aceitável</li>
+<li>
+<strong>VIF &gt; 10</strong>: Multicolinearidade problemática</li>
+</ul></section><section id="predições-do-modelo" class="level3" data-number="7.8.7"><h3 data-number="7.8.7" class="anchored" data-anchor-id="predições-do-modelo">
+<span class="header-section-number">7.8.7</span> Predições do Modelo</h3>
+<div class="cell">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Predições de probabilidade para cada categoria</span></span>
+<span><span class="va">predicoes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">modelo_multi</span>, type <span class="op">=</span> <span class="st">"probs"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Adicionar ao dataframe</span></span>
+<span><span class="va">dados_modelo</span> <span class="op">&lt;-</span> <span class="va">dados_modelo</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_cols.html">bind_cols</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">predicoes</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Visualizar primeiras predições</span></span>
+<span><span class="va">dados_modelo</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">sentimento_resposta</span>, <span class="va">negativo</span>, <span class="va">neutro</span>, <span class="va">positivo</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="visualizando-probabilidades-preditas" class="level3" data-number="7.8.8"><h3 data-number="7.8.8" class="anchored" data-anchor-id="visualizando-probabilidades-preditas">
+<span class="header-section-number">7.8.8</span> Visualizando Probabilidades Preditas</h3>
+<div class="cell">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Criar grid de valores para predição</span></span>
+<span><span class="va">grid_predicao</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html">expand.grid</a></span><span class="op">(</span></span>
+<span>  idade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">18</span>, <span class="fl">65</span>, by <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  genero <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Feminino"</span>, <span class="st">"Masculino"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Predizer probabilidades</span></span>
+<span><span class="va">grid_predicao</span> <span class="op">&lt;-</span> <span class="va">grid_predicao</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_cols.html">bind_cols</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">modelo_multi</span>, newdata <span class="op">=</span> <span class="va">grid_predicao</span>, type <span class="op">=</span> <span class="st">"probs"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Transformar para formato longo</span></span>
+<span><span class="va">grid_longo</span> <span class="op">&lt;-</span> <span class="va">grid_predicao</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">negativo</span>, <span class="va">neutro</span>, <span class="va">positivo</span><span class="op">)</span>,</span>
+<span>               names_to <span class="op">=</span> <span class="st">"sentimento"</span>,</span>
+<span>               values_to <span class="op">=</span> <span class="st">"probabilidade"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Plotar</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">grid_longo</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">idade</span>, y <span class="op">=</span> <span class="va">probabilidade</span>, color <span class="op">=</span> <span class="va">sentimento</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1.2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">genero</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Probabilidade Predita de Sentimento por Idade e Gênero"</span>,</span>
+<span>       x <span class="op">=</span> <span class="st">"Idade"</span>,</span>
+<span>       y <span class="op">=</span> <span class="st">"Probabilidade"</span>,</span>
+<span>       color <span class="op">=</span> <span class="st">"Sentimento"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"negativo"</span> <span class="op">=</span> <span class="st">"red"</span>,</span>
+<span>                                 <span class="st">"neutro"</span> <span class="op">=</span> <span class="st">"gray"</span>,</span>
+<span>                                 <span class="st">"positivo"</span> <span class="op">=</span> <span class="st">"green"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section></section><section id="considerações-éticas" class="level2" data-number="7.9"><h2 data-number="7.9" class="anchored" data-anchor-id="considerações-éticas">
+<span class="header-section-number">7.9</span> Considerações Éticas</h2>
+<section id="privacidade-e-anonimização" class="level3" data-number="7.9.1"><h3 data-number="7.9.1" class="anchored" data-anchor-id="privacidade-e-anonimização">
+<span class="header-section-number">7.9.1</span> Privacidade e Anonimização</h3>
+<ul>
+<li>
+<strong>Remova informações identificáveis</strong> antes de análise (nomes, CPF, endereços)</li>
+<li>
+<strong>Agregue resultados</strong> quando reportar para evitar identificação individual</li>
+<li>
+<strong>Obtenha consentimento</strong> quando usar dados de redes sociais ou comentários públicos</li>
+</ul></section><section id="viés-em-análise-de-sentimento" class="level3" data-number="7.9.2"><h3 data-number="7.9.2" class="anchored" data-anchor-id="viés-em-análise-de-sentimento">
+<span class="header-section-number">7.9.2</span> Viés em Análise de Sentimento</h3>
+<ul>
+<li>
+<strong>Léxicos</strong> podem ter viés cultural ou temporal</li>
+<li>
+<strong>LLMs</strong> podem herdar vieses dos dados de treinamento</li>
+<li>
+<strong>Sempre valide</strong> resultados com amostra manual antes de generalizar</li>
+</ul></section><section id="considerações-culturais-para-português" class="level3" data-number="7.9.3"><h3 data-number="7.9.3" class="anchored" data-anchor-id="considerações-culturais-para-português">
+<span class="header-section-number">7.9.3</span> Considerações Culturais para Português</h3>
+<ul>
+<li>Português brasileiro vs.&nbsp;europeu têm diferenças lexicais</li>
+<li>
+<strong>Contexto importa</strong>: “legal” pode ser positivo (“que legal!”) ou neutro (“aspecto legal”)</li>
+<li>
+<strong>Regionalismos</strong> podem não ser capturados por léxicos gerais</li>
+</ul></section></section><section id="aplicações-práticas-em-saúde" class="level2" data-number="7.10"><h2 data-number="7.10" class="anchored" data-anchor-id="aplicações-práticas-em-saúde">
+<span class="header-section-number">7.10</span> Aplicações Práticas em Saúde</h2>
+<section id="análise-de-feedback-de-pacientes" class="level3" data-number="7.10.1"><h3 data-number="7.10.1" class="anchored" data-anchor-id="análise-de-feedback-de-pacientes">
+<span class="header-section-number">7.10.1</span> 1. Análise de Feedback de Pacientes</h3>
+<div class="cell">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Exemplo: Analisar satisfação em comentários de alta hospitalar</span></span>
+<span><span class="va">comentarios</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
+<span>  paciente_id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,</span>
+<span>  comentario <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"O atendimento foi excelente, médicos muito atenciosos"</span>,</span>
+<span>    <span class="st">"Demora muito para ser atendido, experiência frustrante"</span>,</span>
+<span>    <span class="st">"Hospital limpo, mas falta comunicação da equipe"</span>,</span>
+<span>    <span class="st">"Tratamento eficaz, me senti acolhido pela equipe"</span>,</span>
+<span>    <span class="st">"Infraestrutura precária, muito barulho nos corredores"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Análise de sentimento</span></span>
+<span><span class="va">comentarios</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/mall/man/llm_sentiment.html">llm_sentiment</a></span><span class="op">(</span><span class="va">comentario</span>, pred_name <span class="op">=</span> <span class="st">"satisfacao"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">satisfacao</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="pesquisa-qualitativa" class="level3" data-number="7.10.2"><h3 data-number="7.10.2" class="anchored" data-anchor-id="pesquisa-qualitativa">
+<span class="header-section-number">7.10.2</span> 2. Pesquisa Qualitativa</h3>
+<div class="cell">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Exemplo: Identificar temas em entrevistas sobre adesão a tratamento</span></span>
+<span><span class="va">entrevistas_adesao</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
+<span>  participante <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,</span>
+<span>  resposta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"Esqueci de tomar o remédio várias vezes porque é difícil lembrar"</span>,</span>
+<span>    <span class="st">"O custo elevado dificulta a compra mensal dos medicamentos"</span>,</span>
+<span>    <span class="st">"Sinto muitos efeitos colaterais e isso me desanima a continuar"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Classificar em categorias de barreiras</span></span>
+<span><span class="va">entrevistas_adesao</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/mall/man/llm_classify.html">llm_classify</a></span><span class="op">(</span><span class="va">resposta</span>,</span>
+<span>               labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"esquecimento"</span>, <span class="st">"custo"</span>, <span class="st">"efeitos_colaterais"</span>, <span class="st">"complexidade"</span><span class="op">)</span>,</span>
+<span>               pred_name <span class="op">=</span> <span class="st">"barreira_principal"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="monitoramento-de-redes-sociais" class="level3" data-number="7.10.3"><h3 data-number="7.10.3" class="anchored" data-anchor-id="monitoramento-de-redes-sociais">
+<span class="header-section-number">7.10.3</span> 3. Monitoramento de Redes Sociais</h3>
+<div class="cell">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Exemplo: Analisar discussões sobre vacinação no Twitter</span></span>
+<span><span class="co"># (dados hipotéticos)</span></span>
+<span><span class="va">tweets</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
+<span>  tweet_id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,</span>
+<span>  texto <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"Tomei a vacina hoje e me sinto protegido, recomendo!"</span>,</span>
+<span>    <span class="st">"Efeitos colaterais muito fortes, precisamos de mais informação"</span>,</span>
+<span>    <span class="st">"Vacina é importante mas o acesso ainda é difícil em algumas regiões"</span>,</span>
+<span>    <span class="st">"Campanhas de vacinação são essenciais para saúde pública"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Análise de sentimento</span></span>
+<span><span class="va">tweets</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/mall/man/llm_sentiment.html">llm_sentiment</a></span><span class="op">(</span><span class="va">texto</span>, pred_name <span class="op">=</span> <span class="st">"sentimento"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">sentimento</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section></section><section id="exercícios-práticos" class="level2" data-number="7.11"><h2 data-number="7.11" class="anchored" data-anchor-id="exercícios-práticos">
+<span class="header-section-number">7.11</span> Exercícios Práticos</h2>
+<section id="exercício-1-análise-de-frequência" class="level3" data-number="7.11.1"><h3 data-number="7.11.1" class="anchored" data-anchor-id="exercício-1-análise-de-frequência">
+<span class="header-section-number">7.11.1</span> Exercício 1: Análise de Frequência</h3>
+<p>Use o dataset de entrevistas para:</p>
+<ol type="a">
+<li>Tokenizar as respostas da segunda pergunta (desafios de implementação)</li>
+<li>Remover stopwords</li>
+<li>Calcular e visualizar as 15 palavras mais frequentes</li>
+<li>Criar um word cloud</li>
+<li>Interpretar os principais temas identificados</li>
+</ol></section><section id="exercício-2-comparação-léxico-vs.-llm" class="level3" data-number="7.11.2"><h3 data-number="7.11.2" class="anchored" data-anchor-id="exercício-2-comparação-léxico-vs.-llm">
+<span class="header-section-number">7.11.2</span> Exercício 2: Comparação Léxico vs.&nbsp;LLM</h3>
+<ol type="a">
+<li>Use o dataset de percepção de marca</li>
+<li>Realize análise de sentimento usando abordagem léxico</li>
+<li>Realize análise de sentimento usando LLM (se disponível)</li>
+<li>Compare os resultados: qual proporção de concordância?</li>
+<li>Examine casos de discordância e tente explicar as diferenças</li>
+</ol></section><section id="exercício-3-regressão-multinomial" class="level3" data-number="7.11.3"><h3 data-number="7.11.3" class="anchored" data-anchor-id="exercício-3-regressão-multinomial">
+<span class="header-section-number">7.11.3</span> Exercício 3: Regressão Multinomial</h3>
+<p>Use os resultados de sentimento (LLM ou léxico) como variável resposta:</p>
+<ol type="a">
+<li>Ajuste um modelo multinomial com idade, gênero e escolaridade como preditores</li>
+<li>Calcule e interprete os odds ratios</li>
+<li>Verifique multicolinearidade com VIF</li>
+<li>Crie visualizações das probabilidades preditas</li>
+<li>Escreva uma interpretação dos resultados em formato de artigo</li>
+</ol></section><section id="exercício-4-análise-temática" class="level3" data-number="7.11.4"><h3 data-number="7.11.4" class="anchored" data-anchor-id="exercício-4-análise-temática">
+<span class="header-section-number">7.11.4</span> Exercício 4: Análise Temática</h3>
+<ol type="a">
+<li>Use o dataset de entrevistas</li>
+<li>Use LLM para classificar respostas em temas customizados (escolha 4-5 temas)</li>
+<li>Conte a frequência de cada tema</li>
+<li>Crie um gráfico de barras mostrando a distribuição</li>
+<li>Para cada tema, crie um word cloud das respostas classificadas naquele tema</li>
+</ol></section><section id="exercício-5-aplicação-em-saúde" class="level3" data-number="7.11.5"><h3 data-number="7.11.5" class="anchored" data-anchor-id="exercício-5-aplicação-em-saúde">
+<span class="header-section-number">7.11.5</span> Exercício 5: Aplicação em Saúde</h3>
+<p>Escolha um cenário de saúde (satisfação do paciente, adesão a tratamento, percepção de risco):</p>
+<ol type="a">
+<li>Crie um pequeno dataset simulado com 10-15 respostas textuais</li>
+<li>Realize análise completa: tokenização, word cloud, análise de sentimento</li>
+<li>Se apropriado, ajuste um modelo multinomial</li>
+<li>Interprete os resultados no contexto clínico</li>
+<li>Discuta limitações e considerações éticas</li>
+</ol>
+<hr>
+<p><strong>Referências:</strong></p>
+<ul>
+<li>Silge, J., &amp; Robinson, D. (2017). <em>Text Mining with R: A Tidy Approach</em>. O’Reilly Media.</li>
+<li>Welbers, K., Van Atteveldt, W., &amp; Benoit, K. (2017). Text analysis in R. <em>Communication Methods and Measures</em>, 11(4), 245-265.</li>
+<li>Taboada, M., et al.&nbsp;(2011). Lexicon-based methods for sentiment analysis. <em>Computational Linguistics</em>, 37(2), 267-307.</li>
+<li>Devlin, J., et al.&nbsp;(2019). BERT: Pre-training of deep bidirectional transformers for language understanding. <em>NAACL-HLT</em>.</li>
+<li>Freire, T., et al.&nbsp;(2014). SENTILEX-PT: Principais características e potencialidades. <em>Oslo Studies in Language</em>, 6(1).</li>
+</ul>
+
+
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./psicometria.html" class="pagination-link" aria-label="Análise Psicométrica">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Análise Psicométrica</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./references.html" class="pagination-link" aria-label="Referências">
+        <span class="nav-page-text">Referências</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

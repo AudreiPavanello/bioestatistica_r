@@ -1,0 +1,39 @@
+# Quarto
+/.quarto/
+/_book/
+/_site/
+/.vscode/
+/_freeze/
+
+# R
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj
+
+# IDE
+.DS_Store
+.idea/
+*.swp
+*.swo
+*~
+
+# System Files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Temporary files
+*.tmp
+*.bak
+*.log
+
+# Data files (if needed to keep private)
+data/*.xlsx
+data
+pdfs
+scripts
+.claude
+.github
+

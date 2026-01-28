@@ -1,0 +1,487 @@
+# Introdução ao R e RStudio
+
+## O que é o R?
+
+O **R** é uma linguagem de programação e ambiente de software livre para computação estatística e gráficos. Desenvolvido inicialmente por Ross Ihaka e Robert Gentleman na Universidade de Auckland, Nova Zelândia, o R se tornou uma das ferramentas mais populares para análise de dados, especialmente nas áreas de estatística, bioestatística e ciência de dados.
+
+### Vantagens do R
+
+-   **Gratuito e Open Source**: O R é completamente gratuito e possui código aberto
+-   **Ampla Comunidade**: Grande comunidade de usuários e desenvolvedores
+-   **Pacotes Especializados**: Mais de 19.000 pacotes disponíveis no CRAN para diferentes análises
+-   **Gráficos de Alta Qualidade**: Excelentes capacidades de visualização de dados
+-   **Reprodutibilidade**: Facilita a pesquisa reproduzível através de scripts
+-   **Integração**: Pode ser integrado com outras linguagens e ferramentas
+
+### Desvantagens do R
+
+-   **Curva de Aprendizado**: Pode ser desafiador para iniciantes sem experiência em programação
+-   **Velocidade**: Pode ser mais lento que linguagens compiladas para grandes volumes de dados
+-   **Consumo de Memória**: Armazena todos os dados na memória RAM
+
+## Interface do RStudio
+
+O **RStudio** é um ambiente de desenvolvimento integrado (IDE) para R que facilita significativamente o trabalho com a linguagem. A interface do RStudio é dividida em quatro painéis principais:
+
+1.  **Editor de Scripts** (superior esquerdo): Onde você escreve e salva seus códigos
+2.  **Console** (inferior esquerdo): Onde os comandos são executados e os resultados aparecem
+3.  **Environment/History** (superior direito): Mostra objetos criados e histórico de comandos
+4.  **Files/Plots/Packages/Help** (inferior direito): Gerenciamento de arquivos, visualização de gráficos, pacotes e ajuda
+
+### RStudio Projects
+
+Os **Projects** do RStudio são uma forma de organizar seu trabalho. Ao criar um projeto:
+
+-   Mantém todos os arquivos relacionados em um único diretório
+-   Define o diretório de trabalho automaticamente
+-   Preserva o histórico de comandos específico do projeto
+-   Facilita o controle de versão com Git
+
+**Dica**: Sempre use Projects para organizar suas análises!
+
+## Primeiros Passos com R
+
+### Interface do RStudio
+
+Bem-vindo à interface do RStudio! Nesta seção, vamos aprender os comandos básicos do R.
+
+```{r}
+#| label: comentarios
+#| echo: true
+
+# O uso de # no início de uma linha significa uma linha de comentário
+# Essa linha não é executada pelo R
+# Use comentários para documentar seu código!
+```
+
+### Declarando Variáveis
+
+No R, usamos o operador `<-` para atribuir valores a variáveis.
+
+**Atalho útil**: `Alt + -` (Windows) ou `Option + -` (Mac) insere automaticamente `<-`
+
+**Para executar código**: `Ctrl + Enter` (Windows) ou `Cmd + Enter` (Mac)
+
+```{r}
+#| label: variaveis-basicas
+
+# Declarando variáveis simples
+a <- 1
+b <- 2
+
+# Operações matemáticas
+a + b
+```
+
+### Estruturas de Dados
+
+O R possui diferentes estruturas para armazenar dados:
+
+#### Vetores
+
+Vetores são a estrutura mais simples, contendo elementos de um único tipo:
+
+```{r}
+#| label: vetores
+
+# Vetor numérico simples
+a <- 1
+
+# Vetor com múltiplos elementos
+numeros <- c(1, 2, 3, 4, 5)
+```
+
+#### Listas
+
+Listas podem conter diferentes tipos de dados:
+
+```{r}
+#| label: listas
+
+# Lista com diferentes tipos de dados
+a <- list("a", 1, "b")
+```
+
+#### Data Frames
+
+O **data frame** é a estrutura mais importante para análise de dados - é equivalente a uma planilha do Excel.
+
+```{r}
+#| label: dataframe-exemplo
+
+# Criando um data frame com informações de pacientes
+df <- data.frame(
+  Nome = c("João", "José", "Maria", "Antônia"),
+  Idade = c(65, 60, 22, 28),
+  Sexo = c("Masculino", "Masculino", "Feminino", "Feminino"),
+  CEP = c(85802159, 87945632, 89745632, 85706984),
+  Curso = c("Nutrição", "Educação Física", "Fisioterapia", "Medicina")
+)
+
+# Visualizando o resumo dos dados
+summary(df)
+```
+
+#### Acessando Colunas de um Data Frame
+
+O símbolo `$` é usado para acessar colunas específicas de um data frame:
+
+```{r}
+#| label: acessar-colunas
+#| fig-cap: "Gráfico de dispersão da idade dos participantes"
+
+# Plotando a idade dos participantes
+plot(df$Idade,
+     main = "Idade dos Participantes",
+     ylab = "Idade (anos)",
+     xlab = "Índice",
+     col = "navy",
+     pch = 16)
+```
+
+### Tipos de Dados no R
+
+Compreender os tipos de dados é fundamental para trabalhar com R:
+
+#### Numeric (Double)
+
+Valores numéricos decimais:
+
+```{r}
+#| label: numeric
+
+a <- 1
+a
+class(a)
+```
+
+#### Integer
+
+Valores numéricos inteiros (use `L` para especificar):
+
+```{r}
+#| label: integer
+
+a <- 1L
+a
+class(a)
+```
+
+#### Character
+
+Dados de texto (strings):
+
+```{r}
+#| label: character
+
+a <- "1"
+a
+class(a)
+```
+
+#### Factor
+
+Dados categóricos (nominais ou ordinais):
+
+```{r}
+#| label: factor
+
+a <- "1"
+a <- as.factor(a)
+class(a)
+```
+
+Fatores são essenciais para análises estatísticas com variáveis categóricas.
+
+#### Logical (Booleano)
+
+Valores lógicos `TRUE` (verdadeiro) ou `FALSE` (falso):
+
+```{r}
+#| label: logical
+
+a <- 1
+b <- 2
+a == b  # Retorna FALSE
+```
+
+#### NA (Not Available)
+
+Representa valores ausentes em um conjunto de dados:
+
+```{r}
+#| label: na-values
+
+a <- c(1, 2, NA)
+a
+a + 2  # O NA se propaga nas operações
+```
+
+### Convertendo Tipos de Dados
+
+Vamos aplicar o que aprendemos ao nosso data frame:
+
+```{r}
+#| label: converter-factor
+#| fig-cap: "Distribuição de idade por sexo"
+
+# Convertendo a variável Sexo para fator
+df$Sexo <- as.factor(df$Sexo)
+
+# Agora conseguimos criar um boxplot adequado
+plot(x = df$Sexo,
+     y = df$Idade,
+     xlab = "Sexo",
+     ylab = "Idade (anos)",
+     col = c("lightblue", "lightpink"),
+     main = "Distribuição de Idade por Sexo")
+```
+
+## Lógica de Programação no R
+
+### Operadores Lógicos
+
+Os operadores lógicos são usados para realizar comparações:
+
+| Operador | Significado    |
+|----------|----------------|
+| `==`     | Igual a        |
+| `!=`     | Diferente de   |
+| `<`      | Menor que      |
+| `>`      | Maior que      |
+| `<=`     | Menor ou igual |
+| `>=`     | Maior ou igual |
+
+```{r}
+#| label: operadores-logicos
+
+# Exemplos de operadores lógicos
+1 > 2   # FALSE
+1 < 2   # TRUE
+1 <= 2  # TRUE
+1 >= 2  # FALSE
+1 != 2  # TRUE
+2 == 2  # TRUE
+```
+
+Podemos aplicar operadores lógicos a colunas inteiras:
+
+```{r}
+#| label: operadores-dataframe
+
+df$Idade > 50  # Quais idades são maiores que 50?
+df$Idade >= 60  # Quais são idosos (>=60 anos)?
+```
+
+### Condicionais: if, else, ifelse
+
+#### Estrutura if-else
+
+```{r}
+#| label: if-else
+
+a <- 200
+b <- 1
+
+if (a > b) {
+  print(paste(a, "é maior que", b))
+} else {
+  print(paste(a, "não é maior que", b))
+}
+```
+
+#### Função ifelse
+
+A função `ifelse()` é útil para vetorização de condições:
+
+```{r}
+#| label: ifelse-exemplo
+
+# Classificando idades em adultos e crianças
+idades <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 21, 25, 38, 48, 54)
+classificacao <- ifelse(idades >= 10, "Adulto", "Criança")
+classificacao
+```
+
+Aplicando ao nosso data frame:
+
+```{r}
+#| label: ifelse-dataframe
+
+# Classificando participantes como idosos ou adultos
+classificacao_idade <- ifelse(df$Idade >= 60, "Idoso", "Adulto")
+classificacao_idade
+```
+
+### Loops: Operações Repetidas
+
+Loops são úteis para realizar operações repetidas de forma automática.
+
+#### Loop for básico
+
+```{r}
+#| label: loop-basico
+
+# Imprimindo números de 1 a 10
+for (i in 1:10) {
+  print(i)
+}
+```
+
+#### Loop for com condicionais
+
+Exemplo avançado: criando gráficos automaticamente para cada coluna do data frame:
+
+```{r}
+#| label: loop-graficos
+#| fig-cap: "Gráficos automáticos para cada variável do data frame"
+#| fig-width: 8
+#| fig-height: 6
+
+# Loop para gerar gráficos de todas as colunas
+for (col in names(df)) {
+  if (is.numeric(df[[col]])) {
+    # Se a coluna for numérica, cria gráfico de dispersão
+    plot(df[[col]],
+         main = paste("Gráfico da coluna:", col),
+         xlab = "Índice",
+         ylab = "Valor",
+         col = "navy",
+         pch = 16)
+  } else if (is.factor(df[[col]])) {
+    # Se a coluna for fator, cria gráfico de barras
+    counts <- table(df[[col]])
+    barplot(counts,
+            main = paste("Distribuição da coluna:", col),
+            col = "darkred",
+            border = "black",
+            xlab = "Categorias",
+            ylab = "Frequência")
+  }
+}
+```
+
+## Boas Práticas de Formatação de Código
+
+Escrever código limpo e legível é essencial para:
+
+-   Facilitar a manutenção e revisão do código
+-   Permitir que outros entendam seu trabalho
+-   Evitar erros e bugs
+-   Promover colaboração
+
+### Uso de Espaços
+
+**Sempre use espaços** ao redor de operadores para melhorar a legibilidade:
+
+```{r}
+#| label: espacamento
+#| eval: false
+
+# ✓ CORRETO - Código legível
+a <- 1
+a <- 1 + 2 * 3
+
+# ✗ ERRADO - Código difícil de ler
+a<-1+2*3
+```
+
+### Formatação de Data Frames
+
+Compare as duas formas de criar o mesmo data frame:
+
+```{r}
+#| label: formatacao-df-bom
+#| eval: false
+
+# ✓ CORRETO - Cada argumento em uma linha, bem espaçado
+df <- data.frame(
+  Nome = c("João", "José", "Maria", "Antônia"),
+  Idade = c(65, 60, 22, 28),
+  Sexo = c("Masculino", "Masculino", "Feminino", "Feminino"),
+  CEP = c(85802159, 87945632, 89745632, 85706984),
+  Curso = c("Nutrição", "Educação Física", "Fisioterapia", "Medicina")
+)
+```
+
+```{r}
+#| label: formatacao-df-ruim
+#| eval: false
+
+# ✗ ERRADO - Tudo em poucas linhas, difícil de ler
+df <- data.frame(Nome=c("João","José","Maria","Antônia"),Idade=c(65,60,22,28),
+                 Sexo=c("Masculino","Masculino","Feminino","Feminino"),
+                 CEP=c(85802159,87945632,89745632,85706984),
+                 Curso=c("Nutrição","Educação Física","Fisioterapia","Medicina"))
+```
+
+### Convenções de Nomenclatura
+
+Use **snake_case** (minúsculas com underline) para nomear variáveis e objetos:
+
+```{r}
+#| label: nomenclatura
+#| eval: false
+
+# ✗ ERRADO - Nome com espaço (causa erro)
+tabela 1 <- 1
+
+# ✗ ERRADO - Mistura de maiúsculas e espaço
+tabelA 1 <- 1
+
+# ✓ CORRETO - snake_case
+tabela_1 <- 1
+dados_pacientes <- data.frame()
+modelo_final <- lm()
+```
+
+### Documentação com Comentários
+
+**Sempre documente seu código** com comentários explicativos:
+
+```{r}
+#| label: comentarios-bons
+#| eval: false
+
+# Carregando dados de internações hospitalares
+dados <- read_excel("dados_internacoes_maringa_2024.xlsx")
+
+# Filtrando apenas pacientes adultos (>= 18 anos)
+dados_adultos <- dados |>
+  filter(idade >= 18)
+
+# Calculando estatísticas descritivas por sexo
+resumo <- dados_adultos |>
+  group_by(sexo) |>
+  summarise(
+    idade_media = mean(idade),
+    idade_dp = sd(idade)
+  )
+```
+
+## Resumo do Capítulo
+
+Neste capítulo, você aprendeu:
+
+-   **O que é o R** e suas vantagens para análise de dados em saúde
+-   **Interface do RStudio** e como organizá-la com Projects
+-   **Tipos de dados** no R: numeric, integer, character, factor, logical, NA
+-   **Estruturas de dados**: vetores, listas e data frames
+-   **Operadores lógicos** e como usá-los para comparações
+-   **Condicionais** com if-else e ifelse
+-   **Loops** para automatizar tarefas repetitivas
+-   **Boas práticas** de formatação e documentação de código
+
+No próximo capítulo, você aprenderá a manipular dados de forma eficiente usando o pacote **tidyverse**, uma das ferramentas mais poderosas do ecossistema R.
+
+## Exercícios Práticos
+
+1.  Crie um data frame com dados de 5 pacientes, incluindo variáveis: nome, idade, peso, altura e diagnóstico
+
+2.  Calcule o IMC (Índice de Massa Corporal) de cada paciente usando a fórmula: IMC = peso / altura²
+
+3.  Use `ifelse()` para classificar os pacientes em: "Baixo peso" (IMC \< 18.5), "Normal" (18.5 ≤ IMC \< 25), "Sobrepeso" (25 ≤ IMC \< 30), ou "Obesidade" (IMC ≥ 30)
+
+4.  Crie gráficos apropriados para visualizar a distribuição de idade e IMC dos pacientes
+
+5.  Use um loop para calcular e imprimir a idade de cada paciente daqui a 10 anos

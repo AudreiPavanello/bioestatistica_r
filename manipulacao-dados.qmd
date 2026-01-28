@@ -1,0 +1,590 @@
+# Manipulação de Dados com Tidyverse
+
+## O que é o Tidyverse?
+
+O **tidyverse** é uma coleção de pacotes R projetados para ciência de dados. Todos os pacotes compartilham uma filosofia de design, gramática e estruturas de dados subjacentes, tornando o trabalho com dados mais intuitivo e eficiente.
+
+### Pacotes Principais do Tidyverse
+
+-   **dplyr**: Manipulação de dados (filtrar, selecionar, agrupar, sumarizar)
+-   **ggplot2**: Criação de gráficos elegantes
+-   **tidyr**: Organização e limpeza de dados
+-   **readr**: Leitura rápida de dados retangulares (CSV, TSV)
+-   **purrr**: Programação funcional
+-   **tibble**: Versão moderna de data frames
+-   **stringr**: Manipulação de strings
+-   **forcats**: Manipulação de fatores
+
+### Por que usar o Tidyverse?
+
+-   **Código mais legível**: Sintaxe intuitiva e consistente
+-   **Pipe operator**: Encadeamento de operações de forma natural
+-   **Eficiência**: Otimizado para grandes volumes de dados
+-   **Comunidade**: Ampla documentação e suporte
+-   **Integração**: Pacotes funcionam perfeitamente juntos
+
+## Instalação e Carregamento de Pacotes
+
+### Instalando Pacotes
+
+Para instalar um pacote no R, usamos a função `install.packages()`:
+
+```{r}
+#| label: install-packages
+#| eval: false
+
+# Instalando um pacote individual
+install.packages("tidyverse")
+
+# Instalando múltiplos pacotes
+install.packages(c("tidyverse", "readxl", "janitor"))
+```
+
+**Importante**: Você só precisa instalar um pacote uma vez. Após a instalação, o pacote fica disponível permanentemente.
+
+### Carregando Pacotes
+
+Após instalados, os pacotes precisam ser carregados em cada sessão usando `library()`:
+
+```{r}
+#| label: carregar-pacotes
+#| message: false
+#| warning: false
+
+# Carregando os pacotes necessários
+library(tidyverse)  # Manipulação e visualização de dados
+library(readxl)     # Leitura de arquivos Excel
+```
+
+## Importando Dados
+
+### Leitura de Arquivos Excel
+
+A função `read_excel()` do pacote **readxl** permite importar dados de arquivos Excel:
+
+```{r}
+#| label: importar-dados
+#| eval: false
+
+# Importando dados de internações hospitalares
+dados <- read_excel("data/dados_internacoes_maringa_2024.xlsx")
+```
+
+::: callout-note
+## Nota sobre os Dados
+
+Os dados utilizados neste livro são de internações hospitalares de Maringá-PR referentes ao ano de 2024, disponibilizados pelo Sistema de Informações Hospitalares (SIH) do SUS. O arquivo `dados_internacoes_maringa_2024.xlsx` deve estar na pasta `data/` do seu projeto.
+:::
+
+### Explorando os Dados Importados
+
+Após importar, é importante explorar a estrutura dos dados:
+
+```{r}
+#| label: explorar-dados
+#| eval: false
+
+# Resumo estatístico das variáveis
+summary(dados)
+
+# Visão geral da estrutura (tidyverse)
+glimpse(dados)
+
+# Estrutura detalhada (R base)
+str(dados)
+```
+
+Essas funções fornecem informações sobre:
+
+-   Número de linhas e colunas
+-   Tipos de dados de cada variável
+-   Primeiros valores de cada coluna
+-   Valores ausentes (NAs)
+
+## Principais Funções do Tidyverse
+
+O tidyverse oferece um conjunto de funções poderosas para manipulação de dados:
+
+| Função        | Descrição                          |
+|---------------|------------------------------------|
+| `select()`    | Seleciona colunas específicas      |
+| `filter()`    | Filtra linhas baseado em condições |
+| `mutate()`    | Cria ou modifica colunas           |
+| `rename()`    | Renomeia colunas                   |
+| `group_by()`  | Agrupa dados por variáveis         |
+| `summarise()` | Calcula estatísticas resumidas     |
+
+Vamos explorar cada uma dessas funções em detalhes.
+
+### select(): Selecionando Colunas
+
+A função `select()` permite escolher quais colunas manter no seu data frame:
+
+```{r}
+#| label: select-exemplo
+#| eval: false
+
+# Selecionando apenas as colunas SEXO e IDADE
+dados_selecionados <- select(dados, SEXO, IDADE)
+
+glimpse(dados_selecionados)
+```
+
+#### Excluindo Colunas
+
+Você pode também remover colunas específicas usando o sinal de menos `-`:
+
+```{r}
+#| label: select-excluir
+#| eval: false
+
+# Removendo a coluna CEP
+dados2 <- select(dados, -CEP)
+```
+
+#### Seleção Avançada
+
+```{r}
+#| label: select-avancado
+#| eval: false
+
+# Selecionar colunas que começam com determinado texto
+select(dados, starts_with("VAL"))
+
+# Selecionar colunas que terminam com determinado texto
+select(dados, ends_with("_TOT"))
+
+# Selecionar colunas que contêm determinado texto
+select(dados, contains("IDADE"))
+
+# Selecionar colunas numéricas
+select(dados, where(is.numeric))
+```
+
+### filter(): Filtrando Linhas
+
+A função `filter()` permite selecionar linhas que atendem a determinadas condições:
+
+#### Filtro Simples
+
+```{r}
+#| label: filter-simples
+#| eval: false
+
+# Filtrando apenas pacientes do sexo masculino
+dados_masculino <- filter(dados, SEXO == "Masculino")
+
+# Filtrando pacientes que NÃO são do sexo masculino
+dados_feminino <- filter(dados, SEXO != "Masculino")
+```
+
+#### Múltiplas Condições
+
+Use o operador `&` (E) para combinar condições:
+
+```{r}
+#| label: filter-multiplo
+#| eval: false
+
+# Homens que foram a óbito
+dados_masculino_morte <- filter(dados, SEXO == "Masculino" & MORTE == "Sim")
+
+# Homens idosos (>=60 anos) que foram a óbito
+dados_masculino_morte_idosos <- filter(
+  dados,
+  SEXO == "Masculino" & MORTE == "Sim" & IDADE >= 60
+)
+```
+
+#### Outros Operadores Lógicos
+
+```{r}
+#| label: filter-operadores
+#| eval: false
+
+# Operador OU (|): pacientes com idade menor que 18 OU maior que 60
+filter(dados, IDADE < 18 | IDADE > 60)
+
+# Operador %in%: selecionar múltiplos valores
+filter(dados, RACA_COR %in% c("Branca", "Parda"))
+
+# Valores ausentes
+filter(dados, is.na(IDADE))  # Linhas com idade ausente
+filter(dados, !is.na(IDADE))  # Linhas SEM idade ausente
+```
+
+### mutate(): Criando e Modificando Colunas
+
+A função `mutate()` é usada para criar novas colunas ou modificar existentes:
+
+#### Criando Nova Coluna
+
+```{r}
+#| label: mutate-nova-coluna
+#| eval: false
+
+# Criando nova coluna com valor total multiplicado por 1000
+dados_valor_1000 <- mutate(dados, VAL_TOT_1000 = VAL_TOT * 1000)
+```
+
+#### Modificando Tipo de Dados
+
+A função `across()` permite aplicar uma transformação a múltiplas colunas:
+
+```{r}
+#| label: mutate-tipo-dados
+#| eval: false
+
+# Convertendo IDADE e DIAS_PERM para numérico
+dados <- mutate(dados, across(c(IDADE, DIAS_PERM), as.numeric))
+
+# Convertendo múltiplas colunas para fator
+dados <- mutate(dados, across(c(SEXO, RACA_COR, MORTE), as.factor))
+```
+
+#### Recodificando Variáveis com case_when()
+
+A função `case_when()` é útil para criar categorias baseadas em múltiplas condições:
+
+```{r}
+#| label: mutate-case-when
+#| eval: false
+
+# Recodificando códigos numéricos de raça/cor para texto descritivo
+dados <- mutate(
+  dados,
+  RACA_COR = case_when(
+    RACA_COR == '01' ~ "Branca",
+    RACA_COR == "02" ~ "Preta",
+    RACA_COR == "03" ~ "Parda",
+    RACA_COR == "04" ~ "Amarela",
+    RACA_COR == "05" ~ "Indígena"
+  )
+)
+```
+
+Outros exemplos de `case_when()`:
+
+```{r}
+#| label: case-when-exemplos
+#| eval: false
+
+# Classificando faixas etárias
+dados <- mutate(
+  dados,
+  faixa_etaria = case_when(
+    IDADE < 18 ~ "Criança/Adolescente",
+    IDADE >= 18 & IDADE < 60 ~ "Adulto",
+    IDADE >= 60 ~ "Idoso"
+  )
+)
+
+# Classificando permanência hospitalar
+dados <- mutate(
+  dados,
+  tempo_internacao = case_when(
+    DIAS_PERM <= 3 ~ "Curta",
+    DIAS_PERM > 3 & DIAS_PERM <= 7 ~ "Média",
+    DIAS_PERM > 7 ~ "Longa"
+  )
+)
+```
+
+### rename(): Renomeando Colunas
+
+A função `rename()` permite alterar nomes de colunas:
+
+```{r}
+#| label: rename-exemplo
+#| eval: false
+
+# Renomeando a coluna ESPEC para ESPECIALIDADE
+dados <- rename(dados, ESPECIALIDADE = ESPEC)
+
+# Sintaxe: novo_nome = nome_antigo
+```
+
+Renomeando múltiplas colunas:
+
+```{r}
+#| label: rename-multiplas
+#| eval: false
+
+dados <- rename(
+  dados,
+  especialidade = ESPEC,
+  diagnostico = DIAG_PRINC,
+  idade_anos = IDADE
+)
+```
+
+### group_by() e summarise(): Sumarizando Dados
+
+Estas funções trabalham em conjunto para calcular estatísticas agrupadas.
+
+#### Agrupamento e Sumarização Básica
+
+```{r}
+#| label: group-by-basico
+#| eval: false
+
+# Calculando idade média por sexo e raça/cor
+dados_agrupados <- dados |>
+  group_by(SEXO, RACA_COR) |>
+  summarise(mean_idade = mean(IDADE), .groups = "drop")
+
+dados_agrupados
+```
+
+#### Múltiplas Estatísticas
+
+```{r}
+#| label: summarise-multiplas
+#| eval: false
+
+# Calculando várias estatísticas ao mesmo tempo
+estatisticas <- dados |>
+  group_by(SEXO) |>
+  summarise(
+    n = n(),                          # Contagem
+    idade_media = mean(IDADE, na.rm = TRUE),
+    idade_dp = sd(IDADE, na.rm = TRUE),
+    idade_mediana = median(IDADE, na.rm = TRUE),
+    idade_min = min(IDADE, na.rm = TRUE),
+    idade_max = max(IDADE, na.rm = TRUE),
+    .groups = "drop"
+  )
+```
+
+## O Operador Pipe \|\>
+
+O **pipe operator** `|>` é uma das características mais poderosas do tidyverse. Ele permite encadear múltiplas operações de forma legível.
+
+### Como Ler o Pipe
+
+O símbolo `|>` pode ser lido como **"E ENTÃO"** ou **"PASSE PARA"**.
+
+```{r}
+#| label: pipe-leitura
+#| eval: false
+
+# Sem pipe (difícil de ler)
+resultado <- summarise(
+  group_by(
+    filter(dados, SEXO == "Masculino"),
+    RACA_COR
+  ),
+  media_idade = mean(IDADE)
+)
+
+# Com pipe (fácil de ler)
+resultado <- dados |>
+  filter(SEXO == "Masculino") |>
+  group_by(RACA_COR) |>
+  summarise(media_idade = mean(IDADE))
+```
+
+**Leitura**: "Pegue os dados E ENTÃO filtre para sexo masculino E ENTÃO agrupe por raça/cor E ENTÃO calcule a média de idade"
+
+### Atalho de Teclado
+
+-   **Windows/Linux**: `Ctrl + Shift + M`
+-   **Mac**: `Cmd + Shift + M`
+
+::: callout-tip
+## Pipe Nativo vs. Pipe do magrittr
+
+O R possui dois operadores pipe:
+
+-   `|>` - Pipe nativo do R (versão 4.1+) - usado neste livro
+-   `%>%` - Pipe do pacote magrittr
+
+Ambos funcionam de forma similar. Usamos `|>` por ser nativo e não requerer pacotes adicionais.
+:::
+
+## Encadeamento de Operações
+
+O verdadeiro poder do tidyverse aparece quando combinamos múltiplas operações:
+
+### Exemplo Completo de Pipeline
+
+```{r}
+#| label: pipeline-completo
+#| eval: false
+
+# Pipeline complexo de limpeza e análise de dados
+dados_limpos <- dados |>
+  # 1. Selecionar colunas relevantes
+  select(SEXO, RACA_COR, IDADE, MORTE, COD_IDADE) |>
+  # 2. Filtrar apenas idades em anos
+  filter(COD_IDADE == "Anos") |>
+  # 3. Remover coluna COD_IDADE (não mais necessária)
+  select(-COD_IDADE) |>
+  # 4. Converter IDADE para numérico
+  mutate(across(IDADE, as.numeric)) |>
+  # 5. Converter variáveis categóricas para fator
+  mutate(across(c(SEXO, RACA_COR, MORTE), as.factor)) |>
+  # 6. Recodificar raça/cor
+  mutate(RACA_COR = case_when(
+    RACA_COR == '01' ~ "Branca",
+    RACA_COR == "02" ~ "Preta",
+    RACA_COR == "03" ~ "Parda",
+    RACA_COR == "04" ~ "Amarela",
+    RACA_COR == "05" ~ "Indígena"
+  )) |>
+  # 7. Renomear colunas para minúsculas
+  rename(
+    sexo = SEXO,
+    raca_cor = RACA_COR,
+    idade = IDADE,
+    morte = MORTE
+  ) |>
+  # 8. Agrupar por raça/cor e sexo
+  group_by(raca_cor, sexo) |>
+  # 9. Calcular idade média por grupo
+  summarise(mean_idade = mean(idade), .groups = "drop")
+
+dados_limpos
+```
+
+### Vantagens do Encadeamento
+
+1.  **Legibilidade**: Código lido de cima para baixo, como uma receita
+2.  **Manutenção**: Fácil adicionar, remover ou modificar etapas
+3.  **Eficiência**: Evita criar múltiplos objetos intermediários
+4.  **Debug**: Fácil testar executando até determinado ponto
+
+### Dica para Debug
+
+Você pode executar o pipeline até qualquer ponto selecionando o código desejado:
+
+```{r}
+#| label: debug-pipeline
+#| eval: false
+
+# Selecione e execute até a linha que deseja inspecionar
+dados |>
+  select(SEXO, RACA_COR, IDADE, MORTE, COD_IDADE) |>
+  filter(COD_IDADE == "Anos")  # Execute até aqui para ver o resultado
+# |> select(-COD_IDADE)          # Não será executado
+```
+
+## Outras Funções Úteis do dplyr
+
+### arrange(): Ordenando Dados
+
+```{r}
+#| label: arrange
+#| eval: false
+
+# Ordenar por idade (crescente)
+dados |> arrange(IDADE)
+
+# Ordenar por idade (decrescente)
+dados |> arrange(desc(IDADE))
+
+# Ordenar por múltiplas colunas
+dados |> arrange(SEXO, desc(IDADE))
+```
+
+### count(): Contagem Rápida
+
+```{r}
+#| label: count
+#| eval: false
+
+# Contar frequências de uma variável
+dados |> count(SEXO)
+
+# Contar combinações
+dados |> count(SEXO, MORTE)
+
+# Ordenar por frequência
+dados |> count(RACA_COR, sort = TRUE)
+```
+
+### distinct(): Valores Únicos
+
+```{r}
+#| label: distinct
+#| eval: false
+
+# Valores únicos de uma coluna
+dados |> distinct(SEXO)
+
+# Remover linhas duplicadas completas
+dados |> distinct()
+```
+
+### slice(): Seleção por Posição
+
+```{r}
+#| label: slice
+#| eval: false
+
+# Primeiras 10 linhas
+dados |> slice(1:10)
+
+# Linhas específicas
+dados |> slice(c(1, 5, 10))
+
+# Top 5 idades mais altas
+dados |> slice_max(IDADE, n = 5)
+
+# Bottom 5 idades mais baixas
+dados |> slice_min(IDADE, n = 5)
+```
+
+## Pacote janitor: Limpeza de Nomes
+
+O pacote **janitor** oferece funções úteis para limpeza de dados, especialmente nomes de colunas:
+
+```{r}
+#| label: janitor
+#| eval: false
+
+library(janitor)
+
+# Limpar nomes de colunas (remove acentos, espaços, caracteres especiais)
+dados <- clean_names(dados)
+
+# Antes: "Nome da Variável"
+# Depois: "nome_da_variavel"
+```
+
+## Resumo do Capítulo
+
+Neste capítulo, você aprendeu:
+
+-   **O que é o tidyverse** e seus principais pacotes
+-   Como **instalar e carregar pacotes** no R
+-   **Importar dados** de arquivos Excel com `read_excel()`
+-   **Explorar dados** com `summary()`, `glimpse()` e `str()`
+-   **Principais funções do dplyr**:
+    -   `select()` - Selecionar colunas
+    -   `filter()` - Filtrar linhas
+    -   `mutate()` - Criar/modificar colunas
+    -   `rename()` - Renomear colunas
+    -   `group_by()` e `summarise()` - Agrupar e sumarizar
+-   **Usar o pipe operator** `|>` para encadear operações
+-   **Criar pipelines complexos** de limpeza e análise de dados
+-   **Funções adicionais** como `arrange()`, `count()`, `distinct()`, `slice()`
+
+No próximo capítulo, você aprenderá a realizar **análises exploratórias de dados**, incluindo estatística descritiva, testes estatísticos e visualização com ggplot2.
+
+## Exercícios Práticos
+
+1.  Carregue o arquivo `dados_internacoes_maringa_2024.xlsx` e explore sua estrutura
+
+2.  Crie um pipeline que:
+
+    -   Selecione as colunas SEXO, IDADE, DIAS_PERM, VAL_TOT, MORTE
+    -   Filtre apenas pacientes adultos (IDADE \>= 18)
+    -   Crie uma coluna categorizando o tempo de permanência (curta: ≤3 dias, média: 4-7 dias, longa: \>7 dias)
+    -   Calcule a idade média e o valor total médio por sexo e categoria de permanência
+
+3.  Identifique as 10 especialidades médicas com maior número de internações
+
+4.  Calcule a taxa de mortalidade (%) por faixa etária (use intervalos de 10 anos)
+
+5.  Crie um data frame limpo contendo apenas internações de pacientes idosos (≥60 anos) com todas as variáveis categóricas recodificadas de forma descritiva

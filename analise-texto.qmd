@@ -1,0 +1,849 @@
+# Análise de Dados Textuais e Mineração de Texto
+
+## Introdução à Mineração de Texto
+
+A **mineração de texto (text mining)** e a **análise de sentimento** são técnicas cada vez mais importantes em pesquisas de saúde, permitindo extrair informações valiosas de dados não estruturados como narrativas de pacientes, respostas abertas em questionários, postagens em redes sociais, registros médicos, e transcrições de entrevistas.
+
+### Aplicações em Saúde
+
+- **Análise de feedback de pacientes**: Avaliar satisfação através de comentários abertos
+- **Pesquisa qualitativa**: Processar transcrições de entrevistas e grupos focais
+- **Monitoramento de redes sociais**: Acompanhar discussões públicas sobre saúde
+- **Análise de registros médicos**: Extrair informações de notas clínicas
+- **Pesquisas de percepção**: Avaliar atitudes em relação a medicamentos, tratamentos, ou políticas de saúde
+
+### Estrutura do Capítulo
+
+Neste capítulo, abordaremos:
+
+1. **Preparação e limpeza** de dados textuais
+2. **Tokenização** e análise de frequência
+3. **Visualização** com word clouds
+4. **Análise de sentimento** usando dois métodos:
+   - Abordagem baseada em **léxico** (dicionário)
+   - Abordagem baseada em **LLMs** (Large Language Models)
+5. **Regressão multinomial** para modelar sentimento
+
+## Preparação do Ambiente
+
+### Carregando Pacotes
+
+```{r}
+#| label: carregar-pacotes-texto
+#| message: false
+#| warning: false
+
+library(tidyverse)      # Manipulação de dados
+library(readxl)         # Leitura de Excel
+library(janitor)        # Limpeza de nomes
+library(tidytext)       # Mineração de texto (tokenização)
+library(wordcloud)      # Nuvens de palavras
+library(quanteda)       # Análise quantitativa de texto
+library(lexiconPT)      # Léxico de sentimentos em português
+library(tm)             # Text mining básico
+library(mall)           # Interface para LLMs locais
+library(nnet)           # Regressão multinomial
+library(gtsummary)      # Tabelas de regressão
+
+# Remover notação científica
+options(scipen = 999)
+```
+
+### Sobre os Datasets
+
+Utilizaremos dois conjuntos de dados neste capítulo:
+
+1. **entrevistas.xlsx**: Respostas abertas sobre impacto de tecnologias digitais na educação
+2. **respostas_questionario.xlsx**: Dados de percepção de marca com variáveis demográficas
+
+## Tokenização e Análise de Frequência
+
+A **tokenização** é o processo de dividir texto em unidades menores chamadas **tokens** (palavras, frases, ou n-gramas).
+
+### Importando Dados de Entrevistas
+
+```{r}
+#| label: importar-entrevistas
+#| eval: false
+
+# Importar dados de entrevistas
+dados_entrevistas <- read_excel("data/entrevistas.xlsx")
+
+# Visualizar estrutura
+glimpse(dados_entrevistas)
+```
+
+### Tokenização por Sentenças
+
+Primeiro, vamos segmentar o texto em **sentenças** para facilitar análises posteriores:
+
+```{r}
+#| label: tokenizacao-sentencas
+#| eval: false
+
+# Tokenizar em sentenças
+entrevistas_frases <- dados_entrevistas %>%
+  # Segmentar em frases (sentences)
+  unnest_tokens(output = frase,
+                input = `Como você avalia o impacto das tecnologias digitais na qualidade do ensino?`,
+                token = "sentences") %>%
+  # Agrupar por ID da entrevista
+  group_by(ID) %>%
+  # Criar identificador de frase dentro de cada entrevista
+  mutate(id_frase_entrevista = row_number()) %>%
+  ungroup() %>%
+  # Selecionar colunas relevantes
+  select(ID, id_frase_entrevista, frase)
+
+# Visualizar resultado
+head(entrevistas_frases, 10)
+```
+
+**Explicação:**
+
+- `unnest_tokens()`: Função do tidytext que separa texto em tokens
+- `token = "sentences"`: Especifica tokenização por sentenças
+- `row_number()`: Cria ID sequencial para cada frase dentro de cada entrevista
+
+### Tokenização por Palavras
+
+Para análise de frequência, tokenizamos em **palavras**:
+
+```{r}
+#| label: tokenizacao-palavras
+#| eval: false
+
+# Tokenizar em palavras
+palavras_tokens <- dados_entrevistas %>%
+  unnest_tokens(output = word,
+                input = `Como você avalia o impacto das tecnologias digitais na qualidade do ensino?`,
+                token = "words") %>%
+  select(ID, word)
+
+# Visualizar
+head(palavras_tokens, 20)
+```
+
+## Remoção de Stopwords
+
+**Stopwords** são palavras muito comuns que geralmente não carregam significado importante para análise (ex: "a", "o", "que", "de", "em").
+
+### Criando Lista de Stopwords em Português
+
+```{r}
+#| label: stopwords-portugues
+#| eval: false
+
+# Stopwords em português (lista customizada)
+stop_words_pt <- tibble(
+  word = c("a", "o", "que", "e", "do", "da", "em", "um", "para", "é",
+           "com", "não", "uma", "os", "no", "se", "na", "por", "mais", "as",
+           "dos", "como", "mas", "foi", "ao", "ele", "das", "tem", "à", "seu",
+           "sua", "ou", "ser", "quando", "muito", "há", "nos", "já", "está",
+           "eu", "também", "só", "pelo", "pela", "até", "isso", "ela", "entre",
+           "era", "depois", "sem", "mesmo", "aos", "ter", "seus", "quem", "nas",
+           "me", "esse", "eles", "estão", "você", "tinha", "foram", "essa",
+           "num", "nem", "suas", "meu", "às", "minha", "têm", "numa", "pelos",
+           "elas", "havia", "seja", "qual", "será", "nós", "tenho", "lhe",
+           "deles", "essas", "esses", "pelas", "este", "fosse", "dele", "tu",
+           "te", "vocês", "vos", "lhes", "meus", "minhas", "teu", "tua", "teus",
+           "tuas", "nosso", "nossa", "nossos", "nossas", "dela", "delas",
+           "esta", "estes", "estas", "aquele", "aquela", "aqueles", "aquelas",
+           "isto", "aquilo", "sabe", "acho", "pode", "podem", "então", "vai",
+           "são", "ainda", "bem", "só", "cada", "cada", "onde", "muitos",
+           "alguma", "alguns", "tudo", "toda", "todos", "todas")
+)
+
+# Alternativamente, usar pacote stopwords
+library(stopwords)
+stopwords_pt_pacote <- tibble(word = stopwords("pt"))
+```
+
+### Calculando Frequência de Palavras
+
+```{r}
+#| label: frequencia-palavras
+#| eval: false
+
+# Calcular frequência, removendo stopwords
+palavras_frequentes <- dados_entrevistas %>%
+  unnest_tokens(word, `Como você avalia o impacto das tecnologias digitais na qualidade do ensino?`) %>%
+  anti_join(stop_words_pt, by = "word") %>%  # Remove stopwords
+  count(word, sort = TRUE) %>%                # Conta frequência
+  filter(n > 1)                               # Remove palavras únicas
+
+# Visualizar top 20 palavras
+print(palavras_frequentes, n = 20)
+```
+
+### Visualizando Frequência com Gráfico de Barras
+
+```{r}
+#| label: grafico-frequencia
+#| eval: false
+
+# Top 20 palavras mais frequentes
+palavras_frequentes %>%
+  slice_max(n, n = 20) %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(x = n, y = word)) +
+  geom_col(fill = "steelblue") +
+  labs(title = "20 Palavras Mais Frequentes",
+       x = "Frequência",
+       y = "Palavra") +
+  theme_minimal()
+```
+
+## Visualização com Word Clouds
+
+**Word clouds (nuvens de palavras)** são representações visuais onde o tamanho da palavra é proporcional à sua frequência.
+
+### Criando uma Função para Word Cloud
+
+```{r}
+#| label: funcao-wordcloud
+#| eval: false
+
+# Função para criar word cloud
+criar_wordcloud <- function(coluna) {
+  # Processar texto
+  palavras <- coluna %>%
+    str_to_lower() %>%                         # Minúsculas
+    str_replace_all("[[:punct:]]", "") %>%     # Remover pontuação
+    str_replace_all("[[:digit:]]", "") %>%     # Remover números
+    str_split("\\s+") %>%                      # Dividir por espaços
+    unlist()
+
+  # Remover stopwords e palavras curtas
+  stopwords_pt <- stopwords("portuguese")
+  palavras <- palavras[!palavras %in% stopwords_pt & nchar(palavras) > 2]
+
+  # Contar frequência
+  freq_palavras <- table(palavras) %>%
+    as.data.frame() %>%
+    arrange(desc(Freq)) %>%
+    filter(Freq > 1)  # Apenas palavras que aparecem mais de 1 vez
+
+  # Plotar word cloud
+  wordcloud(words = freq_palavras$palavras,
+            freq = freq_palavras$Freq,
+            max.words = 100,              # Máximo de palavras
+            scale = c(3, 0.5),            # Escala de tamanho
+            random.order = FALSE,         # Palavras mais frequentes no centro
+            rot.per = 0.35,               # 35% de palavras rotacionadas
+            colors = brewer.pal(8, "Dark2"))  # Paleta de cores
+}
+```
+
+### Aplicando a Função
+
+```{r}
+#| label: aplicar-wordcloud
+#| eval: false
+
+# Word cloud para primeira pergunta
+criar_wordcloud(dados_entrevistas$`Como você avalia o impacto das tecnologias digitais na qualidade do ensino?`)
+
+# Word cloud para segunda pergunta
+criar_wordcloud(dados_entrevistas$`Quais são os principais desafios para a implementação dessas tecnologias nas instituições de ensino?`)
+```
+
+**Interpretação:**
+
+- Palavras **maiores** aparecem com maior frequência
+- Palavras **centrais** geralmente são as mais frequentes
+- **Cores** ajudam a diferenciar grupos de palavras
+- Útil para identificar temas principais rapidamente
+
+## Análise de Sentimento: Abordagem Baseada em Léxico
+
+A **análise de sentimento baseada em léxico** usa dicionários pré-definidos que atribuem polaridade (positiva, negativa, neutra) a palavras.
+
+### Sobre o Léxico SentiLex-PT
+
+O **SentiLex-PT** é um léxico de sentimentos para português que atribui:
+
+- **Polaridade**: -1 (negativo), 0 (neutro), +1 (positivo)
+- **Scores contínuos**: Valores intermediários indicam intensidade
+
+### Importando Dados de Percepção de Marca
+
+```{r}
+#| label: importar-percepcao
+#| eval: false
+
+# Importar dados de questionário sobre percepção de marca
+dados_marca <- read_excel("data/respostas_questionario.xlsx")
+
+# Limpar nomes e preparar dados
+dados_marca <- dados_marca %>%
+  clean_names() %>%
+  mutate(across(c(genero, estado, nivel_de_escolaridade,
+                  avaliacao_da_marca_1_5), as.factor))
+
+# Visualizar estrutura
+glimpse(dados_marca)
+```
+
+### Carregando o Léxico de Sentimentos
+
+```{r}
+#| label: carregar-lexicon
+#| eval: false
+
+# Carregar léxico SentiLex-PT
+data("sentiLex_lem_PT02")
+
+# Visualizar estrutura do léxico
+head(sentiLex_lem_PT02)
+```
+
+### Pré-processamento do Texto
+
+```{r}
+#| label: preprocessamento-lexicon
+#| eval: false
+
+# Pré-processar texto e tokenizar
+dados_tokens <- dados_marca %>%
+  mutate(percepcao_da_marca = percepcao_da_marca %>%
+           tolower() %>%              # Converter para minúsculas
+           removePunctuation()) %>%   # Remover pontuação
+  unnest_tokens(term, percepcao_da_marca)  # Tokenizar
+
+# Remover stopwords
+stopwords_pt <- stopwords("pt")
+dados_tokens <- dados_tokens %>%
+  filter(!term %in% stopwords_pt)
+
+# Visualizar tokens
+head(dados_tokens, 20)
+```
+
+### Atribuindo Polaridade às Palavras
+
+```{r}
+#| label: juntar-lexicon
+#| eval: false
+
+# Juntar tokens com o léxico de sentimentos
+dados_sent <- dados_tokens %>%
+  left_join(sentiLex_lem_PT02, by = "term")
+
+# Visualizar resultado (mostra polaridade para cada palavra)
+dados_sent %>%
+  select(id, term, polarity) %>%
+  filter(!is.na(polarity)) %>%  # Apenas palavras com polaridade
+  head(20)
+```
+
+### Calculando Sentimento Total por Resposta
+
+```{r}
+#| label: calcular-sentimento
+#| eval: false
+
+# Calcular sentimento total por ID (somar polaridades)
+sentimentos_lexicon <- dados_sent %>%
+  group_by(id) %>%
+  summarise(sentimento_total = sum(polarity, na.rm = TRUE),
+            n_palavras_sentimento = sum(!is.na(polarity)))
+
+# Visualizar distribuição
+sentimentos_lexicon %>%
+  ggplot(aes(x = sentimento_total)) +
+  geom_histogram(bins = 30, fill = "steelblue", color = "white") +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "red") +
+  labs(title = "Distribuição do Sentimento (Léxico)",
+       x = "Escore de Sentimento",
+       y = "Frequência") +
+  theme_minimal()
+```
+
+**Interpretação:**
+
+- **Sentimento total > 0**: Sentimento predominantemente positivo
+- **Sentimento total < 0**: Sentimento predominantemente negativo
+- **Sentimento total ≈ 0**: Sentimento neutro ou misto
+
+### Classificando em Categorias
+
+```{r}
+#| label: classificar-sentimento-lexicon
+#| eval: false
+
+# Classificar em categorias
+sentimentos_lexicon <- sentimentos_lexicon %>%
+  mutate(categoria_sentimento = case_when(
+    sentimento_total > 0 ~ "Positivo",
+    sentimento_total < 0 ~ "Negativo",
+    TRUE ~ "Neutro"
+  ))
+
+# Contar categorias
+sentimentos_lexicon %>%
+  count(categoria_sentimento) %>%
+  mutate(percentual = n / sum(n) * 100)
+```
+
+## Análise de Sentimento: Abordagem com LLMs
+
+Os **Large Language Models (LLMs)** oferecem uma abordagem mais sofisticada para análise de sentimento, capturando nuances contextuais que léxicos não conseguem.
+
+### Sobre Ollama e o Pacote mall
+
+**Ollama** é uma ferramenta que permite rodar LLMs localmente (sem necessidade de APIs pagas ou conexão com internet após download do modelo).
+
+**mall** é um pacote R que fornece interface para interagir com LLMs através do Ollama.
+
+### Instalação do Ollama (Passo a Passo)
+
+::: {.callout-important}
+## Configuração Necessária
+
+Esta seção requer instalação prévia do Ollama no seu computador. Siga os passos:
+
+1. **Baixe o Ollama**: [https://ollama.com/download](https://ollama.com/download)
+2. **Instale** seguindo instruções para seu sistema operacional
+3. **Baixe um modelo** (recomendado: llama3.2):
+   ```bash
+   ollama pull llama3.2
+   ```
+4. **Verifique** se está rodando:
+   ```bash
+   ollama list
+   ```
+
+**Alternativa:** Se não puder instalar Ollama, pule esta seção e use apenas a abordagem baseada em léxico.
+:::
+
+### Configurando o Modelo LLM
+
+```{r}
+#| label: configurar-llm
+#| eval: false
+
+# Escolher modelo (deve estar instalado via Ollama)
+llm_use(model = "llama3.2", seed = 100)  # seed para reprodutibilidade
+```
+
+**Modelos disponíveis no Ollama:**
+
+- **llama3.2** (3B parâmetros): Rápido, bom para tarefas simples
+- **llama3.1** (8B parâmetros): Balanceado entre velocidade e qualidade
+- **mistral** (7B parâmetros): Alternativa de alta qualidade
+- **gemma2** (9B parâmetros): Desenvolvido pelo Google
+
+### Análise de Sentimento com LLM
+
+```{r}
+#| label: sentimento-llm
+#| eval: false
+
+# Realizar análise de sentimento usando LLM
+dados_marca_llm <- dados_marca %>%
+  llm_sentiment(percepcao_da_marca,
+                pred_name = "sentimento_resposta",
+                additional_prompt = "Realize uma análise de sentimento em cada linha, que corresponde a uma resposta de uma entrevista sobre a percepção de uma marca. Classifique como positivo, negativo ou neutro.")
+
+# Mover coluna de sentimento para melhor visualização
+dados_marca_llm <- dados_marca_llm %>%
+  relocate(sentimento_resposta, .before = sugestoes_de_melhoria)
+
+# Converter para fator
+dados_marca_llm$sentimento_resposta <- as.factor(dados_marca_llm$sentimento_resposta)
+
+# Visualizar resultado
+table(dados_marca_llm$sentimento_resposta)
+```
+
+### Visualizando Resultados do LLM
+
+```{r}
+#| label: visualizar-sentimento-llm
+#| eval: false
+
+# Gráfico de barras - contagens
+ggplot(dados_marca_llm, aes(x = sentimento_resposta)) +
+  geom_bar(fill = "steelblue") +
+  labs(title = "Distribuição de Sentimentos (LLM)",
+       x = "Sentimento",
+       y = "Frequência") +
+  theme_minimal()
+
+# Gráfico de barras - proporções
+dados_prop <- dados_marca_llm %>%
+  count(sentimento_resposta) %>%
+  mutate(percent = n / sum(n) * 100)
+
+ggplot(dados_prop, aes(x = sentimento_resposta, y = percent)) +
+  geom_bar(stat = "identity", fill = "lightblue") +
+  geom_text(aes(label = paste0(round(percent, 1), "%")),
+            vjust = -0.5) +
+  labs(title = "Proporção de Sentimentos (LLM)",
+       x = "Sentimento",
+       y = "Porcentagem (%)") +
+  scale_y_continuous(limits = c(0, 100)) +
+  theme_minimal()
+```
+
+### Outras Capacidades dos LLMs
+
+#### Sumarização de Texto
+
+```{r}
+#| label: sumarizacao-llm
+#| eval: false
+
+# Sumarizar respostas longas
+dados_sumarizados <- dados_entrevistas %>%
+  llm_summarize(`Como você avalia o impacto das tecnologias digitais na qualidade do ensino?`,
+                pred_name = "resumo",
+                max_words = 50)  # Resumo em até 50 palavras
+
+# Ver resumos
+dados_sumarizados %>%
+  select(ID, resumo) %>%
+  head(5)
+```
+
+#### Classificação Customizada
+
+```{r}
+#| label: classificacao-llm
+#| eval: false
+
+# Classificar em categorias customizadas
+dados_classificados <- dados_entrevistas %>%
+  llm_classify(`Quais são os principais desafios para a implementação dessas tecnologias nas instituições de ensino?`,
+               labels = c("infraestrutura", "capacitação", "resistência", "custos"),
+               pred_name = "categoria_desafio")
+
+# Ver distribuição de categorias
+table(dados_classificados$categoria_desafio)
+```
+
+### Vantagens e Desvantagens: Léxico vs. LLM
+
+| **Aspecto** | **Abordagem Léxico** | **Abordagem LLM** |
+|-------------|---------------------|------------------|
+| **Velocidade** | Muito rápida | Mais lenta |
+| **Recursos computacionais** | Mínimos | Requer GPU ou espera |
+| **Precisão** | Moderada | Alta |
+| **Nuances contextuais** | Não captura | Captura bem |
+| **Ironia/Sarcasmo** | Não detecta | Pode detectar |
+| **Configuração** | Simples | Requer instalação Ollama |
+| **Reprodutibilidade** | Alta | Alta (com seed) |
+| **Custo** | Gratuito | Gratuito (local) |
+
+**Recomendação:** Use léxico para análises exploratórias rápidas e LLM para análises finais onde precisão é crítica.
+
+## Regressão Multinomial
+
+A **regressão multinomial** é uma extensão da regressão logística para variáveis resposta **categóricas com 3+ níveis não ordenados**.
+
+### Quando Usar?
+
+- **Variável resposta**: Categórica com 3+ categorias (ex: positivo, neutro, negativo)
+- **Variáveis preditoras**: Numéricas e/ou categóricas
+- **Objetivo**: Modelar a probabilidade de cada categoria em função das preditoras
+
+### Preparando Dados para Regressão
+
+```{r}
+#| label: preparar-regressao
+#| eval: false
+
+# Remover NAs (regressão não aceita valores faltantes)
+dados_modelo <- dados_marca_llm %>%
+  drop_na(sentimento_resposta, idade, genero)
+
+# Converter sentimento para fator (se ainda não for)
+dados_modelo$sentimento_resposta <- as.factor(dados_modelo$sentimento_resposta)
+
+# Verificar níveis da variável resposta
+levels(dados_modelo$sentimento_resposta)
+```
+
+### Ajustando o Modelo Multinomial
+
+```{r}
+#| label: modelo-multinomial
+#| eval: false
+
+library(nnet)
+
+# Ajustar modelo multinomial
+# "neutro" será a categoria de referência (por padrão, a primeira)
+modelo_multi <- multinom(sentimento_resposta ~ idade + genero,
+                         data = dados_modelo)
+
+# Resumo do modelo
+summary(modelo_multi)
+```
+
+### Interpretação dos Coeficientes
+
+A regressão multinomial estima coeficientes para cada categoria **em relação a uma categoria de referência**.
+
+**Exemplo de output:**
+
+```
+Call:
+multinom(formula = sentimento_resposta ~ idade + genero, data = dados_modelo)
+
+Coefficients:
+           (Intercept)      idade  generoMasculino
+negativo     -0.234      0.012         -0.456
+positivo      1.123     -0.008          0.234
+```
+
+**Interpretação:**
+
+- **Categoria de referência**: "neutro" (não aparece no output)
+- **Coeficientes para "negativo"**: Log-odds de negativo vs. neutro
+  - `idade = 0.012`: Para cada ano adicional, log-odds de negativo vs. neutro aumenta 0.012
+  - `generoMasculino = -0.456`: Homens têm log-odds menores de negativo vs. neutro (comparado a mulheres)
+- **Coeficientes para "positivo"**: Log-odds de positivo vs. neutro
+
+### Odds Ratios (Razões de Chance)
+
+```{r}
+#| label: odds-ratios-multinomial
+#| eval: false
+
+# Calcular odds ratios (exponentiate os coeficientes)
+exp(coef(modelo_multi))
+
+# Ou usar gtsummary para tabela formatada
+tbl_regression(modelo_multi, exponentiate = TRUE)
+```
+
+**Interpretação de OR:**
+
+- **OR = 1**: Sem efeito
+- **OR > 1**: Aumenta a chance daquela categoria (vs. referência)
+- **OR < 1**: Diminui a chance daquela categoria (vs. referência)
+
+### Verificando Multicolinearidade
+
+```{r}
+#| label: vif-multinomial
+#| eval: false
+
+library(car)
+
+# Calcular VIF (Variance Inflation Factor)
+vif(modelo_multi)
+```
+
+**Interpretação:**
+
+- **VIF < 5**: Multicolinearidade aceitável
+- **VIF > 10**: Multicolinearidade problemática
+
+### Predições do Modelo
+
+```{r}
+#| label: predicoes-multinomial
+#| eval: false
+
+# Predições de probabilidade para cada categoria
+predicoes <- predict(modelo_multi, type = "probs")
+
+# Adicionar ao dataframe
+dados_modelo <- dados_modelo %>%
+  bind_cols(as.data.frame(predicoes))
+
+# Visualizar primeiras predições
+dados_modelo %>%
+  select(sentimento_resposta, negativo, neutro, positivo) %>%
+  head(10)
+```
+
+### Visualizando Probabilidades Preditas
+
+```{r}
+#| label: visualizar-predicoes
+#| eval: false
+
+# Criar grid de valores para predição
+grid_predicao <- expand.grid(
+  idade = seq(18, 65, by = 1),
+  genero = c("Feminino", "Masculino")
+)
+
+# Predizer probabilidades
+grid_predicao <- grid_predicao %>%
+  bind_cols(as.data.frame(predict(modelo_multi, newdata = grid_predicao, type = "probs")))
+
+# Transformar para formato longo
+grid_longo <- grid_predicao %>%
+  pivot_longer(cols = c(negativo, neutro, positivo),
+               names_to = "sentimento",
+               values_to = "probabilidade")
+
+# Plotar
+ggplot(grid_longo, aes(x = idade, y = probabilidade, color = sentimento)) +
+  geom_line(size = 1.2) +
+  facet_wrap(~ genero) +
+  labs(title = "Probabilidade Predita de Sentimento por Idade e Gênero",
+       x = "Idade",
+       y = "Probabilidade",
+       color = "Sentimento") +
+  scale_color_manual(values = c("negativo" = "red",
+                                 "neutro" = "gray",
+                                 "positivo" = "green")) +
+  theme_minimal()
+```
+
+## Considerações Éticas
+
+### Privacidade e Anonimização
+
+- **Remova informações identificáveis** antes de análise (nomes, CPF, endereços)
+- **Agregue resultados** quando reportar para evitar identificação individual
+- **Obtenha consentimento** quando usar dados de redes sociais ou comentários públicos
+
+### Viés em Análise de Sentimento
+
+- **Léxicos** podem ter viés cultural ou temporal
+- **LLMs** podem herdar vieses dos dados de treinamento
+- **Sempre valide** resultados com amostra manual antes de generalizar
+
+### Considerações Culturais para Português
+
+- Português brasileiro vs. europeu têm diferenças lexicais
+- **Contexto importa**: "legal" pode ser positivo ("que legal!") ou neutro ("aspecto legal")
+- **Regionalismos** podem não ser capturados por léxicos gerais
+
+## Aplicações Práticas em Saúde
+
+### 1. Análise de Feedback de Pacientes
+
+```{r}
+#| label: exemplo-feedback
+#| eval: false
+
+# Exemplo: Analisar satisfação em comentários de alta hospitalar
+comentarios <- tibble(
+  paciente_id = 1:5,
+  comentario = c(
+    "O atendimento foi excelente, médicos muito atenciosos",
+    "Demora muito para ser atendido, experiência frustrante",
+    "Hospital limpo, mas falta comunicação da equipe",
+    "Tratamento eficaz, me senti acolhido pela equipe",
+    "Infraestrutura precária, muito barulho nos corredores"
+  )
+)
+
+# Análise de sentimento
+comentarios %>%
+  llm_sentiment(comentario, pred_name = "satisfacao") %>%
+  count(satisfacao)
+```
+
+### 2. Pesquisa Qualitativa
+
+```{r}
+#| label: exemplo-qualitativa
+#| eval: false
+
+# Exemplo: Identificar temas em entrevistas sobre adesão a tratamento
+entrevistas_adesao <- tibble(
+  participante = 1:3,
+  resposta = c(
+    "Esqueci de tomar o remédio várias vezes porque é difícil lembrar",
+    "O custo elevado dificulta a compra mensal dos medicamentos",
+    "Sinto muitos efeitos colaterais e isso me desanima a continuar"
+  )
+)
+
+# Classificar em categorias de barreiras
+entrevistas_adesao %>%
+  llm_classify(resposta,
+               labels = c("esquecimento", "custo", "efeitos_colaterais", "complexidade"),
+               pred_name = "barreira_principal")
+```
+
+### 3. Monitoramento de Redes Sociais
+
+```{r}
+#| label: exemplo-redes-sociais
+#| eval: false
+
+# Exemplo: Analisar discussões sobre vacinação no Twitter
+# (dados hipotéticos)
+tweets <- tibble(
+  tweet_id = 1:4,
+  texto = c(
+    "Tomei a vacina hoje e me sinto protegido, recomendo!",
+    "Efeitos colaterais muito fortes, precisamos de mais informação",
+    "Vacina é importante mas o acesso ainda é difícil em algumas regiões",
+    "Campanhas de vacinação são essenciais para saúde pública"
+  )
+)
+
+# Análise de sentimento
+tweets %>%
+  llm_sentiment(texto, pred_name = "sentimento") %>%
+  count(sentimento)
+```
+
+## Exercícios Práticos
+
+### Exercício 1: Análise de Frequência
+
+Use o dataset de entrevistas para:
+
+a) Tokenizar as respostas da segunda pergunta (desafios de implementação)
+b) Remover stopwords
+c) Calcular e visualizar as 15 palavras mais frequentes
+d) Criar um word cloud
+e) Interpretar os principais temas identificados
+
+### Exercício 2: Comparação Léxico vs. LLM
+
+a) Use o dataset de percepção de marca
+b) Realize análise de sentimento usando abordagem léxico
+c) Realize análise de sentimento usando LLM (se disponível)
+d) Compare os resultados: qual proporção de concordância?
+e) Examine casos de discordância e tente explicar as diferenças
+
+### Exercício 3: Regressão Multinomial
+
+Use os resultados de sentimento (LLM ou léxico) como variável resposta:
+
+a) Ajuste um modelo multinomial com idade, gênero e escolaridade como preditores
+b) Calcule e interprete os odds ratios
+c) Verifique multicolinearidade com VIF
+d) Crie visualizações das probabilidades preditas
+e) Escreva uma interpretação dos resultados em formato de artigo
+
+### Exercício 4: Análise Temática
+
+a) Use o dataset de entrevistas
+b) Use LLM para classificar respostas em temas customizados (escolha 4-5 temas)
+c) Conte a frequência de cada tema
+d) Crie um gráfico de barras mostrando a distribuição
+e) Para cada tema, crie um word cloud das respostas classificadas naquele tema
+
+### Exercício 5: Aplicação em Saúde
+
+Escolha um cenário de saúde (satisfação do paciente, adesão a tratamento, percepção de risco):
+
+a) Crie um pequeno dataset simulado com 10-15 respostas textuais
+b) Realize análise completa: tokenização, word cloud, análise de sentimento
+c) Se apropriado, ajuste um modelo multinomial
+d) Interprete os resultados no contexto clínico
+e) Discuta limitações e considerações éticas
+
+---
+
+**Referências:**
+
+- Silge, J., & Robinson, D. (2017). *Text Mining with R: A Tidy Approach*. O'Reilly Media.
+- Welbers, K., Van Atteveldt, W., & Benoit, K. (2017). Text analysis in R. *Communication Methods and Measures*, 11(4), 245-265.
+- Taboada, M., et al. (2011). Lexicon-based methods for sentiment analysis. *Computational Linguistics*, 37(2), 267-307.
+- Devlin, J., et al. (2019). BERT: Pre-training of deep bidirectional transformers for language understanding. *NAACL-HLT*.
+- Freire, T., et al. (2014). SENTILEX-PT: Principais características e potencialidades. *Oslo Studies in Language*, 6(1).

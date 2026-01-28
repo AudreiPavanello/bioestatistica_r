@@ -1,0 +1,838 @@
+# Testes Estatísticos
+
+## Introdução aos Testes de Hipóteses
+
+Os **testes estatísticos** são ferramentas fundamentais para responder perguntas científicas com base em dados. Eles nos permitem tomar decisões fundamentadas sobre relações, diferenças e associações entre variáveis, quantificando a incerteza das nossas conclusões.
+
+### Lógica dos Testes de Hipóteses
+
+Todo teste estatístico segue uma lógica baseada em duas hipóteses complementares:
+
+- **Hipótese Nula (H₀)**: Assume que não existe efeito, diferença ou associação entre as variáveis. É a hipótese de "status quo" ou "nenhuma mudança".
+- **Hipótese Alternativa (H₁)**: Propõe que existe um efeito, diferença ou associação. É o que geralmente buscamos evidenciar.
+
+**Exemplo prático:**
+```
+H₀: A média de idade entre homens e mulheres internados é igual
+H₁: A média de idade entre homens e mulheres internados é diferente
+```
+
+### Valor-p e Significância Estatística
+
+O **valor-p** (p-value) representa a probabilidade de obter os resultados observados (ou mais extremos) assumindo que a hipótese nula é verdadeira.
+
+**Interpretação:**
+
+- **p < 0,05**: Rejeitamos H₀ → evidência estatisticamente significativa de que existe diferença/associação
+- **p ≥ 0,05**: Não rejeitamos H₀ → não há evidência estatística suficiente para afirmar que existe diferença/associação
+
+**Importante:** Significância estatística (p < 0,05) não implica necessariamente relevância clínica ou prática. Sempre interprete os resultados no contexto do estudo.
+
+### Intervalos de Confiança
+
+Os **intervalos de confiança (IC)** fornecem uma faixa de valores plausíveis para o parâmetro populacional.
+
+- **IC 95%**: Temos 95% de confiança que o valor verdadeiro está dentro deste intervalo
+- Se o IC não inclui zero (para diferenças) ou 1 (para razões), o resultado é estatisticamente significativo (p < 0,05)
+
+### Erros em Testes de Hipóteses
+
+| | **H₀ Verdadeira** | **H₀ Falsa** |
+|---|---|---|
+| **Rejeitar H₀** | Erro Tipo I (α) | Decisão correta |
+| **Não rejeitar H₀** | Decisão correta | Erro Tipo II (β) |
+
+- **Erro Tipo I (α)**: Falso positivo - rejeitar H₀ quando ela é verdadeira (fixado em 0,05)
+- **Erro Tipo II (β)**: Falso negativo - não rejeitar H₀ quando ela é falsa
+
+## Árvore de Decisão: Qual Teste Usar?
+
+Antes de realizar qualquer teste, é fundamental escolher o teste apropriado para suas variáveis e pergunta de pesquisa.
+
+### Fluxograma de Seleção de Testes
+
+```{mermaid}
+flowchart TD
+    A[Qual é o seu objetivo?] --> B{Comparar grupos?}
+    A --> C{Testar associação?}
+    A --> D{Medir correlação?}
+
+    B --> E{Variável dependente}
+    E --> F[Numérica]
+    E --> G[Categórica]
+
+    F --> H{Quantos grupos?}
+    H --> I[2 grupos]
+    H --> J[3+ grupos]
+
+    I --> K{Dados normais?}
+    K --> |Sim| L[Teste t]
+    K --> |Não| M[Mann-Whitney]
+
+    J --> N{Dados normais?}
+    N --> |Sim| O[ANOVA]
+    N --> |Não| P[Kruskal-Wallis]
+
+    C --> Q{Ambas categóricas}
+    Q --> R{Tamanho da amostra?}
+    R --> |Grande| S[Qui-quadrado]
+    R --> |Pequena| T[Teste Exato de Fisher]
+
+    D --> U{Ambas numéricas}
+    U --> V{Dados normais?}
+    V --> |Sim| W[Correlação de Pearson]
+    V --> |Não| X[Correlação de Spearman]
+```
+
+### Tabela Resumo de Testes
+
+| **Objetivo** | **Variável Dependente** | **Variável Independente** | **Teste Paramétrico** | **Teste Não-Paramétrico** |
+|--------------|-------------------------|---------------------------|----------------------|--------------------------|
+| Comparar 2 grupos | Numérica | Categórica (2 níveis) | Teste t | Mann-Whitney |
+| Comparar 3+ grupos | Numérica | Categórica (3+ níveis) | ANOVA | Kruskal-Wallis |
+| Testar associação | Categórica | Categórica | Qui-quadrado | Teste Exato de Fisher |
+| Medir correlação | Numérica | Numérica | Pearson | Spearman / Kendall |
+
+## Preparação dos Dados
+
+Antes de realizar os testes estatísticos, precisamos carregar os pacotes e preparar os dados.
+
+```{r}
+#| label: carregar-pacotes-testes
+#| message: false
+#| warning: false
+
+library(tidyverse)    # Manipulação de dados
+library(readxl)       # Leitura de Excel
+library(janitor)      # Limpeza de dados
+library(car)          # Testes estatísticos avançados
+library(FSA)          # Teste de Dunn (post-hoc Kruskal-Wallis)
+library(ggpubr)       # Gráficos estatísticos
+
+# Remover notação científica
+options(scipen = 999)
+```
+
+```{r}
+#| label: importar-dados-testes
+#| eval: false
+
+# Carregar dados de internações
+dados <- read_excel("data/dados_internacoes_maringa_2024.xlsx")
+
+# Preparar dados
+dados_limpos <- dados |>
+  clean_names() |>
+  filter(cod_idade == "Anos") |>
+  select(sexo, val_tot, raca_cor, idade, morte, dias_perm) |>
+  mutate(
+    raca_cor = case_when(
+      raca_cor == '01' ~ "Branca",
+      raca_cor == "02" ~ "Preta",
+      raca_cor == "03" ~ "Parda",
+      raca_cor == "04" ~ "Amarela",
+      raca_cor == "05" ~ "Indígena"
+    )
+  ) |>
+  mutate(across(c(val_tot, idade, dias_perm), as.numeric)) |>
+  mutate(across(c(sexo, raca_cor, morte), as.factor)) |>
+  rename(df = everything())  # Para compatibilidade com scripts existentes
+```
+
+## Pressupostos dos Testes Paramétricos
+
+Os testes **paramétricos** (t-test, ANOVA, Pearson) assumem que os dados seguem certas condições. Quando essas condições não são atendidas, devemos usar alternativas **não-paramétricas**.
+
+### Teste de Normalidade
+
+A normalidade dos dados é o pressuposto mais importante para testes paramétricos.
+
+#### Avaliação Visual
+
+O **gráfico de densidade** ou **histograma** fornece uma primeira impressão sobre a distribuição:
+
+```{r}
+#| label: visualizar-normalidade
+#| eval: false
+
+# Histograma da idade
+ggplot(dados_limpos, aes(x = idade)) +
+  geom_histogram(bins = 30, fill = "steelblue", color = "white") +
+  labs(title = "Distribuição da Idade",
+       x = "Idade (anos)",
+       y = "Frequência") +
+  theme_minimal()
+```
+
+#### Teste de Shapiro-Wilk
+
+O **teste de Shapiro-Wilk** é o teste mais utilizado para avaliar normalidade:
+
+```{r}
+#| label: shapiro-test
+#| eval: false
+
+# Teste de Shapiro-Wilk (para amostras < 5000)
+shapiro.test(sample(dados_limpos$idade, 5000))
+```
+
+**Interpretação:**
+
+- **H₀**: Os dados seguem distribuição normal
+- **p > 0,05**: Não rejeitamos H₀ → dados são normais
+- **p < 0,05**: Rejeitamos H₀ → dados não são normais
+
+**Importante:** O teste de Shapiro-Wilk é sensível ao tamanho da amostra. Com amostras muito grandes, pequenos desvios da normalidade podem ser significativos. Use também avaliação visual.
+
+#### Teste de Kolmogorov-Smirnov
+
+Alternativa para grandes amostras:
+
+```{r}
+#| label: ks-test
+#| eval: false
+
+# Teste de Kolmogorov-Smirnov
+ks.test(dados_limpos$idade, "pnorm",
+        mean = mean(dados_limpos$idade),
+        sd = sd(dados_limpos$idade))
+```
+
+### Homogeneidade de Variâncias
+
+Para testes que comparam grupos (t-test, ANOVA), as variâncias entre grupos devem ser similares.
+
+#### Teste de Levene
+
+```{r}
+#| label: levene-test
+#| eval: false
+
+# Teste de Levene para homogeneidade de variâncias
+leveneTest(idade ~ sexo, data = dados_limpos)
+```
+
+**Interpretação:**
+
+- **H₀**: As variâncias dos grupos são iguais
+- **p > 0,05**: Variâncias homogêneas → pode usar teste t padrão
+- **p < 0,05**: Variâncias heterogêneas → usar Welch's t-test
+
+## Testes Paramétricos
+
+### Teste t de Student
+
+O **teste t** compara as médias de **dois grupos independentes** assumindo distribuição normal e variâncias homogêneas.
+
+#### Quando usar?
+
+- **Variável dependente**: Numérica contínua (ex: idade, custo, tempo)
+- **Variável independente**: Categórica binária (ex: sexo, grupo tratamento/controle)
+- **Pressupostos**: Normalidade e homogeneidade de variâncias
+
+#### Exemplo: Diferença de idade entre sexos
+
+**Pergunta de pesquisa:** Há diferença na idade média de internação entre homens e mulheres?
+
+```{r}
+#| label: teste-t-exemplo
+#| eval: false
+
+# Passo 1: Verificar pressupostos
+# Normalidade
+shapiro.test(sample(dados_limpos$idade, 5000))
+
+# Homogeneidade de variâncias
+leveneTest(idade ~ sexo, data = dados_limpos)
+
+# Passo 2: Realizar teste t
+# Se variâncias iguais (Levene p > 0.05)
+t.test(idade ~ sexo, data = dados_limpos, var.equal = TRUE)
+
+# Se variâncias diferentes (Levene p < 0.05) - Welch's t-test
+t.test(idade ~ sexo, data = dados_limpos, var.equal = FALSE)
+```
+
+#### Interpretação dos Resultados
+
+```
+Welch Two Sample t-test
+
+data:  idade by sexo
+t = -5.3159, df = 28465, p-value = 1.066e-07
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -1.925  -1.094
+sample estimates:
+mean in group Feminino mean in group Masculino
+              45.09                  46.60
+```
+
+**Interpretação:**
+
+- **t = -5.32**: Estatística t (quanto maior, maior a diferença entre grupos)
+- **df = 28.465**: Graus de liberdade (relacionado ao tamanho da amostra)
+- **p < 0,001**: Forte evidência de diferença significativa entre sexos
+- **IC 95% [-1,93; -1,09]**: Não inclui zero → diferença é significativa
+- **Médias**: Homens são internados, em média, 1,51 anos mais velhos que mulheres (46,60 - 45,09)
+
+#### Visualização
+
+```{r}
+#| label: boxplot-teste-t
+#| eval: false
+
+ggplot(dados_limpos, aes(x = sexo, y = idade, fill = sexo)) +
+  geom_boxplot(alpha = 0.6) +
+  stat_compare_means(method = "t.test") +  # Adiciona p-valor
+  labs(title = "Distribuição da Idade por Sexo",
+       x = "Sexo",
+       y = "Idade (anos)") +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+### ANOVA (Análise de Variância)
+
+A **ANOVA** compara as médias de **três ou mais grupos independentes**.
+
+#### Quando usar?
+
+- **Variável dependente**: Numérica contínua
+- **Variável independente**: Categórica com 3+ níveis (ex: raça/cor, região, faixa etária)
+- **Pressupostos**: Normalidade dos resíduos e homogeneidade de variâncias
+
+#### Exemplo: Idade média entre grupos de raça/cor
+
+**Pergunta de pesquisa:** A idade média de internação varia entre os diferentes grupos de raça/cor?
+
+```{r}
+#| label: anova-exemplo
+#| eval: false
+
+# Ajustar modelo ANOVA
+modelo_anova <- aov(idade ~ raca_cor, data = dados_limpos)
+
+# Resultados da ANOVA
+summary(modelo_anova)
+```
+
+#### Interpretação dos Resultados
+
+```
+            Df   Sum Sq Mean Sq F value   Pr(>F)
+raca_cor     4    24015    6004   23.11 < 2e-16 ***
+Residuals 28994  7531748     260
+```
+
+**Interpretação:**
+
+- **F = 23,11**: Estatística F (razão entre variância entre grupos / variância dentro dos grupos)
+- **p < 0,001**: Pelo menos um grupo difere significativamente dos demais
+- **Limitação**: A ANOVA apenas indica que existe diferença, mas não informa **quais** grupos diferem
+
+#### Post-hoc: Teste de Tukey HSD
+
+Para identificar **quais grupos** diferem entre si, usamos testes post-hoc:
+
+```{r}
+#| label: tukey-hsd
+#| eval: false
+
+# Teste de Tukey para comparações múltiplas
+TukeyHSD(modelo_anova)
+```
+
+#### Interpretação do Teste de Tukey
+
+```
+           diff      lwr      upr   p adj
+Preta-Branca     -2.14   -3.85   -0.43  0.0047
+Parda-Branca     -1.67   -2.35   -0.98  0.0000
+Amarela-Branca    0.84   -2.76    4.44  0.9785
+Indígena-Branca  -4.23  -10.80    2.34  0.4320
+...
+```
+
+**Interpretação:**
+
+- **diff**: Diferença média entre os grupos
+- **lwr / upr**: Intervalo de confiança 95%
+- **p adj**: Valor-p ajustado para múltiplas comparações
+- Se **p adj < 0,05** e o IC não inclui zero → grupos diferem significativamente
+
+**Exemplo:** Pessoas de raça Preta são internadas, em média, 2,14 anos mais jovens que pessoas de raça Branca (p = 0,0047).
+
+#### Verificação dos Pressupostos da ANOVA
+
+```{r}
+#| label: pressupostos-anova
+#| eval: false
+
+# 1. Normalidade dos resíduos
+shapiro.test(sample(residuals(modelo_anova), 5000))
+
+# Q-Q plot dos resíduos
+qqnorm(residuals(modelo_anova))
+qqline(residuals(modelo_anova), col = "red")
+
+# 2. Homogeneidade de variâncias
+leveneTest(idade ~ raca_cor, data = dados_limpos)
+```
+
+#### Visualização
+
+```{r}
+#| label: boxplot-anova
+#| eval: false
+
+ggplot(dados_limpos, aes(x = raca_cor, y = idade, fill = raca_cor)) +
+  geom_boxplot(alpha = 0.6) +
+  stat_compare_means(method = "anova") +
+  labs(title = "Distribuição da Idade por Raça/Cor",
+       x = "Raça/Cor",
+       y = "Idade (anos)") +
+  theme_minimal() +
+  theme(legend.position = "none",
+        axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+## Testes Não-Paramétricos
+
+Quando os pressupostos dos testes paramétricos não são atendidos (dados não normais ou variâncias heterogêneas), usamos alternativas não-paramétricas.
+
+### Teste de Mann-Whitney (Wilcoxon)
+
+Alternativa não-paramétrica ao **teste t** para comparar **dois grupos independentes**.
+
+#### Quando usar?
+
+- Os dados **não** seguem distribuição normal
+- Variâncias muito heterogêneas
+- Dados ordinais (ex: escalas Likert)
+- Presença de outliers extremos
+
+#### Exemplo
+
+```{r}
+#| label: mann-whitney
+#| eval: false
+
+# Teste de Mann-Whitney
+wilcox.test(idade ~ sexo, data = dados_limpos)
+```
+
+#### Interpretação
+
+```
+Wilcoxon rank sum test with continuity correction
+
+data:  idade by sexo
+W = 98234567, p-value = 2.234e-07
+alternative hypothesis: true location shift is not equal to 0
+```
+
+**Interpretação:**
+
+- **W**: Estatística do teste (soma dos ranks)
+- **p < 0,001**: Diferença significativa entre os grupos
+- O teste compara **medianas** e distribuições, não médias
+- Para identificar a direcionalidade, calcular medianas por grupo:
+
+```{r}
+#| label: medianas-grupo
+#| eval: false
+
+dados_limpos %>%
+  group_by(sexo) %>%
+  summarise(
+    Mediana = median(idade, na.rm = TRUE),
+    Media = mean(idade, na.rm = TRUE),
+    n = n()
+  )
+```
+
+### Teste de Kruskal-Wallis
+
+Alternativa não-paramétrica à **ANOVA** para comparar **três ou mais grupos**.
+
+#### Quando usar?
+
+- Dados não seguem distribuição normal
+- Variâncias heterogêneas
+- Variável dependente ordinal
+
+#### Exemplo
+
+```{r}
+#| label: kruskal-wallis
+#| eval: false
+
+# Teste de Kruskal-Wallis
+kruskal.test(idade ~ raca_cor, data = dados_limpos)
+```
+
+#### Interpretação
+
+```
+Kruskal-Wallis rank sum test
+
+data:  idade by raca_cor
+Kruskal-Wallis chi-squared = 89.456, df = 4, p-value < 2.2e-16
+```
+
+**Interpretação:**
+
+- **χ² = 89,46**: Estatística do teste
+- **df = 4**: Graus de liberdade (número de grupos - 1)
+- **p < 0,001**: Pelo menos um grupo difere dos demais
+
+#### Post-hoc: Teste de Dunn
+
+Para comparações múltiplas após Kruskal-Wallis:
+
+```{r}
+#| label: dunn-test
+#| eval: false
+
+# Teste de Dunn com correção de Bonferroni
+dunnTest(idade ~ raca_cor, data = dados_limpos, method = "bonferroni")
+```
+
+**Interpretação:** Similar ao Tukey HSD, identifica quais pares de grupos diferem significativamente.
+
+## Testes para Variáveis Categóricas
+
+### Teste Qui-Quadrado (χ²)
+
+O **teste qui-quadrado** avalia a associação entre **duas variáveis categóricas**.
+
+#### Quando usar?
+
+- Ambas as variáveis são categóricas
+- Tamanho amostral grande (todas as células da tabela de contingência devem ter frequência esperada ≥ 5)
+
+#### Exemplo: Associação entre sexo e mortalidade
+
+**Pergunta de pesquisa:** Existe associação entre sexo e mortalidade hospitalar?
+
+```{r}
+#| label: qui-quadrado
+#| eval: false
+
+# Criar tabela de contingência
+tabela_contingencia <- table(dados_limpos$sexo, dados_limpos$morte)
+
+# Visualizar tabela
+tabela_contingencia
+
+# Aplicar teste qui-quadrado
+chisq.test(tabela_contingencia)
+```
+
+#### Interpretação
+
+```
+Pearson's Chi-squared test with Yates' continuity correction
+
+data:  tabela_contingencia
+X-squared = 12.34, df = 1, p-value = 0.0004432
+```
+
+**Interpretação:**
+
+- **X² = 12,34**: Estatística qui-quadrado (mede discrepância entre frequências observadas e esperadas)
+- **df = 1**: Graus de liberdade = (linhas - 1) × (colunas - 1)
+- **p < 0,001**: Existe associação significativa entre sexo e mortalidade
+
+Para entender a **direção** da associação:
+
+```{r}
+#| label: proporcoes-qui
+#| eval: false
+
+# Proporções por linha
+prop.table(tabela_contingencia, margin = 1)
+```
+
+#### Visualização com Mosaic Plot
+
+```{r}
+#| label: mosaic-plot
+#| eval: false
+
+library(vcd)
+
+mosaic(~ sexo + morte, data = dados_limpos,
+       shade = TRUE,
+       legend = TRUE,
+       main = "Associação entre Sexo e Mortalidade")
+```
+
+### Teste Exato de Fisher
+
+Alternativa ao qui-quadrado para **amostras pequenas** (frequência esperada < 5 em alguma célula).
+
+#### Quando usar?
+
+- Variáveis categóricas
+- Tabelas 2×2 ou pequenas
+- Frequências esperadas < 5
+
+#### Exemplo
+
+```{r}
+#| label: fisher-test
+#| eval: false
+
+# Criar tabela de contingência
+tabela2 <- table(dados_limpos$raca_cor, dados_limpos$sexo)
+
+# Teste exato de Fisher
+fisher.test(tabela2, simulate.p.value = TRUE)  # Simulação para tabelas maiores
+```
+
+**Nota:** Para tabelas maiores que 2×2, o teste pode ser computacionalmente intensivo. Use `simulate.p.value = TRUE` para aproximação por simulação.
+
+## Testes de Correlação
+
+A **correlação** mede a força e direção da relação linear entre **duas variáveis numéricas**.
+
+### Coeficiente de Correlação
+
+O coeficiente varia de **-1 a +1**:
+
+- **r = +1**: Correlação positiva perfeita
+- **r = 0**: Sem correlação linear
+- **r = -1**: Correlação negativa perfeita
+
+**Interpretação da magnitude:**
+
+| Valor de \|r\| | Interpretação |
+|---------------|---------------|
+| 0,00 - 0,10 | Desprezível |
+| 0,10 - 0,30 | Fraca |
+| 0,30 - 0,50 | Moderada |
+| 0,50 - 0,70 | Forte |
+| 0,70 - 1,00 | Muito forte |
+
+### Correlação de Pearson
+
+A **correlação de Pearson** mede a relação **linear** entre variáveis com distribuição normal.
+
+#### Quando usar?
+
+- Ambas as variáveis são numéricas contínuas
+- Relação linear entre as variáveis
+- Dados seguem distribuição normal
+
+#### Exemplo: Correlação entre idade e custo de internação
+
+```{r}
+#| label: pearson-correlation
+#| eval: false
+
+# Teste de correlação de Pearson
+cor.test(dados_limpos$idade, dados_limpos$val_tot, method = "pearson")
+```
+
+#### Interpretação
+
+```
+Pearson's product-moment correlation
+
+data:  dados_limpos$idade and dados_limpos$val_tot
+t = 8.234, df = 28998, p-value < 2.2e-16
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.0357  0.0589
+sample estimates:
+      cor
+0.0473
+```
+
+**Interpretação:**
+
+- **r = 0,047**: Correlação positiva muito fraca
+- **p < 0,001**: A correlação é estatisticamente significativa
+- **IC 95% [0,036; 0,059]**: Não inclui zero → significativo
+- **Conclusão**: Embora estatisticamente significativa, a correlação é muito fraca (praticamente desprezível), indicando que idade explica apenas 0,22% da variabilidade no custo (r² = 0,047² = 0,0022)
+
+### Correlação de Spearman
+
+Alternativa não-paramétrica que mede correlação **monotônica** (não necessariamente linear).
+
+#### Quando usar?
+
+- Dados não seguem distribuição normal
+- Relação monotônica (não linear)
+- Presença de outliers
+- Dados ordinais
+
+#### Exemplo
+
+```{r}
+#| label: spearman-correlation
+#| eval: false
+
+# Teste de correlação de Spearman
+cor.test(dados_limpos$idade, dados_limpos$val_tot, method = "spearman")
+```
+
+### Visualização de Correlação
+
+#### Gráfico de Dispersão
+
+```{r}
+#| label: scatter-plot-correlation
+#| eval: false
+
+ggplot(dados_limpos, aes(x = idade, y = val_tot)) +
+  geom_point(alpha = 0.3, size = 1) +
+  geom_smooth(method = "loess", color = "red", se = TRUE) +
+  labs(title = "Relação entre Idade e Custo de Internação",
+       x = "Idade (anos)",
+       y = "Custo da Internação (R$)") +
+  scale_y_continuous(labels = scales::number_format(big.mark = ".", decimal.mark = ",")) +
+  theme_minimal()
+```
+
+**Observações:**
+
+- A curva de suavização (loess) mostra uma relação quase plana
+- Muitos outliers (custos muito altos) podem distorcer a correlação
+- A visualização confirma a correlação muito fraca encontrada no teste
+
+#### Matriz de Correlação
+
+Para examinar múltiplas correlações simultaneamente:
+
+```{r}
+#| label: correlation-matrix
+#| eval: false
+
+library(corrplot)
+
+# Selecionar variáveis numéricas
+vars_numericas <- dados_limpos %>%
+  select(idade, val_tot, dias_perm) %>%
+  na.omit()
+
+# Calcular matriz de correlação
+matriz_cor <- cor(vars_numericas, method = "spearman")
+
+# Visualizar
+corrplot(matriz_cor,
+         method = "color",
+         type = "upper",
+         addCoef.col = "black",
+         tl.col = "black",
+         tl.srt = 45,
+         diag = FALSE)
+```
+
+## Resumo e Recomendações
+
+### Escolhendo o Teste Apropriado
+
+1. **Identifique o tipo de variáveis:**
+   - Numéricas contínuas → testes t, ANOVA, correlação
+   - Categóricas → qui-quadrado, Fisher
+
+2. **Verifique os pressupostos:**
+   - Normalidade (Shapiro-Wilk, Q-Q plot)
+   - Homogeneidade de variâncias (Levene)
+
+3. **Escolha entre paramétrico e não-paramétrico:**
+   - Pressupostos atendidos → testes paramétricos (mais poder estatístico)
+   - Pressupostos violados → testes não-paramétricos (mais robustos)
+
+### Tabela de Decisão Rápida
+
+| **Situação** | **Teste Recomendado** |
+|--------------|----------------------|
+| Comparar 2 grupos (normal) | Teste t |
+| Comparar 2 grupos (não normal) | Mann-Whitney |
+| Comparar 3+ grupos (normal) | ANOVA + Tukey |
+| Comparar 3+ grupos (não normal) | Kruskal-Wallis + Dunn |
+| Associação entre categóricas (n grande) | Qui-quadrado |
+| Associação entre categóricas (n pequeno) | Teste Exato de Fisher |
+| Correlação (normal, linear) | Pearson |
+| Correlação (não normal, monotônica) | Spearman |
+
+### Boas Práticas
+
+1. **Sempre verifique os pressupostos** antes de escolher o teste
+2. **Visualize os dados** antes de interpretar os testes
+3. **Reporte os intervalos de confiança**, não apenas p-valores
+4. **Interprete no contexto clínico/prático**, não apenas estatístico
+5. **Use testes post-hoc** para comparações múltiplas (Tukey, Dunn)
+6. **Considere o tamanho do efeito**, não apenas significância
+
+### Reportando Resultados
+
+Ao reportar resultados de testes estatísticos em artigos científicos:
+
+- **Teste t**: "Homens foram internados com idade média significativamente maior que mulheres (46,6 vs 45,1 anos; t = -5,32; p < 0,001; IC 95%: -1,93 a -1,09)"
+
+- **ANOVA**: "A idade média de internação diferiu significativamente entre grupos de raça/cor (F(4, 28994) = 23,11; p < 0,001). Testes post-hoc de Tukey revelaram..."
+
+- **Qui-quadrado**: "Observou-se associação significativa entre sexo e mortalidade (χ² = 12,34; df = 1; p < 0,001)"
+
+- **Correlação**: "Idade e custo de internação apresentaram correlação positiva fraca, mas estatisticamente significativa (r = 0,047; p < 0,001; IC 95%: 0,036 a 0,059)"
+
+## Exercícios Práticos
+
+### Exercício 1: Teste t
+
+Use o dataset de internações para responder: Existe diferença significativa no tempo de permanência hospitalar (dias_perm) entre pacientes que foram a óbito e os que sobreviveram?
+
+a) Verifique os pressupostos (normalidade e homogeneidade de variâncias)
+b) Escolha o teste apropriado
+c) Realize o teste e interprete os resultados
+d) Crie um boxplot visualizando a comparação
+
+### Exercício 2: ANOVA
+
+Investigue se o custo médio de internação (val_tot) difere entre os diferentes meses de competência (mes_cmpt).
+
+a) Realize ANOVA
+b) Se significativo, faça o teste post-hoc de Tukey
+c) Identifique quais meses diferem significativamente
+d) Crie um gráfico de boxplot com os resultados
+
+### Exercício 3: Qui-quadrado
+
+Analise se existe associação entre raça/cor (raca_cor) e mortalidade (morte).
+
+a) Crie uma tabela de contingência
+b) Calcule as proporções de óbito por grupo
+c) Realize o teste qui-quadrado
+d) Crie um mosaic plot para visualizar a associação
+
+### Exercício 4: Correlação
+
+Examine a relação entre dias de permanência (dias_perm) e custo de internação (val_tot).
+
+a) Crie um gráfico de dispersão
+b) Avalie a normalidade das variáveis
+c) Calcule a correlação apropriada (Pearson ou Spearman)
+d) Interprete a força e direção da correlação
+
+### Exercício 5: Comparações Múltiplas
+
+Escolha uma variável numérica e uma categórica do dataset. Realize uma análise completa:
+
+a) Formule uma pergunta de pesquisa
+b) Verifique pressupostos
+c) Escolha e realize o teste apropriado
+d) Visualize os resultados
+e) Escreva uma conclusão em formato de artigo científico
+
+---
+
+**Referências:**
+
+- Field, A., Miles, J., & Field, Z. (2012). *Discovering Statistics Using R*. SAGE Publications.
+- Motulsky, H. (2014). *Intuitive Biostatistics: A Nonmathematical Guide to Statistical Thinking*. Oxford University Press.
+- Whitlock, M. C., & Schluter, D. (2015). *The Analysis of Biological Data*. Roberts and Company Publishers.

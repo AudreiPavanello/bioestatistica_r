@@ -1,0 +1,844 @@
+# Regressão Linear, Logística e Multinomial
+
+Neste capítulo, exploraremos três técnicas estatísticas fundamentais em pesquisa em saúde: a **regressão linear**, a **regressão logística** e a **regressão multinomial**. Cada técnica é adequada para diferentes tipos de variáveis resposta.
+
+## Introdução à Regressão
+
+A análise de regressão é uma ferramenta estatística fundamental que permite:
+
+- **Inferência e causalidade**: Avaliar precisamente como uma variável impacta outra
+- **Predição**: Predizer o comportamento de uma variável a partir de outras
+
+Trabalharemos com dados reais de internações hospitalares em Maringá-PR (2024) para ilustrar como essas técnicas podem ser aplicadas em contextos práticos da área da saúde.
+
+## Regressão Linear
+
+### O que é uma Regressão Linear?
+
+A regressão linear é utilizada quando queremos modelar a relação entre uma **variável dependente contínua** (como custo de internação, pressão arterial, peso) e uma ou mais **variáveis independentes** (também chamadas de preditoras).
+
+Visualmente, a regressão linear é representada por uma **linha que cruza os pontos** de duas ou mais variáveis no gráfico de dispersão. Essa linha é definida por dois componentes principais:
+
+- **Intercepto (β₀)**: Ponto onde a variável X cruza Y no eixo vertical. Representa o valor de Y quando X for 0.
+- **Inclinação ou slope (β₁)**: Inclinação da reta. Indica quanto Y varia para cada aumento de uma unidade em X.
+
+A qualidade do ajuste da reta é medida pelo **R²** (coeficiente de determinação), que varia de 0 a 1. Quanto mais próximo de 1, melhor a reta relaciona as duas variáveis.
+
+### Equação da Regressão Linear
+
+A forma matemática da regressão linear simples é:
+
+$$Y = \beta_0 + \beta_1X$$
+
+Onde:
+
+- $Y$ = variável dependente (ex: valor total da internação)
+- $\beta_0$ = intercepto (valor de Y quando X = 0)
+- $\beta_1$ = coeficiente que indica a variação em Y para cada aumento da unidade de X
+- $X$ = variável independente (ex: idade)
+
+### Exemplo Prático com R
+
+Vamos trabalhar com dados de internações por apendicite em Maringá-PR para entender como a idade influencia o custo total das internações.
+
+```{r}
+#| label: setup-regressao-linear
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(readxl)
+library(janitor)
+library(gtsummary)
+library(officer)
+library(flextable)
+library(jtools)
+library(car)
+
+# Retirar notação científica
+options(scipen = 999)
+```
+
+```{r}
+#| label: carregar-dados-regressao
+#| message: false
+
+# Carregar banco de dados
+dados <- read_excel("data/dados_internacoes_maringa_2024.xlsx")
+```
+
+#### Preparação dos Dados
+
+Primeiro, vamos filtrar e limpar os dados, focando em internações por apendicite (CID K35):
+
+```{r}
+#| label: filtrar-apendicite
+
+# Identificar doenças mais frequentes
+df <- table(dados$DIAG_PRINC)
+df <- data.frame(df)
+
+# Filtrando para apendicite (K35)
+dados_limpos <- dados |>
+  clean_names() |>
+  filter(str_starts(diag_princ, "K35")) |>
+  filter(cod_idade == "Anos") |>
+  select(sexo, val_tot, raca_cor, idade, morte, dias_perm) |>
+  mutate(raca_cor = case_when(
+    raca_cor == '01' ~ "Branca",
+    raca_cor == "02" ~ "Preta",
+    raca_cor == "03" ~ "Parda",
+    raca_cor == "04" ~ "Amarela",
+    raca_cor == "05" ~ "Indígena"
+  )) |>
+  mutate(across(c(val_tot, idade, dias_perm), as.numeric)) |>
+  mutate(across(c(sexo, raca_cor, morte), as.factor))
+```
+
+#### Visualizando a Relação entre Idade e Custo
+
+```{r}
+#| label: fig-regressao-linear-basica
+#| fig-cap: "Relação entre idade e custo de internações por apendicite"
+#| fig-width: 10
+#| fig-height: 6
+
+ggplot(dados_limpos, aes(x = idade, y = val_tot, colour = sexo)) +
+  geom_point() +
+  geom_smooth(method = "lm", colour = "navy") +
+  labs(x = "Idade", y = "Valor Total (BRL)",
+       title = "Custo de internações causadas por apendicite de acordo com a idade",
+       subtitle = "Dados de Maringá-PR referentes a 2024",
+       caption = "Fonte: SIH") +
+  theme_minimal()
+```
+
+#### Visualização com Escala Logarítmica
+
+Quando há outliers (valores extremos), podemos usar escala logarítmica para melhor visualização:
+
+```{r}
+#| label: fig-regressao-log
+#| fig-cap: "Relação entre idade e custo com escala logarítmica"
+#| fig-width: 10
+#| fig-height: 6
+
+ggplot(dados_limpos, aes(x = idade, y = val_tot, colour = sexo)) +
+  geom_point() +
+  geom_smooth(method = "lm", colour = "navy") +
+  labs(x = "Idade", y = "Valor Total (BRL) - Escala Log",
+       title = "Relação entre Idade e o Valor Total da Internação") +
+  scale_y_log10() +
+  theme_minimal()
+```
+
+### Etapas para Ajuste de um Modelo de Regressão
+
+A construção de um modelo de regressão segue etapas progressivas:
+
+1. **Modelo somente com intercepto**: Útil para verificar o basal de Y
+2. **Modelo univariado**: Uma única variável preditora
+3. **Modelo multivariado**: Ajustado por várias variáveis preditoras
+
+**Importante**: Maior número de variáveis aumenta a complexidade e a dificuldade de interpretação do modelo.
+
+#### 1. Modelo Somente com Intercepto
+
+```{r}
+#| label: modelo-intercepto
+
+modelo <- lm(val_tot ~ 1, dados_limpos)
+
+# Visualizando o modelo
+summ(modelo)
+```
+
+O intercepto representa o valor médio basal de Y (custo total) sem considerar nenhuma variável preditora.
+
+#### 2. Modelo Univariado com Idade
+
+```{r}
+#| label: modelo-idade
+
+modelo_idade <- lm(val_tot ~ idade, dados_limpos)
+
+# Visualizando resultados
+summ(modelo_idade)
+```
+
+**Interpretação do modelo:**
+
+- O intercepto (β₀) é 408,80
+- O coeficiente da idade (β₁) é 15,48
+- Para um paciente de 50 anos: Valor total = 408,80 + (15,48 × 50) = **R$ 1.182,00**
+- O R² = 0,06 indica que a idade explica apenas 6% da variação no custo
+
+#### 3. Modelo Ajustado por Sexo
+
+Variáveis categóricas são tratadas de forma especial. O R cria variáveis dummy, usando uma categoria como referência (baseline).
+
+```{r}
+#| label: modelo-idade-sexo
+
+modelo_idade_sexo <- lm(val_tot ~ idade + sexo, dados_limpos)
+
+summ(modelo_idade_sexo)
+```
+
+Por padrão, o R usa ordem alfabética para definir a categoria de referência. Podemos alterar isso:
+
+```{r}
+#| label: alterar-referencia
+
+# Definindo Masculino como referência
+dados_limpos$sexo <- factor(dados_limpos$sexo, levels = c("Masculino", "Feminino"))
+
+modelo_idade_sexo <- lm(val_tot ~ idade + sexo, dados_limpos)
+
+summ(modelo_idade_sexo)
+```
+
+### Diagnóstico do Modelo
+
+#### Multicolinearidade (VIF)
+
+Quando incluímos múltiplas variáveis, precisamos verificar se há multicolinearidade (correlação forte entre preditores).
+
+**VIF (Variance Inflation Factor)**: se > 5, há problema de multicolinearidade.
+
+```{r}
+#| label: vif-teste
+
+vif(modelo_idade_sexo)
+```
+
+#### Teste de Heterocedasticidade
+
+A regressão linear assume que os resíduos têm variância constante (homocedasticidade).
+
+```{r}
+#| label: teste-heterocedasticidade
+
+lmtest::bptest(modelo_idade_sexo)
+```
+
+Se p < 0,05, há evidência de heterocedasticidade, o que pode violar as suposições do modelo.
+
+### Modelo Multivariado Completo
+
+```{r}
+#| label: modelo-final-linear
+
+modelo_final <- lm(val_tot ~ idade + sexo + raca_cor + dias_perm, dados_limpos)
+
+# Verificar VIF
+vif(modelo_final)
+
+# Visualizar resultados
+summ(modelo_final)
+```
+
+### Apresentação de Resultados com Tabela
+
+```{r}
+#| label: tbl-regressao-linear
+#| tbl-cap: "Modelo de regressão linear para custo de internação por apendicite"
+
+modelo_final |>
+  tbl_regression(label = list(
+    idade ~ "Idade (anos)",
+    sexo ~ "Sexo",
+    raca_cor ~ "Raça/Cor",
+    dias_perm ~ "Dias de hospitalização"
+  )) |>
+  bold_p(t = 0.05) |>
+  bold_labels() |>
+  italicize_levels() |>
+  modify_header(label = "**Variáveis preditoras**") |>
+  modify_footnote(label = "Tabela 1: Efeito das variáveis preditoras sobre o custo de internação") |>
+  modify_header(estimate = "**Coeficiente**") |>
+  as_flex_table()
+```
+
+### Predição com o Modelo
+
+Podemos usar a função `predict()` para estimar valores:
+
+```{r}
+#| label: predicao-linear
+
+# Homem de 45 anos
+predict(modelo_idade_sexo, newdata = data.frame(
+  sexo = "Masculino", idade = 45))
+
+# Mulher de 45 anos
+predict(modelo_idade_sexo, newdata = data.frame(
+  sexo = "Feminino", idade = 45))
+```
+
+---
+
+## Regressão Logística
+
+### O que é uma Regressão Logística?
+
+A regressão logística é utilizada quando a **variável dependente é categórica binária** (sim/não, vivo/morto, doente/saudável). Diferentemente da regressão linear, que prediz valores contínuos, a regressão logística **prediz a probabilidade** de um determinado evento acontecer.
+
+### Equação da Regressão Logística
+
+A forma matemática é:
+
+$$\log\left(\frac{p}{1-p}\right) = \beta_0 + \beta_1X_1$$
+
+Onde:
+
+- $p$ = probabilidade do evento ocorrer
+- $\frac{p}{1-p}$ = **odds** (razão de chances) do evento
+- $\log\left(\frac{p}{1-p}\right)$ = **log-odds** ou logit
+- $\beta_0$ = intercepto (log-odds quando todas as variáveis preditoras são 0)
+- $\beta_1$ = coeficiente que quantifica a variação na probabilidade
+
+### Exemplo Prático: Mortalidade por Septicemia
+
+Vamos analisar fatores associados à morte hospitalar em pacientes com septicemia.
+
+#### Preparação dos Dados
+
+```{r}
+#| label: preparar-dados-septicemia
+
+# Identificar diagnósticos com mortes
+df_morte <- table(dados$DIAG_PRINC, dados$MORTE)
+df_morte <- data.frame(df_morte)
+
+# Filtrar para septicemia (CID A419)
+dados_limpos_log <- dados |>
+  clean_names() |>
+  filter(str_starts(diag_princ, "A419")) |>
+  filter(cod_idade == "Anos") |>
+  select(sexo, val_tot, raca_cor, idade, morte, dias_perm) |>
+  mutate(raca_cor = case_when(
+    raca_cor == '01' ~ "Branca",
+    raca_cor == "02" ~ "Preta",
+    raca_cor == "03" ~ "Parda",
+    raca_cor == "04" ~ "Amarela",
+    raca_cor == "05" ~ "Indígena"
+  )) |>
+  mutate(across(c(val_tot, idade, dias_perm), as.numeric)) |>
+  mutate(across(c(sexo, raca_cor, morte), as.factor))
+
+# Criar variável binária para plotagem
+dados_limpos_log$morte_bin <- ifelse(dados_limpos_log$morte == "Sim", 1, 0)
+```
+
+#### Visualização da Relação Logística
+
+```{r}
+#| label: fig-regressao-logistica
+#| fig-cap: "Probabilidade de morte hospitalar por septicemia de acordo com a idade"
+#| fig-width: 10
+#| fig-height: 6
+
+ggplot(dados_limpos_log, aes(x = idade, y = morte_bin, colour = sexo)) +
+  geom_point() +
+  geom_smooth(method = "glm", method.args = list(family = "binomial"), colour = "navy") +
+  labs(x = "Idade", y = "Probabilidade de Morte Hospitalar",
+       title = "Aumento da idade leva a maior mortalidade por septicemia",
+       subtitle = "Dados de Maringá-PR referentes a 2024",
+       caption = "Fonte: SIH") +
+  theme_minimal()
+```
+
+#### Visualização Separada por Sexo
+
+```{r}
+#| label: fig-regressao-logistica-sexo
+#| fig-cap: "Probabilidade de morte por septicemia estratificada por sexo"
+#| fig-width: 10
+#| fig-height: 6
+
+ggplot(dados_limpos_log, aes(x = idade, y = morte_bin, colour = sexo)) +
+  geom_point() +
+  geom_smooth(method = "glm", method.args = list(family = "binomial"), se = TRUE) +
+  labs(x = "Idade", y = "Probabilidade de Morte Hospitalar",
+       title = "Aumento da idade leva a maior mortalidade por septicemia",
+       subtitle = "Dados de Maringá-PR referentes a 2024",
+       caption = "Fonte: SIH") +
+  theme_minimal()
+```
+
+#### Visualização com Jitter
+
+Para melhor visualização da densidade de pontos:
+
+```{r}
+#| label: fig-regressao-logistica-jitter
+#| fig-cap: "Probabilidade de morte com jitter para melhor visualização"
+#| fig-width: 10
+#| fig-height: 6
+
+ggplot(dados_limpos_log, aes(x = idade, y = morte_bin, color = sexo)) +
+  geom_jitter(height = 0.05, alpha = 0.5) +
+  geom_smooth(method = "glm",
+              method.args = list(family = "binomial"),
+              se = TRUE) +
+  labs(x = "Idade",
+       y = "Probabilidade de Morte Hospitalar",
+       title = "Aumento da idade leva a maior mortalidade por septicemia",
+       subtitle = "Dados de Maringá-PR referentes a 2024",
+       caption = "Fonte: SIH") +
+  theme_minimal()
+```
+
+### Construindo Modelos Logísticos
+
+#### Preparação da Variável Dependente
+
+**Importante**: A variável dependente deve ser um fator. O R usa ordem alfabética para definir qual categoria é o "evento". Podemos alterar isso:
+
+```{r}
+#| label: preparar-morte-fator
+
+# Definir "Sim" como evento (segundo nível)
+dados_limpos_log$morte <- factor(dados_limpos_log$morte, levels = c("Não", "Sim"))
+```
+
+#### 1. Modelo com Intercepto Apenas
+
+```{r}
+#| label: modelo-log-intercepto
+
+modelo_log <- glm(morte ~ 1, family = "binomial", dados_limpos_log)
+
+# Visualizando
+summ(modelo_log)
+
+# Com odds-ratio (exponenciando os coeficientes)
+summ(modelo_log, exp = TRUE)
+```
+
+#### 2. Modelo Univariado com Idade
+
+```{r}
+#| label: modelo-log-idade
+
+modelo_log_idade <- glm(morte ~ idade, family = "binomial", dados_limpos_log)
+
+# Coeficientes brutos (log-odds)
+summ(modelo_log_idade)
+
+# Odds-ratio
+summ(modelo_log_idade, exp = TRUE)
+```
+
+#### 3. Modelo com Idade e Sexo
+
+```{r}
+#| label: modelo-log-idade-sexo
+
+modelo_log_idade_sexo <- glm(morte ~ idade + sexo, family = "binomial", dados_limpos_log)
+
+# Verificar multicolinearidade
+vif(modelo_log_idade_sexo)
+
+# Visualizar odds-ratio
+summ(modelo_log_idade_sexo, exp = TRUE)
+```
+
+### Predição de Probabilidades
+
+```{r}
+#| label: predicao-logistica
+
+# Homem de 45 anos
+predict(modelo_log_idade_sexo,
+        newdata = data.frame(sexo = "Masculino", idade = 45),
+        type = "response")
+
+# Mulher de 45 anos
+predict(modelo_log_idade_sexo,
+        newdata = data.frame(sexo = "Feminino", idade = 45),
+        type = "response")
+```
+
+### Apresentação de Resultados
+
+```{r}
+#| label: tbl-regressao-logistica-simples
+#| tbl-cap: "Modelo de regressão logística para mortalidade - modelo simples"
+
+modelo_log_idade_sexo |>
+  tbl_regression(
+    label = list(
+      idade ~ "Idade (anos)",
+      sexo ~ "Sexo"
+    ),
+    exponentiate = TRUE
+  ) |>
+  bold_p(t = 0.05) |>
+  bold_labels() |>
+  italicize_levels() |>
+  modify_header(label = "**Variáveis preditoras**") |>
+  modify_footnote(label = "Tabela 2: Odds-ratio de mortalidade por septicemia") |>
+  modify_header(estimate = "**OR**") |>
+  as_flex_table()
+```
+
+### Modelo Multivariado Completo
+
+```{r}
+#| label: modelo-log-final
+
+modelo_log_final <- glm(morte ~ idade + sexo + val_tot + raca_cor + dias_perm,
+                        family = "binomial",
+                        dados_limpos_log)
+
+# Verificar VIF
+vif(modelo_log_final)
+
+# Visualizar com odds-ratio
+summ(modelo_log_final, exp = TRUE)
+```
+
+#### Ajustando Categoria de Referência
+
+```{r}
+#| label: ajustar-referencia-raca
+
+# Verificar distribuição
+table(dados_limpos_log$raca_cor)
+
+# Mudar "Branca" para categoria de referência (mais frequente)
+dados_limpos_log$raca_cor <- factor(dados_limpos_log$raca_cor,
+                                     levels = c("Branca", "Amarela", "Parda", "Preta"))
+
+# Rodar modelo novamente
+modelo_log_final <- glm(morte ~ idade + sexo + val_tot + raca_cor + dias_perm,
+                        family = "binomial",
+                        dados_limpos_log)
+
+summ(modelo_log_final, exp = TRUE)
+```
+
+### Tabela Final do Modelo Multivariado
+
+```{r}
+#| label: tbl-regressao-logistica-final
+#| tbl-cap: "Modelo multivariado de regressão logística para mortalidade por septicemia"
+
+modelo_log_final |>
+  tbl_regression(
+    label = list(
+      idade ~ "Idade (anos)",
+      sexo ~ "Sexo",
+      val_tot ~ "Valor total (BRL)",
+      raca_cor ~ "Raça/Cor",
+      dias_perm ~ "Dias de hospitalização"
+    ),
+    exponentiate = TRUE
+  ) |>
+  bold_p(t = 0.05) |>
+  bold_labels() |>
+  italicize_levels() |>
+  modify_header(label = "**Variáveis preditoras**") |>
+  modify_footnote(label = "Tabela 3: Odds-ratio de mortalidade por septicemia - modelo ajustado") |>
+  modify_header(estimate = "**OR**") |>
+  as_flex_table()
+```
+
+## Interpretando Odds Ratio
+
+O **Odds Ratio (OR)** ou **Razão de Chances** é a métrica mais importante em regressão logística. É obtido exponenciando os coeficientes do modelo (`exp = TRUE`).
+
+### Como Interpretar
+
+- **OR = 1**: Não há associação entre a variável e o desfecho
+- **OR > 1**: As chances do evento são **maiores** no grupo exposto
+  - Exemplo: OR = 1,04 → 4% mais chances
+  - Exemplo: OR = 2,66 → 166% mais chances (ou 2,66 vezes mais chances)
+- **OR < 1**: As chances do evento são **menores** no grupo exposto
+  - Exemplo: OR = 0,86 → 14% menos chances (1 - 0,86 = 0,14)
+  - Exemplo: OR = 0,66 → 34% menos chances
+
+### Exemplos Práticos de Interpretação
+
+#### 1. Idade (OR = 1,04)
+
+- Cada ano a mais de idade aumenta em **4% as chances de óbito**
+- Para calcular o efeito cumulativo: OR^anos
+  - Indivíduo de 50 anos: 1,04^50 = 7
+  - Chances de óbito **7 vezes maiores** comparado a um recém-nascido
+
+#### 2. Valor Total (OR = 1,00)
+
+- Embora significativo (p < 0,001), o OR = 1,00 indica que cada real a mais no custo **não altera as chances de morte**
+- Valores muito próximos de 1 geralmente indicam efeito pequeno ou nulo
+
+#### 3. Raça/Cor Preta (OR = 2,66)
+
+- Comparado a indivíduos brancos (categoria de referência), indivíduos pretos têm:
+  - **2,66 vezes mais chances de óbito** OU
+  - **166% mais chances de óbito** (2,66 - 1 = 1,66 = 166%)
+
+#### 4. Dias de Hospitalização (OR = 0,86)
+
+- Cada dia a mais de hospitalização **reduz em 14% as chances de óbito** (1 - 0,86 = 0,14)
+- Para múltiplos dias: 0,86^dias
+  - 4 dias de hospitalização: 0,86^4 = 0,54
+  - **46% menos chances de óbito** (1 - 0,54 = 0,46)
+
+::: {.callout-note}
+## Interpretação Importante
+
+Odds ratio < 1 indica **efeito protetor** (reduz chances do evento), enquanto > 1 indica **fator de risco** (aumenta chances do evento).
+
+Para calcular a redução percentual quando OR < 1: (1 - OR) × 100
+:::
+
+### Cálculo Manual da Probabilidade
+
+Embora o R faça isso automaticamente com `predict()`, entender o cálculo manual ajuda a compreender o modelo:
+
+$$\log\left(\frac{p}{1-p}\right) = -2,87 + (0,04 \times 50)$$
+
+$$\log\left(\frac{p}{1-p}\right) = -0,87$$
+
+$$\frac{p}{1-p} = \exp(-0,87) = 0,42$$
+
+Resolvendo para p:
+
+$$p = \frac{0,42}{1 + 0,42} = 0,29$$
+
+**Resultado**: Um paciente de 50 anos tem **29% de probabilidade de óbito**.
+
+---
+
+## Regressão Multinomial
+
+### O que é Regressão Multinomial?
+
+A **regressão multinomial** (também chamada de regressão logística multinomial ou politômica) é uma extensão da regressão logística binária para variáveis resposta **categóricas com três ou mais níveis não ordenados**.
+
+#### Quando Usar?
+
+**Use regressão multinomial quando:**
+
+- **Variável resposta**: Categórica com 3+ níveis **não ordenados**
+  - Exemplos: tipo de tratamento escolhido (cirurgia, medicamento, fisioterapia)
+  - Categoria de diagnóstico (doença A, doença B, doença C)
+  - **Análise de sentimento** (positivo, neutro, negativo)
+- **Variáveis preditoras**: Numéricas e/ou categóricas
+- **Objetivo**: Modelar probabilidade de cada categoria em função das preditoras
+
+::: {.callout-note}
+## Regressão Multinomial vs. Ordinal
+
+- **Multinomial**: Categorias não têm ordem natural (ex: tipo sanguíneo A, B, AB, O)
+- **Ordinal**: Categorias têm ordem natural (ex: leve, moderado, grave)
+
+Para variáveis ordinais, use **regressão logística ordinal** (não coberto neste livro).
+:::
+
+### Conexão com o Capítulo 7
+
+A regressão multinomial é particularmente útil para análise de sentimento, onde classificamos texto em categorias como **positivo, neutro, negativo**. Consulte o **Capítulo 7 - Análise de Dados Textuais** para exemplos completos de análise de sentimento seguida de modelagem multinomial.
+
+### Estrutura do Modelo
+
+A regressão multinomial estima coeficientes para cada categoria **em relação a uma categoria de referência**.
+
+**Exemplo com 3 categorias (positivo, neutro, negativo):**
+
+Se "neutro" for a referência:
+
+- **Modelo 1**: Log-odds de **positivo** vs. neutro
+- **Modelo 2**: Log-odds de **negativo** vs. neutro
+
+**Equações:**
+
+$$
+\log\left(\frac{P(\text{positivo})}{P(\text{neutro})}\right) = \beta_{0,pos} + \beta_{1,pos}X_1 + \beta_{2,pos}X_2
+$$
+
+$$
+\log\left(\frac{P(\text{negativo})}{P(\text{neutro})}\right) = \beta_{0,neg} + \beta_{1,neg}X_1 + \beta_{2,neg}X_2
+$$
+
+### Exemplo Prático: Modelando Tipo de Alta Hospitalar
+
+Vamos usar os dados de internações para modelar o tipo de alta (simulado para demonstração, pois o dataset original tem apenas dados binários de morte).
+
+```{r}
+#| label: preparar-dados-multinomial
+#| eval: false
+
+library(nnet)        # Para regressão multinomial
+
+# Criar variável categórica de tipo de alta (simulada para demonstração)
+set.seed(123)
+dados_multi <- dados_limpos %>%
+  filter(!is.na(idade), !is.na(sexo)) %>%
+  mutate(tipo_alta = sample(c("Alta melhorada", "Alta a pedido", "Transferência"),
+                             size = n(),
+                             replace = TRUE,
+                             prob = c(0.70, 0.15, 0.15))) %>%
+  mutate(tipo_alta = as.factor(tipo_alta))
+
+# Definir categoria de referência ("Alta melhorada" é a mais comum)
+dados_multi$tipo_alta <- relevel(dados_multi$tipo_alta, ref = "Alta melhorada")
+
+# Visualizar distribuição
+table(dados_multi$tipo_alta)
+prop.table(table(dados_multi$tipo_alta))
+```
+
+### Ajustando o Modelo Multinomial
+
+```{r}
+#| label: ajustar-modelo-multinomial
+#| eval: false
+
+# Ajustar modelo multinomial
+modelo_multi <- multinom(tipo_alta ~ idade + sexo + val_tot,
+                         data = dados_multi)
+
+# Resumo do modelo
+summary(modelo_multi)
+
+# Odds ratios e tabela formatada
+tbl_regression(modelo_multi, exponentiate = TRUE)
+```
+
+### Interpretação dos Coeficientes
+
+Os coeficientes representam o log-odds de cada categoria **comparado à categoria de referência** ("Alta melhorada").
+
+**Exemplo de interpretação:**
+
+Se o OR para `idade` no modelo "Transferência" vs. "Alta melhorada" é 1,02 (IC 95%: 1,01-1,03; p < 0,001):
+
+- Para cada ano adicional de idade, as chances de transferência (vs. alta melhorada) aumentam 2%
+- É estatisticamente significativo (p < 0,001)
+
+### Verificando Multicolinearidade
+
+```{r}
+#| label: vif-multinomial
+#| eval: false
+
+# Calcular VIF
+vif(modelo_multi)
+```
+
+### Predições de Probabilidade
+
+```{r}
+#| label: predicoes-multinomial
+#| eval: false
+
+# Criar grid para predições
+grid_pred <- expand.grid(
+  idade = seq(20, 80, by = 10),
+  sexo = c("Feminino", "Masculino"),
+  val_tot = median(dados_multi$val_tot, na.rm = TRUE)
+)
+
+# Predizer probabilidades
+probs <- predict(modelo_multi, newdata = grid_pred, type = "probs")
+
+# Combinar e visualizar
+grid_pred <- grid_pred %>%
+  bind_cols(as.data.frame(probs)) %>%
+  pivot_longer(cols = c(`Alta melhorada`, `Alta a pedido`, `Transferência`),
+               names_to = "tipo_alta",
+               values_to = "probabilidade")
+
+# Plotar
+ggplot(grid_pred, aes(x = idade, y = probabilidade, color = tipo_alta)) +
+  geom_line(size = 1.2) +
+  facet_wrap(~ sexo) +
+  labs(title = "Probabilidade Predita de Tipo de Alta",
+       x = "Idade",
+       y = "Probabilidade",
+       color = "Tipo de Alta") +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+```
+
+### Comparação: Logística Binária vs. Multinomial
+
+| **Aspecto** | **Regressão Logística Binária** | **Regressão Multinomial** |
+|-------------|--------------------------------|--------------------------|
+| **Variável resposta** | 2 categorias (sim/não) | 3+ categorias não ordenadas |
+| **Modelos estimados** | 1 modelo | K-1 modelos (K = nº categorias) |
+| **Interpretação** | Odds ratio direto | Odds ratio vs. categoria referência |
+| **Categoria referência** | Automática | Deve ser definida |
+| **Complexidade** | Simples | Mais complexa |
+| **Exemplo** | Morte (sim/não) | Tipo de alta (3 categorias) |
+
+### Aplicação em Análise de Sentimento
+
+A regressão multinomial é amplamente usada em análise de sentimento de dados textuais. No **Capítulo 7 - Análise de Dados Textuais**, você encontrará exemplos completos de:
+
+1. Análise de sentimento usando **léxicos** e **LLMs**
+2. Classificação de texto em categorias (positivo, neutro, negativo)
+3. Modelagem multinomial completa com dados textuais reais
+4. Interpretação de resultados no contexto de pesquisa qualitativa
+
+**Fluxo típico:**
+
+```
+Texto bruto → Análise de sentimento → Categorias → Regressão multinomial
+```
+
+### Limitações e Considerações
+
+1. **Tamanho amostral**: Requer amostras maiores que regressão logística binária
+   - Regra prática: Pelo menos 10 eventos por preditor **por categoria**
+2. **Categoria de referência**: Escolha a categoria mais comum ou mais relevante clinicamente
+3. **Interpretação**: Mais complexa que regressão logística binária - cada coeficiente é relativo à referência
+4. **Alternativas**: Se categorias são **ordenadas** (leve, moderado, grave), use **regressão logística ordinal**
+
+## Resumo do Capítulo
+
+Neste capítulo, aprendemos sobre três tipos de regressão:
+
+1. **Regressão Linear**:
+   - Usada para desfechos contínuos (custo, peso, pressão)
+   - Interpreta-se pelos coeficientes β
+   - Avalia-se a qualidade do ajuste pelo R²
+   - Diagnósticos importantes: VIF e teste de heterocedasticidade
+
+2. **Regressão Logística**:
+   - Usada para desfechos binários (morte, doença, evento)
+   - Interpreta-se pelos odds ratios (OR)
+   - OR > 1 = fator de risco; OR < 1 = fator protetor
+   - Prediz probabilidades de eventos
+
+3. **Regressão Multinomial**:
+   - Usada para desfechos categóricos com 3+ níveis não ordenados
+   - Estima K-1 modelos (K = número de categorias)
+   - Interpreta-se pelos OR relativos à categoria de referência
+   - Aplicações: análise de sentimento, escolha de tratamento, classificação de diagnósticos
+
+4. **Etapas de Modelagem**:
+   - Modelo com intercepto → Modelo univariado → Modelo multivariado
+   - Verificar sempre multicolinearidade (VIF)
+   - Escolher categoria de referência apropriada
+
+4. **Apresentação de Resultados**:
+   - Tabelas formatadas com `tbl_regression()`
+   - Odds ratios com intervalos de confiança
+   - Valores p destacados
+
+### Exercícios Práticos
+
+1. **Regressão Linear**: Construa um modelo de regressão linear com uma doença de sua escolha. Gere gráficos e interprete os coeficientes. Verifique os pressupostos (VIF, heterocedasticidade).
+
+2. **Regressão Logística**: Construa um modelo de regressão logística para predizer algum desfecho binário. Calcule e interprete os odds ratios. Compare modelos univariado e multivariado.
+
+3. **Regressão Multinomial**: Crie uma variável categórica com 3 categorias (ex: faixa de custo: baixo, médio, alto) e ajuste um modelo multinomial. Interprete os odds ratios e crie visualizações de probabilidades preditas.
+
+4. **Comparação de Modelos**: Para um mesmo desfecho, compare modelos com diferentes conjuntos de preditores. Use critérios de ajuste (AIC, BIC) para selecionar o melhor modelo.
+
+5. **Integração com Capítulo 7**: Após estudar o Capítulo 7, realize uma análise de sentimento completa e modele os resultados usando regressão multinomial com variáveis demográficas como preditores.

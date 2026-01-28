@@ -1,0 +1,124 @@
+# Prefácio {.unnumbered}
+
+Este livro foi desenvolvido como material didático para o curso de **Bioestatística Aplicada à Saúde utilizando o Software R**, ministrado pelos professores:
+
+- **Prof. Dr. Audrei Pavanello**
+- **Profa. Dra. Karina Miura Costa**
+- **Prof. Dr. Leonardo Pestillo de Oliveira**
+
+## Sobre este Livro
+
+Este material combina teoria e prática, apresentando conceitos fundamentais de bioestatística aplicados a dados reais da área da saúde. Através de exemplos práticos e códigos executáveis em R, você aprenderá a manipular, analisar e visualizar dados de saúde pública.
+
+Todos os exemplos utilizam dados reais de internações hospitalares de Maringá-PR referentes ao ano de 2024, disponibilizados pelo Sistema de Informações Hospitalares (SIH) do SUS.
+
+## Como Usar este Livro
+
+- **Códigos Executáveis**: Todos os códigos apresentados são executáveis e podem ser reproduzidos em seu próprio ambiente R
+- **Dados Disponíveis**: Os dados utilizados nos exemplos estão disponíveis na pasta `data/`
+- **Estrutura Progressiva**: O conteúdo é apresentado de forma progressiva, desde conceitos básicos até análises avançadas
+- **Exemplos Práticos**: Cada capítulo contém exemplos práticos aplicados a dados reais de saúde pública
+
+## Estrutura do Livro
+
+### 1. Introdução ao R e RStudio
+Primeiros passos com R, interface do RStudio, lógica de programação e boas práticas de código.
+
+### 2. Manipulação de Dados
+Importação e limpeza de dados usando o pacote tidyverse, principais funções de manipulação de data frames.
+
+### 3. Análise Exploratória de Dados
+Estatística descritiva com gtsummary e visualização de dados com ggplot2.
+
+### 4. Testes Estatísticos
+Testes de hipóteses paramétricos e não-paramétricos, incluindo teste t, ANOVA, Mann-Whitney, Kruskal-Wallis, qui-quadrado, Fisher, e correlações.
+
+### 5. Regressão Linear, Logística e Multinomial
+Construção e interpretação de modelos de regressão linear, logística e multinomial, cálculo e interpretação de odds ratio.
+
+### 6. Análise Psicométrica
+Confiabilidade (Alfa de Cronbach, Ômega de McDonald), Análise Fatorial Exploratória e Confirmatória, validação de escalas e instrumentos.
+
+### 7. Análise de Dados Textuais e Mineração de Texto
+Tokenização, análise de frequência, word clouds, análise de sentimento com léxico e LLMs, e regressão multinomial para dados textuais.
+
+## Pré-requisitos
+
+Para acompanhar este livro, você precisará:
+
+1. **R** (versão 4.0 ou superior): [https://cran.r-project.org/](https://cran.r-project.org/)
+2. **RStudio** (versão recente): [https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/)
+3. **Pacotes R necessários**:
+
+   **Pacotes Básicos (Capítulos 1-3):**
+   - tidyverse
+   - readxl
+   - janitor
+   - gtsummary
+   - officer
+   - flextable
+   - ggpubr
+
+   **Testes Estatísticos (Capítulo 4):**
+   - car
+   - FSA
+   - vcd
+
+   **Regressão (Capítulo 5):**
+   - jtools
+   - sjPlot
+   - lmtest
+   - nnet
+
+   **Análise Psicométrica (Capítulo 6):**
+   - psych
+   - lavaan
+   - semPlot
+   - qgraph
+   - corrplot
+   - GGally
+
+   **Análise de Texto (Capítulo 7):**
+   - tidytext
+   - wordcloud
+   - quanteda
+   - lexiconPT
+   - tm
+   - mall *(requer instalação prévia do Ollama - opcional)*
+   - stopwords
+
+Você pode instalar todos os pacotes executando:
+
+```r
+# Lista de pacotes necessários
+packages <- c(
+  # Básicos
+  "tidyverse", "readxl", "janitor", "gtsummary",
+  "officer", "flextable", "ggpubr",
+  # Testes Estatísticos
+  "car", "FSA", "vcd",
+  # Regressão
+  "jtools", "sjPlot", "lmtest", "nnet",
+  # Análise Psicométrica
+  "psych", "lavaan", "semPlot", "qgraph", "corrplot", "GGally",
+  # Análise de Texto
+  "tidytext", "wordcloud", "quanteda", "lexiconPT", "tm", "stopwords"
+)
+
+# Instalar pacotes que não estão instalados
+install.packages(setdiff(packages, rownames(installed.packages())))
+
+# Para mall (análise de texto com LLMs) - opcional
+# install.packages("mall")
+# Requer instalação prévia do Ollama: https://ollama.com/download
+```
+
+## Licença
+
+Este material é disponibilizado para fins educacionais. Os dados utilizados são de domínio público, provenientes do Sistema de Informações Hospitalares (SIH) do SUS.
+
+---
+
+**Data de Publicação**: `r Sys.Date()`
+
+**Versão do R utilizada**: `r R.version.string`

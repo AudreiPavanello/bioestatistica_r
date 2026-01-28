@@ -1,0 +1,795 @@
+# Análise Psicométrica
+
+## Introdução à Psicometria
+
+A **psicometria** é uma especialidade dentro das ciências comportamentais e sociais dedicada à mensuração de fenômenos psicológicos e sociais. Em pesquisas de saúde, a psicometria é fundamental para validar instrumentos que avaliam construtos como qualidade de vida, satisfação do paciente, literacia em saúde, sintomas psicológicos, entre outros.
+
+### Por que fazer um estudo antes de fazer um estudo?
+
+Esta é a pergunta central da análise psicométrica. Antes de utilizar um questionário ou escala em uma pesquisa substantiva, é essencial validar o instrumento para garantir que ele mede o que realmente pretende medir.
+
+### O Custo de Medidas Inadequadas
+
+Usar instrumentos que não avaliam corretamente o que propõem leva a **decisões erradas** baseadas em dados não confiáveis. Enquanto uma medida imperfeita pode ser melhor que nenhuma medida, pesquisadores devem reconhecer quando os procedimentos são falhos e moderar suas conclusões adequadamente.
+
+> **Princípio fundamental:** Medidas adequadas são uma condição necessária para pesquisa válida.
+
+### Aplicações em Saúde
+
+- **Validação transcultural** de instrumentos (adaptação entre idiomas e culturas)
+- **Desenvolvimento de escalas** (criação de novos instrumentos)
+- **Avaliação de propriedades psicométricas** de questionários existentes
+- **Garantia de qualidade** dos instrumentos antes da pesquisa principal
+
+**Exemplo:** Adaptação do Questionário SF-8 para Swahili (Tanzânia) para populações com lesão cerebral traumática.
+
+## Preparação dos Dados Psicométricos
+
+Neste capítulo, utilizaremos o dataset **literacia_data.csv**, que contém respostas de uma pesquisa sobre literacia digital, incluindo dados demográficos e 10 itens de escala (L1 a L10).
+
+### Carregando Pacotes
+
+```{r}
+#| label: carregar-pacotes-psicometria
+#| message: false
+#| warning: false
+
+library(tidyverse)    # Manipulação de dados
+library(psych)        # Análise psicométrica (Alpha, Omega, EFA)
+library(corrplot)     # Visualização de correlações
+library(lavaan)       # Análise Fatorial Confirmatória (CFA)
+library(semPlot)      # Visualização de modelos SEM
+library(qgraph)       # Análise de redes
+library(GGally)       # Gráficos de correlação
+
+# Remover notação científica
+options(scipen = 999)
+```
+
+### Importando e Explorando os Dados
+
+```{r}
+#| label: importar-dados-psicometria
+#| eval: false
+
+# Importar dados de literacia digital
+dados <- read_csv("data/literacia_data.csv")
+
+# Visualizar primeiras linhas
+head(dados)
+
+# Estrutura do dataframe
+str(dados)
+
+# Resumo estatístico
+summary(dados)
+```
+
+### Convertendo Variáveis Categóricas
+
+```{r}
+#| label: converter-fatores
+#| eval: false
+
+# Converter variáveis qualitativas em fatores
+dados <- dados %>%
+  mutate(across(c(sexo, etnia, estcivil, escolaridade, economia,
+                  renda, beneficio, comunicacao, celular,
+                  internet, acesso), as.factor))
+
+# Verificar estrutura após conversão
+str(dados)
+```
+
+### Tratamento de Dados Faltantes
+
+```{r}
+#| label: dados-faltantes
+#| eval: false
+
+# Verificar quantidade de dados faltantes por coluna
+colSums(is.na(dados))
+
+# Proporção de dados faltantes (%)
+colMeans(is.na(dados)) * 100
+
+# Estratégias de tratamento:
+# 1. Exclusão listwise (casos completos)
+dados_completo <- dados[complete.cases(dados), ]
+
+# 2. Imputação por média (se apropriado)
+# dados$idade[is.na(dados$idade)] <- mean(dados$idade, na.rm = TRUE)
+```
+
+**Importante:** A escolha da estratégia de tratamento de dados faltantes depende do padrão dos missing data (MCAR, MAR, MNAR) e dos objetivos da pesquisa. Para análises psicométricas, geralmente preferimos casos completos.
+
+## Matriz de Correlação
+
+Antes de realizar análises fatoriais, é útil examinar a estrutura de correlações entre os itens.
+
+### Calculando e Visualizando Correlações
+
+```{r}
+#| label: matriz-correlacao
+#| eval: false
+
+# Selecionar itens da escala de literacia (L1 a L10) e idade
+dados_cor <- dados %>%
+  select(L1:L10, idade)
+
+# Calcular matriz de correlação
+matriz_cor <- cor(dados_cor, use = "complete.obs")
+
+# Visualização com corrplot - círculos
+corrplot(matriz_cor,
+         method = "circle",
+         type = "upper",
+         tl.col = "black",
+         tl.srt = 45)
+
+# Visualização com números
+corrplot(matriz_cor,
+         method = "number",
+         type = "upper",
+         tl.col = "black",
+         tl.srt = 45)
+
+# Visualização com cores e ordenação por clusters
+corrplot(matriz_cor,
+         method = "color",
+         type = "upper",
+         order = "hclust",
+         addCoef.col = "black",
+         tl.col = "black",
+         tl.srt = 45,
+         number.cex = 0.7)
+```
+
+### Interpretação da Matriz de Correlação
+
+Os valores de correlação variam de -1 a +1:
+
+- **r ≈ +1**: Correlação positiva forte
+- **r ≈ 0**: Correlação fraca ou ausente
+- **r ≈ -1**: Correlação negativa forte
+
+Para análise fatorial, esperamos:
+
+- **Correlações moderadas a fortes** entre itens do mesmo fator
+- **Correlações mais fracas** entre itens de fatores diferentes
+- **Ausência de correlações muito altas** (r > 0,90), que indicam redundância
+
+### Heatmap de Correlação
+
+```{r}
+#| label: heatmap-correlacao
+#| eval: false
+
+# Heatmap com cores
+heatmap(matriz_cor,
+        col = colorRampPalette(c("blue", "white", "red"))(20),
+        main = "Heatmap de Correlações - Itens de Literacia")
+```
+
+## Análise de Redes
+
+A **análise de redes** oferece uma perspectiva alternativa sobre as relações entre itens, visualizando-os como nós conectados por arestas.
+
+### Criando a Rede
+
+```{r}
+#| label: analise-redes
+#| eval: false
+
+# Selecionar itens da escala
+dados_rede <- dados %>%
+  select(L1:L10) %>%
+  na.omit()
+
+# Calcular matriz de correlação
+matriz_rede <- cor(dados_rede)
+
+# Calcular tamanho da amostra
+n_amostra <- nrow(dados_rede)
+
+# Criar rede com qgraph
+rede <- qgraph(matriz_rede,
+               graph = "glasso",        # Regularização LASSO
+               layout = "spring",       # Layout spring
+               vsize = 8,               # Tamanho dos nós
+               sampleSize = n_amostra,  # Tamanho da amostra
+               edge.labels = TRUE,      # Mostrar valores nas arestas
+               edge.label.cex = 0.8,    # Tamanho dos rótulos
+               title = "Rede de Literacia Digital")
+```
+
+### Interpretação da Análise de Redes
+
+- **Nós**: Representam as variáveis (itens)
+- **Arestas**: Representam relações entre variáveis
+- **Espessura das arestas**: Indica a força da relação
+- **Cor das arestas**: Verde = positiva, Vermelho = negativa
+- **Posição dos nós**: Algoritmo agrupa nós fortemente relacionados
+
+**Medidas de centralidade** (grau, intermediação, proximidade) podem identificar os itens mais importantes na rede.
+
+## Análise de Confiabilidade
+
+A **confiabilidade** refere-se ao grau de consistência e precisão de um instrumento de medida. Representa a proporção da variância atribuível ao verdadeiro escore da variável latente.
+
+### Alfa de Cronbach
+
+O **Alfa de Cronbach (α)** é a medida mais amplamente utilizada de consistência interna.
+
+#### Teoria
+
+- Baseado nas correlações entre itens
+- Usa a matriz de covariância dos itens
+- Valores aceitáveis: **α > 0,70**
+- Valores ideais: **0,70 < α < 0,95**
+
+**Fórmula:**
+
+$$
+\alpha = \frac{k}{k-1} \left(1 - \frac{\sum \sigma^2_i}{\sigma^2_T}\right)
+$$
+
+Onde:
+- k = número de itens
+- σ²ᵢ = variância de cada item
+- σ²_T = variância total da escala
+
+#### Calculando o Alfa de Cronbach
+
+```{r}
+#| label: alfa-cronbach
+#| eval: false
+
+# Selecionar itens da escala
+itens_escala <- dados %>%
+  select(L1:L10) %>%
+  na.omit()
+
+# Calcular Alfa de Cronbach
+alfa <- psych::alpha(itens_escala,
+                     n.iter = 1000,      # Iterações para bootstrap
+                     check.keys = TRUE)  # Verifica itens reversos
+
+# Exibir resultados
+print(alfa)
+```
+
+#### Interpretação do Output
+
+```
+Reliability analysis
+
+raw_alpha std.alpha G6(smc) average_r S/N
+     0.89      0.89    0.91      0.42  8.1
+
+lower alpha upper     95% confidence boundaries
+0.87  0.89  0.91
+```
+
+**Interpretação:**
+
+- **raw_alpha = 0,89**: Alfa de Cronbach bruto (excelente consistência interna)
+- **std.alpha = 0,89**: Alfa padronizado
+- **average_r = 0,42**: Correlação média entre itens
+- **IC 95% [0,87; 0,91]**: Intervalo de confiança do alfa
+
+**Critérios de interpretação:**
+
+| Alfa de Cronbach | Consistência Interna |
+|------------------|---------------------|
+| α < 0,60 | Inaceitável |
+| 0,60 ≤ α < 0,70 | Questionável |
+| 0,70 ≤ α < 0,80 | Aceitável |
+| 0,80 ≤ α < 0,90 | Boa |
+| α ≥ 0,90 | Excelente (pode indicar redundância) |
+
+#### Limitação Importante
+
+> **"Alpha não valida um teste"**
+
+Alta consistência interna **não garante** que o instrumento mede o que afirma medir. Confiabilidade é necessária, mas não suficiente para validade.
+
+### Ômega de McDonald
+
+O **Ômega de McDonald (ω)** é uma medida alternativa de confiabilidade composta, considerada mais geral que o Alfa de Cronbach.
+
+#### Teoria
+
+- Calculado usando cargas fatoriais e unicidades da análise fatorial
+- Baseado em estrutura CFA
+- Mais apropriado para escalas multidimensionais
+- Valores aceitáveis: **ω > 0,70**
+
+**Fórmula:**
+
+$$
+\omega = \frac{(\sum \lambda_i)^2}{(\sum \lambda_i)^2 + \sum \theta_i}
+$$
+
+Onde:
+- λᵢ = cargas fatoriais
+- θᵢ = variâncias de erro
+
+#### Calculando o Ômega de McDonald
+
+```{r}
+#| label: omega-mcdonald
+#| eval: false
+
+# Calcular Ômega de McDonald
+omega_result <- omega(itens_escala)
+
+# Exibir resultados
+print(omega_result)
+```
+
+### Comparação: Alfa vs. Ômega
+
+| **Característica** | **Alfa de Cronbach** | **Ômega de McDonald** |
+|-------------------|---------------------|----------------------|
+| Base de cálculo | Matriz de covariância | Cargas fatoriais (CFA) |
+| Estrutura fatorial | Não requer | Requer modelo CFA |
+| Dimensionalidade | Assume unidimensionalidade | Adequado para multidimensional |
+| Generalidade | Mais restrito | Mais geral |
+
+**Recomendação:** Reporte ambos os índices quando possível, especialmente para escalas multidimensionais.
+
+## Análise Fatorial Exploratória (EFA)
+
+A **Análise Fatorial Exploratória (AFE)** é usada para **desenvolvimento de teoria**, explorando a estrutura latente dos dados sem hipóteses prévias sobre o número de fatores.
+
+### Teoria da EFA
+
+#### Características Principais
+
+1. **Natureza exploratória**: Número de fatores determinado pelos dados
+2. **Cargas não fixadas**: Padrão de cargas emerge dos dados
+3. **Redução de dimensionalidade**: Reduz muitos itens a poucos fatores latentes
+4. **Rotação**: Fatores rotacionados para interpretação mais clara
+
+#### Equação Básica
+
+$$
+X = \Lambda F + \epsilon
+$$
+
+Onde:
+- X = variáveis observadas (itens)
+- Λ = matriz de cargas fatoriais
+- F = fatores latentes
+- ε = erros de medida
+
+### Pressupostos da EFA
+
+#### Teste KMO (Kaiser-Meyer-Olkin)
+
+O **KMO** avalia a adequação da amostra para análise fatorial.
+
+```{r}
+#| label: teste-kmo
+#| eval: false
+
+# Calcular KMO
+kmo_resultado <- KMO(itens_escala)
+
+# Imprimir KMO geral
+cat("KMO geral:", kmo_resultado$MSA, "\n")
+
+# Interpretar resultado
+if (kmo_resultado$MSA >= 0.9) {
+  cat("A adequação da amostra é excelente.\n")
+} else if (kmo_resultado$MSA >= 0.8) {
+  cat("A adequação da amostra é boa.\n")
+} else if (kmo_resultado$MSA >= 0.7) {
+  cat("A adequação da amostra é razoável.\n")
+} else if (kmo_resultado$MSA >= 0.6) {
+  cat("A adequação da amostra é medíocre.\n")
+} else if (kmo_resultado$MSA >= 0.5) {
+  cat("A adequação da amostra é inadequada.\n")
+} else {
+  cat("A adequação da amostra é inaceitável.\n")
+}
+```
+
+**Critérios de interpretação:**
+
+| KMO | Adequação da Amostra |
+|-----|---------------------|
+| KMO ≥ 0,90 | Excelente |
+| 0,80 ≤ KMO < 0,90 | Boa |
+| 0,70 ≤ KMO < 0,80 | Razoável |
+| 0,60 ≤ KMO < 0,70 | Medíocre |
+| 0,50 ≤ KMO < 0,60 | Inadequada |
+| KMO < 0,50 | Inaceitável |
+
+#### Teste de Esfericidade de Bartlett
+
+Testa se a matriz de correlação é significativamente diferente de uma matriz identidade.
+
+- **H₀**: Matriz de correlação é uma matriz identidade (variáveis não correlacionadas)
+- **H₁**: Existem correlações significativas entre variáveis
+- **Desejado**: p < 0,05 (rejeitar H₀)
+
+### Determinando o Número de Fatores
+
+#### Análise Paralela
+
+A **análise paralela** é o método mais confiável para determinar o número de fatores.
+
+```{r}
+#| label: analise-paralela
+#| eval: false
+
+# Realizar análise paralela
+fa.parallel(itens_escala,
+            fa = "fa",          # Análise fatorial (não PCA)
+            n.iter = 100,       # Número de iterações
+            main = "Análise Paralela - Scree Plot")
+```
+
+**Interpretação:**
+
+- **Linha azul**: Autovalores observados nos dados reais
+- **Linha vermelha**: Autovalores médios de dados aleatórios (simulados)
+- **Linha verde**: Autovalores do 95º percentil dos dados simulados
+- **Decisão**: Reter fatores onde a linha azul está **acima** da linha vermelha
+
+#### Regra de Kaiser (Autovalores > 1)
+
+Método tradicional, mas menos confiável que análise paralela.
+
+```{r}
+#| label: scree-plot
+#| eval: false
+
+# Scree plot simples
+scree(itens_escala, main = "Scree Plot")
+```
+
+### Realizando a EFA
+
+```{r}
+#| label: efa-modelo
+#| eval: false
+
+# Determinar número de fatores (baseado em análise paralela)
+n_fatores <- 4  # Ajustar baseado em análise paralela
+
+# Realizar EFA
+efa_resultado <- fa(itens_escala,
+                    nfactors = n_fatores,
+                    rotate = "varimax",  # Rotação ortogonal
+                    fm = "ml")           # Máxima verossimilhança
+
+# Imprimir resultados
+print(efa_resultado)
+
+# Visualizar diagrama de fatores
+fa.diagram(efa_resultado)
+```
+
+### Interpretação das Cargas Fatoriais
+
+As **cargas fatoriais (factor loadings)** representam a correlação entre item e fator.
+
+**Critérios de interpretação:**
+
+| Carga Fatorial | Interpretação |
+|---------------|---------------|
+| \|λ\| ≥ 0,70 | Excelente |
+| \|λ\| ≥ 0,63 | Muito boa |
+| \|λ\| ≥ 0,55 | Boa |
+| \|λ\| ≥ 0,45 | Razoável |
+| \|λ\| ≥ 0,32 | Fraca |
+| \|λ\| < 0,32 | Inaceitável |
+
+**Variância explicada**: λ² = R²
+
+Exemplo: Carga de 0,70 explica 0,49 (49%) da variância do item.
+
+### Rotação de Fatores
+
+- **Varimax** (ortogonal): Fatores não correlacionados - mais simples de interpretar
+- **Oblimin** (oblíqua): Permite correlação entre fatores - mais realista em muitos contextos
+
+### EFA Unidimensional (Exemplo com Literacia)
+
+Se a teoria sugere que o instrumento é unidimensional:
+
+```{r}
+#| label: efa-unidimensional
+#| eval: false
+
+# EFA com 1 fator (modelo teórico unidimensional)
+efa_uni <- fa(itens_escala,
+              nfactors = 1,
+              rotate = "none",   # Sem rotação (1 fator)
+              fm = "ml")
+
+# Resultados
+print(efa_uni)
+
+# Diagrama
+fa.diagram(efa_uni)
+```
+
+## Análise Fatorial Confirmatória (CFA)
+
+A **Análise Fatorial Confirmatória (AFC)** é usada para **testar teoria**, verificando se uma estrutura fatorial pré-especificada se ajusta aos dados.
+
+### Teoria da CFA
+
+#### Características Principais
+
+1. **Natureza confirmatória**: Número de fatores especificado *a priori*
+2. **Cargas fixadas**: Padrão de cargas especificado antes da análise
+3. **Testa teoria**: Verifica se estrutura teórica se ajusta aos dados empíricos
+4. **Fatores correlacionados**: Geralmente permite correlações entre fatores
+
+#### Diferenças EFA vs. CFA
+
+| **Aspecto** | **EFA** | **CFA** |
+|------------|---------|---------|
+| Objetivo | Desenvolvimento de teoria | Teste de teoria |
+| Fatores | Determinados pelos dados | Especificados *a priori* |
+| Cargas | Não fixadas | Padrão fixo |
+| Rotação | Sim (para interpretação) | Não aplicável |
+| Correlação entre fatores | Geralmente ortogonais | Geralmente correlacionados |
+| Erros correlacionados | Não permitidos | Podem ser permitidos |
+| Testes estatísticos | Limitados | Extensivos (índices de ajuste) |
+
+### Especificação do Modelo no lavaan
+
+O pacote **lavaan** usa sintaxe intuitiva para especificar modelos CFA.
+
+#### Sintaxe básica
+
+```
+# =~ define fatores latentes
+# ~~ define correlações/covariâncias
+```
+
+#### Exemplo: Modelo Unidimensional
+
+```{r}
+#| label: cfa-modelo-uni
+#| eval: false
+
+# Carregar lavaan
+library(lavaan)
+
+# Especificar modelo unidimensional
+modelo_cfa <- '
+  # Definição do fator latente
+  Literacia =~ L1 + L2 + L3 + L4 + L5 + L6 + L7 + L8 + L9 + L10
+'
+
+# Estimar modelo
+ajuste_cfa <- cfa(modelo_cfa,
+                  data = itens_escala,
+                  estimator = "ML")  # Máxima verossimilhança
+
+# Sumarizar resultados
+summary(ajuste_cfa,
+        fit.measures = TRUE,    # Mostrar índices de ajuste
+        standardized = TRUE)    # Mostrar coeficientes padronizados
+```
+
+#### Exemplo: Modelo Bidimensional
+
+```{r}
+#| label: cfa-modelo-bi
+#| eval: false
+
+# Modelo com 2 fatores correlacionados
+modelo_cfa_2f <- '
+  # Definição dos fatores
+  Fator1 =~ L1 + L2 + L3 + L4 + L5
+  Fator2 =~ L6 + L7 + L8 + L9 + L10
+'
+
+# Estimar modelo
+ajuste_cfa_2f <- cfa(modelo_cfa_2f, data = itens_escala)
+
+# Resultados
+summary(ajuste_cfa_2f, fit.measures = TRUE, standardized = TRUE)
+```
+
+### Índices de Ajuste do Modelo
+
+Os **índices de ajuste (fit indices)** avaliam o quão bem o modelo teórico se ajusta aos dados observados.
+
+#### 1. Qui-Quadrado (χ²)
+
+**Teste formal de ajuste exato:**
+
+- **H₀**: O modelo se ajusta perfeitamente aos dados
+- **Bom ajuste**: p > 0,05 (não rejeitar H₀)
+- **Problema**: Sensível ao tamanho da amostra (sempre significativo com n grande)
+
+**Qui-quadrado normalizado:**
+
+- **χ²/df < 2**: Bom ajuste
+- **χ²/df < 3**: Ajuste aceitável
+
+#### 2. CFI (Comparative Fit Index)
+
+- Compara o modelo proposto com modelo nulo (independência)
+- **Bom ajuste**: CFI ≥ 0,95
+- **Ajuste aceitável**: CFI ≥ 0,90
+
+#### 3. TLI (Tucker-Lewis Index)
+
+- Similar ao CFI, mas penaliza complexidade do modelo
+- **Bom ajuste**: TLI ≥ 0,95
+- **Ajuste aceitável**: TLI ≥ 0,90
+
+#### 4. RMSEA (Root Mean Square Error of Approximation)
+
+- Mede erro de aproximação na população
+- **Bom ajuste**: RMSEA ≤ 0,05
+- **Ajuste aceitável**: RMSEA ≤ 0,08
+- **Ajuste mediocre**: 0,08 < RMSEA ≤ 0,10
+- **Ajuste ruim**: RMSEA > 0,10
+
+**Importante:** O IC 90% do RMSEA também deve ser considerado.
+
+#### 5. SRMR (Standardized Root Mean Square Residual)
+
+- Raiz quadrada média do resíduo padronizado
+- **Bom ajuste**: SRMR ≤ 0,05
+- **Ajuste aceitável**: SRMR ≤ 0,08
+
+### Tabela Resumo de Critérios de Ajuste
+
+| **Índice** | **Bom Ajuste** | **Ajuste Aceitável** |
+|-----------|---------------|---------------------|
+| χ²/df | ≤ 2 | ≤ 3 |
+| CFI | ≥ 0,95 | ≥ 0,90 |
+| TLI | ≥ 0,95 | ≥ 0,90 |
+| RMSEA | ≤ 0,05 | ≤ 0,08 |
+| SRMR | ≤ 0,05 | ≤ 0,08 |
+
+### Interpretação dos Resultados da CFA
+
+```{r}
+#| label: interpretar-cfa
+#| eval: false
+
+# Exibir índices de ajuste
+fitMeasures(ajuste_cfa, c("chisq", "df", "pvalue", "cfi", "tli", "rmsea", "srmr"))
+
+# Exibir cargas fatoriais padronizadas
+standardizedSolution(ajuste_cfa)
+
+# Exibir R² dos itens
+inspect(ajuste_cfa, "r2")
+```
+
+### Modificação de Modelos
+
+Se o modelo não ajustar bem, considere modificações baseadas em:
+
+1. **Teoria**: Modificações devem ser teoricamente justificáveis
+2. **Índices de modificação**: Sugestões estatísticas do lavaan
+
+```{r}
+#| label: indices-modificacao
+#| eval: false
+
+# Índices de modificação
+modindices(ajuste_cfa, sort = TRUE, maximum.number = 10)
+```
+
+**Cuidado:** Não realize modificações baseadas apenas em estatísticas - sempre justifique teoricamente.
+
+### Visualização do Modelo com semPaths
+
+```{r}
+#| label: semplot-visualizacao
+#| eval: false
+
+library(semPlot)
+
+# Plotar modelo CFA
+semPaths(ajuste_cfa,
+         what = "std",             # Coeficientes padronizados
+         layout = "tree2",         # Layout hierárquico
+         edge.label.cex = 0.8,     # Tamanho das etiquetas
+         sizeMan = 8,              # Tamanho dos nós observados
+         sizeLat = 10,             # Tamanho dos nós latentes
+         esize = 1,                # Tamanho das setas
+         residuals = TRUE,         # Mostrar resíduos
+         intercepts = FALSE,       # Não mostrar interceptos
+         title = TRUE,
+         nCharNodes = 0)           # Sem abreviação de nomes
+```
+
+**Elementos do diagrama:**
+
+- **Retângulos**: Variáveis observadas (itens)
+- **Elipses/Círculos**: Variáveis latentes (fatores)
+- **Setas unidirecionais (→)**: Relações de regressão
+- **Setas bidirecionais (↔)**: Correlações/Covariâncias
+- **Pequenos círculos → retângulos**: Erros de medida
+
+## Validação de Constructo
+
+A **validação baseada na estrutura interna** avalia se as relações entre itens e componentes do teste se conformam ao constructo teórico.
+
+### Métodos de Validação
+
+1. **Análise fatorial** (EFA e CFA)
+2. **Correlações item-total**
+3. **Correlações inter-itens**
+4. **Coeficientes de confiabilidade** (α, ω)
+
+### Critérios de Avaliação
+
+- Agrupamento de itens corresponde à teoria
+- Índices de ajuste adequados (CFA)
+- Confiabilidade aceitável
+- Cargas fatoriais apropriadas
+
+## Exercícios Práticos
+
+### Exercício 1: Confiabilidade
+
+Use o dataset de literacia para:
+
+a) Calcular o Alfa de Cronbach para os 10 itens
+b) Calcular o Ômega de McDonald
+c) Identificar se algum item reduz a confiabilidade (item-total correlations)
+d) Comparar os dois índices e interpretar os resultados
+
+### Exercício 2: Análise Fatorial Exploratória
+
+a) Calcule o KMO e interprete a adequação da amostra
+b) Realize análise paralela para determinar o número de fatores
+c) Realize EFA com o número apropriado de fatores
+d) Interprete as cargas fatoriais e nomeie os fatores
+e) Compare a solução unidimensional vs. multidimensional
+
+### Exercício 3: Análise Fatorial Confirmatória
+
+a) Especifique um modelo CFA unidimensional para os 10 itens
+b) Estime o modelo e avalie os índices de ajuste
+c) Examine as cargas fatoriais padronizadas
+d) Se o ajuste for inadequado, explore índices de modificação
+e) Visualize o modelo final com semPaths
+
+### Exercício 4: Comparação de Modelos
+
+Compare três modelos CFA:
+
+- **Modelo 1**: Unidimensional (1 fator geral)
+- **Modelo 2**: Bidimensional (2 fatores correlacionados)
+- **Modelo 3**: Hierárquico (2 fatores de primeira ordem + 1 fator de segunda ordem)
+
+a) Especifique e estime os três modelos
+b) Compare os índices de ajuste
+c) Use o teste qui-quadrado de diferença para modelos aninhados
+d) Selecione o melhor modelo e justifique
+
+### Exercício 5: Análise de Redes
+
+a) Crie uma rede psicométrica para os 10 itens
+b) Identifique os itens mais centrais na rede
+c) Examine se há comunidades (clusters) de itens
+d) Compare a estrutura da rede com os resultados da análise fatorial
+
+---
+
+**Referências:**
+
+- Cronbach, L. J. (1951). Coefficient alpha and the internal structure of tests. *Psychometrika*, 16(3), 297-334.
+- DeVellis, R. F. (2003). *Scale Development: Theory and Applications*. SAGE Publications.
+- Fornell, C., & Larcker, D. F. (1981). Evaluating structural equation models with unobservable variables and measurement error. *Journal of Marketing Research*, 18(1), 39-50.
+- Hu, L. T., & Bentler, P. M. (1999). Cutoff criteria for fit indexes in covariance structure analysis. *Structural Equation Modeling*, 6(1), 1-55.
+- McDonald, R. P. (1999). *Test Theory: A Unified Treatment*. Lawrence Erlbaum Associates.
+- Rosseel, Y. (2012). lavaan: An R package for structural equation modeling. *Journal of Statistical Software*, 48(2), 1-36.

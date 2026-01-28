@@ -1,0 +1,1803 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>6&nbsp; Análise Psicométrica – Bioestatística Aplicada à Saúde usando R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./analise-texto.html" rel="next">
+<link href="./regressao.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-4a990d8dcb58f517c7c86712b8f2ac7c.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-46f4cc9626f044588a66931b604fc9c8.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-4a990d8dcb58f517c7c86712b8f2ac7c.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-1ea2f1ca8430a0e4b2b18d49b51ad2af.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-90005ebdada80aaf03d6f48ec6c0ecfe.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-1ea2f1ca8430a0e4b2b18d49b51ad2af.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="styles.css">
+</head>
+<body class="nav-sidebar docked quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./psicometria.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Análise Psicométrica</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Bioestatística Aplicada à Saúde usando R</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prefácio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introducao-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução ao R e RStudio</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./manipulacao-dados.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Manipulação de Dados com Tidyverse</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analise-exploratoria.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Análise Exploratória de Dados</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./testes-estatisticos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Testes Estatísticos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./regressao.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Regressão Linear, Logística e Multinomial</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./psicometria.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Análise Psicométrica</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analise-texto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Análise de Dados Textuais e Mineração de Texto</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referências</span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li>
+<a href="#introdu%C3%A7%C3%A3o-%C3%A0-psicometria" id="toc-introdução-à-psicometria" class="nav-link active" data-scroll-target="#introdu%C3%A7%C3%A3o-%C3%A0-psicometria"><span class="header-section-number">6.1</span> Introdução à Psicometria</a>
+  <ul class="collapse">
+<li><a href="#por-que-fazer-um-estudo-antes-de-fazer-um-estudo" id="toc-por-que-fazer-um-estudo-antes-de-fazer-um-estudo" class="nav-link" data-scroll-target="#por-que-fazer-um-estudo-antes-de-fazer-um-estudo"><span class="header-section-number">6.1.1</span> Por que fazer um estudo antes de fazer um estudo?</a></li>
+  <li><a href="#o-custo-de-medidas-inadequadas" id="toc-o-custo-de-medidas-inadequadas" class="nav-link" data-scroll-target="#o-custo-de-medidas-inadequadas"><span class="header-section-number">6.1.2</span> O Custo de Medidas Inadequadas</a></li>
+  <li><a href="#aplica%C3%A7%C3%B5es-em-sa%C3%BAde" id="toc-aplicações-em-saúde" class="nav-link" data-scroll-target="#aplica%C3%A7%C3%B5es-em-sa%C3%BAde"><span class="header-section-number">6.1.3</span> Aplicações em Saúde</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#prepara%C3%A7%C3%A3o-dos-dados-psicom%C3%A9tricos" id="toc-preparação-dos-dados-psicométricos" class="nav-link" data-scroll-target="#prepara%C3%A7%C3%A3o-dos-dados-psicom%C3%A9tricos"><span class="header-section-number">6.2</span> Preparação dos Dados Psicométricos</a>
+  <ul class="collapse">
+<li><a href="#carregando-pacotes" id="toc-carregando-pacotes" class="nav-link" data-scroll-target="#carregando-pacotes"><span class="header-section-number">6.2.1</span> Carregando Pacotes</a></li>
+  <li><a href="#importando-e-explorando-os-dados" id="toc-importando-e-explorando-os-dados" class="nav-link" data-scroll-target="#importando-e-explorando-os-dados"><span class="header-section-number">6.2.2</span> Importando e Explorando os Dados</a></li>
+  <li><a href="#convertendo-vari%C3%A1veis-categ%C3%B3ricas" id="toc-convertendo-variáveis-categóricas" class="nav-link" data-scroll-target="#convertendo-vari%C3%A1veis-categ%C3%B3ricas"><span class="header-section-number">6.2.3</span> Convertendo Variáveis Categóricas</a></li>
+  <li><a href="#tratamento-de-dados-faltantes" id="toc-tratamento-de-dados-faltantes" class="nav-link" data-scroll-target="#tratamento-de-dados-faltantes"><span class="header-section-number">6.2.4</span> Tratamento de Dados Faltantes</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#matriz-de-correla%C3%A7%C3%A3o" id="toc-matriz-de-correlação" class="nav-link" data-scroll-target="#matriz-de-correla%C3%A7%C3%A3o"><span class="header-section-number">6.3</span> Matriz de Correlação</a>
+  <ul class="collapse">
+<li><a href="#calculando-e-visualizando-correla%C3%A7%C3%B5es" id="toc-calculando-e-visualizando-correlações" class="nav-link" data-scroll-target="#calculando-e-visualizando-correla%C3%A7%C3%B5es"><span class="header-section-number">6.3.1</span> Calculando e Visualizando Correlações</a></li>
+  <li><a href="#interpreta%C3%A7%C3%A3o-da-matriz-de-correla%C3%A7%C3%A3o" id="toc-interpretação-da-matriz-de-correlação" class="nav-link" data-scroll-target="#interpreta%C3%A7%C3%A3o-da-matriz-de-correla%C3%A7%C3%A3o"><span class="header-section-number">6.3.2</span> Interpretação da Matriz de Correlação</a></li>
+  <li><a href="#heatmap-de-correla%C3%A7%C3%A3o" id="toc-heatmap-de-correlação" class="nav-link" data-scroll-target="#heatmap-de-correla%C3%A7%C3%A3o"><span class="header-section-number">6.3.3</span> Heatmap de Correlação</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#an%C3%A1lise-de-redes" id="toc-análise-de-redes" class="nav-link" data-scroll-target="#an%C3%A1lise-de-redes"><span class="header-section-number">6.4</span> Análise de Redes</a>
+  <ul class="collapse">
+<li><a href="#criando-a-rede" id="toc-criando-a-rede" class="nav-link" data-scroll-target="#criando-a-rede"><span class="header-section-number">6.4.1</span> Criando a Rede</a></li>
+  <li><a href="#interpreta%C3%A7%C3%A3o-da-an%C3%A1lise-de-redes" id="toc-interpretação-da-análise-de-redes" class="nav-link" data-scroll-target="#interpreta%C3%A7%C3%A3o-da-an%C3%A1lise-de-redes"><span class="header-section-number">6.4.2</span> Interpretação da Análise de Redes</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#an%C3%A1lise-de-confiabilidade" id="toc-análise-de-confiabilidade" class="nav-link" data-scroll-target="#an%C3%A1lise-de-confiabilidade"><span class="header-section-number">6.5</span> Análise de Confiabilidade</a>
+  <ul class="collapse">
+<li><a href="#alfa-de-cronbach" id="toc-alfa-de-cronbach" class="nav-link" data-scroll-target="#alfa-de-cronbach"><span class="header-section-number">6.5.1</span> Alfa de Cronbach</a></li>
+  <li><a href="#%C3%B4mega-de-mcdonald" id="toc-ômega-de-mcdonald" class="nav-link" data-scroll-target="#%C3%B4mega-de-mcdonald"><span class="header-section-number">6.5.2</span> Ômega de McDonald</a></li>
+  <li><a href="#compara%C3%A7%C3%A3o-alfa-vs.-%C3%B4mega" id="toc-comparação-alfa-vs.-ômega" class="nav-link" data-scroll-target="#compara%C3%A7%C3%A3o-alfa-vs.-%C3%B4mega"><span class="header-section-number">6.5.3</span> Comparação: Alfa vs.&nbsp;Ômega</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#an%C3%A1lise-fatorial-explorat%C3%B3ria-efa" id="toc-análise-fatorial-exploratória-efa" class="nav-link" data-scroll-target="#an%C3%A1lise-fatorial-explorat%C3%B3ria-efa"><span class="header-section-number">6.6</span> Análise Fatorial Exploratória (EFA)</a>
+  <ul class="collapse">
+<li><a href="#teoria-da-efa" id="toc-teoria-da-efa" class="nav-link" data-scroll-target="#teoria-da-efa"><span class="header-section-number">6.6.1</span> Teoria da EFA</a></li>
+  <li><a href="#pressupostos-da-efa" id="toc-pressupostos-da-efa" class="nav-link" data-scroll-target="#pressupostos-da-efa"><span class="header-section-number">6.6.2</span> Pressupostos da EFA</a></li>
+  <li><a href="#determinando-o-n%C3%BAmero-de-fatores" id="toc-determinando-o-número-de-fatores" class="nav-link" data-scroll-target="#determinando-o-n%C3%BAmero-de-fatores"><span class="header-section-number">6.6.3</span> Determinando o Número de Fatores</a></li>
+  <li><a href="#realizando-a-efa" id="toc-realizando-a-efa" class="nav-link" data-scroll-target="#realizando-a-efa"><span class="header-section-number">6.6.4</span> Realizando a EFA</a></li>
+  <li><a href="#interpreta%C3%A7%C3%A3o-das-cargas-fatoriais" id="toc-interpretação-das-cargas-fatoriais" class="nav-link" data-scroll-target="#interpreta%C3%A7%C3%A3o-das-cargas-fatoriais"><span class="header-section-number">6.6.5</span> Interpretação das Cargas Fatoriais</a></li>
+  <li><a href="#rota%C3%A7%C3%A3o-de-fatores" id="toc-rotação-de-fatores" class="nav-link" data-scroll-target="#rota%C3%A7%C3%A3o-de-fatores"><span class="header-section-number">6.6.6</span> Rotação de Fatores</a></li>
+  <li><a href="#efa-unidimensional-exemplo-com-literacia" id="toc-efa-unidimensional-exemplo-com-literacia" class="nav-link" data-scroll-target="#efa-unidimensional-exemplo-com-literacia"><span class="header-section-number">6.6.7</span> EFA Unidimensional (Exemplo com Literacia)</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#an%C3%A1lise-fatorial-confirmat%C3%B3ria-cfa" id="toc-análise-fatorial-confirmatória-cfa" class="nav-link" data-scroll-target="#an%C3%A1lise-fatorial-confirmat%C3%B3ria-cfa"><span class="header-section-number">6.7</span> Análise Fatorial Confirmatória (CFA)</a>
+  <ul class="collapse">
+<li><a href="#teoria-da-cfa" id="toc-teoria-da-cfa" class="nav-link" data-scroll-target="#teoria-da-cfa"><span class="header-section-number">6.7.1</span> Teoria da CFA</a></li>
+  <li><a href="#especifica%C3%A7%C3%A3o-do-modelo-no-lavaan" id="toc-especificação-do-modelo-no-lavaan" class="nav-link" data-scroll-target="#especifica%C3%A7%C3%A3o-do-modelo-no-lavaan"><span class="header-section-number">6.7.2</span> Especificação do Modelo no lavaan</a></li>
+  <li><a href="#%C3%ADndices-de-ajuste-do-modelo" id="toc-índices-de-ajuste-do-modelo" class="nav-link" data-scroll-target="#%C3%ADndices-de-ajuste-do-modelo"><span class="header-section-number">6.7.3</span> Índices de Ajuste do Modelo</a></li>
+  <li><a href="#tabela-resumo-de-crit%C3%A9rios-de-ajuste" id="toc-tabela-resumo-de-critérios-de-ajuste" class="nav-link" data-scroll-target="#tabela-resumo-de-crit%C3%A9rios-de-ajuste"><span class="header-section-number">6.7.4</span> Tabela Resumo de Critérios de Ajuste</a></li>
+  <li><a href="#interpreta%C3%A7%C3%A3o-dos-resultados-da-cfa" id="toc-interpretação-dos-resultados-da-cfa" class="nav-link" data-scroll-target="#interpreta%C3%A7%C3%A3o-dos-resultados-da-cfa"><span class="header-section-number">6.7.5</span> Interpretação dos Resultados da CFA</a></li>
+  <li><a href="#modifica%C3%A7%C3%A3o-de-modelos" id="toc-modificação-de-modelos" class="nav-link" data-scroll-target="#modifica%C3%A7%C3%A3o-de-modelos"><span class="header-section-number">6.7.6</span> Modificação de Modelos</a></li>
+  <li><a href="#visualiza%C3%A7%C3%A3o-do-modelo-com-sempaths" id="toc-visualização-do-modelo-com-sempaths" class="nav-link" data-scroll-target="#visualiza%C3%A7%C3%A3o-do-modelo-com-sempaths"><span class="header-section-number">6.7.7</span> Visualização do Modelo com semPaths</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#valida%C3%A7%C3%A3o-de-constructo" id="toc-validação-de-constructo" class="nav-link" data-scroll-target="#valida%C3%A7%C3%A3o-de-constructo"><span class="header-section-number">6.8</span> Validação de Constructo</a>
+  <ul class="collapse">
+<li><a href="#m%C3%A9todos-de-valida%C3%A7%C3%A3o" id="toc-métodos-de-validação" class="nav-link" data-scroll-target="#m%C3%A9todos-de-valida%C3%A7%C3%A3o"><span class="header-section-number">6.8.1</span> Métodos de Validação</a></li>
+  <li><a href="#crit%C3%A9rios-de-avalia%C3%A7%C3%A3o" id="toc-critérios-de-avaliação" class="nav-link" data-scroll-target="#crit%C3%A9rios-de-avalia%C3%A7%C3%A3o"><span class="header-section-number">6.8.2</span> Critérios de Avaliação</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#exerc%C3%ADcios-pr%C3%A1ticos" id="toc-exercícios-práticos" class="nav-link" data-scroll-target="#exerc%C3%ADcios-pr%C3%A1ticos"><span class="header-section-number">6.9</span> Exercícios Práticos</a>
+  <ul class="collapse">
+<li><a href="#exerc%C3%ADcio-1-confiabilidade" id="toc-exercício-1-confiabilidade" class="nav-link" data-scroll-target="#exerc%C3%ADcio-1-confiabilidade"><span class="header-section-number">6.9.1</span> Exercício 1: Confiabilidade</a></li>
+  <li><a href="#exerc%C3%ADcio-2-an%C3%A1lise-fatorial-explorat%C3%B3ria" id="toc-exercício-2-análise-fatorial-exploratória" class="nav-link" data-scroll-target="#exerc%C3%ADcio-2-an%C3%A1lise-fatorial-explorat%C3%B3ria"><span class="header-section-number">6.9.2</span> Exercício 2: Análise Fatorial Exploratória</a></li>
+  <li><a href="#exerc%C3%ADcio-3-an%C3%A1lise-fatorial-confirmat%C3%B3ria" id="toc-exercício-3-análise-fatorial-confirmatória" class="nav-link" data-scroll-target="#exerc%C3%ADcio-3-an%C3%A1lise-fatorial-confirmat%C3%B3ria"><span class="header-section-number">6.9.3</span> Exercício 3: Análise Fatorial Confirmatória</a></li>
+  <li><a href="#exerc%C3%ADcio-4-compara%C3%A7%C3%A3o-de-modelos" id="toc-exercício-4-comparação-de-modelos" class="nav-link" data-scroll-target="#exerc%C3%ADcio-4-compara%C3%A7%C3%A3o-de-modelos"><span class="header-section-number">6.9.4</span> Exercício 4: Comparação de Modelos</a></li>
+  <li><a href="#exerc%C3%ADcio-5-an%C3%A1lise-de-redes" id="toc-exercício-5-análise-de-redes" class="nav-link" data-scroll-target="#exerc%C3%ADcio-5-an%C3%A1lise-de-redes"><span class="header-section-number">6.9.5</span> Exercício 5: Análise de Redes</a></li>
+  </ul>
+</li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Análise Psicométrica</span>
+</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><section id="introdução-à-psicometria" class="level2" data-number="6.1"><h2 data-number="6.1" class="anchored" data-anchor-id="introdução-à-psicometria">
+<span class="header-section-number">6.1</span> Introdução à Psicometria</h2>
+<p>A <strong>psicometria</strong> é uma especialidade dentro das ciências comportamentais e sociais dedicada à mensuração de fenômenos psicológicos e sociais. Em pesquisas de saúde, a psicometria é fundamental para validar instrumentos que avaliam construtos como qualidade de vida, satisfação do paciente, literacia em saúde, sintomas psicológicos, entre outros.</p>
+<section id="por-que-fazer-um-estudo-antes-de-fazer-um-estudo" class="level3" data-number="6.1.1"><h3 data-number="6.1.1" class="anchored" data-anchor-id="por-que-fazer-um-estudo-antes-de-fazer-um-estudo">
+<span class="header-section-number">6.1.1</span> Por que fazer um estudo antes de fazer um estudo?</h3>
+<p>Esta é a pergunta central da análise psicométrica. Antes de utilizar um questionário ou escala em uma pesquisa substantiva, é essencial validar o instrumento para garantir que ele mede o que realmente pretende medir.</p>
+</section><section id="o-custo-de-medidas-inadequadas" class="level3" data-number="6.1.2"><h3 data-number="6.1.2" class="anchored" data-anchor-id="o-custo-de-medidas-inadequadas">
+<span class="header-section-number">6.1.2</span> O Custo de Medidas Inadequadas</h3>
+<p>Usar instrumentos que não avaliam corretamente o que propõem leva a <strong>decisões erradas</strong> baseadas em dados não confiáveis. Enquanto uma medida imperfeita pode ser melhor que nenhuma medida, pesquisadores devem reconhecer quando os procedimentos são falhos e moderar suas conclusões adequadamente.</p>
+<blockquote class="blockquote">
+<p><strong>Princípio fundamental:</strong> Medidas adequadas são uma condição necessária para pesquisa válida.</p>
+</blockquote>
+</section><section id="aplicações-em-saúde" class="level3" data-number="6.1.3"><h3 data-number="6.1.3" class="anchored" data-anchor-id="aplicações-em-saúde">
+<span class="header-section-number">6.1.3</span> Aplicações em Saúde</h3>
+<ul>
+<li>
+<strong>Validação transcultural</strong> de instrumentos (adaptação entre idiomas e culturas)</li>
+<li>
+<strong>Desenvolvimento de escalas</strong> (criação de novos instrumentos)</li>
+<li>
+<strong>Avaliação de propriedades psicométricas</strong> de questionários existentes</li>
+<li>
+<strong>Garantia de qualidade</strong> dos instrumentos antes da pesquisa principal</li>
+</ul>
+<p><strong>Exemplo:</strong> Adaptação do Questionário SF-8 para Swahili (Tanzânia) para populações com lesão cerebral traumática.</p>
+</section></section><section id="preparação-dos-dados-psicométricos" class="level2" data-number="6.2"><h2 data-number="6.2" class="anchored" data-anchor-id="preparação-dos-dados-psicométricos">
+<span class="header-section-number">6.2</span> Preparação dos Dados Psicométricos</h2>
+<p>Neste capítulo, utilizaremos o dataset <strong>literacia_data.csv</strong>, que contém respostas de uma pesquisa sobre literacia digital, incluindo dados demográficos e 10 itens de escala (L1 a L10).</p>
+<section id="carregando-pacotes" class="level3" data-number="6.2.1"><h3 data-number="6.2.1" class="anchored" data-anchor-id="carregando-pacotes">
+<span class="header-section-number">6.2.1</span> Carregando Pacotes</h3>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>    <span class="co"># Manipulação de dados</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://personality-project.org/r/psych/">psych</a></span><span class="op">)</span>        <span class="co"># Análise psicométrica (Alpha, Omega, EFA)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/taiyun/corrplot">corrplot</a></span><span class="op">)</span>     <span class="co"># Visualização de correlações</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://lavaan.ugent.be">lavaan</a></span><span class="op">)</span>       <span class="co"># Análise Fatorial Confirmatória (CFA)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/SachaEpskamp/semPlot">semPlot</a></span><span class="op">)</span>      <span class="co"># Visualização de modelos SEM</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">qgraph</span><span class="op">)</span>       <span class="co"># Análise de redes</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggobi.github.io/ggally/">GGally</a></span><span class="op">)</span>       <span class="co"># Gráficos de correlação</span></span>
+<span></span>
+<span><span class="co"># Remover notação científica</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>scipen <span class="op">=</span> <span class="fl">999</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="importando-e-explorando-os-dados" class="level3" data-number="6.2.2"><h3 data-number="6.2.2" class="anchored" data-anchor-id="importando-e-explorando-os-dados">
+<span class="header-section-number">6.2.2</span> Importando e Explorando os Dados</h3>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Importar dados de literacia digital</span></span>
+<span><span class="va">dados</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/literacia_data.csv"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Visualizar primeiras linhas</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">dados</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Estrutura do dataframe</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">dados</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Resumo estatístico</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">dados</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="convertendo-variáveis-categóricas" class="level3" data-number="6.2.3"><h3 data-number="6.2.3" class="anchored" data-anchor-id="convertendo-variáveis-categóricas">
+<span class="header-section-number">6.2.3</span> Convertendo Variáveis Categóricas</h3>
+<div class="cell">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Converter variáveis qualitativas em fatores</span></span>
+<span><span class="va">dados</span> <span class="op">&lt;-</span> <span class="va">dados</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sexo</span>, <span class="va">etnia</span>, <span class="va">estcivil</span>, <span class="va">escolaridade</span>, <span class="va">economia</span>,</span>
+<span>                  <span class="va">renda</span>, <span class="va">beneficio</span>, <span class="va">comunicacao</span>, <span class="va">celular</span>,</span>
+<span>                  <span class="va">internet</span>, <span class="va">acesso</span><span class="op">)</span>, <span class="va">as.factor</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Verificar estrutura após conversão</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">dados</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="tratamento-de-dados-faltantes" class="level3" data-number="6.2.4"><h3 data-number="6.2.4" class="anchored" data-anchor-id="tratamento-de-dados-faltantes">
+<span class="header-section-number">6.2.4</span> Tratamento de Dados Faltantes</h3>
+<div class="cell">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Verificar quantidade de dados faltantes por coluna</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colSums</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">dados</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Proporção de dados faltantes (%)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colMeans</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">dados</span><span class="op">)</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span></span>
+<span></span>
+<span><span class="co"># Estratégias de tratamento:</span></span>
+<span><span class="co"># 1. Exclusão listwise (casos completos)</span></span>
+<span><span class="va">dados_completo</span> <span class="op">&lt;-</span> <span class="va">dados</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/stats/complete.cases.html">complete.cases</a></span><span class="op">(</span><span class="va">dados</span><span class="op">)</span>, <span class="op">]</span></span>
+<span></span>
+<span><span class="co"># 2. Imputação por média (se apropriado)</span></span>
+<span><span class="co"># dados$idade[is.na(dados$idade)] &lt;- mean(dados$idade, na.rm = TRUE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Importante:</strong> A escolha da estratégia de tratamento de dados faltantes depende do padrão dos missing data (MCAR, MAR, MNAR) e dos objetivos da pesquisa. Para análises psicométricas, geralmente preferimos casos completos.</p>
+</section></section><section id="matriz-de-correlação" class="level2" data-number="6.3"><h2 data-number="6.3" class="anchored" data-anchor-id="matriz-de-correlação">
+<span class="header-section-number">6.3</span> Matriz de Correlação</h2>
+<p>Antes de realizar análises fatoriais, é útil examinar a estrutura de correlações entre os itens.</p>
+<section id="calculando-e-visualizando-correlações" class="level3" data-number="6.3.1"><h3 data-number="6.3.1" class="anchored" data-anchor-id="calculando-e-visualizando-correlações">
+<span class="header-section-number">6.3.1</span> Calculando e Visualizando Correlações</h3>
+<div class="cell">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Selecionar itens da escala de literacia (L1 a L10) e idade</span></span>
+<span><span class="va">dados_cor</span> <span class="op">&lt;-</span> <span class="va">dados</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">L1</span><span class="op">:</span><span class="va">L10</span>, <span class="va">idade</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Calcular matriz de correlação</span></span>
+<span><span class="va">matriz_cor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">dados_cor</span>, use <span class="op">=</span> <span class="st">"complete.obs"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Visualização com corrplot - círculos</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/corrplot/man/corrplot.html">corrplot</a></span><span class="op">(</span><span class="va">matriz_cor</span>,</span>
+<span>         method <span class="op">=</span> <span class="st">"circle"</span>,</span>
+<span>         type <span class="op">=</span> <span class="st">"upper"</span>,</span>
+<span>         tl.col <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>         tl.srt <span class="op">=</span> <span class="fl">45</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Visualização com números</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/corrplot/man/corrplot.html">corrplot</a></span><span class="op">(</span><span class="va">matriz_cor</span>,</span>
+<span>         method <span class="op">=</span> <span class="st">"number"</span>,</span>
+<span>         type <span class="op">=</span> <span class="st">"upper"</span>,</span>
+<span>         tl.col <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>         tl.srt <span class="op">=</span> <span class="fl">45</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Visualização com cores e ordenação por clusters</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/corrplot/man/corrplot.html">corrplot</a></span><span class="op">(</span><span class="va">matriz_cor</span>,</span>
+<span>         method <span class="op">=</span> <span class="st">"color"</span>,</span>
+<span>         type <span class="op">=</span> <span class="st">"upper"</span>,</span>
+<span>         order <span class="op">=</span> <span class="st">"hclust"</span>,</span>
+<span>         addCoef.col <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>         tl.col <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>         tl.srt <span class="op">=</span> <span class="fl">45</span>,</span>
+<span>         number.cex <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="interpretação-da-matriz-de-correlação" class="level3" data-number="6.3.2"><h3 data-number="6.3.2" class="anchored" data-anchor-id="interpretação-da-matriz-de-correlação">
+<span class="header-section-number">6.3.2</span> Interpretação da Matriz de Correlação</h3>
+<p>Os valores de correlação variam de -1 a +1:</p>
+<ul>
+<li>
+<strong>r ≈ +1</strong>: Correlação positiva forte</li>
+<li>
+<strong>r ≈ 0</strong>: Correlação fraca ou ausente</li>
+<li>
+<strong>r ≈ -1</strong>: Correlação negativa forte</li>
+</ul>
+<p>Para análise fatorial, esperamos:</p>
+<ul>
+<li>
+<strong>Correlações moderadas a fortes</strong> entre itens do mesmo fator</li>
+<li>
+<strong>Correlações mais fracas</strong> entre itens de fatores diferentes</li>
+<li>
+<strong>Ausência de correlações muito altas</strong> (r &gt; 0,90), que indicam redundância</li>
+</ul></section><section id="heatmap-de-correlação" class="level3" data-number="6.3.3"><h3 data-number="6.3.3" class="anchored" data-anchor-id="heatmap-de-correlação">
+<span class="header-section-number">6.3.3</span> Heatmap de Correlação</h3>
+<div class="cell">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Heatmap com cores</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/heatmap.html">heatmap</a></span><span class="op">(</span><span class="va">matriz_cor</span>,</span>
+<span>        col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"blue"</span>, <span class="st">"white"</span>, <span class="st">"red"</span><span class="op">)</span><span class="op">)</span><span class="op">(</span><span class="fl">20</span><span class="op">)</span>,</span>
+<span>        main <span class="op">=</span> <span class="st">"Heatmap de Correlações - Itens de Literacia"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section></section><section id="análise-de-redes" class="level2" data-number="6.4"><h2 data-number="6.4" class="anchored" data-anchor-id="análise-de-redes">
+<span class="header-section-number">6.4</span> Análise de Redes</h2>
+<p>A <strong>análise de redes</strong> oferece uma perspectiva alternativa sobre as relações entre itens, visualizando-os como nós conectados por arestas.</p>
+<section id="criando-a-rede" class="level3" data-number="6.4.1"><h3 data-number="6.4.1" class="anchored" data-anchor-id="criando-a-rede">
+<span class="header-section-number">6.4.1</span> Criando a Rede</h3>
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Selecionar itens da escala</span></span>
+<span><span class="va">dados_rede</span> <span class="op">&lt;-</span> <span class="va">dados</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">L1</span><span class="op">:</span><span class="va">L10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Calcular matriz de correlação</span></span>
+<span><span class="va">matriz_rede</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">dados_rede</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Calcular tamanho da amostra</span></span>
+<span><span class="va">n_amostra</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">dados_rede</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Criar rede com qgraph</span></span>
+<span><span class="va">rede</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/qgraph/man/qgraph.html">qgraph</a></span><span class="op">(</span><span class="va">matriz_rede</span>,</span>
+<span>               graph <span class="op">=</span> <span class="st">"glasso"</span>,        <span class="co"># Regularização LASSO</span></span>
+<span>               layout <span class="op">=</span> <span class="st">"spring"</span>,       <span class="co"># Layout spring</span></span>
+<span>               vsize <span class="op">=</span> <span class="fl">8</span>,               <span class="co"># Tamanho dos nós</span></span>
+<span>               sampleSize <span class="op">=</span> <span class="va">n_amostra</span>,  <span class="co"># Tamanho da amostra</span></span>
+<span>               edge.labels <span class="op">=</span> <span class="cn">TRUE</span>,      <span class="co"># Mostrar valores nas arestas</span></span>
+<span>               edge.label.cex <span class="op">=</span> <span class="fl">0.8</span>,    <span class="co"># Tamanho dos rótulos</span></span>
+<span>               title <span class="op">=</span> <span class="st">"Rede de Literacia Digital"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="interpretação-da-análise-de-redes" class="level3" data-number="6.4.2"><h3 data-number="6.4.2" class="anchored" data-anchor-id="interpretação-da-análise-de-redes">
+<span class="header-section-number">6.4.2</span> Interpretação da Análise de Redes</h3>
+<ul>
+<li>
+<strong>Nós</strong>: Representam as variáveis (itens)</li>
+<li>
+<strong>Arestas</strong>: Representam relações entre variáveis</li>
+<li>
+<strong>Espessura das arestas</strong>: Indica a força da relação</li>
+<li>
+<strong>Cor das arestas</strong>: Verde = positiva, Vermelho = negativa</li>
+<li>
+<strong>Posição dos nós</strong>: Algoritmo agrupa nós fortemente relacionados</li>
+</ul>
+<p><strong>Medidas de centralidade</strong> (grau, intermediação, proximidade) podem identificar os itens mais importantes na rede.</p>
+</section></section><section id="análise-de-confiabilidade" class="level2" data-number="6.5"><h2 data-number="6.5" class="anchored" data-anchor-id="análise-de-confiabilidade">
+<span class="header-section-number">6.5</span> Análise de Confiabilidade</h2>
+<p>A <strong>confiabilidade</strong> refere-se ao grau de consistência e precisão de um instrumento de medida. Representa a proporção da variância atribuível ao verdadeiro escore da variável latente.</p>
+<section id="alfa-de-cronbach" class="level3" data-number="6.5.1"><h3 data-number="6.5.1" class="anchored" data-anchor-id="alfa-de-cronbach">
+<span class="header-section-number">6.5.1</span> Alfa de Cronbach</h3>
+<p>O <strong>Alfa de Cronbach (α)</strong> é a medida mais amplamente utilizada de consistência interna.</p>
+<section id="teoria" class="level4" data-number="6.5.1.1"><h4 data-number="6.5.1.1" class="anchored" data-anchor-id="teoria">
+<span class="header-section-number">6.5.1.1</span> Teoria</h4>
+<ul>
+<li>Baseado nas correlações entre itens</li>
+<li>Usa a matriz de covariância dos itens</li>
+<li>Valores aceitáveis: <strong>α &gt; 0,70</strong>
+</li>
+<li>Valores ideais: <strong>0,70 &lt; α &lt; 0,95</strong>
+</li>
+</ul>
+<p><strong>Fórmula:</strong></p>
+<p><span class="math display">\[
+\alpha = \frac{k}{k-1} \left(1 - \frac{\sum \sigma^2_i}{\sigma^2_T}\right)
+\]</span></p>
+<p>Onde: - k = número de itens - σ²ᵢ = variância de cada item - σ²_T = variância total da escala</p>
+</section><section id="calculando-o-alfa-de-cronbach" class="level4" data-number="6.5.1.2"><h4 data-number="6.5.1.2" class="anchored" data-anchor-id="calculando-o-alfa-de-cronbach">
+<span class="header-section-number">6.5.1.2</span> Calculando o Alfa de Cronbach</h4>
+<div class="cell">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Selecionar itens da escala</span></span>
+<span><span class="va">itens_escala</span> <span class="op">&lt;-</span> <span class="va">dados</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">L1</span><span class="op">:</span><span class="va">L10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Calcular Alfa de Cronbach</span></span>
+<span><span class="va">alfa</span> <span class="op">&lt;-</span> <span class="fu">psych</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/alpha.html">alpha</a></span><span class="op">(</span><span class="va">itens_escala</span>,</span>
+<span>                     n.iter <span class="op">=</span> <span class="fl">1000</span>,      <span class="co"># Iterações para bootstrap</span></span>
+<span>                     check.keys <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>  <span class="co"># Verifica itens reversos</span></span>
+<span></span>
+<span><span class="co"># Exibir resultados</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">alfa</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="interpretação-do-output" class="level4" data-number="6.5.1.3"><h4 data-number="6.5.1.3" class="anchored" data-anchor-id="interpretação-do-output">
+<span class="header-section-number">6.5.1.3</span> Interpretação do Output</h4>
+<pre><code>Reliability analysis
+
+raw_alpha std.alpha G6(smc) average_r S/N
+     0.89      0.89    0.91      0.42  8.1
+
+lower alpha upper     95% confidence boundaries
+0.87  0.89  0.91</code></pre>
+<p><strong>Interpretação:</strong></p>
+<ul>
+<li>
+<strong>raw_alpha = 0,89</strong>: Alfa de Cronbach bruto (excelente consistência interna)</li>
+<li>
+<strong>std.alpha = 0,89</strong>: Alfa padronizado</li>
+<li>
+<strong>average_r = 0,42</strong>: Correlação média entre itens</li>
+<li>
+<strong>IC 95% [0,87; 0,91]</strong>: Intervalo de confiança do alfa</li>
+</ul>
+<p><strong>Critérios de interpretação:</strong></p>
+<table class="caption-top table">
+<thead><tr class="header">
+<th>Alfa de Cronbach</th>
+<th>Consistência Interna</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>α &lt; 0,60</td>
+<td>Inaceitável</td>
+</tr>
+<tr class="even">
+<td>0,60 ≤ α &lt; 0,70</td>
+<td>Questionável</td>
+</tr>
+<tr class="odd">
+<td>0,70 ≤ α &lt; 0,80</td>
+<td>Aceitável</td>
+</tr>
+<tr class="even">
+<td>0,80 ≤ α &lt; 0,90</td>
+<td>Boa</td>
+</tr>
+<tr class="odd">
+<td>α ≥ 0,90</td>
+<td>Excelente (pode indicar redundância)</td>
+</tr>
+</tbody>
+</table></section><section id="limitação-importante" class="level4" data-number="6.5.1.4"><h4 data-number="6.5.1.4" class="anchored" data-anchor-id="limitação-importante">
+<span class="header-section-number">6.5.1.4</span> Limitação Importante</h4>
+<blockquote class="blockquote">
+<p><strong>“Alpha não valida um teste”</strong></p>
+</blockquote>
+<p>Alta consistência interna <strong>não garante</strong> que o instrumento mede o que afirma medir. Confiabilidade é necessária, mas não suficiente para validade.</p>
+</section></section><section id="ômega-de-mcdonald" class="level3" data-number="6.5.2"><h3 data-number="6.5.2" class="anchored" data-anchor-id="ômega-de-mcdonald">
+<span class="header-section-number">6.5.2</span> Ômega de McDonald</h3>
+<p>O <strong>Ômega de McDonald (ω)</strong> é uma medida alternativa de confiabilidade composta, considerada mais geral que o Alfa de Cronbach.</p>
+<section id="teoria-1" class="level4" data-number="6.5.2.1"><h4 data-number="6.5.2.1" class="anchored" data-anchor-id="teoria-1">
+<span class="header-section-number">6.5.2.1</span> Teoria</h4>
+<ul>
+<li>Calculado usando cargas fatoriais e unicidades da análise fatorial</li>
+<li>Baseado em estrutura CFA</li>
+<li>Mais apropriado para escalas multidimensionais</li>
+<li>Valores aceitáveis: <strong>ω &gt; 0,70</strong>
+</li>
+</ul>
+<p><strong>Fórmula:</strong></p>
+<p><span class="math display">\[
+\omega = \frac{(\sum \lambda_i)^2}{(\sum \lambda_i)^2 + \sum \theta_i}
+\]</span></p>
+<p>Onde: - λᵢ = cargas fatoriais - θᵢ = variâncias de erro</p>
+</section><section id="calculando-o-ômega-de-mcdonald" class="level4" data-number="6.5.2.2"><h4 data-number="6.5.2.2" class="anchored" data-anchor-id="calculando-o-ômega-de-mcdonald">
+<span class="header-section-number">6.5.2.2</span> Calculando o Ômega de McDonald</h4>
+<div class="cell">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Calcular Ômega de McDonald</span></span>
+<span><span class="va">omega_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/psych/man/omega.html">omega</a></span><span class="op">(</span><span class="va">itens_escala</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Exibir resultados</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">omega_result</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section></section><section id="comparação-alfa-vs.-ômega" class="level3" data-number="6.5.3"><h3 data-number="6.5.3" class="anchored" data-anchor-id="comparação-alfa-vs.-ômega">
+<span class="header-section-number">6.5.3</span> Comparação: Alfa vs.&nbsp;Ômega</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 33%">
+<col style="width: 35%">
+</colgroup>
+<thead><tr class="header">
+<th><strong>Característica</strong></th>
+<th><strong>Alfa de Cronbach</strong></th>
+<th><strong>Ômega de McDonald</strong></th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Base de cálculo</td>
+<td>Matriz de covariância</td>
+<td>Cargas fatoriais (CFA)</td>
+</tr>
+<tr class="even">
+<td>Estrutura fatorial</td>
+<td>Não requer</td>
+<td>Requer modelo CFA</td>
+</tr>
+<tr class="odd">
+<td>Dimensionalidade</td>
+<td>Assume unidimensionalidade</td>
+<td>Adequado para multidimensional</td>
+</tr>
+<tr class="even">
+<td>Generalidade</td>
+<td>Mais restrito</td>
+<td>Mais geral</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Recomendação:</strong> Reporte ambos os índices quando possível, especialmente para escalas multidimensionais.</p>
+</section></section><section id="análise-fatorial-exploratória-efa" class="level2" data-number="6.6"><h2 data-number="6.6" class="anchored" data-anchor-id="análise-fatorial-exploratória-efa">
+<span class="header-section-number">6.6</span> Análise Fatorial Exploratória (EFA)</h2>
+<p>A <strong>Análise Fatorial Exploratória (AFE)</strong> é usada para <strong>desenvolvimento de teoria</strong>, explorando a estrutura latente dos dados sem hipóteses prévias sobre o número de fatores.</p>
+<section id="teoria-da-efa" class="level3" data-number="6.6.1"><h3 data-number="6.6.1" class="anchored" data-anchor-id="teoria-da-efa">
+<span class="header-section-number">6.6.1</span> Teoria da EFA</h3>
+<section id="características-principais" class="level4" data-number="6.6.1.1"><h4 data-number="6.6.1.1" class="anchored" data-anchor-id="características-principais">
+<span class="header-section-number">6.6.1.1</span> Características Principais</h4>
+<ol type="1">
+<li>
+<strong>Natureza exploratória</strong>: Número de fatores determinado pelos dados</li>
+<li>
+<strong>Cargas não fixadas</strong>: Padrão de cargas emerge dos dados</li>
+<li>
+<strong>Redução de dimensionalidade</strong>: Reduz muitos itens a poucos fatores latentes</li>
+<li>
+<strong>Rotação</strong>: Fatores rotacionados para interpretação mais clara</li>
+</ol></section><section id="equação-básica" class="level4" data-number="6.6.1.2"><h4 data-number="6.6.1.2" class="anchored" data-anchor-id="equação-básica">
+<span class="header-section-number">6.6.1.2</span> Equação Básica</h4>
+<p><span class="math display">\[
+X = \Lambda F + \epsilon
+\]</span></p>
+<p>Onde: - X = variáveis observadas (itens) - Λ = matriz de cargas fatoriais - F = fatores latentes - ε = erros de medida</p>
+</section></section><section id="pressupostos-da-efa" class="level3" data-number="6.6.2"><h3 data-number="6.6.2" class="anchored" data-anchor-id="pressupostos-da-efa">
+<span class="header-section-number">6.6.2</span> Pressupostos da EFA</h3>
+<section id="teste-kmo-kaiser-meyer-olkin" class="level4" data-number="6.6.2.1"><h4 data-number="6.6.2.1" class="anchored" data-anchor-id="teste-kmo-kaiser-meyer-olkin">
+<span class="header-section-number">6.6.2.1</span> Teste KMO (Kaiser-Meyer-Olkin)</h4>
+<p>O <strong>KMO</strong> avalia a adequação da amostra para análise fatorial.</p>
+<div class="cell">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Calcular KMO</span></span>
+<span><span class="va">kmo_resultado</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/psych/man/KMO.html">KMO</a></span><span class="op">(</span><span class="va">itens_escala</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Imprimir KMO geral</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"KMO geral:"</span>, <span class="va">kmo_resultado</span><span class="op">$</span><span class="va">MSA</span>, <span class="st">"\n"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Interpretar resultado</span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="va">kmo_resultado</span><span class="op">$</span><span class="va">MSA</span> <span class="op">&gt;=</span> <span class="fl">0.9</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"A adequação da amostra é excelente.\n"</span><span class="op">)</span></span>
+<span><span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">kmo_resultado</span><span class="op">$</span><span class="va">MSA</span> <span class="op">&gt;=</span> <span class="fl">0.8</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"A adequação da amostra é boa.\n"</span><span class="op">)</span></span>
+<span><span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">kmo_resultado</span><span class="op">$</span><span class="va">MSA</span> <span class="op">&gt;=</span> <span class="fl">0.7</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"A adequação da amostra é razoável.\n"</span><span class="op">)</span></span>
+<span><span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">kmo_resultado</span><span class="op">$</span><span class="va">MSA</span> <span class="op">&gt;=</span> <span class="fl">0.6</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"A adequação da amostra é medíocre.\n"</span><span class="op">)</span></span>
+<span><span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">kmo_resultado</span><span class="op">$</span><span class="va">MSA</span> <span class="op">&gt;=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"A adequação da amostra é inadequada.\n"</span><span class="op">)</span></span>
+<span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"A adequação da amostra é inaceitável.\n"</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Critérios de interpretação:</strong></p>
+<table class="caption-top table">
+<thead><tr class="header">
+<th>KMO</th>
+<th>Adequação da Amostra</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>KMO ≥ 0,90</td>
+<td>Excelente</td>
+</tr>
+<tr class="even">
+<td>0,80 ≤ KMO &lt; 0,90</td>
+<td>Boa</td>
+</tr>
+<tr class="odd">
+<td>0,70 ≤ KMO &lt; 0,80</td>
+<td>Razoável</td>
+</tr>
+<tr class="even">
+<td>0,60 ≤ KMO &lt; 0,70</td>
+<td>Medíocre</td>
+</tr>
+<tr class="odd">
+<td>0,50 ≤ KMO &lt; 0,60</td>
+<td>Inadequada</td>
+</tr>
+<tr class="even">
+<td>KMO &lt; 0,50</td>
+<td>Inaceitável</td>
+</tr>
+</tbody>
+</table></section><section id="teste-de-esfericidade-de-bartlett" class="level4" data-number="6.6.2.2"><h4 data-number="6.6.2.2" class="anchored" data-anchor-id="teste-de-esfericidade-de-bartlett">
+<span class="header-section-number">6.6.2.2</span> Teste de Esfericidade de Bartlett</h4>
+<p>Testa se a matriz de correlação é significativamente diferente de uma matriz identidade.</p>
+<ul>
+<li>
+<strong>H₀</strong>: Matriz de correlação é uma matriz identidade (variáveis não correlacionadas)</li>
+<li>
+<strong>H₁</strong>: Existem correlações significativas entre variáveis</li>
+<li>
+<strong>Desejado</strong>: p &lt; 0,05 (rejeitar H₀)</li>
+</ul></section></section><section id="determinando-o-número-de-fatores" class="level3" data-number="6.6.3"><h3 data-number="6.6.3" class="anchored" data-anchor-id="determinando-o-número-de-fatores">
+<span class="header-section-number">6.6.3</span> Determinando o Número de Fatores</h3>
+<section id="análise-paralela" class="level4" data-number="6.6.3.1"><h4 data-number="6.6.3.1" class="anchored" data-anchor-id="análise-paralela">
+<span class="header-section-number">6.6.3.1</span> Análise Paralela</h4>
+<p>A <strong>análise paralela</strong> é o método mais confiável para determinar o número de fatores.</p>
+<div class="cell">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Realizar análise paralela</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.parallel.html">fa.parallel</a></span><span class="op">(</span><span class="va">itens_escala</span>,</span>
+<span>            fa <span class="op">=</span> <span class="st">"fa"</span>,          <span class="co"># Análise fatorial (não PCA)</span></span>
+<span>            n.iter <span class="op">=</span> <span class="fl">100</span>,       <span class="co"># Número de iterações</span></span>
+<span>            main <span class="op">=</span> <span class="st">"Análise Paralela - Scree Plot"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Interpretação:</strong></p>
+<ul>
+<li>
+<strong>Linha azul</strong>: Autovalores observados nos dados reais</li>
+<li>
+<strong>Linha vermelha</strong>: Autovalores médios de dados aleatórios (simulados)</li>
+<li>
+<strong>Linha verde</strong>: Autovalores do 95º percentil dos dados simulados</li>
+<li>
+<strong>Decisão</strong>: Reter fatores onde a linha azul está <strong>acima</strong> da linha vermelha</li>
+</ul></section><section id="regra-de-kaiser-autovalores-1" class="level4" data-number="6.6.3.2"><h4 data-number="6.6.3.2" class="anchored" data-anchor-id="regra-de-kaiser-autovalores-1">
+<span class="header-section-number">6.6.3.2</span> Regra de Kaiser (Autovalores &gt; 1)</h4>
+<p>Método tradicional, mas menos confiável que análise paralela.</p>
+<div class="cell">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Scree plot simples</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/VSS.scree.html">scree</a></span><span class="op">(</span><span class="va">itens_escala</span>, main <span class="op">=</span> <span class="st">"Scree Plot"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section></section><section id="realizando-a-efa" class="level3" data-number="6.6.4"><h3 data-number="6.6.4" class="anchored" data-anchor-id="realizando-a-efa">
+<span class="header-section-number">6.6.4</span> Realizando a EFA</h3>
+<div class="cell">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Determinar número de fatores (baseado em análise paralela)</span></span>
+<span><span class="va">n_fatores</span> <span class="op">&lt;-</span> <span class="fl">4</span>  <span class="co"># Ajustar baseado em análise paralela</span></span>
+<span></span>
+<span><span class="co"># Realizar EFA</span></span>
+<span><span class="va">efa_resultado</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.html">fa</a></span><span class="op">(</span><span class="va">itens_escala</span>,</span>
+<span>                    nfactors <span class="op">=</span> <span class="va">n_fatores</span>,</span>
+<span>                    rotate <span class="op">=</span> <span class="st">"varimax"</span>,  <span class="co"># Rotação ortogonal</span></span>
+<span>                    fm <span class="op">=</span> <span class="st">"ml"</span><span class="op">)</span>           <span class="co"># Máxima verossimilhança</span></span>
+<span></span>
+<span><span class="co"># Imprimir resultados</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">efa_resultado</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Visualizar diagrama de fatores</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.diagram.html">fa.diagram</a></span><span class="op">(</span><span class="va">efa_resultado</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="interpretação-das-cargas-fatoriais" class="level3" data-number="6.6.5"><h3 data-number="6.6.5" class="anchored" data-anchor-id="interpretação-das-cargas-fatoriais">
+<span class="header-section-number">6.6.5</span> Interpretação das Cargas Fatoriais</h3>
+<p>As <strong>cargas fatoriais (factor loadings)</strong> representam a correlação entre item e fator.</p>
+<p><strong>Critérios de interpretação:</strong></p>
+<table class="caption-top table">
+<thead><tr class="header">
+<th>Carga Fatorial</th>
+<th>Interpretação</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>|λ| ≥ 0,70</td>
+<td>Excelente</td>
+</tr>
+<tr class="even">
+<td>|λ| ≥ 0,63</td>
+<td>Muito boa</td>
+</tr>
+<tr class="odd">
+<td>|λ| ≥ 0,55</td>
+<td>Boa</td>
+</tr>
+<tr class="even">
+<td>|λ| ≥ 0,45</td>
+<td>Razoável</td>
+</tr>
+<tr class="odd">
+<td>|λ| ≥ 0,32</td>
+<td>Fraca</td>
+</tr>
+<tr class="even">
+<td>|λ| &lt; 0,32</td>
+<td>Inaceitável</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variância explicada</strong>: λ² = R²</p>
+<p>Exemplo: Carga de 0,70 explica 0,49 (49%) da variância do item.</p>
+</section><section id="rotação-de-fatores" class="level3" data-number="6.6.6"><h3 data-number="6.6.6" class="anchored" data-anchor-id="rotação-de-fatores">
+<span class="header-section-number">6.6.6</span> Rotação de Fatores</h3>
+<ul>
+<li>
+<strong>Varimax</strong> (ortogonal): Fatores não correlacionados - mais simples de interpretar</li>
+<li>
+<strong>Oblimin</strong> (oblíqua): Permite correlação entre fatores - mais realista em muitos contextos</li>
+</ul></section><section id="efa-unidimensional-exemplo-com-literacia" class="level3" data-number="6.6.7"><h3 data-number="6.6.7" class="anchored" data-anchor-id="efa-unidimensional-exemplo-com-literacia">
+<span class="header-section-number">6.6.7</span> EFA Unidimensional (Exemplo com Literacia)</h3>
+<p>Se a teoria sugere que o instrumento é unidimensional:</p>
+<div class="cell">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># EFA com 1 fator (modelo teórico unidimensional)</span></span>
+<span><span class="va">efa_uni</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.html">fa</a></span><span class="op">(</span><span class="va">itens_escala</span>,</span>
+<span>              nfactors <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>              rotate <span class="op">=</span> <span class="st">"none"</span>,   <span class="co"># Sem rotação (1 fator)</span></span>
+<span>              fm <span class="op">=</span> <span class="st">"ml"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Resultados</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">efa_uni</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Diagrama</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.diagram.html">fa.diagram</a></span><span class="op">(</span><span class="va">efa_uni</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section></section><section id="análise-fatorial-confirmatória-cfa" class="level2" data-number="6.7"><h2 data-number="6.7" class="anchored" data-anchor-id="análise-fatorial-confirmatória-cfa">
+<span class="header-section-number">6.7</span> Análise Fatorial Confirmatória (CFA)</h2>
+<p>A <strong>Análise Fatorial Confirmatória (AFC)</strong> é usada para <strong>testar teoria</strong>, verificando se uma estrutura fatorial pré-especificada se ajusta aos dados.</p>
+<section id="teoria-da-cfa" class="level3" data-number="6.7.1"><h3 data-number="6.7.1" class="anchored" data-anchor-id="teoria-da-cfa">
+<span class="header-section-number">6.7.1</span> Teoria da CFA</h3>
+<section id="características-principais-1" class="level4" data-number="6.7.1.1"><h4 data-number="6.7.1.1" class="anchored" data-anchor-id="características-principais-1">
+<span class="header-section-number">6.7.1.1</span> Características Principais</h4>
+<ol type="1">
+<li>
+<strong>Natureza confirmatória</strong>: Número de fatores especificado <em>a priori</em>
+</li>
+<li>
+<strong>Cargas fixadas</strong>: Padrão de cargas especificado antes da análise</li>
+<li>
+<strong>Testa teoria</strong>: Verifica se estrutura teórica se ajusta aos dados empíricos</li>
+<li>
+<strong>Fatores correlacionados</strong>: Geralmente permite correlações entre fatores</li>
+</ol></section><section id="diferenças-efa-vs.-cfa" class="level4" data-number="6.7.1.2"><h4 data-number="6.7.1.2" class="anchored" data-anchor-id="diferenças-efa-vs.-cfa">
+<span class="header-section-number">6.7.1.2</span> Diferenças EFA vs.&nbsp;CFA</h4>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 30%">
+<col style="width: 30%">
+</colgroup>
+<thead><tr class="header">
+<th><strong>Aspecto</strong></th>
+<th><strong>EFA</strong></th>
+<th><strong>CFA</strong></th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Objetivo</td>
+<td>Desenvolvimento de teoria</td>
+<td>Teste de teoria</td>
+</tr>
+<tr class="even">
+<td>Fatores</td>
+<td>Determinados pelos dados</td>
+<td>Especificados <em>a priori</em>
+</td>
+</tr>
+<tr class="odd">
+<td>Cargas</td>
+<td>Não fixadas</td>
+<td>Padrão fixo</td>
+</tr>
+<tr class="even">
+<td>Rotação</td>
+<td>Sim (para interpretação)</td>
+<td>Não aplicável</td>
+</tr>
+<tr class="odd">
+<td>Correlação entre fatores</td>
+<td>Geralmente ortogonais</td>
+<td>Geralmente correlacionados</td>
+</tr>
+<tr class="even">
+<td>Erros correlacionados</td>
+<td>Não permitidos</td>
+<td>Podem ser permitidos</td>
+</tr>
+<tr class="odd">
+<td>Testes estatísticos</td>
+<td>Limitados</td>
+<td>Extensivos (índices de ajuste)</td>
+</tr>
+</tbody>
+</table></section></section><section id="especificação-do-modelo-no-lavaan" class="level3" data-number="6.7.2"><h3 data-number="6.7.2" class="anchored" data-anchor-id="especificação-do-modelo-no-lavaan">
+<span class="header-section-number">6.7.2</span> Especificação do Modelo no lavaan</h3>
+<p>O pacote <strong>lavaan</strong> usa sintaxe intuitiva para especificar modelos CFA.</p>
+<section id="sintaxe-básica" class="level4" data-number="6.7.2.1"><h4 data-number="6.7.2.1" class="anchored" data-anchor-id="sintaxe-básica">
+<span class="header-section-number">6.7.2.1</span> Sintaxe básica</h4>
+<pre><code># =~ define fatores latentes
+# ~~ define correlações/covariâncias</code></pre>
+</section><section id="exemplo-modelo-unidimensional" class="level4" data-number="6.7.2.2"><h4 data-number="6.7.2.2" class="anchored" data-anchor-id="exemplo-modelo-unidimensional">
+<span class="header-section-number">6.7.2.2</span> Exemplo: Modelo Unidimensional</h4>
+<div class="cell">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Carregar lavaan</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://lavaan.ugent.be">lavaan</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Especificar modelo unidimensional</span></span>
+<span><span class="va">modelo_cfa</span> <span class="op">&lt;-</span> <span class="st">'</span></span>
+<span><span class="st">  # Definição do fator latente</span></span>
+<span><span class="st">  Literacia =~ L1 + L2 + L3 + L4 + L5 + L6 + L7 + L8 + L9 + L10</span></span>
+<span><span class="st">'</span></span>
+<span></span>
+<span><span class="co"># Estimar modelo</span></span>
+<span><span class="va">ajuste_cfa</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/cfa.html">cfa</a></span><span class="op">(</span><span class="va">modelo_cfa</span>,</span>
+<span>                  data <span class="op">=</span> <span class="va">itens_escala</span>,</span>
+<span>                  estimator <span class="op">=</span> <span class="st">"ML"</span><span class="op">)</span>  <span class="co"># Máxima verossimilhança</span></span>
+<span></span>
+<span><span class="co"># Sumarizar resultados</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">ajuste_cfa</span>,</span>
+<span>        fit.measures <span class="op">=</span> <span class="cn">TRUE</span>,    <span class="co"># Mostrar índices de ajuste</span></span>
+<span>        standardized <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>    <span class="co"># Mostrar coeficientes padronizados</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="exemplo-modelo-bidimensional" class="level4" data-number="6.7.2.3"><h4 data-number="6.7.2.3" class="anchored" data-anchor-id="exemplo-modelo-bidimensional">
+<span class="header-section-number">6.7.2.3</span> Exemplo: Modelo Bidimensional</h4>
+<div class="cell">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Modelo com 2 fatores correlacionados</span></span>
+<span><span class="va">modelo_cfa_2f</span> <span class="op">&lt;-</span> <span class="st">'</span></span>
+<span><span class="st">  # Definição dos fatores</span></span>
+<span><span class="st">  Fator1 =~ L1 + L2 + L3 + L4 + L5</span></span>
+<span><span class="st">  Fator2 =~ L6 + L7 + L8 + L9 + L10</span></span>
+<span><span class="st">'</span></span>
+<span></span>
+<span><span class="co"># Estimar modelo</span></span>
+<span><span class="va">ajuste_cfa_2f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/cfa.html">cfa</a></span><span class="op">(</span><span class="va">modelo_cfa_2f</span>, data <span class="op">=</span> <span class="va">itens_escala</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Resultados</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">ajuste_cfa_2f</span>, fit.measures <span class="op">=</span> <span class="cn">TRUE</span>, standardized <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section></section><section id="índices-de-ajuste-do-modelo" class="level3" data-number="6.7.3"><h3 data-number="6.7.3" class="anchored" data-anchor-id="índices-de-ajuste-do-modelo">
+<span class="header-section-number">6.7.3</span> Índices de Ajuste do Modelo</h3>
+<p>Os <strong>índices de ajuste (fit indices)</strong> avaliam o quão bem o modelo teórico se ajusta aos dados observados.</p>
+<section id="qui-quadrado-χ²" class="level4" data-number="6.7.3.1"><h4 data-number="6.7.3.1" class="anchored" data-anchor-id="qui-quadrado-χ²">
+<span class="header-section-number">6.7.3.1</span> 1. Qui-Quadrado (χ²)</h4>
+<p><strong>Teste formal de ajuste exato:</strong></p>
+<ul>
+<li>
+<strong>H₀</strong>: O modelo se ajusta perfeitamente aos dados</li>
+<li>
+<strong>Bom ajuste</strong>: p &gt; 0,05 (não rejeitar H₀)</li>
+<li>
+<strong>Problema</strong>: Sensível ao tamanho da amostra (sempre significativo com n grande)</li>
+</ul>
+<p><strong>Qui-quadrado normalizado:</strong></p>
+<ul>
+<li>
+<strong>χ²/df &lt; 2</strong>: Bom ajuste</li>
+<li>
+<strong>χ²/df &lt; 3</strong>: Ajuste aceitável</li>
+</ul></section><section id="cfi-comparative-fit-index" class="level4" data-number="6.7.3.2"><h4 data-number="6.7.3.2" class="anchored" data-anchor-id="cfi-comparative-fit-index">
+<span class="header-section-number">6.7.3.2</span> 2. CFI (Comparative Fit Index)</h4>
+<ul>
+<li>Compara o modelo proposto com modelo nulo (independência)</li>
+<li>
+<strong>Bom ajuste</strong>: CFI ≥ 0,95</li>
+<li>
+<strong>Ajuste aceitável</strong>: CFI ≥ 0,90</li>
+</ul></section><section id="tli-tucker-lewis-index" class="level4" data-number="6.7.3.3"><h4 data-number="6.7.3.3" class="anchored" data-anchor-id="tli-tucker-lewis-index">
+<span class="header-section-number">6.7.3.3</span> 3. TLI (Tucker-Lewis Index)</h4>
+<ul>
+<li>Similar ao CFI, mas penaliza complexidade do modelo</li>
+<li>
+<strong>Bom ajuste</strong>: TLI ≥ 0,95</li>
+<li>
+<strong>Ajuste aceitável</strong>: TLI ≥ 0,90</li>
+</ul></section><section id="rmsea-root-mean-square-error-of-approximation" class="level4" data-number="6.7.3.4"><h4 data-number="6.7.3.4" class="anchored" data-anchor-id="rmsea-root-mean-square-error-of-approximation">
+<span class="header-section-number">6.7.3.4</span> 4. RMSEA (Root Mean Square Error of Approximation)</h4>
+<ul>
+<li>Mede erro de aproximação na população</li>
+<li>
+<strong>Bom ajuste</strong>: RMSEA ≤ 0,05</li>
+<li>
+<strong>Ajuste aceitável</strong>: RMSEA ≤ 0,08</li>
+<li>
+<strong>Ajuste mediocre</strong>: 0,08 &lt; RMSEA ≤ 0,10</li>
+<li>
+<strong>Ajuste ruim</strong>: RMSEA &gt; 0,10</li>
+</ul>
+<p><strong>Importante:</strong> O IC 90% do RMSEA também deve ser considerado.</p>
+</section><section id="srmr-standardized-root-mean-square-residual" class="level4" data-number="6.7.3.5"><h4 data-number="6.7.3.5" class="anchored" data-anchor-id="srmr-standardized-root-mean-square-residual">
+<span class="header-section-number">6.7.3.5</span> 5. SRMR (Standardized Root Mean Square Residual)</h4>
+<ul>
+<li>Raiz quadrada média do resíduo padronizado</li>
+<li>
+<strong>Bom ajuste</strong>: SRMR ≤ 0,05</li>
+<li>
+<strong>Ajuste aceitável</strong>: SRMR ≤ 0,08</li>
+</ul></section></section><section id="tabela-resumo-de-critérios-de-ajuste" class="level3" data-number="6.7.4"><h3 data-number="6.7.4" class="anchored" data-anchor-id="tabela-resumo-de-critérios-de-ajuste">
+<span class="header-section-number">6.7.4</span> Tabela Resumo de Critérios de Ajuste</h3>
+<table class="caption-top table">
+<thead><tr class="header">
+<th><strong>Índice</strong></th>
+<th><strong>Bom Ajuste</strong></th>
+<th><strong>Ajuste Aceitável</strong></th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>χ²/df</td>
+<td>≤ 2</td>
+<td>≤ 3</td>
+</tr>
+<tr class="even">
+<td>CFI</td>
+<td>≥ 0,95</td>
+<td>≥ 0,90</td>
+</tr>
+<tr class="odd">
+<td>TLI</td>
+<td>≥ 0,95</td>
+<td>≥ 0,90</td>
+</tr>
+<tr class="even">
+<td>RMSEA</td>
+<td>≤ 0,05</td>
+<td>≤ 0,08</td>
+</tr>
+<tr class="odd">
+<td>SRMR</td>
+<td>≤ 0,05</td>
+<td>≤ 0,08</td>
+</tr>
+</tbody>
+</table></section><section id="interpretação-dos-resultados-da-cfa" class="level3" data-number="6.7.5"><h3 data-number="6.7.5" class="anchored" data-anchor-id="interpretação-dos-resultados-da-cfa">
+<span class="header-section-number">6.7.5</span> Interpretação dos Resultados da CFA</h3>
+<div class="cell">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Exibir índices de ajuste</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/fitMeasures.html">fitMeasures</a></span><span class="op">(</span><span class="va">ajuste_cfa</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"chisq"</span>, <span class="st">"df"</span>, <span class="st">"pvalue"</span>, <span class="st">"cfi"</span>, <span class="st">"tli"</span>, <span class="st">"rmsea"</span>, <span class="st">"srmr"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Exibir cargas fatoriais padronizadas</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/standardizedSolution.html">standardizedSolution</a></span><span class="op">(</span><span class="va">ajuste_cfa</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Exibir R² dos itens</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/lavInspect.html">inspect</a></span><span class="op">(</span><span class="va">ajuste_cfa</span>, <span class="st">"r2"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="modificação-de-modelos" class="level3" data-number="6.7.6"><h3 data-number="6.7.6" class="anchored" data-anchor-id="modificação-de-modelos">
+<span class="header-section-number">6.7.6</span> Modificação de Modelos</h3>
+<p>Se o modelo não ajustar bem, considere modificações baseadas em:</p>
+<ol type="1">
+<li>
+<strong>Teoria</strong>: Modificações devem ser teoricamente justificáveis</li>
+<li>
+<strong>Índices de modificação</strong>: Sugestões estatísticas do lavaan</li>
+</ol>
+<div class="cell">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Índices de modificação</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/modificationIndices.html">modindices</a></span><span class="op">(</span><span class="va">ajuste_cfa</span>, sort <span class="op">=</span> <span class="cn">TRUE</span>, maximum.number <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Cuidado:</strong> Não realize modificações baseadas apenas em estatísticas - sempre justifique teoricamente.</p>
+</section><section id="visualização-do-modelo-com-sempaths" class="level3" data-number="6.7.7"><h3 data-number="6.7.7" class="anchored" data-anchor-id="visualização-do-modelo-com-sempaths">
+<span class="header-section-number">6.7.7</span> Visualização do Modelo com semPaths</h3>
+<div class="cell">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/SachaEpskamp/semPlot">semPlot</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Plotar modelo CFA</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/semPlot/man/semPaths.html">semPaths</a></span><span class="op">(</span><span class="va">ajuste_cfa</span>,</span>
+<span>         what <span class="op">=</span> <span class="st">"std"</span>,             <span class="co"># Coeficientes padronizados</span></span>
+<span>         layout <span class="op">=</span> <span class="st">"tree2"</span>,         <span class="co"># Layout hierárquico</span></span>
+<span>         edge.label.cex <span class="op">=</span> <span class="fl">0.8</span>,     <span class="co"># Tamanho das etiquetas</span></span>
+<span>         sizeMan <span class="op">=</span> <span class="fl">8</span>,              <span class="co"># Tamanho dos nós observados</span></span>
+<span>         sizeLat <span class="op">=</span> <span class="fl">10</span>,             <span class="co"># Tamanho dos nós latentes</span></span>
+<span>         esize <span class="op">=</span> <span class="fl">1</span>,                <span class="co"># Tamanho das setas</span></span>
+<span>         residuals <span class="op">=</span> <span class="cn">TRUE</span>,         <span class="co"># Mostrar resíduos</span></span>
+<span>         intercepts <span class="op">=</span> <span class="cn">FALSE</span>,       <span class="co"># Não mostrar interceptos</span></span>
+<span>         title <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>         nCharNodes <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>           <span class="co"># Sem abreviação de nomes</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Elementos do diagrama:</strong></p>
+<ul>
+<li>
+<strong>Retângulos</strong>: Variáveis observadas (itens)</li>
+<li>
+<strong>Elipses/Círculos</strong>: Variáveis latentes (fatores)</li>
+<li>
+<strong>Setas unidirecionais (→)</strong>: Relações de regressão</li>
+<li>
+<strong>Setas bidirecionais (↔︎)</strong>: Correlações/Covariâncias</li>
+<li>
+<strong>Pequenos círculos → retângulos</strong>: Erros de medida</li>
+</ul></section></section><section id="validação-de-constructo" class="level2" data-number="6.8"><h2 data-number="6.8" class="anchored" data-anchor-id="validação-de-constructo">
+<span class="header-section-number">6.8</span> Validação de Constructo</h2>
+<p>A <strong>validação baseada na estrutura interna</strong> avalia se as relações entre itens e componentes do teste se conformam ao constructo teórico.</p>
+<section id="métodos-de-validação" class="level3" data-number="6.8.1"><h3 data-number="6.8.1" class="anchored" data-anchor-id="métodos-de-validação">
+<span class="header-section-number">6.8.1</span> Métodos de Validação</h3>
+<ol type="1">
+<li>
+<strong>Análise fatorial</strong> (EFA e CFA)</li>
+<li><strong>Correlações item-total</strong></li>
+<li><strong>Correlações inter-itens</strong></li>
+<li>
+<strong>Coeficientes de confiabilidade</strong> (α, ω)</li>
+</ol></section><section id="critérios-de-avaliação" class="level3" data-number="6.8.2"><h3 data-number="6.8.2" class="anchored" data-anchor-id="critérios-de-avaliação">
+<span class="header-section-number">6.8.2</span> Critérios de Avaliação</h3>
+<ul>
+<li>Agrupamento de itens corresponde à teoria</li>
+<li>Índices de ajuste adequados (CFA)</li>
+<li>Confiabilidade aceitável</li>
+<li>Cargas fatoriais apropriadas</li>
+</ul></section></section><section id="exercícios-práticos" class="level2" data-number="6.9"><h2 data-number="6.9" class="anchored" data-anchor-id="exercícios-práticos">
+<span class="header-section-number">6.9</span> Exercícios Práticos</h2>
+<section id="exercício-1-confiabilidade" class="level3" data-number="6.9.1"><h3 data-number="6.9.1" class="anchored" data-anchor-id="exercício-1-confiabilidade">
+<span class="header-section-number">6.9.1</span> Exercício 1: Confiabilidade</h3>
+<p>Use o dataset de literacia para:</p>
+<ol type="a">
+<li>Calcular o Alfa de Cronbach para os 10 itens</li>
+<li>Calcular o Ômega de McDonald</li>
+<li>Identificar se algum item reduz a confiabilidade (item-total correlations)</li>
+<li>Comparar os dois índices e interpretar os resultados</li>
+</ol></section><section id="exercício-2-análise-fatorial-exploratória" class="level3" data-number="6.9.2"><h3 data-number="6.9.2" class="anchored" data-anchor-id="exercício-2-análise-fatorial-exploratória">
+<span class="header-section-number">6.9.2</span> Exercício 2: Análise Fatorial Exploratória</h3>
+<ol type="a">
+<li>Calcule o KMO e interprete a adequação da amostra</li>
+<li>Realize análise paralela para determinar o número de fatores</li>
+<li>Realize EFA com o número apropriado de fatores</li>
+<li>Interprete as cargas fatoriais e nomeie os fatores</li>
+<li>Compare a solução unidimensional vs.&nbsp;multidimensional</li>
+</ol></section><section id="exercício-3-análise-fatorial-confirmatória" class="level3" data-number="6.9.3"><h3 data-number="6.9.3" class="anchored" data-anchor-id="exercício-3-análise-fatorial-confirmatória">
+<span class="header-section-number">6.9.3</span> Exercício 3: Análise Fatorial Confirmatória</h3>
+<ol type="a">
+<li>Especifique um modelo CFA unidimensional para os 10 itens</li>
+<li>Estime o modelo e avalie os índices de ajuste</li>
+<li>Examine as cargas fatoriais padronizadas</li>
+<li>Se o ajuste for inadequado, explore índices de modificação</li>
+<li>Visualize o modelo final com semPaths</li>
+</ol></section><section id="exercício-4-comparação-de-modelos" class="level3" data-number="6.9.4"><h3 data-number="6.9.4" class="anchored" data-anchor-id="exercício-4-comparação-de-modelos">
+<span class="header-section-number">6.9.4</span> Exercício 4: Comparação de Modelos</h3>
+<p>Compare três modelos CFA:</p>
+<ul>
+<li>
+<strong>Modelo 1</strong>: Unidimensional (1 fator geral)</li>
+<li>
+<strong>Modelo 2</strong>: Bidimensional (2 fatores correlacionados)</li>
+<li>
+<strong>Modelo 3</strong>: Hierárquico (2 fatores de primeira ordem + 1 fator de segunda ordem)</li>
+</ul>
+<ol type="a">
+<li>Especifique e estime os três modelos</li>
+<li>Compare os índices de ajuste</li>
+<li>Use o teste qui-quadrado de diferença para modelos aninhados</li>
+<li>Selecione o melhor modelo e justifique</li>
+</ol></section><section id="exercício-5-análise-de-redes" class="level3" data-number="6.9.5"><h3 data-number="6.9.5" class="anchored" data-anchor-id="exercício-5-análise-de-redes">
+<span class="header-section-number">6.9.5</span> Exercício 5: Análise de Redes</h3>
+<ol type="a">
+<li>Crie uma rede psicométrica para os 10 itens</li>
+<li>Identifique os itens mais centrais na rede</li>
+<li>Examine se há comunidades (clusters) de itens</li>
+<li>Compare a estrutura da rede com os resultados da análise fatorial</li>
+</ol>
+<hr>
+<p><strong>Referências:</strong></p>
+<ul>
+<li>Cronbach, L. J. (1951). Coefficient alpha and the internal structure of tests. <em>Psychometrika</em>, 16(3), 297-334.</li>
+<li>DeVellis, R. F. (2003). <em>Scale Development: Theory and Applications</em>. SAGE Publications.</li>
+<li>Fornell, C., &amp; Larcker, D. F. (1981). Evaluating structural equation models with unobservable variables and measurement error. <em>Journal of Marketing Research</em>, 18(1), 39-50.</li>
+<li>Hu, L. T., &amp; Bentler, P. M. (1999). Cutoff criteria for fit indexes in covariance structure analysis. <em>Structural Equation Modeling</em>, 6(1), 1-55.</li>
+<li>McDonald, R. P. (1999). <em>Test Theory: A Unified Treatment</em>. Lawrence Erlbaum Associates.</li>
+<li>Rosseel, Y. (2012). lavaan: An R package for structural equation modeling. <em>Journal of Statistical Software</em>, 48(2), 1-36.</li>
+</ul>
+
+
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./regressao.html" class="pagination-link" aria-label="Regressão Linear, Logística e Multinomial">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Regressão Linear, Logística e Multinomial</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./analise-texto.html" class="pagination-link" aria-label="Análise de Dados Textuais e Mineração de Texto">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Análise de Dados Textuais e Mineração de Texto</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
