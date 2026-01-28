@@ -64,7 +64,7 @@
     "href": "introducao-r.html",
     "title": "\n1  Introdução ao R e RStudio\n",
     "section": "",
-    "text": "1.1 O que é o R?\nO R é uma linguagem de programação e ambiente de software livre para computação estatística e gráficos. Desenvolvido inicialmente por Ross Ihaka e Robert Gentleman na Universidade de Auckland, Nova Zelândia, o R se tornou uma das ferramentas mais populares para análise de dados, especialmente nas áreas de estatística, bioestatística e ciência de dados.",
+    "text": "1.1 O que é o R?\nO R é uma linguagem de programação e ambiente de software livre para computação estatística e gráficos. Atualmente o R se tornou uma das ferramentas mais populares para análise de dados, especialmente nas áreas de estatística, bioestatística e ciência de dados.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introdução ao R e RStudio</span>"
     ]
@@ -74,7 +74,7 @@
     "href": "introducao-r.html#o-que-é-o-r",
     "title": "\n1  Introdução ao R e RStudio\n",
     "section": "",
-    "text": "1.1.1 Vantagens do R\n\n\nGratuito e Open Source: O R é completamente gratuito e possui código aberto\n\nAmpla Comunidade: Grande comunidade de usuários e desenvolvedores\n\nPacotes Especializados: Mais de 19.000 pacotes disponíveis no CRAN para diferentes análises\n\nGráficos de Alta Qualidade: Excelentes capacidades de visualização de dados\n\nReprodutibilidade: Facilita a pesquisa reproduzível através de scripts\n\nIntegração: Pode ser integrado com outras linguagens e ferramentas\n\n1.1.2 Desvantagens do R\n\n\nCurva de Aprendizado: Pode ser desafiador para iniciantes sem experiência em programação\n\nVelocidade: Pode ser mais lento que linguagens compiladas para grandes volumes de dados\n\nConsumo de Memória: Armazena todos os dados na memória RAM",
+    "text": "1.1.1 Vantagens do R\n\n\nGratuito e Open Source: O R é completamente gratuito e possui código aberto\n\nAmpla Comunidade: Grande comunidade de usuários e desenvolvedores\n\nPacotes Especializados: Mais de 19.000 pacotes disponíveis no CRAN para diferentes análises\n\nGráficos de Alta Qualidade: Excelentes capacidades de visualização de dados\n\nReprodutibilidade: Facilita a pesquisa reproduzível através de scripts\n\nIntegração: Pode ser integrado com outras linguagens e ferramentas\n\n1.1.2 Desvantagens do R\n\n\nCurva de Aprendizado: Pode ser desafiador para iniciantes sem experiência em programação",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introdução ao R e RStudio</span>"
     ]
@@ -264,7 +264,7 @@
     "href": "analise-exploratoria.html#introdução",
     "title": "\n3  Análise Exploratória de Dados\n",
     "section": "",
-    "text": "Compreender a distribuição das variáveis\nIdentificar padrões e tendências\nDetectar valores atípicos (outliers)\nFormular hipóteses para análises posteriores\nVerificar a qualidade dos dados\n\n\n\n\nEstatística Descritiva: Resumir dados usando tabelas e medidas\n\nVisualização de Dados: Criar gráficos informativos com ggplot2\n\n\n\n\n\n\n\nSobre Testes Estatísticos\n\n\n\nOs testes estatísticos (teste t, ANOVA, qui-quadrado, correlações) foram movidos para um capítulo dedicado. Consulte o Capítulo 4 - Testes Estatísticos para aprender sobre testes de hipóteses paramétricos e não-paramétricos.",
+    "text": "Compreender a distribuição das variáveis\nIdentificar padrões e tendências\nDetectar valores atípicos (outliers)\nFormular hipóteses para análises posteriores\nVerificar a qualidade dos dados\n\n\n\n\nEstatística Descritiva: Resumir dados usando tabelas e medidas\n\nVisualização de Dados: Criar gráficos informativos com ggplot2",
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Análise Exploratória de Dados</span>"
     ]
@@ -744,7 +744,7 @@
     "href": "references.html#pacotes-r-utilizados",
     "title": "Referências",
     "section": "",
-    "text": "Manipulação e Visualização de Dados\n\ntidyverse [@wickham2019]: Coleção de pacotes para ciência de dados\n\nWickham H, Averick M, Bryan J, et al. (2019). “Welcome to the tidyverse.” Journal of Open Source Software, 4(43), 1686. https://doi.org/10.21105/joss.01686\n\ndplyr [@wickham2023dplyr]: Manipulação de dados\n\nWickham H, François R, Henry L, Müller K (2023). dplyr: A Grammar of Data Manipulation. https://dplyr.tidyverse.org\n\nggplot2 [@wickham2016]: Visualização de dados\n\nWickham H (2016). ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York. https://ggplot2.tidyverse.org\n\nreadxl [@wickham2023readxl]: Leitura de arquivos Excel\n\nWickham H, Bryan J (2023). readxl: Read Excel Files. https://readxl.tidyverse.org\n\n\n\n\nEstatística e Modelagem\n\ngtsummary [@sjoberg2021]: Tabelas de resumo estatístico\n\nSjoberg DD, Whiting K, Curry M, Lavery JA, Larmarange J (2021). “Reproducible Summary Tables with the gtsummary Package.” The R Journal, 13(1), 570-580. https://doi.org/10.32614/RJ-2021-053\n\njtools [@long2020]: Análise e visualização de modelos de regressão\n\nLong JA (2020). jtools: Analysis and Presentation of Social Scientific Data. https://jtools.jacob-long.com\n\ncar [@fox2019]: Funções complementares para análise de regressão\n\nFox J, Weisberg S (2019). An R Companion to Applied Regression, Third edition. Sage, Thousand Oaks CA. https://socialsciences.mcmaster.ca/jfox/Books/Companion/\n\nlmtest [@zeileis2002]: Testes para modelos lineares\n\nZeileis A, Hothorn T (2002). “Diagnostic Checking in Regression Relationships.” R News, 2(3), 7-10. https://CRAN.R-project.org/package=lmtest\n\n\n\n\nTabelas e Relatórios\n\nflextable [@gohel2023]: Criação de tabelas para publicação\n\nGohel D, Skintzos P (2023). flextable: Functions for Tabular Reporting. https://ardata-fr.github.io/flextable-book/\n\nofficer [@gohel2023officer]: Manipulação de documentos Office\n\nGohel D (2023). officer: Manipulation of Microsoft Word and PowerPoint Documents. https://davidgohel.github.io/officer/\n\n\n\n\nUtilidades\n\njanitor [@firke2023]: Limpeza de dados\n\nFirke S (2023). janitor: Simple Tools for Examining and Cleaning Dirty Data. https://sfirke.github.io/janitor/",
+    "text": "Manipulação e Visualização de Dados\n\ntidyverse [@wickham2019]: Coleção de pacotes para ciência de dados\n\nWickham H, Averick M, Bryan J, et al. (2019). “Welcome to the tidyverse.” Journal of Open Source Software, 4(43), 1686. https://doi.org/10.21105/joss.01686\n\ndplyr [@wickham2023dplyr]: Manipulação de dados\n\nWickham H, François R, Henry L, Müller K (2023). dplyr: A Grammar of Data Manipulation. https://dplyr.tidyverse.org\n\nggplot2 [@wickham2016]: Visualização de dados\n\nWickham H (2016). ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York. https://ggplot2.tidyverse.org\n\nreadxl [@wickham2023readxl]: Leitura de arquivos Excel\n\nWickham H, Bryan J (2023). readxl: Read Excel Files. https://readxl.tidyverse.org\n\n\n\n\nEstatística e Modelagem\n\ngtsummary [@sjoberg2021]: Tabelas de resumo estatístico\n\nSjoberg DD, Whiting K, Curry M, Lavery JA, Larmarange J (2021). “Reproducible Summary Tables with the gtsummary Package.” The R Journal, 13(1), 570-580. https://doi.org/10.32614/RJ-2021-053\n\njtools [@long2020]: Análise e visualização de modelos de regressão\n\nLong JA (2020). jtools: Analysis and Presentation of Social Scientific Data. https://jtools.jacob-long.com\n\ncar [@fox2019]: Funções complementares para análise de regressão\n\nFox J, Weisberg S (2019). An R Companion to Applied Regression, Third edition. Sage, Thousand Oaks CA. https://socialsciences.mcmaster.ca/jfox/Books/Companion/\n\nlmtest [@zeileis2002]: Testes para modelos lineares\n\nZeileis A, Hothorn T (2002). “Diagnostic Checking in Regression Relationships.” R News, 2(3), 7-10. https://CRAN.R-project.org/package=lmtest\n\nBatra, Neale, et al. The Epidemiologist R Handbook. 2021. https://www.epirhandbook.com/en/\n\n\n\nTabelas e Relatórios\n\nflextable [@gohel2023]: Criação de tabelas para publicação\n\nGohel D, Skintzos P (2023). flextable: Functions for Tabular Reporting. https://ardata-fr.github.io/flextable-book/\n\nofficer [@gohel2023officer]: Manipulação de documentos Office\n\nGohel D (2023). officer: Manipulation of Microsoft Word and PowerPoint Documents. https://davidgohel.github.io/officer/\n\n\n\n\nUtilidades\n\njanitor [@firke2023]: Limpeza de dados\n\nFirke S (2023). janitor: Simple Tools for Examining and Cleaning Dirty Data. https://sfirke.github.io/janitor/",
     "crumbs": [
       "Referências"
     ]
@@ -754,7 +754,7 @@
     "href": "references.html#referências-bibliográficas-em-bioestatística",
     "title": "Referências",
     "section": "Referências Bibliográficas em Bioestatística",
-    "text": "Referências Bibliográficas em Bioestatística\n\nLivros Fundamentais\n\nAltman DG (1991). Practical Statistics for Medical Research. Chapman and Hall/CRC.\nArmitage P, Berry G, Matthews JNS (2002). Statistical Methods in Medical Research, 4th edition. Blackwell Science.\nHosmer DW, Lemeshow S, Sturdivant RX (2013). Applied Logistic Regression, 3rd edition. Wiley.\nKirkwood BR, Sterne JAC (2003). Essential Medical Statistics, 2nd edition. Blackwell Science.\n\n\n\nRegressão Linear e Logística\n\nChatterjee S, Hadi AS (2012). Regression Analysis by Example, 5th edition. Wiley.\nFox J (2016). Applied Regression Analysis and Generalized Linear Models, 3rd edition. Sage Publications.\nKleinbaum DG, Klein M (2010). Logistic Regression: A Self-Learning Text, 3rd edition. Springer.\n\n\n\nVisualização de Dados\n\nTufte ER (2001). The Visual Display of Quantitative Information, 2nd edition. Graphics Press.\nWilke CO (2019). Fundamentals of Data Visualization. O’Reilly Media. https://clauswilke.com/dataviz/",
+    "text": "Referências Bibliográficas em Bioestatística\n\nBECKER, A. D.; GRENFELL, B. T. tsiR: An R package for time-series Susceptible-Infected-Recovered models of epidemics. PloS one, [S.l.], v. 12, n. 9, p. e0185528, Sept. 2017. DOI 10.1371/journal.pone.0185528. Disponível em: https://doi.org/10.1371/journal.pone.0185528.\nBATRA, Neale et al. The Epidemiologist R Handbook. 2021.\nBROWN, ANNA. Psychometrics in Exercises using R and RStudio. Textbook and data resource. 2023. Available from https://bookdown.org/annabrown/psychometricsR.\nCHAN, B. K. C. Data Analysis Using R Programming. Advances in experimental medicine and biology, [S.l.], v. 1082, p. 47-122, 2018. DOI 10.1007/978-3-319-93791-5_2. Disponível em: https://doi.org/10.1007/978-3-319-93791-5_2.\nCOLEMAN, A.; BOSE, A.; MITRA, S. Metagenomics Data Visualization Using R. Methods in molecular biology (Clifton, N.J.), [S.l.], v. 2649, p. 359-392, 2023. DOI 10.1007/978-1-0716-3072-3_19. Disponível em: https://doi.org/10.1007/978-1-0716-3072-3_19.\nFEINSTEIN, J. A. et al. R Package for Pediatric Complex Chronic Condition Classification. JAMA pediatrics, [S.l.], v. 172, n. 6, p. 596-598, June 2018. DOI 10.1001/jamapediatrics.2018.0256. Disponível em: https://doi.org/10.1001/jamapediatrics.2018.0256.\nGIOGIO, F. M.; CERAOLO, C.; MERCATELLI, D. The R Language: An Engine for Bioinformatics and Data Science. Life (Basel, Switzerland), [S.l.], v. 12, n. 5, p. 648, May 2022. DOI 10.3390/life12050648. Disponível em: https://doi.org/10.3390/life12050648.\nJALAL, H. et al. An Overview of R in Health Decision Sciences. Medical decision making : an international journal of the Society for Medical Decision Making, [S.l.], v. 37, n. 7, p. 735-746, July 2017. DOI 10.1177/0272989X16686559. Disponível em: https://doi.org/10.1177/0272989X16686559.\nJIA, L. et al. Development of interactive biological web applications with R/Shiny. Briefings in bioinformatics, [S.l.], v. 23, n. 1, p. bbab415, Jan. 2022. DOI 10.1093/bib/bbab415. Disponível em: https://doi.org/10.1093/bib/bbab415.\nKAMVAR, Z. N. et al. Epidemic curves made easy using the R package incidence. F1000Research, [S.l.], v. 8, p. 139, 2019. DOI 10.12688/f1000research.18002.1. Disponível em: https://doi.org/10.12688/f1000research.18002.1.\nKRIJKAMP, E. M. et al. Microsimulation Modeling for Health Decision Sciences Using R: A Tutorial. Medical decision making : an international journal of the Society for Medical Decision Making, [S.l.], v. 38, n. 3, p. 400-422, May 2018. DOI 10.1177/0272989X18754513. Disponível em: https://doi.org/10.1177/0272989X18754513.\nPALM, J.; MEINEKE, F. A.; PRZYBILLA, J.; PESCHEL, T. “fhircrackr”: An R Package Unlocking Fast Healthcare Interoperability Resources for Statistical Analysis. Applied clinical informatics, [S.l.], v. 14, n. 1, p. 54-64, Jan. 2023. DOI 10.1055/s-0042-1760436. Disponível em: https://doi.org/10.1055/s-0042-1760436.\nSEPULVEDA, J. L. Using R and Bioconductor in Clinical Genomics and Transcriptomics. The Journal of molecular diagnostics : JMD, [S.l.], v. 22, n. 1, p. 3-20, Jan. 2020. DOI 10.1016/j.jmoldx.2019.08.006. Disponível em: https://doi.org/10.1016/j.jmoldx.2019.08.006.\nSTAPLES, T. L. Expansion and evolution of the R programming language. Royal Society open science, [S.l.], v. 10, n. 4, p. 221550, Apr. 2023. DOI 10.1098/rsos.221550. Disponível em: https://doi.org/10.1098/rsos.221550.",
     "crumbs": [
       "Referências"
     ]
@@ -764,7 +764,7 @@
     "href": "references.html#recursos-online",
     "title": "Referências",
     "section": "Recursos Online",
-    "text": "Recursos Online\n\nDocumentação Oficial\n\nR Project: https://www.r-project.org/\nRStudio: https://posit.co/products/open-source/rstudio/\nTidyverse: https://www.tidyverse.org/\nQuarto: https://quarto.org/\n\n\n\nTutoriais e Guias\n\nR for Data Science (Wickham & Grolemund): https://r4ds.had.co.nz/\nggplot2 Book: https://ggplot2-book.org/\nStatistical Inference via Data Science (ModernDive): https://moderndive.com/\nRegression and Other Stories (Gelman et al.): https://avehtari.github.io/ROS-Examples/\n\n\n\nComunidades e Fóruns\n\nStack Overflow (tag: R): https://stackoverflow.com/questions/tagged/r\nRStudio Community: https://community.rstudio.com/\nR-bloggers: https://www.r-bloggers.com/\n#RStats no Twitter/X: Comunidade ativa de usuários R",
+    "text": "Recursos Online\n\nDocumentação Oficial\n\nR Project: https://www.r-project.org/\nRStudio: https://posit.co/products/open-source/rstudio/\nTidyverse: https://www.tidyverse.org/\nQuarto: https://quarto.org/\n\n\n\nTutoriais e Guias\n\nR for Data Science (Wickham & Grolemund): https://r4ds.had.co.nz/\nggplot2 Book: https://ggplot2-book.org/\nStatistical Inference via Data Science (ModernDive): https://moderndive.com/\nRegression and Other Stories (Gelman et al.): https://avehtari.github.io/ROS-Examples/",
     "crumbs": [
       "Referências"
     ]
@@ -774,7 +774,7 @@
     "href": "references.html#dados-utilizados",
     "title": "Referências",
     "section": "Dados Utilizados",
-    "text": "Dados Utilizados\nOs dados de internações hospitalares utilizados neste livro são provenientes do:\n\nSistema de Informações Hospitalares do SUS (SIH/SUS)\n\nMunicípio: Maringá-PR\nPeríodo: 2024\nFonte: DATASUS - Departamento de Informática do SUS\nDisponível em: https://datasus.saude.gov.br/\n\n\n\n\n\n\n\n\nNota sobre os Dados\n\n\n\nOs dados foram anonimizados e utilizados exclusivamente para fins educacionais. Informações que possam identificar pacientes foram removidas em conformidade com a Lei Geral de Proteção de Dados (LGPD).",
+    "text": "Dados Utilizados\nOs dados de internações hospitalares utilizados neste livro são provenientes do:\n\nSistema de Informações Hospitalares do SUS (SIH/SUS)\n\nMunicípio: Maringá-PR\nPeríodo: 2024\nFonte: DATASUS - Departamento de Informática do SUS\nDisponível em: https://datasus.saude.gov.br/",
     "crumbs": [
       "Referências"
     ]
@@ -784,7 +784,7 @@
     "href": "references.html#citação-recomendada",
     "title": "Referências",
     "section": "Citação Recomendada",
-    "text": "Citação Recomendada\nPara citar este livro, utilize:\n\nPavanello A, Costa KM, Oliveira LP (2026). Bioestatística Aplicada à Saúde usando R. Material didático do curso de Pós-graduação. Disponível em: [URL do GitHub Pages quando publicado]",
+    "text": "Citação Recomendada\nPara citar este livro, utilize:\n\nPavanello A, Costa KM, Oliveira LP (2026). Bioestatística Aplicada à Saúde usando R. Material didático do curso de Pós-graduação. Disponível em: [https://audreipavanello.github.io/bioestatistica_r/]",
     "crumbs": [
       "Referências"
     ]
@@ -794,7 +794,7 @@
     "href": "references.html#repositório-do-código",
     "title": "Referências",
     "section": "Repositório do Código",
-    "text": "Repositório do Código\nTodo o código-fonte deste livro está disponível no GitHub:\n\nRepositório: [Será adicionado após publicação]\nLicença: CC BY-NC-SA 4.0 (conteúdo) e MIT (código)",
+    "text": "Repositório do Código\nTodo o código-fonte deste livro está disponível no GitHub:\n\nRepositório: [https://github.com/AudreiPavanello/bioestatistica_r]\nLicença: CC BY-NC-SA 4.0 (conteúdo) e MIT (código)",
     "crumbs": [
       "Referências"
     ]
@@ -804,7 +804,7 @@
     "href": "references.html#software",
     "title": "Referências",
     "section": "Software",
-    "text": "Software\nEste livro foi criado usando:\n\nR versão 4.3+ (https://www.r-project.org/)\nRStudio (https://posit.co/products/open-source/rstudio/)\nQuarto (https://quarto.org/)\n\n\n\n\n\n\n\nContribuições\n\n\n\nEncontrou um erro ou tem sugestões? Abra uma issue no repositório do GitHub ou entre em contato com os autores.\n\n\n\nÚltima atualização: r Sys.Date()",
+    "text": "Software\nEste livro foi criado usando:\n\nR versão 4.3+ (https://www.r-project.org/)\nRStudio (https://posit.co/products/open-source/rstudio/)\nQuarto (https://quarto.org/)",
     "crumbs": [
       "Referências"
     ]

@@ -2,7 +2,7 @@
 
 ## O que é o R?
 
-O **R** é uma linguagem de programação e ambiente de software livre para computação estatística e gráficos. Desenvolvido inicialmente por Ross Ihaka e Robert Gentleman na Universidade de Auckland, Nova Zelândia, o R se tornou uma das ferramentas mais populares para análise de dados, especialmente nas áreas de estatística, bioestatística e ciência de dados.
+O **R** é uma linguagem de programação e ambiente de software livre para computação estatística e gráficos. Atualmente o R se tornou uma das ferramentas mais populares para análise de dados, especialmente nas áreas de estatística, bioestatística e ciência de dados.
 
 ### Vantagens do R
 
@@ -16,8 +16,6 @@ O **R** é uma linguagem de programação e ambiente de software livre para comp
 ### Desvantagens do R
 
 -   **Curva de Aprendizado**: Pode ser desafiador para iniciantes sem experiência em programação
--   **Velocidade**: Pode ser mais lento que linguagens compiladas para grandes volumes de dados
--   **Consumo de Memória**: Armazena todos os dados na memória RAM
 
 ## Interface do RStudio
 

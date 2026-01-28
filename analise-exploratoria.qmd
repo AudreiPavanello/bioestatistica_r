@@ -15,11 +15,6 @@ Neste capítulo, abordaremos dois componentes essenciais da AED:
 1.  **Estatística Descritiva**: Resumir dados usando tabelas e medidas
 2.  **Visualização de Dados**: Criar gráficos informativos com ggplot2
 
-::: callout-note
-## Sobre Testes Estatísticos
-
-Os **testes estatísticos** (teste t, ANOVA, qui-quadrado, correlações) foram movidos para um capítulo dedicado. Consulte o **Capítulo 4 - Testes Estatísticos** para aprender sobre testes de hipóteses paramétricos e não-paramétricos.
-:::
 
 ## Preparação dos Dados
 

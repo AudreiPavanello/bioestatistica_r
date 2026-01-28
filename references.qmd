@@ -6,137 +6,101 @@ Este livro faz uso extensivo de diversos pacotes do ecossistema R. Agradecemos a
 
 ### Manipulação e Visualização de Dados
 
-- **tidyverse** [@wickham2019]: Coleção de pacotes para ciência de dados
-  - Wickham H, Averick M, Bryan J, et al. (2019). "Welcome to the tidyverse." *Journal of Open Source Software*, 4(43), 1686. <https://doi.org/10.21105/joss.01686>
-
-- **dplyr** [@wickham2023dplyr]: Manipulação de dados
-  - Wickham H, François R, Henry L, Müller K (2023). *dplyr: A Grammar of Data Manipulation*. <https://dplyr.tidyverse.org>
-
-- **ggplot2** [@wickham2016]: Visualização de dados
-  - Wickham H (2016). *ggplot2: Elegant Graphics for Data Analysis*. Springer-Verlag New York. <https://ggplot2.tidyverse.org>
-
-- **readxl** [@wickham2023readxl]: Leitura de arquivos Excel
-  - Wickham H, Bryan J (2023). *readxl: Read Excel Files*. <https://readxl.tidyverse.org>
+-   **tidyverse** [@wickham2019]: Coleção de pacotes para ciência de dados
+    -   Wickham H, Averick M, Bryan J, et al. (2019). "Welcome to the tidyverse." *Journal of Open Source Software*, 4(43), 1686. <https://doi.org/10.21105/joss.01686>
+-   **dplyr** [@wickham2023dplyr]: Manipulação de dados
+    -   Wickham H, François R, Henry L, Müller K (2023). *dplyr: A Grammar of Data Manipulation*. <https://dplyr.tidyverse.org>
+-   **ggplot2** [@wickham2016]: Visualização de dados
+    -   Wickham H (2016). *ggplot2: Elegant Graphics for Data Analysis*. Springer-Verlag New York. <https://ggplot2.tidyverse.org>
+-   **readxl** [@wickham2023readxl]: Leitura de arquivos Excel
+    -   Wickham H, Bryan J (2023). *readxl: Read Excel Files*. <https://readxl.tidyverse.org>
 
 ### Estatística e Modelagem
 
-- **gtsummary** [@sjoberg2021]: Tabelas de resumo estatístico
-  - Sjoberg DD, Whiting K, Curry M, Lavery JA, Larmarange J (2021). "Reproducible Summary Tables with the gtsummary Package." *The R Journal*, 13(1), 570-580. <https://doi.org/10.32614/RJ-2021-053>
-
-- **jtools** [@long2020]: Análise e visualização de modelos de regressão
-  - Long JA (2020). *jtools: Analysis and Presentation of Social Scientific Data*. <https://jtools.jacob-long.com>
-
-- **car** [@fox2019]: Funções complementares para análise de regressão
-  - Fox J, Weisberg S (2019). *An R Companion to Applied Regression*, Third edition. Sage, Thousand Oaks CA. <https://socialsciences.mcmaster.ca/jfox/Books/Companion/>
-
-- **lmtest** [@zeileis2002]: Testes para modelos lineares
-  - Zeileis A, Hothorn T (2002). "Diagnostic Checking in Regression Relationships." *R News*, 2(3), 7-10. <https://CRAN.R-project.org/package=lmtest>
+-   **gtsummary** [@sjoberg2021]: Tabelas de resumo estatístico
+    -   Sjoberg DD, Whiting K, Curry M, Lavery JA, Larmarange J (2021). "Reproducible Summary Tables with the gtsummary Package." *The R Journal*, 13(1), 570-580. <https://doi.org/10.32614/RJ-2021-053>
+-   **jtools** [@long2020]: Análise e visualização de modelos de regressão
+    -   Long JA (2020). *jtools: Analysis and Presentation of Social Scientific Data*. <https://jtools.jacob-long.com>
+-   **car** [@fox2019]: Funções complementares para análise de regressão
+    -   Fox J, Weisberg S (2019). *An R Companion to Applied Regression*, Third edition. Sage, Thousand Oaks CA. <https://socialsciences.mcmaster.ca/jfox/Books/Companion/>
+-   **lmtest** [@zeileis2002]: Testes para modelos lineares
+    -   Zeileis A, Hothorn T (2002). "Diagnostic Checking in Regression Relationships." *R News*, 2(3), 7-10. <https://CRAN.R-project.org/package=lmtest>
+-   Batra, Neale, et al. The Epidemiologist R Handbook. 2021. <https://www.epirhandbook.com/en/>
 
 ### Tabelas e Relatórios
 
-- **flextable** [@gohel2023]: Criação de tabelas para publicação
-  - Gohel D, Skintzos P (2023). *flextable: Functions for Tabular Reporting*. <https://ardata-fr.github.io/flextable-book/>
-
-- **officer** [@gohel2023officer]: Manipulação de documentos Office
-  - Gohel D (2023). *officer: Manipulation of Microsoft Word and PowerPoint Documents*. <https://davidgohel.github.io/officer/>
+-   **flextable** [@gohel2023]: Criação de tabelas para publicação
+    -   Gohel D, Skintzos P (2023). *flextable: Functions for Tabular Reporting*. <https://ardata-fr.github.io/flextable-book/>
+-   **officer** [@gohel2023officer]: Manipulação de documentos Office
+    -   Gohel D (2023). *officer: Manipulation of Microsoft Word and PowerPoint Documents*. <https://davidgohel.github.io/officer/>
 
 ### Utilidades
 
-- **janitor** [@firke2023]: Limpeza de dados
-  - Firke S (2023). *janitor: Simple Tools for Examining and Cleaning Dirty Data*. <https://sfirke.github.io/janitor/>
+-   **janitor** [@firke2023]: Limpeza de dados
+    -   Firke S (2023). *janitor: Simple Tools for Examining and Cleaning Dirty Data*. <https://sfirke.github.io/janitor/>
 
 ## Referências Bibliográficas em Bioestatística
 
-### Livros Fundamentais
-
-- **Altman DG** (1991). *Practical Statistics for Medical Research*. Chapman and Hall/CRC.
-
-- **Armitage P, Berry G, Matthews JNS** (2002). *Statistical Methods in Medical Research*, 4th edition. Blackwell Science.
-
-- **Hosmer DW, Lemeshow S, Sturdivant RX** (2013). *Applied Logistic Regression*, 3rd edition. Wiley.
-
-- **Kirkwood BR, Sterne JAC** (2003). *Essential Medical Statistics*, 2nd edition. Blackwell Science.
-
-### Regressão Linear e Logística
-
-- **Chatterjee S, Hadi AS** (2012). *Regression Analysis by Example*, 5th edition. Wiley.
-
-- **Fox J** (2016). *Applied Regression Analysis and Generalized Linear Models*, 3rd edition. Sage Publications.
-
-- **Kleinbaum DG, Klein M** (2010). *Logistic Regression: A Self-Learning Text*, 3rd edition. Springer.
-
-### Visualização de Dados
-
-- **Tufte ER** (2001). *The Visual Display of Quantitative Information*, 2nd edition. Graphics Press.
-
-- **Wilke CO** (2019). *Fundamentals of Data Visualization*. O'Reilly Media. <https://clauswilke.com/dataviz/>
+1.  BECKER, A. D.; GRENFELL, B. T. tsiR: An R package for time-series Susceptible-Infected-Recovered models of epidemics. PloS one, \[S.l.\], v. 12, n. 9, p. e0185528, Sept. 2017. DOI 10.1371/journal.pone.0185528. Disponível em: https://doi.org/10.1371/journal.pone.0185528.
+2.  BATRA, Neale et al. The Epidemiologist R Handbook. 2021.
+3.  BROWN, ANNA. Psychometrics in Exercises using R and RStudio. Textbook and data resource. 2023. Available from https://bookdown.org/annabrown/psychometricsR.
+4.  CHAN, B. K. C. Data Analysis Using R Programming. Advances in experimental medicine and biology, \[S.l.\], v. 1082, p. 47-122, 2018. DOI 10.1007/978-3-319-93791-5_2. Disponível em: https://doi.org/10.1007/978-3-319-93791-5_2.
+5.  COLEMAN, A.; BOSE, A.; MITRA, S. Metagenomics Data Visualization Using R. Methods in molecular biology (Clifton, N.J.), \[S.l.\], v. 2649, p. 359-392, 2023. DOI 10.1007/978-1-0716-3072-3_19. Disponível em: https://doi.org/10.1007/978-1-0716-3072-3_19.
+6.  FEINSTEIN, J. A. et al. R Package for Pediatric Complex Chronic Condition Classification. JAMA pediatrics, \[S.l.\], v. 172, n. 6, p. 596-598, June 2018. DOI 10.1001/jamapediatrics.2018.0256. Disponível em: https://doi.org/10.1001/jamapediatrics.2018.0256.
+7.  GIOGIO, F. M.; CERAOLO, C.; MERCATELLI, D. The R Language: An Engine for Bioinformatics and Data Science. Life (Basel, Switzerland), \[S.l.\], v. 12, n. 5, p. 648, May 2022. DOI 10.3390/life12050648. Disponível em: https://doi.org/10.3390/life12050648.
+8.  JALAL, H. et al. An Overview of R in Health Decision Sciences. Medical decision making : an international journal of the Society for Medical Decision Making, \[S.l.\], v. 37, n. 7, p. 735-746, July 2017. DOI 10.1177/0272989X16686559. Disponível em: https://doi.org/10.1177/0272989X16686559.
+9.  JIA, L. et al. Development of interactive biological web applications with R/Shiny. Briefings in bioinformatics, \[S.l.\], v. 23, n. 1, p. bbab415, Jan. 2022. DOI 10.1093/bib/bbab415. Disponível em: https://doi.org/10.1093/bib/bbab415.
+10. KAMVAR, Z. N. et al. Epidemic curves made easy using the R package incidence. F1000Research, \[S.l.\], v. 8, p. 139, 2019. DOI 10.12688/f1000research.18002.1. Disponível em: https://doi.org/10.12688/f1000research.18002.1.
+11. KRIJKAMP, E. M. et al. Microsimulation Modeling for Health Decision Sciences Using R: A Tutorial. Medical decision making : an international journal of the Society for Medical Decision Making, \[S.l.\], v. 38, n. 3, p. 400-422, May 2018. DOI 10.1177/0272989X18754513. Disponível em: https://doi.org/10.1177/0272989X18754513.
+12. PALM, J.; MEINEKE, F. A.; PRZYBILLA, J.; PESCHEL, T. "fhircrackr": An R Package Unlocking Fast Healthcare Interoperability Resources for Statistical Analysis. Applied clinical informatics, \[S.l.\], v. 14, n. 1, p. 54-64, Jan. 2023. DOI 10.1055/s-0042-1760436. Disponível em: https://doi.org/10.1055/s-0042-1760436.
+13. SEPULVEDA, J. L. Using R and Bioconductor in Clinical Genomics and Transcriptomics. The Journal of molecular diagnostics : JMD, \[S.l.\], v. 22, n. 1, p. 3-20, Jan. 2020. DOI 10.1016/j.jmoldx.2019.08.006. Disponível em: https://doi.org/10.1016/j.jmoldx.2019.08.006.
+14. STAPLES, T. L. Expansion and evolution of the R programming language. Royal Society open science, \[S.l.\], v. 10, n. 4, p. 221550, Apr. 2023. DOI 10.1098/rsos.221550. Disponível em: https://doi.org/10.1098/rsos.221550.
 
 ## Recursos Online
 
 ### Documentação Oficial
 
-- **R Project**: <https://www.r-project.org/>
-- **RStudio**: <https://posit.co/products/open-source/rstudio/>
-- **Tidyverse**: <https://www.tidyverse.org/>
-- **Quarto**: <https://quarto.org/>
+-   **R Project**: <https://www.r-project.org/>
+-   **RStudio**: <https://posit.co/products/open-source/rstudio/>
+-   **Tidyverse**: <https://www.tidyverse.org/>
+-   **Quarto**: <https://quarto.org/>
 
 ### Tutoriais e Guias
 
-- **R for Data Science** (Wickham & Grolemund): <https://r4ds.had.co.nz/>
-- **ggplot2 Book**: <https://ggplot2-book.org/>
-- **Statistical Inference via Data Science** (ModernDive): <https://moderndive.com/>
-- **Regression and Other Stories** (Gelman et al.): <https://avehtari.github.io/ROS-Examples/>
-
-### Comunidades e Fóruns
-
-- **Stack Overflow** (tag: R): <https://stackoverflow.com/questions/tagged/r>
-- **RStudio Community**: <https://community.rstudio.com/>
-- **R-bloggers**: <https://www.r-bloggers.com/>
-- **#RStats no Twitter/X**: Comunidade ativa de usuários R
+-   **R for Data Science** (Wickham & Grolemund): <https://r4ds.had.co.nz/>
+-   **ggplot2 Book**: <https://ggplot2-book.org/>
+-   **Statistical Inference via Data Science** (ModernDive): <https://moderndive.com/>
+-   **Regression and Other Stories** (Gelman et al.): <https://avehtari.github.io/ROS-Examples/>
 
 ## Dados Utilizados
 
 Os dados de internações hospitalares utilizados neste livro são provenientes do:
 
-- **Sistema de Informações Hospitalares do SUS (SIH/SUS)**
-  - Município: Maringá-PR
-  - Período: 2024
-  - Fonte: DATASUS - Departamento de Informática do SUS
-  - Disponível em: <https://datasus.saude.gov.br/>
-
-::: {.callout-note}
-## Nota sobre os Dados
-
-Os dados foram anonimizados e utilizados exclusivamente para fins educacionais. Informações que possam identificar pacientes foram removidas em conformidade com a Lei Geral de Proteção de Dados (LGPD).
-:::
+-   **Sistema de Informações Hospitalares do SUS (SIH/SUS)**
+    -   Município: Maringá-PR
+    -   Período: 2024
+    -   Fonte: DATASUS - Departamento de Informática do SUS
+    -   Disponível em: <https://datasus.saude.gov.br/>
 
 ## Citação Recomendada
 
 Para citar este livro, utilize:
 
-> Pavanello A, Costa KM, Oliveira LP (2026). *Bioestatística Aplicada à Saúde usando R*. Material didático do curso de Pós-graduação. Disponível em: [URL do GitHub Pages quando publicado]
+> Pavanello A, Costa KM, Oliveira LP (2026). *Bioestatística Aplicada à Saúde usando R*. Material didático do curso de Pós-graduação. Disponível em: \[https://audreipavanello.github.io/bioestatistica_r/\]
 
 ## Repositório do Código
 
 Todo o código-fonte deste livro está disponível no GitHub:
 
-- **Repositório**: [Será adicionado após publicação]
-- **Licença**: CC BY-NC-SA 4.0 (conteúdo) e MIT (código)
+-   **Repositório**: \[https://github.com/AudreiPavanello/bioestatistica_r\]
+-   **Licença**: CC BY-NC-SA 4.0 (conteúdo) e MIT (código)
 
 ## Software
 
 Este livro foi criado usando:
 
-- **R** versão 4.3+ (<https://www.r-project.org/>)
-- **RStudio** (<https://posit.co/products/open-source/rstudio/>)
-- **Quarto** (<https://quarto.org/>)
+-   **R** versão 4.3+ (<https://www.r-project.org/>)
+-   **RStudio** (<https://posit.co/products/open-source/rstudio/>)
+-   **Quarto** (<https://quarto.org/>)
 
-::: {.callout-tip}
-## Contribuições
-
-Encontrou um erro ou tem sugestões? Abra uma *issue* no repositório do GitHub ou entre em contato com os autores.
-:::
-
----
-
-**Última atualização**: `r Sys.Date()`
+------------------------------------------------------------------------
