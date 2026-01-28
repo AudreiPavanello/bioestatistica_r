@@ -132,6 +132,6 @@ Este material é disponibilizado para fins educacionais. Os dados utilizados sã
 
 ------------------------------------------------------------------------
 
-**Data de Publicação**: {{< meta build_date >}}  
+**Data de Publicação**: 2026-01-28 
 
-**Versão do R utilizada**: {{< meta r_version >}}
+**Versão do R utilizada**: R version 4.4.3
