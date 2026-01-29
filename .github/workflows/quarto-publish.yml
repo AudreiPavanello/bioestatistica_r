@@ -50,7 +50,7 @@ jobs:
 
       - name: Install R packages
         run: |
-          install.packages(c(
+          packages <- c(
             # Data manipulation & cleaning
             "tidyverse", "readxl", "janitor", "openxlsx",
             # Statistical analysis
@@ -65,7 +65,15 @@ jobs:
             "tidytext", "wordcloud", "quanteda", "lexiconPT", "tm", "stopwords", "mall",
             # Rendering
             "rmarkdown", "knitr", "downlit", "xml2"
-          ))
+          )
+          install.packages(packages)
+
+          # Verify all packages installed
+          missing <- packages[!packages %in% rownames(installed.packages())]
+          if (length(missing) > 0) {
+            cat("Failed to install:", paste(missing, collapse=", "), "\n")
+            quit(status = 1)
+          }
         shell: Rscript {0}
 
       - name: Setup Quarto
