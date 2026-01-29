@@ -1,0 +1,432 @@
+﻿sexo,etnia,idade,estcivil,cidade,escolaridade,economia,profissao,renda,beneficio,comunicacao,celular,internet,acesso,L1,L2,L3,L4,L5,L6,L7,L8,L9,L10,literacia,scores
+1,1,30,2,Faxinal Pr,5,3,Enfermeira ,4,9,Internet,1,1,"Computador, Celular",4,4,4,4,4,5,4,4,4,4,4.1,0.586053493
+1,1,39,2,Faxinal,5,3,Enfermeira,4,9,Internet,1,1,Celular,5,5,4,4,4,5,4,4,4,4,4.3,0.586053493
+1,1,57,2,Londrina,3,3,Vendedora ,3,9,Internet,1,1,Celular,3,4,4,4,4,4,4,4,4,4,3.9,0.335292996
+1,1,67,2,Londrina,3,3,Professora Municipal,3,9,Internet,1,1,"Tablet, Celular",4,5,4,4,4,4,4,4,4,4,4.1,0.335292996
+1,1,28,2,Faxinal,2,3,Doméstica,2,1,Internet,1,1,Celular,5,5,4,4,4,4,4,4,4,4,4.2,0.335292996
+2,3,30,1,Faxinal ,4,2,Professor e Técnico em enfermagem ,3,9,"TV, Internet",1,1,Celular,5,4,3,3,3,4,4,3,4,2,3.5,-0.355798543
+2,1,37,2,Faxinal ,4,4,Administrador,3,9,"TV, Internet",1,1,"Computador, Celular",5,4,4,4,4,4,5,4,4,4,4.2,0.601574902
+1,1,32,1,Londrina,5,2,Advogada,2,9,Internet,1,1,"Celular, Notebook",4,4,3,2,3,3,3,2,2,3,2.9,-0.774868468
+2,1,45,2,jacksonville,4,1,zalador,2,9,TV,2,1,Computador,3,4,4,3,4,1,1,1,1,1,2.3,-1.330925323
+1,1,26,2,Ortigueira ,2,2,enfermeira,3,9,Internet,1,1,Celular,4,5,5,5,5,5,5,5,5,5,4.9,1.632261366
+1,1,76,1,Londrina ,3,2,aposentada,3,9,Internet,1,1,Computador,3,1,4,4,4,4,4,4,4,3,3.5,0.209744825
+2,3,75,2,Lndapr,3,4,Aposentado,3,9,"Jornal Escrito e/ou Revistas, TV, Internet",1,1,"Computador, Celular",4,5,4,4,5,5,5,4,2,4,4.2,0.791817002
+2,4,23,1,Panamá ,5,2,Modelo,5,9,"TV, Internet",1,1,"Computador, Celular, Notebook",3,5,3,3,3,4,4,3,3,4,3.5,-0.275951339
+1,1,39,2,Faxinal ,5,3,Enfermeira ,4,9,"TV, Internet",1,1,"Computador, Celular",5,5,4,4,4,4,4,4,4,4,4.2,0.335292996
+2,1,37,2,Faxinal,5,4,Administrador,3,9,"TV, Internet",1,1,"Computador, Celular",5,5,4,4,4,4,4,4,4,4,4.2,0.335292996
+2,1,32,1,Ivaiporã,4,3,Empresário ,3,9,Internet,1,1,Celular,3,5,4,2,2,4,4,4,4,3,3.5,-0.275746009
+1,3,23,1,Ivaiporã,3,3,Estagiária ,2,9,Internet,1,1,Celular,3,4,2,4,4,3,4,4,4,3,3.5,-0.1566588
+1,3,23,1,Ivaiporã,3,2,Administrativo,2,9,Internet,1,1,Celular,5,4,4,4,4,4,4,4,3,3,3.9,0.120461091
+2,1,30,3,Ivaiporã,3,4,auxiliar administrativo,2,9,Internet,1,1,"Computador, Celular",5,5,4,4,4,4,4,4,4,4,4.2,0.335292996
+1,1,23,2,Manoel Ribas,3,3,Empressaria,3,9,Internet,1,1,Celular,3,4,3,4,4,3,3,3,3,3,3.3,-0.415487136
+1,3,31,2,São João do Ivaí,3,1,Do lar,1,9,Internet,1,1,Celular,2,4,4,4,4,4,4,4,4,4,3.8,0.335292996
+1,1,38,1,Ivaiporã,4,3,Auxiliar cartório,2,9,"Jornal Escrito e/ou Revistas, TV, Rádio, Internet",1,1,"Computador, Celular, Notebook",5,5,4,4,3,4,4,2,3,2,3.6,-0.363231348
+1,1,22,1,Grandes rios ,3,2,Secretária,2,9,Internet,1,1,Celular,3,4,3,3,4,4,4,4,3,3,3.5,-0.099895738
+1,1,22,1,Ivaiporã,3,1,Estudante,2,9,Internet,1,1,Celular,5,5,5,3,3,5,5,4,4,4,4.3,0.548989343
+2,4,27,1,Grandes rios,4,2,Contador,4,9,Internet,1,1,"Computador, Celular, Notebook",3,4,3,3,3,3,3,3,3,3,3.1,-0.579124686
+2,1,21,1,Manoel Ribas,3,3,Escrevente ,2,9,Internet,1,1,"Computador, Celular, Notebook",5,5,4,4,4,3,3,4,4,3,3.9,-0.195392736
+1,1,22,1,Ivaiporã ,3,2,Assistente de Advogado,3,9,Internet,1,1,Celular,5,5,2,2,2,2,2,1,1,1,2.3,-1.434419643
+1,1,30,2,Faxinal,3,4,Tec Enfermagem,2,9,Internet,1,1,"Computador, Celular",5,4,3,4,4,4,4,4,4,4,4,0.22863719
+2,1,31,1,Faxinal,5,2,Enfermeiro,4,9,"Jornal Escrito e/ou Revistas, TV, Internet",1,1,Celular,3,4,4,4,4,4,4,4,5,4,4,0.442805533
+1,1,28,1,Faxinal ,4,2,Eng agrônoma ,3,9,Internet,1,1,"Celular, Notebook",4,4,4,4,4,3,4,4,4,3,3.8,-0.018412942
+1,2,51,2,Mauá da Serra,4,3,Orientadora do Kumon,3,9,"TV, Internet",1,1,"Celular, Notebook",3,4,3,4,4,2,2,4,2,2,3,-0.635739998
+1,1,40,1,Faxinal-PR,5,4,Professora,3,9,Internet,1,1,Celular,4,4,2,2,2,2,2,4,2,1,2.5,-1.084352866
+2,1,48,2,Faxinal,3,4,Motorista,2,9,TV,1,1,Celular,5,1,5,3,3,3,3,3,3,3,3.2,-0.451693596
+1,1,50,2,Faxinal parana,4,4,Pedagoga(nas nao atuante),2,3,Internet,1,1,Celular,4,4,4,4,4,4,4,4,3,4,3.9,0.238294813
+1,1,46,2,Faxinal,4,4,Fonoaudióloga ,4,9,"Jornal Escrito e/ou Revistas, Internet",1,1,"Celular, Notebook",4,5,5,5,5,5,5,5,5,5,4.9,1.632261366
+1,1,55,2,Faxinal pr,3,4,Fiscal,1,9,Internet,1,1,Celular,5,5,2,4,4,3,3,3,3,3,3.5,-0.467045555
+2,1,52,2,Londrina,5,4,Analista de negócios,3,9,Internet,1,1,Celular,4,5,3,3,3,4,4,4,2,3,3.5,-0.271852381
+1,1,60,2,Faxinal Pr,3,1,Do lar,1,9,TV,1,1,Notebook,2,4,4,4,4,4,3,4,3,3,3.5,-0.105700636
+1,3,36,2,Faxinal,3,3,Agente comunitário de saúde ,2,9,Internet,1,1,Celular,4,4,4,4,4,4,4,4,4,2,3.8,0.114933537
+2,1,40,3,Arapongas,3,2,Técnico de enfermagem/socorrista,3,9,"TV, Internet",1,1,"Celular, Notebook",3,4,3,3,4,4,4,2,2,2,3.1,-0.454958064
+1,1,41,2,Faxinal,5,2,Enfermeira,4,9,Internet,1,1,Celular,5,4,4,5,5,5,5,4,4,4,4.5,1.037633962
+1,1,37,2,Faxinal,5,2,Professora,4,9,Internet,1,1,"Celular, Notebook",5,5,4,4,4,5,4,5,4,4,4.4,0.750714133
+1,3,45,1,Maua da serra,2,2,Tecnica enfermagem,2,9,Internet,1,1,Celular,5,5,5,5,5,5,5,4,4,3,4.6,1.003520136
+1,3,25,1,Faxinal,3,2,Auxiliar de serviços gerais,2,9,"TV, Rádio, Internet",1,1,"Celular, Notebook",2,2,3,2,3,2,2,2,2,2,2.2,-1.062873256
+1,3,33,2,Faxinal/ Pr,3,2,Agente Comunitário de Saúde ,2,9,"TV, Rádio, Internet",1,1,"Computador, Celular",4,4,4,4,4,3,3,3,3,2,3.4,-0.421148787
+1,1,26,2,Ortigueira ,3,4,enfermeira,3,9,Internet,1,1,Celular,5,5,5,5,5,5,5,5,5,5,5,1.632261366
+1,3,37,1,Faxinal,2,3,Auxiliar de enfermagem ,2,9,Internet,1,1,Celular,5,4,4,4,4,4,4,4,4,2,3.9,0.114933537
+1,1,26,1,Faxinal,4,3,Farmacêutica ,3,9,Internet,1,1,Celular,2,2,3,2,2,2,2,2,2,3,2.2,-1.075319251
+1,1,35,2,Faxinal,5,2,Farmacêutica,3,9,Internet,1,1,Celular,5,4,4,4,4,4,4,4,4,4,4.1,0.335292996
+1,1,26,2,Faxinal-PR,3,3,Assistente Administrativo,2,9,Internet,1,1,Celular,4,4,4,4,4,3,4,4,4,2,3.7,-0.093500047
+1,1,34,1,Ivaiporã,5,2,Fisioterapeuta ,3,9,Rádio,1,1,Celular,2,4,3,4,4,4,4,4,3,2,3.4,-0.057113189
+1,1,29,2,Faxinal,4,1,Assistente social,2,9,Internet,1,1,"Computador, Celular",4,4,4,4,4,4,4,3,4,4,3.9,0.115076457
+1,3,26,1,Grandes rios,3,2,Manicure e pedicure,1,9,Internet,1,1,Celular,5,5,4,4,4,4,4,4,4,4,4.2,0.335292996
+1,1,33,2,Faxinal ,5,4,Enfermeira,4,9,Internet,1,1,Celular,5,5,4,4,4,4,4,4,4,4,4.2,0.335292996
+1,1,25,1,FAXINAL,4,2,Assistente social,3,9,"TV, Internet",1,1,"Computador, Celular, Notebook",3,4,3,4,4,4,4,4,4,4,3.8,0.22863719
+2,1,20,2,Faxinal ,4,2,ecomerce,3,9,"TV, Internet",1,1,"Computador, Celular, Notebook",4,4,2,2,2,4,4,4,5,5,3.6,-0.126431003
+1,1,52,2,Faxinal,5,4,Professora,3,9,Internet,1,1,Celular,3,4,2,4,4,4,4,4,4,3,3.6,0.029068793
+1,3,37,2,Marabá ,3,4,Assistente administrativo ,2,9,Internet,1,1,Celular,5,4,2,2,2,2,2,2,3,1,2.5,-1.239698476
+1,1,36,2,Faxinal,3,3,Servidor público ,2,9,Internet,1,1,Celular,5,4,3,4,4,4,3,3,3,3,3.6,-0.294636855
+1,1,51,2,Faxinal Pr,2,1,Cozinheira,3,9,Internet,1,1,Celular,2,4,3,3,3,3,3,4,3,3,3.1,-0.482931418
+2,1,23,1,Ivaiporã,3,3,Estagiário,2,9,Internet,1,1,Celular,3,4,4,3,4,4,4,4,4,3,3.7,0.055536075
+1,1,47,2,Faxinal,5,4,Professora,3,9,Internet,1,1,"Celular, Notebook",5,5,2,4,4,2,2,2,2,2,3,-0.879516875
+1,1,39,2,Londrina,3,2,Autônoma ,2,9,Internet,1,1,Celular,4,3,2,2,2,4,4,3,3,3,3,-0.555437533
+1,1,25,3,Faxinal,3,1,Estudante,1,9,"TV, Internet",1,1,"Celular, Notebook",4,4,3,3,4,4,4,4,3,2,3.5,-0.176691845
+1,1,39,2,londrina,4,2,assessora,3,9,Internet,1,1,"Computador, Celular",4,5,3,3,3,4,4,4,4,3,3.7,-0.16455289
+1,1,31,2,Apucarana ,5,1,"Sou formada em contabilidade, mas no momento estou do lar.",1,9,Internet,1,1,Celular,3,4,3,3,3,3,3,4,2,2,3,-0.58250901
+1,1,39,2,Faxinal ,3,3,Téc. Enfermagem ,2,9,Internet,1,1,"Celular, Notebook",5,4,3,4,4,4,4,4,4,2,3.8,0.021178325
+1,1,21,2,Faxinal,3,4,Auxilar administrativa,2,9,Internet,1,1,Celular,5,5,4,3,3,3,4,4,4,4,3.9,-0.173180813
+2,3,55,2,Faxinal ,3,4,Fucionario público ,3,9,"TV, Internet",1,1,Celular,3,4,3,4,5,3,3,4,5,3,3.7,-0.02670032
+1,1,35,3,Faxinal,4,4,Nutricionista ,4,9,"TV, Internet",1,1,"Computador, Celular, Notebook",3,5,5,5,5,5,4,4,5,4,4.5,1.012597804
+2,3,43,2,Pindamonhangaba,4,4,Enfermeiro e Auxiliar de enfermagem,4,9,"TV, Internet",1,1,"Celular, Notebook",5,5,5,5,5,5,5,5,5,5,5,1.632261366
+1,1,25,2,Ivaiporã ,3,3,Estudante,2,9,Internet,1,1,Celular,3,4,3,2,2,2,3,3,2,2,2.6,-0.932223298
+2,3,33,1,Londrina,5,4,Gerente de Projetos,3,9,Internet,1,1,"Computador, Celular, Notebook",5,4,3,3,3,3,3,3,3,3,3.3,-0.579124686
+1,1,34,2,Faxinal,5,2,Terapeuta ocupacional,5,9,Internet,1,1,Celular,5,5,4,4,4,4,4,5,5,2,4.2,0.449091285
+1,1,31,2,Faxinal ,4,3,Nutricionista ,3,9,Internet,1,1,Celular,4,5,4,4,4,4,4,4,4,4,4.1,0.335292996
+1,3,33,2,Blumenau,3,3,Sua Adm de farmacia,2,9,"Jornal Escrito e/ou Revistas, Internet",1,1,Celular,1,1,4,5,5,4,4,5,4,2,3.5,0.661452051
+1,1,30,1,Faxinal,4,2,Atendente,3,9,Internet,1,1,Celular,5,5,4,4,4,4,4,4,4,4,4.2,0.335292996
+1,3,43,1,Faxinal ,2,4,Acs Agente de Saúde ,1,9,"TV, Rádio, Internet",1,1,Celular,4,4,2,4,4,4,4,3,5,5,3.9,0.188899087
+1,1,45,2,Faxinal,3,3,Artesã,2,9,Internet,1,1,Notebook,5,5,4,4,4,4,4,4,4,4,4.2,0.335292996
+1,3,57,4,Faxinal PR,2,2,Doméstica,2,3,"TV, Internet",1,1,Celular,5,5,5,4,4,4,4,4,4,4,4.3,0.454451149
+2,1,25,2,Ortigueira ,3,2,Vendedor,2,9,Internet,1,1,"Celular, Notebook",5,1,4,4,4,3,3,3,5,3,3.5,-0.240540655
+1,1,60,3,Faxinal pr,3,4,Aposentada,1,9,Internet,1,1,Celular,5,4,3,3,3,4,4,4,5,4,3.9,0.001719889
+1,1,39,1,Faxinal ,3,2,Cozinheira  ,2,9,Internet,1,1,Celular,5,5,4,4,4,2,2,2,3,2,3.3,-0.73297485
+2,1,42,3,FAXINAL,4,4,FUNCIONÁRIO PÚBLICO,3,9,Internet,1,1,"Computador, Celular",3,4,3,3,3,2,2,4,3,3,3,-0.693477056
+1,1,21,2,Faxinal pr,3,2,Vendedora,1,9,Internet,1,1,Celular,3,4,3,4,4,3,4,3,2,2,3.2,-0.389650944
+1,1,44,1,FAXINAL ,5,3,Administração ,1,9,Internet,1,1,Celular,5,5,4,5,5,5,5,5,5,5,4.9,1.4721985
+1,1,21,2,Ortigueira,3,2,Assistente Administrativa ,2,9,Internet,1,1,"Computador, Celular, Notebook",4,5,5,5,5,5,5,5,5,5,4.9,1.632261366
+1,1,19,2,Faxinal,3,2,Zeladora ,2,9,"TV, Rádio, Internet",1,1,"Tablet, Celular",5,4,4,4,4,4,4,3,3,3,3.8,-0.056549841
+1,3,21,2,Cambé ,3,1,Desempregada,2,9,Internet,1,1,Celular,2,3,4,4,4,2,4,3,4,4,3.4,-0.20099238
+1,3,43,1,Faxinal,2,4,Acs Agente de Saúde ,1,9,"TV, Rádio, Internet",1,1,Celular,4,4,4,4,4,4,4,4,4,3,3.9,0.209744825
+1,1,41,2,Maringa ,5,4,Fonoaudióloga ,5,9,Internet,1,1,"Celular, Notebook",4,5,4,4,4,4,4,4,4,4,4.1,0.335292996
+1,1,27,1,Londrina,4,2,Enfermeira ,3,9,Internet,1,1,"Celular, Notebook",3,5,4,4,4,4,4,4,4,4,4,0.335292996
+1,1,25,1,Cruzeiro do oeste ,3,2,Contadora ,3,9,Internet,1,1,Celular,4,4,4,4,4,4,4,4,4,4,4,0.335292996
+2,1,27,1,ORTIGUEIRA ,5,2,Enfermeiro ,3,9,Internet,1,1,"Computador, Celular, Notebook",5,5,4,5,4,5,5,5,4,5,4.7,1.174373145
+1,1,20,1,Ortigueira ,3,2,Estagiaria ,2,9,Internet,1,1,"Celular, Notebook",5,5,5,5,5,5,5,5,5,5,5,1.632261366
+1,1,29,1,Mauá da Serra ,5,2,Enfermeira ,3,9,Internet,1,1,"Computador, Tablet, Celular, Notebook",5,5,5,5,5,5,5,5,4,5,4.9,1.469419462
+1,1,43,2,Faxinal,3,2,Cabeleireira,3,9,Internet,1,1,Celular,3,3,4,4,4,1,1,1,4,1,2.6,-1.122573179
+1,3,38,2,Faxinal,3,2,Consultora de Vendas ,2,9,"TV, Rádio, Internet",1,1,"Computador, Celular",2,3,3,3,4,3,2,2,2,2,2.6,-0.796455969
+1,3,37,2,Pitanga,5,2,Psicólogo,2,9,Internet,1,1,Celular,4,4,4,4,4,4,4,4,4,4,4,0.335292996
+2,1,21,1,Ciudad del Este,3,1,Estudante,1,9,Internet,1,1,"Computador, Celular",3,5,2,2,4,4,4,4,4,4,3.6,-0.10848046
+1,1,35,2,Apucarana,3,2,Comerciante,2,9,Internet,1,1,Celular,2,4,4,4,4,4,4,4,4,4,3.8,0.335292996
+2,3,24,1,Londrina/PR,4,3,Engenheiro Civil,3,9,Internet,1,1,"Computador, Celular",4,4,3,3,3,3,3,3,3,2,3.1,-0.639784961
+1,1,44,2,Ortigueira,3,4,Aux.de enfermeira ,2,9,"TV, Internet",1,1,"Celular, Notebook",4,4,4,4,4,4,4,4,4,4,4,0.335292996
+2,1,17,1,Cambé,2,3,Atendente,2,9,"TV, Internet",1,1,Celular,3,4,3,3,4,4,3,4,3,2,3.3,-0.335761615
+1,2,19,1,Cruzmaltina,3,1,Estudante,1,9,Internet,1,1,Celular,1,4,2,2,2,4,4,2,2,2,2.5,-0.751558834
+2,3,35,1,Faxinal-PR,5,2,Farmacêutico ,4,9,Internet,1,1,"Computador, Celular",4,4,4,4,4,4,4,4,4,4,4,0.335292996
+2,4,49,2,Londrina PR,3,2,Eletrotécnico,5,9,"Jornal Escrito e/ou Revistas, TV, Rádio, Internet",1,1,"Computador, Celular",5,5,4,4,4,4,4,4,3,3,4,0.120461091
+2,3,21,1,Foz do Iguaçu,3,1,Estudante,1,9,Internet,1,1,Celular,1,3,1,4,4,4,4,4,4,5,3.4,0.215880752
+1,1,28,2,Faxinal,2,3,Doméstica,2,1,Internet,1,1,Celular,4,2,4,4,4,4,4,4,4,4,3.8,0.335292996
+2,1,60,2,Erechim ,5,4,Administrador,5,9,Internet,1,1,Celular,5,4,4,5,5,5,5,4,5,4,4.6,1.120727489
+2,1,42,2,Urai,3,4,Servidor publico,3,9,Internet,1,1,"Computador, Celular",5,5,4,4,4,4,4,4,4,2,4,0.114933537
+2,1,40,2,Aracruz,2,4,Comerciante ,5,9,Internet,1,1,Celular,5,5,4,4,4,4,4,4,4,4,4.2,0.335292996
+1,3,18,1,Londrina,2,3,estagiária ,2,1,Internet,1,1,"Celular, Notebook",5,4,3,4,4,4,3,3,3,2,3.5,-0.359907489
+1,3,22,2,Londrina- PR,3,1,Babá,1,9,Internet,1,1,"Celular, Notebook",3,4,3,4,3,3,3,3,3,2,3.1,-0.565378541
+2,1,52,2,Londrina,3,2,Administrador,3,9,Internet,1,1,"Computador, Celular",5,5,3,3,3,3,3,3,3,3,3.4,-0.579124686
+1,1,36,2,Faxinal ,4,4,Analista de laboratório ,2,9,Internet,1,1,Celular,1,4,3,4,4,4,3,3,3,2,3.1,-0.359907489
+1,1,43,1,ortigueira ,3,2,tecnico em enfermagem ,2,9,Internet,1,1,Celular,1,3,3,3,3,3,3,3,3,3,2.8,-0.579124686
+2,4,46,1,Faxinal pr,5,2,Funcionário público ,3,9,Internet,1,1,"Celular, Notebook",5,1,3,3,3,5,5,4,4,4,3.7,0.408369283
+2,1,60,2,Faxinal Pr,5,4,Médico Veterinário ,3,9,Internet,1,1,Celular,5,5,4,4,4,4,4,4,3,3,4,0.120461091
+2,1,36,2,Ortigueira ,3,4,Funcionario público ,2,9,Internet,1,1,Celular,4,5,3,3,1,1,3,1,1,1,2.3,-1.377118806
+1,1,46,1,Faxinal ,5,3,Professora,3,9,"TV, Internet",1,1,"Computador, Celular, Notebook",5,4,4,4,4,4,4,4,4,4,4.1,0.335292996
+1,1,30,2,Faxinal,3,4,Açougueiro,2,9,Internet,1,1,Celular,4,1,4,4,4,4,4,4,5,4,3.8,0.442805533
+2,1,52,2,Londrina ,5,2,Contador,5,9,"Jornal Escrito e/ou Revistas, TV, Internet",1,1,"Celular, Notebook",4,5,4,4,4,4,4,4,4,4,4.1,0.335292996
+1,1,38,2,Londrina,4,2,Administradora,1,9,Internet,1,1,"Computador, Celular",3,4,2,4,4,2,2,4,4,4,3.3,-0.47105009
+1,1,21,1,CDE ,3,1,Estudante,1,9,Internet,1,1,"Tablet, Celular, Notebook",5,5,4,4,4,4,4,3,3,3,3.9,-0.056549841
+2,1,59,4,Faxinal,3,2,Microempresario,4,9,"Jornal Escrito e/ou Revistas, TV, Internet",1,1,"Computador, Celular",2,3,3,3,3,3,3,2,2,2,2.6,-0.765697456
+1,2,26,2,Faxinal,3,3,Agricultora,1,9,Internet,1,1,Celular,4,5,4,4,4,4,5,4,4,4,4.2,0.601574902
+1,1,24,1,Faxinal ,2,1,Lavradora,1,9,Internet,1,2,Celular,4,5,4,4,4,4,4,4,3,2,3.8,0.02990277
+1,2,47,2,Apucarana ,3,3,Vendedora,3,9,Internet,1,1,Computador,5,5,4,4,4,4,4,4,4,4,4.2,0.335292996
+2,1,31,1,Faxinal,5,2,Programador ,3,9,Internet,1,1,"Celular, Notebook",3,5,4,4,4,3,3,4,2,3,3.5,-0.292331836
+2,1,45,2,londrina,4,4,autonomo,3,9,"TV, Internet",1,1,"Computador, Celular, Notebook",1,4,2,4,4,3,3,1,2,1,2.5,-0.82609965
+1,2,33,2,Faxinal PR,3,4,Caixa,2,9,Internet,1,1,Celular,3,4,3,4,4,4,4,4,5,5,4,0.492886383
+1,1,26,2,São Paulo ,3,2,Assistente de e-commerce ,2,9,Internet,1,1,"Computador, Celular, Notebook",2,4,3,1,1,2,2,2,1,1,1.9,-1.476207212
+1,3,53,2,Faxinal ,3,2,Comerciante ,4,9,Internet,1,1,Celular,3,3,3,3,3,3,3,2,2,2,2.7,-0.765697456
+2,1,37,2,Faxinal PR,3,4,Motorista,3,9,TV,1,1,Celular,3,4,4,4,4,4,4,3,3,3,3.6,-0.056549841
+2,1,39,2,Faxinal pr,4,4,Funcionário publico ,3,9,Internet,1,1,"Computador, Celular",5,5,5,5,5,5,5,5,5,5,5,1.632261366
+1,1,31,2,Londrina,5,4,Engenheira Civil,4,9,Internet,1,1,Celular,2,4,4,4,4,4,4,4,4,3,3.7,0.209744825
+1,1,39,2,Londrina ,4,3,Coordenadora Administrativa ,5,9,"TV, Internet",1,1,"Computador, Celular",5,4,3,4,4,2,4,4,4,3,3.7,-0.214741613
+2,1,31,2,Maringá ,5,2,Dentista,5,9,Internet,1,1,Celular,4,4,3,4,4,3,4,4,3,3,3.6,-0.155689996
+1,1,34,2,LONDRINA,5,4,ADVOGADA,3,9,Internet,1,1,Celular,3,4,4,4,4,4,4,4,4,4,3.9,0.335292996
+2,3,25,2,Faxinal,3,4,Comprador,2,9,Internet,1,1,Celular,3,4,4,4,4,4,4,4,4,2,3.7,0.114933537
+2,1,43,2,Maringá ,5,4,Consultor de Vendas ,3,9,Internet,1,1,"Computador, Celular",5,5,4,4,4,4,4,4,4,4,4.2,0.335292996
+1,1,31,2,Faxinal,5,2,Farmacêutica,3,9,"TV, Internet",1,1,"Celular, Notebook",3,4,3,4,4,4,4,4,4,4,3.8,0.22863719
+2,1,39,2,Maringá,5,4,Consultor de sistemas,5,9,Internet,1,2,"Celular, Notebook",5,5,4,4,4,4,4,4,4,4,4.2,0.335292996
+1,1,32,1,Londrina,5,3,Advogada,2,9,Internet,1,1,"Computador, Celular",4,5,4,4,4,4,4,3,3,2,3.7,-0.133897797
+1,2,39,2,Faxinal PR,2,3,Secretaria,1,9,Internet,1,1,Celular,4,4,4,4,4,4,4,4,5,5,4.2,0.592213151
+1,1,37,2,Faxinal,3,1,Do lar,2,1,"TV, Rádio, Internet",1,1,Celular,5,4,4,4,4,4,4,4,4,4,4.1,0.335292996
+2,1,24,1,Londrina ,3,3,Estudante ,2,9,Internet,1,1,Celular,5,5,4,4,4,4,4,4,4,4,4.2,0.335292996
+1,3,33,1,Faxinal-PR ,4,4,Funcionária pública ,2,9,Internet,1,1,Celular,1,4,3,3,3,3,4,3,3,3,3,-0.461629008
+1,2,39,2,Faxinal PR,2,3,Secretaria,1,9,Internet,1,1,Celular,4,4,4,4,4,4,4,5,5,5,4.3,0.766182858
+1,1,29,2,Faxinal ,3,2,Cabeleira ,2,9,Internet,1,1,Celular,2,4,4,4,4,4,4,4,4,4,3.8,0.335292996
+1,1,37,2,Faxinal,3,4,TEC em enfermagem,2,9,Internet,1,1,Celular,4,4,4,4,4,4,4,4,4,4,4,0.335292996
+2,1,37,1,Curitiba,4,2,Contador,3,9,Internet,1,1,Celular,2,4,3,2,2,2,2,2,4,2,2.5,-1.058056196
+2,1,52,2,Londrina,4,4,Professor ,4,9,"TV, Internet",1,1,Celular,3,4,3,2,3,3,4,4,4,4,3.4,-0.314774322
+1,1,33,1,Passo Fundo,5,2,Arquiteta e Urbanista,5,9,"TV, Internet",1,1,Celular,2,4,3,2,3,4,4,3,3,2,3,-0.485353256
+1,3,39,2,Faxinal_Pr,3,3,Administradora,3,9,Internet,1,1,"Computador, Celular, Notebook",5,5,4,4,4,5,5,4,5,5,4.6,0.973471252
+1,1,52,3,Faxinal,5,4,Medica,5,9,"TV, Rádio, Internet",1,1,"Computador, Celular",5,4,4,4,4,4,4,4,4,4,4.1,0.335292996
+1,3,37,2,Mauá da Serra ,3,4,Agricultura,2,9,Internet,1,1,Celular,2,3,2,2,3,2,3,4,4,2,2.7,-0.720619072
+2,4,35,3,Curitiba,4,4,Supervisor de logística,3,9,Internet,1,1,"Computador, Celular",3,4,3,3,3,4,4,4,5,4,3.7,0.001719889
+2,1,55,2,Curitiba PR,3,4,Técnico de Segurança do trabalho,4,9,"TV, Internet",1,1,"Computador, Celular",3,4,4,4,4,4,4,4,4,4,3.9,0.335292996
+1,1,15,1,Ortigueira,2,2,Nenhuma ,1,9,Internet,1,1,"Computador, Celular",5,5,4,4,4,4,4,4,4,4,4.2,0.335292996
+1,3,37,2,Maua da serra Paraná ,3,4,Agricultura ,2,9,Internet,1,1,Celular,2,3,3,3,3,3,3,4,4,2,3,-0.495879054
+1,1,30,2,Faxinal PR,2,2,Serviço gerais,1,9,Internet,1,1,Celular,1,3,3,3,3,2,2,2,4,2,2.5,-0.898660446
+2,2,28,1,Maringá,5,2,personal trainer e fisioterapeuta,2,9,Internet,1,1,Celular,3,5,4,4,4,4,4,4,4,4,4,0.335292996
+2,1,37,2,Curitiba,5,4,Empresário,4,9,Internet,1,1,Celular,3,5,4,2,2,4,2,2,2,1,2.7,-0.952856342
+2,1,22,1,Cafeara,3,3,Estagiário ,1,9,Internet,1,1,"Celular, Notebook",4,3,3,3,3,3,3,3,3,3,3.1,-0.579124686
+1,1,36,3,Faxinal ,3,2,Técnico de enfermagem ,2,9,"TV, Rádio, Internet",1,1,"Celular, Notebook",5,4,4,4,4,4,4,4,4,4,4.1,0.335292996
+1,1,35,2,Ortigueira,5,3,Farmacêutica,3,9,Internet,1,1,Celular,3,4,4,4,4,4,4,4,4,3,3.8,0.209744825
+1,3,45,2,Sarandi Paraná ,3,4,Cozinheira ,2,9,"Jornal Escrito e/ou Revistas, TV",1,1,Celular,1,3,3,3,2,2,2,2,1,1,2,-1.190570155
+2,1,15,1,Faxinal- Pr,1,1,Estudante ,1,9,"TV, Internet",1,1,Celular,5,5,3,3,3,4,4,3,2,3,3.5,-0.386680397
+2,1,43,2,Londrina,5,4,Professor de educação física,3,9,"Rádio, Internet",1,1,"Celular, Notebook",4,4,4,4,4,3,5,5,4,4,4.1,0.501548694
+1,3,22,1,Londrina ,3,1,Estudante ,1,9,"TV, Internet",1,1,"Computador, Celular",5,5,4,4,4,5,5,5,3,2,4.2,0.692166599
+1,1,50,2,Faxinal parana,4,4,Pedagoga,2,3,Internet,1,1,Celular,4,4,4,3,4,4,4,4,4,4,3.9,0.162303194
+2,3,15,1,Faxinal,2,1,Estudante,1,9,"TV, Internet",1,1,"Computador, Celular",5,5,4,4,4,4,4,4,4,4,4.2,0.335292996
+2,1,16,1,Faxinal,2,1,Estudante,1,9,Internet,1,1,Celular,4,5,4,4,4,4,4,4,4,4,4.1,0.335292996
+1,1,65,4,Faxinal Pr,3,3,Do lar ,1,9,TV,1,1,Celular,5,4,4,4,4,2,2,2,2,2,3.1,-0.773168114
+2,1,45,2,Maringá,2,3,Vendedor,3,9,Internet,1,1,"Celular, Notebook",5,5,4,4,4,4,4,4,4,4,4.2,0.335292996
+1,2,50,2,Praia grande,5,2,Psicanalista,1,9,"Jornal Escrito e/ou Revistas, TV, Rádio, Internet",1,1,"Tablet, Celular, Notebook",4,4,4,4,4,4,4,4,4,4,4,0.335292996
+1,1,15,1,Arapongas,1,1,Nenhuma,1,9,Internet,1,1,Celular,3,3,4,3,4,4,3,3,4,2,3.3,-0.333813354
+1,1,59,2,Faxinal  Pr,5,2,Professora/Pedagoga,3,9,Internet,1,1,"Computador, Celular",1,5,1,5,5,5,5,5,5,4,4.1,1.039328287
+2,1,15,1,Faxinal,1,1,Estudante ,1,9,Internet,1,1,Celular,5,5,3,4,3,3,2,3,2,4,3.4,-0.595596065
+2,1,15,1,Faxinal pr,1,1,Estudante ,1,9,Internet,1,1,"Computador, Celular",5,4,2,3,3,2,3,3,3,4,3.2,-0.670962057
+1,3,32,3,Cambé,2,2,Vendedora,2,9,Internet,1,1,Celular,5,5,3,3,3,3,2,3,1,1,2.9,-0.906021302
+1,1,46,2,Londrina Pr,3,1,Do lar,1,9,Internet,1,1,Celular,3,4,3,3,3,3,3,3,3,3,3.1,-0.579124686
+2,1,40,2,São Paulo ,5,4,Gerente de Operações,5,9,"Rádio, Internet",1,1,"Computador, Celular, Notebook",4,5,4,4,4,5,4,4,4,4,4.2,0.586053493
+1,3,24,1,Maringá ,5,1,Cirurgiã-dentista ,1,9,Internet,1,1,Celular,4,5,3,3,3,3,3,3,4,3,3.4,-0.532794949
+1,1,65,2,Londrina,1,3,Aposentada,2,2,"Jornal Escrito e/ou Revistas, Internet",1,1,Celular,5,5,4,4,4,4,4,4,3,4,4.1,0.238294813
+2,1,54,2,Londrina,5,4,Pastor,5,9,"TV, Internet",1,1,"Celular, Notebook",5,5,4,4,4,4,4,4,5,4,4.3,0.442805533
+1,1,31,1,CASCAVEL,5,4,TÉCNICO ADMINISTRATIVO,2,9,Internet,1,1,"Computador, Celular, Notebook",1,3,4,4,4,4,4,4,4,1,3.3,-0.007454068
+1,1,37,2,Maringá ,5,1,Nutricionista ,1,9,Internet,1,1,Celular,1,4,4,4,4,4,4,4,4,4,3.7,0.335292996
+1,4,50,2,Arapongas,4,2,Artesã e massotwrapeuta,2,9,Internet,1,1,Celular,3,4,3,2,1,1,1,1,4,1,2.1,-1.639468107
+1,3,27,2,Faxinal,3,2,Empregada doméstica,2,1,Internet,1,1,Celular,5,5,5,4,5,5,5,5,5,5,4.9,1.401305793
+1,3,23,1,Cascavel,5,2,Professora,3,9,Internet,1,1,"Tablet, Celular, Notebook",3,4,4,4,3,3,3,4,4,3,3.5,-0.297778466
+1,1,32,3,Araucária,5,4,Professora,4,9,"TV, Internet",1,1,"Celular, Notebook",3,4,3,4,4,4,4,5,5,4,4,0.551860205
+1,1,42,2,Londrina ,4,1,Enfermeira,3,9,Internet,1,1,"Celular, Notebook",5,4,4,4,4,2,2,4,1,1,3.1,-0.700524971
+1,1,20,1,Maringá,3,1,Estudante,1,9,"TV, Internet",1,1,"Celular, Notebook",4,4,4,4,4,4,4,4,4,4,4,0.335292996
+2,1,32,1,Londrina,5,2,Analista de sistemas,2,9,Internet,1,1,"Celular, Notebook",3,3,2,2,2,2,3,3,2,2,2.4,-0.982468591
+1,1,15,1,Faxinal,2,3,Lojista,1,9,Internet,1,1,"Celular, Notebook",4,5,5,3,4,4,4,3,4,3,3.9,-0.010208821
+2,1,49,2,Araucaria - PR,5,4,Assistente Administrativo,5,9,TV,1,1,Computador,4,5,2,2,3,3,3,3,2,3,3,-0.736255915
+2,1,51,2,Sao joao do triunfo,5,4,Professor,3,9,Internet,1,1,Celular,5,4,4,4,4,4,4,4,4,3,4,0.209744825
+1,1,55,2,TURVO PR,5,3,PROFESSORA,3,9,"Jornal Escrito e/ou Revistas, TV, Rádio, Internet",1,1,"Computador, Celular, Notebook",5,5,4,4,4,3,3,3,4,2,3.7,-0.370455537
+1,1,15,1,Faxinal,2,1,Nao trabalho ,1,9,Internet,1,1,Celular,5,4,4,4,4,5,4,3,4,5,4.2,0.498436541
+1,1,33,2,Diamante do Sul,5,4,Professora,3,9,Internet,1,1,"Celular, Notebook",5,5,3,4,5,4,5,4,3,3,4.1,0.491068668
+1,1,27,1,Maringá,5,3,Biomédica,2,9,Internet,1,1,Celular,5,5,5,5,5,5,5,5,5,5,5,1.632261366
+1,1,30,2,Goioxim,4,2,Professora,3,9,Internet,1,1,"Celular, Notebook",4,4,3,4,4,4,4,3,3,3,3.6,-0.131964975
+1,1,47,2,Londrina,5,2,Analista de sistemas ,2,9,"Jornal Escrito e/ou Revistas, TV, Internet",1,1,"Computador, Celular, Notebook",4,5,4,4,4,4,4,3,2,4,3.8,-0.020932167
+2,1,34,2,Maringá ,4,2,Autônomo ,5,9,Internet,1,1,"Computador, Tablet, Celular, Notebook",2,4,3,2,2,2,3,4,4,1,2.7,-0.825130903
+2,1,54,3,Alta Floresta MT ,4,4,Engenheiro civil ,5,9,"Rádio, Internet",1,1,"Computador, Celular, Notebook",5,4,2,2,4,4,4,4,4,2,3.5,-0.267426082
+1,1,39,2,Curitiba,5,4,Servidor público,4,9,Internet,1,1,"Celular, Notebook",3,4,5,5,5,5,5,5,4,4,4.5,1.303448065
+2,1,29,2,Corbélia,5,4,Servidor público municipal,3,9,Internet,1,1,Celular,3,5,3,3,3,3,3,3,4,3,3.3,-0.532794949
+1,1,38,2,Faxinal,4,2,Advogada,3,9,"TV, Internet",1,1,"Celular, Notebook",2,4,4,3,4,4,4,2,2,2,3.1,-0.39439987
+2,1,48,2,londrina,4,4,Tecnologo,3,9,"Jornal Escrito e/ou Revistas, Internet",1,1,"Computador, Celular, Notebook",2,3,2,2,2,2,2,3,3,2,2.3,-1.064245561
+1,2,20,1,Faxinal,3,1,Estudante,1,9,Internet,1,1,Celular,3,5,3,4,4,3,2,4,4,2,3.4,-0.438932907
+2,1,56,2,Londrina ,4,4,Técnico em edificações,5,9,Internet,1,1,Celular,4,5,4,4,3,4,4,4,3,4,3.9,0.050759404
+1,2,57,2,Paranavaí,5,2,Professora,3,9,Internet,1,1,"Celular, Notebook",4,5,5,5,5,5,5,4,4,4,4.6,1.123183672
+1,1,65,4,Matelândia ,5,2,Aposentada,5,9,Internet,1,1,Celular,2,4,4,4,4,3,3,4,3,3,3.4,-0.249918018
+1,1,56,2,Londrina,2,2,Autônoma ,2,9,TV,1,1,Celular,3,4,3,3,3,3,3,2,4,2,3,-0.682253146
+1,3,24,2,Guaravera,3,2,Vendedora,2,9,Internet,1,1,Celular,3,4,3,3,3,4,3,4,2,2,3.1,-0.474116915
+1,1,32,2,Mercedes,4,4,Professora Tutora,2,9,Internet,1,1,Celular,5,5,4,4,4,4,4,3,3,4,4,0.036241136
+2,1,33,1,Maringá ,5,3,Pesquisador,3,9,Internet,1,1,"Celular, Notebook",1,4,4,4,4,4,4,4,4,4,3.7,0.335292996
+2,1,48,2,Apucarana,4,4,Secretário Municipal de Finanças,3,9,Internet,1,1,Celular,1,2,2,2,4,2,2,2,2,2,2.1,-1.03146173
+1,1,44,2,Londrina,2,3,Secretaria,2,9,Internet,1,1,Celular,5,5,4,4,4,4,4,4,4,4,4.2,0.335292996
+1,1,26,2,Londrina,3,3,Diarista,2,1,TV,1,1,Celular,3,4,3,5,4,4,2,3,3,4,3.5,-0.204663608
+2,1,34,2,Orlando,5,4,Pastor,3,9,Internet,1,1,"Tablet, Celular, Notebook",3,4,5,5,5,5,5,5,5,5,4.7,1.632261366
+1,1,53,2,Guaraniaçu PR,5,3,Pedagoga,3,9,Jornal Escrito e/ou Revistas,1,1,Celular,1,3,3,4,4,3,3,4,3,3,3.1,-0.309489532
+2,1,49,2,Londrina,3,4,Auxiliar Administrativo,3,9,"TV, Internet",1,1,"Celular, Notebook",2,5,4,4,4,4,4,4,4,4,3.9,0.335292996
+1,1,67,2,Londrina,3,2,Professora aposentada,2,9,Internet,1,1,"Tablet, Celular",4,4,4,4,4,4,4,4,4,4,4,0.335292996
+2,1,42,3,Mandaguari,4,2,Radialista,3,9,Internet,1,1,Celular,4,4,3,3,3,4,4,3,4,4,3.6,-0.218564332
+1,1,43,1,Ponta Grossa ,5,2,Professora ,4,9,"Rádio, Internet",1,1,"Tablet, Celular, Notebook",4,4,3,3,3,2,2,5,5,2,3.3,-0.450193469
+1,2,35,1,Paranavaí,5,2,Professora ,3,9,Internet,1,1,Celular,5,5,3,3,3,4,4,4,4,4,3.9,-0.08312916
+2,1,32,2,Apucarana- Pr ,5,4,Pastor ,4,9,"TV, Internet",1,1,"Celular, Notebook",4,5,4,4,4,4,4,3,3,4,3.9,0.036241136
+1,1,31,2,Faxinal ,3,4,Acs,2,9,Internet,1,1,Celular,5,5,5,5,5,5,5,5,5,5,5,1.632261366
+1,1,46,1,Cascavel,5,4,Professora,5,9,"TV, Internet",1,1,"Computador, Celular",5,5,4,4,4,4,4,4,3,3,4,0.120461091
+2,1,51,2,Ortigueira pr,3,4,agente comunitario de saúde,2,9,"TV, Internet",1,1,Celular,3,4,4,2,3,2,3,3,4,2,3,-0.713101847
+2,1,51,2,ortigueira pr,3,4,agente comunitario de saude,2,9,"TV, Internet",1,1,Celular,4,5,2,3,2,2,2,2,4,2,2.8,-1.02963815
+1,1,32,2,Londrina,3,4,Empresária - gerente de produção ,4,9,Internet,1,1,Celular,1,4,4,4,4,4,4,4,4,2,3.5,0.114933537
+2,1,49,2,Londrina,3,4,Empresário,3,9,Internet,1,1,"Computador, Celular",5,5,4,4,4,3,4,4,4,4,4.1,0.072091933
+1,1,60,2,Porto Velho,4,4,Contador,5,9,Internet,1,1,Celular,3,5,3,3,4,4,3,3,3,3,3.4,-0.381161212
+1,1,50,2,Matelândia ,5,2,Professora ,5,9,"Jornal Escrito e/ou Revistas, TV, Rádio, Internet",1,1,"Celular, Notebook",5,5,5,4,4,4,4,4,3,4,4.2,0.358956857
+1,1,66,1,Porto Velho,4,2,Farmacêutica,5,9,Internet,1,1,"Computador, Celular",3,4,5,5,5,4,4,5,5,5,4.5,1.094352828
+1,1,38,2,Faxinal ,4,4,Professora,3,9,"TV, Internet",1,1,"Computador, Celular",5,5,3,3,4,4,4,3,4,4,3.9,-0.095507168
+1,1,15,1,Faxinal ,1,1,Nenhuma ,1,9,"TV, Internet",1,1,Celular,3,4,2,2,2,2,3,3,3,3,2.7,-0.877433697
+1,1,53,2,matelandia,5,4,professora,4,9,"TV, Rádio, Internet",1,1,"Computador, Celular, Notebook",5,5,4,4,4,3,4,4,3,3,3.9,-0.085110541
+2,3,40,2,Faxinal,5,4,Bioquimico,5,9,Internet,1,1,Celular,3,3,3,4,4,4,4,4,4,3,3.6,0.111475322
+1,4,15,1,Faxinal,2,1,Estudante,1,9,"TV, Internet",1,1,"Computador, Celular, Notebook",3,3,3,3,3,4,4,3,3,3,3.2,-0.343991428
+2,3,74,2,Belem do pará,4,4,Engenheiro,5,9,Internet,1,1,"Computador, Celular",3,5,4,4,4,4,4,4,4,4,4,0.335292996
+2,4,25,1,Londrina,4,2,Enfermeiro,2,9,Internet,1,1,Celular,5,5,3,4,4,4,4,3,3,4,3.9,-0.045643088
+1,3,55,2,Porto Velho,4,3,Servidora publica Téc em Contabilidade,4,9,Internet,1,1,Celular,4,5,4,4,4,3,4,4,4,4,4,0.072091933
+1,1,20,1,Londrina PR,3,1,Estudante ,1,9,Internet,1,1,Celular,2,4,3,3,4,4,4,4,4,3,3.5,-0.028838047
+1,1,27,1,Cascavel,5,3,secretária,3,9,Internet,1,1,Celular,5,5,5,5,5,5,5,5,5,5,5,1.632261366
+1,1,65,1,Matelândia ,5,4,Professora,4,9,Internet,1,1,"Celular, Notebook",5,5,4,4,4,4,4,4,4,4,4.2,0.335292996
+1,1,28,1,Piên,5,2,contador,4,9,Internet,1,1,Celular,3,4,3,4,4,4,4,4,4,2,3.6,0.021178325
+2,1,42,2,Londrina,4,4,Analista de negócios,3,9,Internet,1,1,"Computador, Celular, Notebook",5,1,4,4,4,5,5,5,5,4,4.2,1.011942712
+1,1,34,2,Faxinal Parana,3,2,Empresaria,3,9,Internet,1,1,Celular,3,4,4,4,4,4,3,3,4,3,3.6,-0.175898954
+2,1,33,1,Foz do Iguaçu ,4,2,Autônomo ,4,9,Internet,1,1,Celular,5,5,4,4,4,4,4,4,4,5,4.3,0.495437281
+2,1,15,1,Faxinal- Pr,1,1,Estudante ,1,9,"Jornal Escrito e/ou Revistas, TV, Internet",1,1,"Computador, Celular",5,5,3,4,4,4,4,3,3,3,3.8,-0.131964975
+1,1,40,2,Ortigueira  Paraná ,2,4,Confeiteira autônoma ,2,9,Internet,1,1,Celular,3,5,4,4,4,3,4,4,4,2,3.7,-0.093500047
+1,1,28,1,Maringá ,5,3,Psicóloga ,3,9,Internet,1,1,"Computador, Celular, Notebook",4,4,3,4,5,5,5,4,4,2,4,0.670321654
+1,1,29,2,Faxinal Pr ,3,2,Servidor público ,2,9,Internet,1,1,Celular,4,4,4,4,4,4,4,4,3,3,3.8,0.120461091
+2,3,23,1,Maringá ,4,2,Artista ,2,9,Internet,1,1,Computador,1,5,1,5,4,4,5,4,5,2,3.6,0.420952737
+2,3,30,1,Faxinal ,4,2,Professor e Técnico em enfermagem ,3,9,"TV, Internet",1,1,Celular,5,5,3,3,3,4,4,3,3,4,3.7,-0.275951339
+2,1,43,1,Mercedes,5,2,Professor,4,9,Internet,1,1,Celular,4,5,3,4,4,4,4,5,5,4,4.2,0.551860205
+2,4,55,3,Londrina/Pr,5,2,Militar,3,9,Internet,1,1,"Celular, Notebook",3,5,4,4,4,4,4,4,4,3,3.9,0.209744825
+1,1,57,2,Londrina ,3,3,Vendedora,3,9,Internet,1,1,Celular,3,4,4,4,4,4,4,4,4,4,3.9,0.335292996
+1,1,50,2,Porto Velho ,5,3,Funcionária pública ,3,9,"TV, Internet",1,1,"Computador, Celular, Notebook",3,4,4,3,3,3,3,3,3,3,3.2,-0.526321205
+1,1,37,2,Cascavel,5,3,Professora,2,9,"TV, Internet",1,1,"Computador, Celular",5,5,4,4,4,4,4,4,4,4,4.2,0.335292996
+1,1,56,2,Maringá ,4,3,Secretária,3,9,TV,1,1,Celular,2,4,4,4,4,4,4,3,3,3,3.5,-0.056549841
+1,1,45,2,Londrina ,4,4,Administrador,5,9,Internet,1,1,Celular,4,4,3,3,3,3,3,3,3,3,3.2,-0.579124686
+2,1,18,1,Faxinal PR,3,2,Agricultura,1,9,Internet,1,1,Celular,5,4,4,5,3,4,4,4,4,4,4.1,0.307724971
+1,1,37,2,Faxinal Pr,3,3,agente comunitaria de saude,2,9,Internet,1,1,Celular,4,4,4,4,4,4,4,4,4,4,4,0.335292996
+2,4,44,2,Londrina,3,4,Vigilante,3,9,Internet,1,1,"Computador, Celular",5,5,4,4,4,5,4,4,5,4,4.4,0.670769823
+1,1,40,2,Faxinal-PR ,2,4,Serviço gerais ,2,9,Internet,1,1,Celular,5,4,4,3,3,3,3,3,3,3,3.4,-0.526321205
+1,1,50,2,Ortigueira parana,4,2,Agente comunitario dr saude,2,9,"TV, Internet",1,2,Celular,5,5,4,5,5,5,5,5,4,3,4.6,1.070247645
+2,1,24,1,São Pedro do Ivaí ,4,2,Operador de fermentação ,3,9,Internet,1,1,Celular,3,3,3,4,4,4,4,4,4,4,3.7,0.22863719
+2,1,22,1,Passo fundo,3,3,Estudante,2,9,Internet,1,1,"Celular, Notebook",5,5,4,2,2,2,2,4,5,3,3.4,-0.67526087
+1,3,53,2,Londrina,5,4,Professora,3,9,Internet,1,1,Celular,4,3,3,3,3,4,4,3,3,2,3.2,-0.40923029
+1,1,21,1,Maringá,3,1,Estudante ,1,9,Internet,1,1,Celular,5,4,3,3,3,4,4,4,4,3,3.7,-0.16455289
+1,1,21,1,Maringá,3,1,Estudante,3,9,Internet,1,1,"Celular, Notebook",3,4,3,5,5,4,4,5,4,4,4.1,0.751908459
+1,1,20,1,Maringá,3,1,Estudante,1,9,Internet,1,1,Celular,5,5,4,4,4,2,2,2,3,2,3.3,-0.73297485
+1,4,54,3,Londrina ,5,4,Professora ,4,9,"TV, Internet",1,1,"Celular, Notebook",4,4,4,4,4,4,4,4,3,4,3.9,0.238294813
+1,1,20,1,Maringá,3,1,Estudante,3,9,Internet,1,1,Celular,3,4,3,4,4,3,3,3,2,2,3.1,-0.517691967
+1,1,21,1,Maringá ,3,1,Estudante ,1,9,Internet,1,1,"Celular, Notebook",3,4,3,4,4,4,4,4,4,3,3.7,0.111475322
+1,1,19,1,Cianorte ,3,1,Estudante,2,9,Internet,1,1,Celular,4,4,3,3,3,2,4,3,2,2,3,-0.665514354
+1,3,23,1,Maringá ,3,1,Estudante ,3,9,"TV, Internet",1,1,"Celular, Notebook",2,3,5,5,5,5,5,5,5,1,4.1,1.059141514
+1,4,44,2,Porecatu ,5,2,Professora ,3,9,TV,1,1,"Celular, Notebook",4,4,3,3,3,3,3,3,4,3,3.3,-0.532794949
+1,1,41,2,RBI,5,2,Professora,1,9,"TV, Internet",1,1,"Computador, Celular",4,4,4,4,4,4,4,4,4,4,4,0.335292996
+2,1,53,2,Praia Grande,5,4,Bancário,5,9,Internet,1,1,"Celular, Notebook",4,5,4,4,4,3,4,4,4,4,4,0.072091933
+2,1,26,2,Maringá,4,3,Profissional de edf,2,9,Internet,1,1,"Computador, Celular",3,3,4,4,4,4,4,4,3,4,3.7,0.238294813
+2,1,22,1,Maringá PR,3,2,Estagiário,2,9,Internet,1,1,"Celular, Notebook",4,5,4,5,5,4,4,4,4,3,4.2,0.568081589
+1,1,50,2,Itaperuçu,5,2,Pedagoga,3,9,Internet,1,1,"Computador, Celular, Notebook",5,4,3,4,4,3,3,4,4,3,3.7,-0.256363435
+1,1,42,3,Faxinal ,3,4,Funcionária pública ,2,9,Internet,1,1,Celular,5,5,4,4,4,4,4,4,4,4,4.2,0.335292996
+1,1,22,1,maringá,3,1,estudante,2,9,Internet,1,1,"Computador, Celular, Notebook",5,5,4,4,4,4,4,4,4,4,4.2,0.335292996
+1,1,22,1,Maringá,4,3,Nutricionista,2,9,Internet,1,1,Celular,5,5,5,5,5,5,5,5,5,4,4.9,1.419401421
+1,1,33,2,Faxinal,3,2,Professora,2,1,Internet,1,1,Celular,5,4,4,4,4,4,4,4,4,4,4.1,0.335292996
+1,1,24,1,Passo Fundo ,4,3,Arquiteta e Urbanista ,3,9,Internet,1,1,"Celular, Notebook",4,4,3,2,2,2,2,1,2,2,2.4,-1.24346968
+1,1,53,2,Londrina ,5,2,Professora ,5,9,"Rádio, Internet",1,1,"Computador, Celular, Notebook",3,4,4,3,4,4,4,4,4,4,3.8,0.162303194
+2,1,40,2,Maringá ,5,2,Advogado ,5,9,Internet,1,1,"Celular, Notebook",2,4,4,4,4,4,4,5,5,2,3.8,0.449091285
+1,1,28,2,Maringá,3,4,Auxiliar administrativo,2,9,Internet,1,1,Celular,3,4,5,5,5,4,4,4,5,2,4.1,0.666556305
+1,1,33,2,Faxinal,3,4,Assistente de vendas,3,9,Internet,1,1,"Celular, Notebook",4,4,3,3,3,3,3,3,3,2,3.1,-0.639784961
+1,1,51,2,Borrazópolis ,5,4,Professora,4,9,Internet,1,1,Celular,2,4,4,4,3,4,4,5,5,4,3.9,0.443162167
+1,1,19,2,Faxinal,3,2,Vendedora,2,9,Internet,1,1,Celular,3,5,4,4,4,4,4,3,3,4,3.8,0.036241136
+2,1,33,2,Faxinal_PR,3,4,Motorista ambulância,3,9,Internet,1,1,Celular,3,4,3,3,4,4,3,3,3,3,3.3,-0.381161212
+2,1,68,2,Londrina PR,2,3,Aposentado,1,9,Internet,1,2,Celular,5,4,4,4,4,4,4,4,4,4,4.1,0.335292996
+1,1,36,1,Curitiba ,3,4,Empresária,5,9,Internet,1,1,Celular,5,5,2,2,2,4,4,2,1,2,2.9,-0.793456866
+2,1,31,1,Ibiporã ,3,2,Empresário ,3,9,"Rádio, Internet",1,1,"Computador, Celular",3,5,4,5,4,4,4,4,4,4,4.1,0.51460947
+1,1,53,2,Londrina ,5,1,Enfermeira,1,9,"TV, Internet",1,1,"Celular, Notebook",3,4,4,4,4,4,4,4,4,4,3.9,0.335292996
+1,1,29,2,Lages,5,3,Psicóloga ,2,9,Internet,1,1,"Celular, Notebook",5,5,4,4,4,4,4,4,3,4,4.1,0.238294813
+1,1,38,2,Faxinal,3,3,Agente comunitário de saúde ,2,9,"TV, Rádio",1,2,Celular,1,4,3,3,3,3,3,3,3,3,2.9,-0.579124686
+1,1,38,2,Faxinal,3,3,Agente comunitário de saúde ,2,9,"TV, Rádio",1,2,Celular,1,4,3,3,3,3,3,3,3,3,2.9,-0.579124686
+2,1,25,2,Ortigueira Pr,3,4,Operador de maquinas,3,9,Internet,1,2,Celular,4,5,3,3,3,4,4,4,4,4,3.8,-0.08312916
+1,1,48,2,Cruzeiro do oeste,5,2,Funcionaria Publica,2,9,TV,1,1,"Computador, Celular",3,4,4,4,4,4,4,4,4,2,3.7,0.114933537
+1,1,36,2,Faxinal ,5,2,Nutricionista,3,9,"Jornal Escrito e/ou Revistas, TV, Rádio, Internet",1,1,Celular,5,1,4,4,4,4,4,4,3,3,3.6,0.120461091
+1,3,31,2,Porto  Amazonas ,5,4,Professora ,3,9,Internet,1,2,Celular,2,4,4,4,4,4,4,3,3,3,3.5,-0.056549841
+2,1,49,2,CURITIBA,5,4,PROFESSOR,3,9,Internet,1,1,Notebook,3,4,4,4,4,4,4,4,4,4,3.9,0.335292996
+1,1,38,2,Curitiba,3,2,Faturamento,3,9,Internet,1,1,"Tablet, Celular, Notebook",3,5,3,4,4,4,4,4,4,4,3.9,0.22863719
+2,4,24,1,Curitiba,3,1,Autônomo,1,9,Internet,1,1,Celular,1,3,3,4,3,4,3,3,4,3,3.1,-0.341868942
+2,1,28,1,Curitiba - PR,3,2,Desenvolvedor WEB,3,9,Internet,1,1,"Celular, Notebook",5,5,4,4,4,4,4,4,4,4,4.2,0.335292996
+2,2,45,2,Curitiba,4,4,Eng. Ambiental,3,9,"TV, Rádio, Internet",1,1,"Celular, Notebook",3,4,4,4,4,4,4,5,5,4,4.1,0.6439421
+2,1,31,1,curitiba,4,4,administrador,3,9,Jornal Escrito e/ou Revistas,2,2,Celular,1,5,1,3,1,1,1,1,1,1,1.6,-1.838299239
+1,1,23,1,Curitiba ,3,3,Estudante,2,9,Internet,1,1,"Computador, Celular, Notebook",2,2,2,2,2,4,2,2,3,1,2.2,-1.018473145
+2,1,31,2,Curitiba,5,4,Analista de Sistemas,3,9,Internet,1,1,"Computador, Celular, Notebook",4,4,3,2,2,4,4,4,3,2,3.2,-0.461806505
+1,1,49,1,Curitiba,3,2,Assistente administrativo,3,9,Internet,1,1,"Computador, Celular",3,4,2,2,4,4,4,2,1,2,2.8,-0.628467929
+1,1,45,2,Curitiba,4,2,Administradora de Empresa,4,9,Internet,1,1,"Computador, Celular, Notebook",3,5,4,4,4,4,4,4,5,4,4.1,0.442805533
+1,1,38,2,Curitiba,3,3,Costura,2,9,Internet,1,1,Celular,3,4,3,3,3,4,3,4,4,4,3.5,-0.252002941
+1,1,26,2,curitiba,4,2,administradora,3,9,Internet,1,1,"Computador, Celular",5,5,5,5,5,5,5,5,5,4,4.9,1.419401421
+2,1,41,3,Curitiba ,4,2,Tecnólogo em automação industrial ,4,9,"Jornal Escrito e/ou Revistas, TV, Rádio, Internet",1,1,"Celular, Notebook",3,4,4,4,4,4,3,4,3,2,3.5,-0.17630685
+2,3,32,2,Curitiba,3,4,Metalúrgico,3,9,Internet,1,1,"Computador, Celular, Notebook",5,5,4,4,5,4,4,4,4,4,4.3,0.533607319
+2,1,42,3,Curitiba,3,4,Técnico mecânico,3,9,"TV, Internet",1,1,Celular,3,4,3,3,3,3,2,4,2,2,2.9,-0.693343634
+2,1,55,2,Curitiba,4,4,Professor,4,9,"Jornal Escrito e/ou Revistas, TV, Rádio, Internet",1,1,"Computador, Celular, Notebook",4,5,4,4,5,4,4,4,4,4,4.2,0.533607319
+1,1,43,3,Curitiba ,5,4,Professora ,3,9,TV,1,1,"Celular, Notebook",4,4,2,2,2,2,4,2,2,4,2.8,-0.836771049
+2,1,41,2,Curitiba,5,3,Professor,3,9,Internet,1,1,"Computador, Celular, Notebook",5,5,4,4,5,4,4,4,4,4,4.3,0.533607319
+1,1,24,3,Curitiba,3,2,Agente de atendimento,2,9,"Jornal Escrito e/ou Revistas, Internet",1,1,"Celular, Notebook",4,4,3,3,4,2,2,2,4,3,3.1,-0.750594887
+1,3,39,2,curitiba,3,3,auxiliar de escritorio,3,9,"Jornal Escrito e/ou Revistas, TV, Internet",1,1,"Computador, Celular",4,4,4,4,4,4,4,4,4,4,4,0.335292996
+2,1,44,2,Curitiba,4,2,Militar,4,9,Internet,1,1,Celular,5,5,4,4,4,4,4,4,4,4,4.2,0.335292996
+1,1,21,2,Curitiba,3,1,Estudante,1,9,Internet,1,1,Celular,1,2,4,3,3,2,2,2,4,1,2.4,-0.921337375
+1,1,23,1,Curitiba,3,3,Estagiária ,1,9,Internet,1,1,"Computador, Celular, Notebook",1,3,1,2,2,1,1,1,4,2,1.8,-1.543307141
+1,1,23,1,Londrina,4,3,Contadora,2,9,"Rádio, Internet",1,1,"Computador, Celular, Notebook",5,5,3,3,2,3,3,4,4,4,3.6,-0.453064554
+1,1,50,2,Londrina,4,2,Psicóloga,5,9,"TV, Internet",1,1,"Computador, Celular",4,4,4,4,4,4,4,5,5,4,4.2,0.6439421
+1,1,38,2,curiiba,4,3,enfermeira,4,9,Internet,1,1,"Celular, Notebook",5,4,4,4,4,4,4,4,4,4,4.1,0.335292996
+1,1,46,2,Curitiba,4,2,Taxista,3,9,Internet,1,1,Celular,3,2,4,2,2,2,2,4,2,1,2.4,-0.976528624
+1,1,41,1,sao jose dos pinhais ,5,3,assistente adm,3,9,Internet,1,1,"Computador, Tablet, Celular, Notebook",3,4,3,3,3,3,3,3,3,3,3.1,-0.579124686
+2,1,32,3,Curitiba ,3,4,Analista dê operações ,3,9,Internet,1,1,Celular,2,4,2,4,4,4,4,2,4,2,3.2,-0.322670072
+2,1,46,2,Curitiba,5,4,Anslusta Judiciário,5,9,"TV, Rádio, Internet",1,1,"Celular, Notebook",4,4,4,4,4,4,4,4,4,4,4,0.335292996
+1,1,40,2,Curitiba,5,3,Contadora,4,9,Internet,1,1,Celular,2,4,2,4,4,4,4,2,4,2,3.2,-0.322670072
+1,1,40,3,Curitiba,5,4,Contadora,4,9,Internet,1,1,"Computador, Celular, Notebook",3,4,3,4,4,4,4,4,4,1,3.5,-0.092640945
+1,1,28,1,Curitiba,5,3,Engenheira Agrícola,2,9,Internet,1,1,"Celular, Notebook",3,4,4,3,3,4,4,4,4,4,3.7,-0.005923788
+1,1,30,2,Curitiba,4,1,Do lar,3,9,Internet,1,1,"Computador, Celular",3,4,3,4,4,4,4,3,4,2,3.5,-0.1414946
+1,1,29,2,Curitiba,4,3,Esteticista,2,9,Internet,1,1,Celular,4,3,3,3,3,3,2,3,3,2,2.9,-0.7503391
+1,1,29,1,Mauá da Serra ,5,2,Enfermeira ,3,9,Internet,1,1,"Computador, Tablet, Celular, Notebook",5,5,5,5,5,5,5,5,4,5,4.9,1.469419462
+2,1,52,2,ctba ,5,4,Administrador ,3,9,"TV, Internet",1,1,Notebook,1,3,3,2,2,2,1,2,2,1,1.9,-1.367964918
+1,1,38,3,Curitiba ,4,4,Gestora ,5,9,Internet,1,1,"Tablet, Celular, Notebook",5,5,5,5,5,5,5,5,5,5,5,1.632261366
+1,1,36,2,Faxinal PR,3,2,Motorista,2,9,TV,1,1,Celular,5,5,4,4,4,4,4,3,3,4,4,0.036241136
+1,1,39,2,Faxinal,4,4,Enfermeira,3,9,TV,1,1,"Computador, Celular, Notebook",5,5,4,4,4,4,4,4,4,4,4.2,0.335292996
+1,2,20,1,Faxinal,3,1,Estudante,1,9,Internet,1,1,Celular,3,5,3,4,4,3,2,4,4,2,3.4,-0.438932907
+1,3,47,2,Jupi Pernambuco,3,1,Agricultora,1,4,Internet,1,1,Celular,2,5,4,4,4,4,4,4,3,4,3.8,0.238294813
+1,1,60,3, Curitiba,4,2,Quimica,3,9,Internet,1,1,"Celular, Notebook",3,4,2,4,4,4,4,4,1,3,3.3,-0.15957282
+1,1,36,2,Faxinal ,4,2,Professora ,2,9,Internet,1,1,Celular,1,2,3,2,2,3,2,2,2,2,2.1,-1.031496989
+2,1,41,2,FAXINAL,5,4,´Professor,3,9,Internet,1,1,Celular,4,4,3,4,4,4,5,4,4,4,4,0.514463754
+1,1,25,2,Ortigueira ,4,3,Professora,2,9,Internet,1,1,Celular,5,1,4,4,4,4,4,4,4,4,3.8,0.335292996
+2,1,32,1,Londrina,5,4,Enfermeiro ,4,9,Internet,1,1,Celular,5,5,4,4,4,5,5,5,5,5,4.7,1.129260328
+1,1,46,4,Curitiba ,4,4,Coordenadora Pedagógica ,3,9,Internet,1,1,"Celular, Notebook",3,4,4,4,4,4,4,3,4,2,3.6,-0.06491743
+1,1,30,1,Londrina,5,4,Enfermeira,3,9,Internet,1,1,"Celular, Notebook",3,4,4,4,4,4,4,4,4,2,3.7,0.114933537
+2,4,29,2,Londrina,4,1,Enfermeiro,4,9,"TV, Rádio, Internet",1,1,Celular,5,4,4,3,4,4,5,5,4,4,4.2,0.613039021
+1,2,39,2,Faxinal,5,4,Gestora de Pessoas,2,9,Internet,1,1,Celular,3,5,2,3,2,2,4,4,2,2,2.9,-0.69704675
+1,1,27,2,Londrina,5,4,Enfermeira,3,9,Internet,1,1,Celular,4,5,3,4,4,4,4,4,4,3,3.9,0.111475322
+2,1,42,2,Londres ,3,4,Motorista ,5,9,"TV, Rádio, Internet",1,1,"Tablet, Celular",5,5,2,3,4,5,4,3,3,3,3.7,-0.034385329
+1,3,27,1,Londrina,5,4,Enfermeiro,3,9,TV,1,1,Celular,1,3,2,4,2,1,1,4,5,1,2.4,-1.035886658
+1,1,39,2,Londrina,4,4,Enfermeira,3,9,Internet,1,1,Celular,5,4,4,2,2,2,2,2,2,2,2.7,-1.089724678
+1,1,37,3,Londrina,5,2,Enfermeira,3,9,Internet,1,1,Celular,4,5,4,4,4,4,5,4,4,4,4.2,0.601574902
+1,1,60,2,Grandes Rios ,3,2,Agropecuária ,3,9,TV,1,1,Celular,4,3,3,3,3,3,3,3,1,3,2.9,-0.656939481
+1,1,37,3,Londrina,5,2,Enfermeira,3,9,Internet,1,1,Celular,4,5,4,4,4,4,5,4,4,4,4.2,0.601574902
+2,1,33,2,Londrina,4,2,Enfermeiro,3,9,Internet,1,1,Celular,4,5,4,3,3,4,4,4,3,2,3.6,-0.228867296
+2,1,32,1,Londrina,5,2,Enfermeiro,3,9,Internet,1,1,"Computador, Celular",4,5,4,5,5,5,5,5,4,4,4.6,1.202059304
+1,1,74,2,Londrina,3,2,Professora,3,9,"Jornal Escrito e/ou Revistas, TV",1,1,Celular,1,2,4,4,4,1,1,1,4,1,2.3,-1.122573179
+1,1,25,1,London ,3,3,Recepcionista ,2,9,"Jornal Escrito e/ou Revistas, Internet",1,1,"Celular, Notebook",3,5,3,4,4,2,4,3,3,2,3.3,-0.455344655
+1,1,59,3,Faxinal,4,2,Servidora publica,4,9,"TV, Internet",1,1,"Computador, Tablet, Celular, Notebook",5,5,5,5,5,4,4,4,4,4,4.5,0.767044811
+1,1,59,3,Faxibal,4,2,Servidora publica,4,9,"Jornal Escrito e/ou Revistas, TV, Rádio, Internet",1,1,"Computador, Tablet, Celular, Notebook",5,5,4,4,4,4,4,4,4,4,4.2,0.335292996
+1,1,26,1,Londrina ,5,2,Enfermeira,3,9,"TV, Internet",1,1,"Celular, Notebook",2,3,4,5,5,5,4,4,5,4,4.1,0.932488614
+2,1,35,2,Londrina ,5,4,Médico veterinário ,5,9,Internet,1,1,"Celular, Notebook",5,5,4,4,4,5,5,5,5,5,4.7,1.129260328
+1,1,47,2,Maringá,5,2,nutricionista,4,9,"Jornal Escrito e/ou Revistas, Internet",1,1,Celular,3,4,3,4,4,3,3,4,4,3,3.5,-0.256363435
+2,1,27,1,Jataizinho,4,3,Programador,3,9,"TV, Internet",1,1,"Celular, Notebook",4,4,3,3,3,3,4,4,4,3,3.5,-0.304727804
+2,1,29,1,Cornélio Procópio,5,2,Engenheiro Mecânico,5,9,Internet,1,1,"Computador, Celular, Notebook",5,3,4,4,4,4,4,3,5,4,4,0.211382956
+2,1,26,1,Assis,3,1,Estudante,1,9,Internet,1,1,Celular,5,5,4,5,4,4,4,4,4,2,4.1,0.304768472
+2,1,27,1,Socorro-SP,4,2,Engenheiro eletricista,3,9,"Rádio, Internet",1,1,"Celular, Notebook",4,3,4,4,3,4,4,4,4,4,3.8,0.13113605
+2,4,23,1,cornelio procopio,3,1,estudante,2,9,Internet,1,1,"Computador, Celular, Notebook",3,5,2,2,4,4,4,3,4,3,3.4,-0.320977579
+1,3,53,2,Jupi/pe,2,2,Agricultora,1,9,Internet,1,1,Celular,3,5,3,4,4,4,4,3,3,4,3.7,-0.045643088
+1,1,36,2,Jupi Pernambuco ,3,3,Professora ,2,9,Internet,1,1,"Computador, Celular",4,4,4,4,4,4,4,4,4,4,4,0.335292996
+1,2,19,1,Jupi,3,1,Estudante,1,9,Internet,1,1,"Computador, Celular, Notebook",4,4,3,3,3,3,4,4,4,3,3.5,-0.304727804
+1,3,46,2,Jupi/PE,3,3,Auxiliar administrativo,1,9,"TV, Rádio, Internet",1,1,Celular,5,5,5,5,5,5,5,5,5,5,5,1.632261366
+1,3,30,2,Jupi pe,3,3,Agricultura,1,9,TV,1,2,Celular,3,4,3,3,3,3,3,3,2,3,3,-0.617094238
+1,1,36,2,Faxinal ,5,2,Farmacêutica ,4,9,Internet,1,1,Celular,3,4,4,4,4,4,4,4,4,4,3.9,0.335292996
+1,1,32,2,Jupi pernambuco,3,2,Apoio escolar ,2,9,Internet,1,2,Celular,3,4,4,4,4,4,4,4,4,4,3.9,0.335292996
+1,1,34,2,Faxinal ,3,4,Auxiliar de serviços Gerais ,2,9,Internet,1,1,Celular,1,4,3,4,4,3,3,4,5,4,3.5,-0.116684319
+1,1,19,1,Faxinal ,3,3,Socorrista ,2,9,Internet,1,1,"Celular, Notebook",3,5,3,4,4,4,4,4,3,3,3.7,0.028549325
+2,3,45,3,Arapongas,3,2,Técnico Operacional ,3,9,Internet,1,1,Celular,3,3,3,3,3,3,3,3,3,3,3,-0.579124686
+1,1,40,2,Faxinal,4,3,Gerente comercial,3,9,Internet,1,1,Celular,3,4,4,4,3,2,3,4,4,4,3.5,-0.337574776
+2,1,29,2,Faxinal,2,4,Vendedor,3,9,Internet,1,2,Celular,5,4,4,4,4,4,4,4,3,4,4,0.238294813
+2,1,43,2,Faxinal,3,4,Servidor público estadual,5,9,"Jornal Escrito e/ou Revistas, TV, Rádio, Internet",1,1,"Celular, Notebook",4,5,3,3,4,4,4,4,4,4,3.9,0.069430882
+1,1,60,1,Jupi Pernambuco ,3,2,Aposentada,2,9,Internet,1,1,Celular,1,4,3,3,4,4,4,4,3,3,3.3,-0.099895738
+1,1,26,2,Faxinal,3,2,Empreendedora,2,9,Internet,1,1,Celular,3,5,4,4,2,2,4,4,4,3,3.5,-0.349267761
+2,1,41,2,Faxinal,4,4,Bancario,3,9,Internet,1,1,Celular,3,3,4,4,4,4,4,4,4,4,3.8,0.335292996
+1,1,46,2,Faxinal PR ,3,3,Artesã ,2,9,Internet,1,1,Celular,3,4,3,3,3,3,3,3,3,2,3,-0.639784961
+1,1,38,2,Mauá da Serra ,2,3,Cantora,2,9,"TV, Internet",1,1,Celular,1,4,2,4,4,1,4,2,5,2,2.9,-0.622356066
+2,3,29,2,Faxinal,2,4,Motorista,2,9,Internet,1,1,Celular,3,4,2,4,4,4,4,4,4,2,3.5,-0.057407927
+2,1,20,1,Foz do Iguaçu,3,1,Estudante,2,9,TV,1,1,Celular,4,5,4,4,4,4,4,3,3,2,3.7,-0.133897797
+2,3,74,2,Londrina ,3,4,Funcionário Público ,5,9,"Jornal Escrito e/ou Revistas, TV, Internet",1,1,"Computador, Celular",5,5,3,4,4,4,4,3,3,3,3.8,-0.131964975
+1,1,18,1,Manoel Ribas ,3,3,Estagiária ,2,9,Internet,1,1,"Celular, Notebook",4,5,4,3,3,3,3,4,4,3,3.6,-0.380033565
+1,3,27,1,Manoel Ribas Paraná,3,4,Estagiária,2,9,Internet,1,1,Celular,4,5,4,4,4,4,4,4,3,4,4,0.238294813
+1,1,39,3,Faxinal Pr,3,4,Office girls,1,9,Internet,1,1,Celular,2,5,3,4,4,4,4,2,2,3,3.3,-0.297064595
+2,1,42,2,Faxinal,3,4,Estoquista,3,9,Internet,1,1,Celular,1,4,3,3,3,3,3,3,3,3,2.9,-0.579124686
+1,1,25,1,FAXINAL,2,3,Baba,1,9,Internet,1,1,Celular,3,4,2,2,2,3,3,3,3,3,2.8,-0.774117286
+1,3,26,2,Faxinal ,3,4,Caixa ,2,9,Internet,1,1,Celular,3,4,4,4,4,4,4,4,4,2,3.7,0.114933537
+1,1,54,2,Faxinal,3,1,Aposentada,3,9,Rádio,1,1,Celular,2,4,4,4,4,2,2,3,2,2,2.9,-0.680340595
+1,1,44,2,Faxinal,3,4,No momento to desempregada,1,1,Internet,1,1,Celular,4,4,3,3,3,3,3,3,3,1,3,-0.713010731
+1,1,57,1,Faxinal ,2,2,Funcionaria pública ,3,9,Internet,1,1,Celular,4,3,3,3,3,4,4,3,3,2,3.2,-0.40923029
+1,4,60,3,Manoel Ribas,1,1,Aposentada ,2,9,"TV, Rádio",1,1,Celular,5,4,4,4,4,4,4,4,4,4,4.1,0.335292996
+1,1,54,2,Faxinal  Pr,2,1,Do lar,2,9,Internet,1,1,Celular,3,4,3,3,4,4,4,4,3,2,3.4,-0.176691845
+1,3,23,2,Faxinal,4,4,Professora,2,9,Internet,1,1,Celular,3,5,3,4,3,4,4,3,4,3,3.6,-0.193071271
+1,1,32,2,Faxinal,3,2,Analista de laboratório,3,9,Internet,1,1,Celular,4,4,3,4,4,4,4,4,4,4,3.9,0.22863719
+2,1,42,2,Faxinal,3,4,empresário,5,9,Internet,1,1,Celular,3,4,4,4,4,2,2,4,4,2,3.3,-0.486959465
+1,1,15,1,Faxinal,2,3,Farmacêutica ,2,9,Internet,1,1,Celular,2,4,2,1,1,1,1,4,4,2,2.2,-1.374344964
+1,1,27,1,Ivaipora,3,4,Comerciaria,2,9,Internet,1,1,Celular,4,5,4,2,2,3,3,3,3,2,3.1,-0.734677615
+2,1,38,2,Londres Inglaterra ,2,4,Fotógrafo ,3,9,"TV, Internet",1,1,"Computador, Tablet, Celular",5,5,5,5,5,5,5,5,5,5,5,1.632261366
+1,1,22,1,Ivaiporã,4,2,Vendedora ,2,9,Internet,1,1,"Celular, Notebook",3,4,3,4,4,3,2,2,3,2,3,-0.683297064
+2,3,38,1,Lidianópolis,3,3,Agricultor,2,9,"TV, Rádio, Internet",1,1,"Celular, Notebook",3,2,2,3,3,3,3,3,1,3,2.6,-0.705659863
+2,1,39,1,Faxinal,3,2,Conselheiro Tutelar,3,9,Internet,1,1,Celular,5,5,4,2,4,2,2,4,4,3,3.5,-0.577864113
+2,1,41,2,Lynn ma Usa,3,4,Construtor,3,9,Internet,1,1,Celular,3,4,3,3,3,4,4,3,3,2,3.2,-0.40923029
+2,1,40,2,Faxinal,3,2,Pintura ,3,9,"TV, Internet",1,1,Celular,3,5,3,4,4,4,4,4,4,1,3.6,-0.092640945
+1,1,23,2,Faxinal,3,1,Estudante ,1,9,Internet,1,1,"Computador, Celular, Notebook",4,4,4,3,5,4,4,3,2,1,3.4,-0.192420728
+1,1,19,1,Faxinal,3,3,Estagiário,2,9,Internet,1,1,Celular,3,4,3,2,3,2,3,3,3,1,2.7,-0.890112676
+2,3,42,2,Londrina,5,4,Policial civil,4,9,Internet,1,1,"Celular, Notebook",5,5,4,4,4,4,4,4,4,4,4.2,0.335292996
