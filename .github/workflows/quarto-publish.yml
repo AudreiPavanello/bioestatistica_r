@@ -29,6 +29,7 @@ jobs:
         with:
           r-version: '4.4.3' # Updated to match your intention
           use-public-rspm: true
+          cache: true
 
       - name: Install Linux System Dependencies
         # These are strictly required for semPlot/igraph/qgraph on Linux
@@ -67,7 +68,7 @@ jobs:
           )
           
           # pak::pkg_install handles dependencies much better than install.packages
-          pak::pkg_install(packages)
+          pak::pkg_install(packages, dependencies = FALSE)
         shell: Rscript {0}
 
       - name: Setup Quarto
