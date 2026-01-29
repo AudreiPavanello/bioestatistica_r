@@ -43,7 +43,9 @@ jobs:
             libfreetype6-dev \
             libpng-dev \
             libtiff5-dev \
-            libjpeg-dev
+            libjpeg-dev \
+            libglpk-dev \
+            cmake
 
       - name: Install R packages
         run: |

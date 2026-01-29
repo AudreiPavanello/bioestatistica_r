@@ -1,0 +1,6 @@
+# Ensure consistent line endings for Quarto freeze compatibility
+*.qmd text eol=lf
+*.yml text eol=lf
+*.json text eol=lf
+*.css text eol=lf
+*.R text eol=lf
