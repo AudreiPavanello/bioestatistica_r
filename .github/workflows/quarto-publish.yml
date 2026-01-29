@@ -43,7 +43,7 @@ jobs:
             libfribidi-dev \
             libfreetype6-dev \
             libpng-dev \
-            libtiff-dev \
+            libtiff5-dev \
             libjpeg-dev \
             libxt-dev \
             libmagick++-dev
@@ -52,30 +52,26 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.local/share/r-lib
-          key: ${{ runner.os }}-r-4.4.3-packages-v1
+          key: ${{ runner.os }}-r-4.4.3-packages-v2
           restore-keys: |
             ${{ runner.os }}-r-4.4.3-
 
       - name: Install R packages
         run: |
-          # Força usar Posit Package Manager com binários pré-compilados
           options(
-            repos = c(CRAN = "https://packagemanager.posit.co/cran/__linux__/jammy/latest"),
-            HTTPUserAgent = sprintf("R/%s R (%s)", getRversion(), 
-                                   paste(getRversion(), R.version["platform"], 
-                                         R.version["arch"], R.version["os"]))
+            repos = c(CRAN = "https://packagemanager.posit.co/cran/__linux__/noble/latest")
           )
           
-          # Instala todos os pacotes como binários (sem compilação!)
+          # Instala pacotes como binários (semPlot/qgraph removidos - já estão no _freeze/)
           install.packages(c(
             "tidyverse", "readxl", "janitor", "openxlsx",
             "car", "FSA", "nnet", "lmtest",
-            "psych", "lavaan", "semPlot", "qgraph",
+            "psych", "lavaan",
             "gtsummary", "broom.helpers", "officer", "flextable",
             "ggpubr", "vcd", "corrplot", "GGally", "sjPlot", "jtools",
             "tidytext", "wordcloud", "quanteda", "lexiconPT", "tm", 
             "stopwords", "mall", "rmarkdown", "knitr", "downlit", "xml2"
-          ), dependencies = TRUE)
+          ), dependencies = TRUE, type = "binary")
         shell: Rscript {0}
 
       - name: Setup Quarto
