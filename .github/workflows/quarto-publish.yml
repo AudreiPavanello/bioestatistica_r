@@ -55,13 +55,13 @@ jobs:
             # Psychometrics & SEM
             "psych", "lavaan", "semPlot", "qgraph",
             # Tables & documents
-            "gtsummary", "officer", "flextable",
+            "gtsummary", "broom.helpers", "officer", "flextable",
             # Visualization
             "ggpubr", "vcd", "corrplot", "GGally", "sjPlot", "jtools",
             # Text analysis
             "tidytext", "wordcloud", "quanteda", "lexiconPT", "tm", "stopwords", "mall",
             # Rendering
-            "rmarkdown", "knitr"
+            "rmarkdown", "knitr", "downlit", "xml2"
           ))
         shell: Rscript {0}
 
