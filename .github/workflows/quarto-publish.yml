@@ -68,7 +68,7 @@ jobs:
           )
           
           # pak::pkg_install handles dependencies much better than install.packages
-          pak::pkg_install(packages, dependencies = c("Depends", "Imports", "LinkingTo")
+          pak::pkg_install(packages, dependencies = c("Depends", "Imports", "LinkingTo"))
         shell: Rscript {0}
 
       - name: Setup Quarto
