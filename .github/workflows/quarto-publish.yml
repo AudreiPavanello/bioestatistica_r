@@ -27,53 +27,47 @@ jobs:
       - name: Setup R
         uses: r-lib/actions/setup-r@v2
         with:
-          r-version: '4.3.2'
+          r-version: '4.4.3' # Updated to match your intention
           use-public-rspm: true
 
-      - name: Install system dependencies
+      - name: Install Linux System Dependencies
+        # These are strictly required for semPlot/igraph/qgraph on Linux
+        # regardless of R version.
         run: |
           sudo apt-get update
           sudo apt-get install -y \
-            libcurl4-openssl-dev \
-            libssl-dev \
+            libglpk-dev \
             libxml2-dev \
-            libfontconfig1-dev \
+            libcairo2-dev \
+            libgit2-dev \
+            default-jdk \
             libharfbuzz-dev \
             libfribidi-dev \
             libfreetype6-dev \
             libpng-dev \
             libtiff5-dev \
             libjpeg-dev \
-            libglpk-dev \
-            libtbb-dev \
+            libxt-dev \
+            libimagemagick++-dev \
             cmake
 
       - name: Install R packages
         run: |
+          # Install pak for faster, safer installation
+          install.packages("pak", repos = "https://r-lib.github.io/p/pak/dev/")
+          
           packages <- c(
-            # Data manipulation & cleaning
             "tidyverse", "readxl", "janitor", "openxlsx",
-            # Statistical analysis
             "car", "FSA", "nnet", "lmtest",
-            # Psychometrics & SEM
             "psych", "lavaan", "semPlot", "qgraph",
-            # Tables & documents
             "gtsummary", "broom.helpers", "officer", "flextable",
-            # Visualization
             "ggpubr", "vcd", "corrplot", "GGally", "sjPlot", "jtools",
-            # Text analysis
             "tidytext", "wordcloud", "quanteda", "lexiconPT", "tm", "stopwords", "mall",
-            # Rendering
             "rmarkdown", "knitr", "downlit", "xml2"
           )
-          install.packages(packages)
-
-          # Verify all packages installed
-          missing <- packages[!packages %in% rownames(installed.packages())]
-          if (length(missing) > 0) {
-            cat("Failed to install:", paste(missing, collapse=", "), "\n")
-            quit(status = 1)
-          }
+          
+          # pak::pkg_install handles dependencies much better than install.packages
+          pak::pkg_install(packages)
         shell: Rscript {0}
 
       - name: Setup Quarto
