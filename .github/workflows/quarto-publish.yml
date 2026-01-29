@@ -71,7 +71,7 @@ jobs:
             "ggpubr", "vcd", "corrplot", "GGally", "sjPlot", "jtools",
             "tidytext", "wordcloud", "quanteda", "lexiconPT", "tm", 
             "stopwords", "mall", "rmarkdown", "knitr", "downlit", "xml2"
-          ), dependencies = TRUE, type = "binary")
+          ), dependencies = TRUE)
         shell: Rscript {0}
 
       - name: Setup Quarto
