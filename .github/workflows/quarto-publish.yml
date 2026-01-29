@@ -27,13 +27,10 @@ jobs:
       - name: Setup R
         uses: r-lib/actions/setup-r@v2
         with:
-          r-version: '4.4.3' # Updated to match your intention
+          r-version: '4.4.3'
           use-public-rspm: true
-          cache: true
 
       - name: Install Linux System Dependencies
-        # These are strictly required for semPlot/igraph/qgraph on Linux
-        # regardless of R version.
         run: |
           sudo apt-get update
           sudo apt-get install -y \
@@ -49,26 +46,36 @@ jobs:
             libtiff-dev \
             libjpeg-dev \
             libxt-dev \
-            libmagick++-dev \
-            cmake
+            libmagick++-dev
+
+      - name: Cache R packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.local/share/r-lib
+          key: ${{ runner.os }}-r-4.4.3-packages-v1
+          restore-keys: |
+            ${{ runner.os }}-r-4.4.3-
 
       - name: Install R packages
         run: |
-          # Install pak for faster, safer installation
-          install.packages("pak", repos = "https://r-lib.github.io/p/pak/dev/")
+          # Força usar Posit Package Manager com binários pré-compilados
+          options(
+            repos = c(CRAN = "https://packagemanager.posit.co/cran/__linux__/jammy/latest"),
+            HTTPUserAgent = sprintf("R/%s R (%s)", getRversion(), 
+                                   paste(getRversion(), R.version["platform"], 
+                                         R.version["arch"], R.version["os"]))
+          )
           
-          packages <- c(
+          # Instala todos os pacotes como binários (sem compilação!)
+          install.packages(c(
             "tidyverse", "readxl", "janitor", "openxlsx",
             "car", "FSA", "nnet", "lmtest",
             "psych", "lavaan", "semPlot", "qgraph",
             "gtsummary", "broom.helpers", "officer", "flextable",
             "ggpubr", "vcd", "corrplot", "GGally", "sjPlot", "jtools",
-            "tidytext", "wordcloud", "quanteda", "lexiconPT", "tm", "stopwords", "mall",
-            "rmarkdown", "knitr", "downlit", "xml2"
-          )
-          
-          # pak::pkg_install handles dependencies much better than install.packages
-          pak::pkg_install(packages, dependencies = c("Depends", "Imports", "LinkingTo"))
+            "tidytext", "wordcloud", "quanteda", "lexiconPT", "tm", 
+            "stopwords", "mall", "rmarkdown", "knitr", "downlit", "xml2"
+          ), dependencies = TRUE)
         shell: Rscript {0}
 
       - name: Setup Quarto
