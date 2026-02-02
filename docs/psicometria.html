@@ -2,9 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.7.31">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Bioestatística Aplicada à Saúde usando R - 6&nbsp; Análise Psicométrica</title>
+<title>6&nbsp; Análise Psicométrica – Bioestatística Aplicada à Saúde usando R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -18,6 +18,7 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -62,23 +63,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="./">
 <link href="./analise-texto.html" rel="next">
 <link href="./regressao.html" rel="prev">
-<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-4a990d8dcb58f517c7c86712b8f2ac7c.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-46f4cc9626f044588a66931b604fc9c8.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-4a990d8dcb58f517c7c86712b8f2ac7c.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-1ea2f1ca8430a0e4b2b18d49b51ad2af.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-90005ebdada80aaf03d6f48ec6c0ecfe.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-1ea2f1ca8430a0e4b2b18d49b51ad2af.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -87,30 +97,220 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script><link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
-<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><link rel="stylesheet" href="styles.css">
+}</script><link href="site_libs/htmltools-fill-0.5.9/fill.css" rel="stylesheet">
+<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script><script src="site_libs/viz-1.8.2/viz.js"></script><link href="site_libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+<script src="site_libs/grViz-binding-1.0.11/grViz.js"></script><link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="styles.css">
 </head>
-<body class="nav-sidebar docked">
+<body class="nav-sidebar docked quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./psicometria.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Análise Psicométrica</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./psicometria.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Análise Psicométrica</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
   </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Bioestatística Aplicada à Saúde usando R</a> 
         <div class="sidebar-tools-main">
@@ -181,7 +381,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
     </ul>
 </div>
-</nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
@@ -248,7 +448,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#tabela-resumo-de-crit%C3%A9rios-de-ajuste" id="toc-tabela-resumo-de-critérios-de-ajuste" class="nav-link" data-scroll-target="#tabela-resumo-de-crit%C3%A9rios-de-ajuste"><span class="header-section-number">6.7.4</span> Tabela Resumo de Critérios de Ajuste</a></li>
   <li><a href="#interpreta%C3%A7%C3%A3o-dos-resultados-da-cfa" id="toc-interpretação-dos-resultados-da-cfa" class="nav-link" data-scroll-target="#interpreta%C3%A7%C3%A3o-dos-resultados-da-cfa"><span class="header-section-number">6.7.5</span> Interpretação dos Resultados da CFA</a></li>
   <li><a href="#modifica%C3%A7%C3%A3o-de-modelos" id="toc-modificação-de-modelos" class="nav-link" data-scroll-target="#modifica%C3%A7%C3%A3o-de-modelos"><span class="header-section-number">6.7.6</span> Modificação de Modelos</a></li>
-  <li><a href="#visualiza%C3%A7%C3%A3o-do-modelo-com-sempaths" id="toc-visualização-do-modelo-com-sempaths" class="nav-link" data-scroll-target="#visualiza%C3%A7%C3%A3o-do-modelo-com-sempaths"><span class="header-section-number">6.7.7</span> Visualização do Modelo com semPaths</a></li>
+  <li><a href="#visualiza%C3%A7%C3%A3o-do-modelo-com-lavaanplot" id="toc-visualização-do-modelo-com-lavaanplot" class="nav-link" data-scroll-target="#visualiza%C3%A7%C3%A3o-do-modelo-com-lavaanplot"><span class="header-section-number">6.7.7</span> Visualização do Modelo com lavaanPlot</a></li>
   </ul>
 </li>
   <li>
@@ -287,6 +487,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
+
 </header><section id="introdução-à-psicometria" class="level2" data-number="6.1"><h2 data-number="6.1" class="anchored" data-anchor-id="introdução-à-psicometria">
 <span class="header-section-number">6.1</span> Introdução à Psicometria</h2>
 <p>A <strong>psicometria</strong> é uma especialidade dentro das ciências comportamentais e sociais dedicada à mensuração de fenômenos psicológicos e sociais. Em pesquisas de saúde, a psicometria é fundamental para validar instrumentos que avaliam construtos como qualidade de vida, satisfação do paciente, literacia em saúde, sintomas psicológicos, entre outros.</p>
@@ -322,7 +523,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://personality-project.org/r/psych/">psych</a></span><span class="op">)</span>        <span class="co"># Análise psicométrica (Alpha, Omega, EFA)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/taiyun/corrplot">corrplot</a></span><span class="op">)</span>     <span class="co"># Visualização de correlações</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://lavaan.ugent.be">lavaan</a></span><span class="op">)</span>       <span class="co"># Análise Fatorial Confirmatória (CFA)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/SachaEpskamp/semPlot">semPlot</a></span><span class="op">)</span>      <span class="co"># Visualização de modelos SEM</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/alishinski/lavaanPlot">lavaanPlot</a></span><span class="op">)</span>   <span class="co"># Visualização de modelos SEM</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">qgraph</span><span class="op">)</span>       <span class="co"># Análise de redes</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggobi.github.io/ggally/">GGally</a></span><span class="op">)</span>       <span class="co"># Gráficos de correlação</span></span>
 <span></span>
@@ -336,18 +537,133 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="va">dados</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/literacia_data.csv"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Visualizar primeiras linhas</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">dados</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Estrutura do dataframe</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">dados</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Resumo estatístico</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">dados</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["sexo"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["etnia"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["idade"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["estcivil"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["cidade"],"name":[5],"type":["chr"],"align":["left"]},{"label":["escolaridade"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["economia"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["profissao"],"name":[8],"type":["chr"],"align":["left"]},{"label":["renda"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["beneficio"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["comunicacao"],"name":[11],"type":["chr"],"align":["left"]},{"label":["celular"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["internet"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["acesso"],"name":[14],"type":["chr"],"align":["left"]},{"label":["L1"],"name":[15],"type":["dbl"],"align":["right"]},{"label":["L2"],"name":[16],"type":["dbl"],"align":["right"]},{"label":["L3"],"name":[17],"type":["dbl"],"align":["right"]},{"label":["L4"],"name":[18],"type":["dbl"],"align":["right"]},{"label":["L5"],"name":[19],"type":["dbl"],"align":["right"]},{"label":["L6"],"name":[20],"type":["dbl"],"align":["right"]},{"label":["L7"],"name":[21],"type":["dbl"],"align":["right"]},{"label":["L8"],"name":[22],"type":["dbl"],"align":["right"]},{"label":["L9"],"name":[23],"type":["dbl"],"align":["right"]},{"label":["L10"],"name":[24],"type":["dbl"],"align":["right"]},{"label":["literacia"],"name":[25],"type":["dbl"],"align":["right"]},{"label":["scores"],"name":[26],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"1","3":"30","4":"2","5":"Faxinal Pr","6":"5","7":"3","8":"Enfermeira","9":"4","10":"9","11":"Internet","12":"1","13":"1","14":"Computador, Celular","15":"4","16":"4","17":"4","18":"4","19":"4","20":"5","21":"4","22":"4","23":"4","24":"4","25":"4.1","26":"0.5860535"},{"1":"1","2":"1","3":"39","4":"2","5":"Faxinal","6":"5","7":"3","8":"Enfermeira","9":"4","10":"9","11":"Internet","12":"1","13":"1","14":"Celular","15":"5","16":"5","17":"4","18":"4","19":"4","20":"5","21":"4","22":"4","23":"4","24":"4","25":"4.3","26":"0.5860535"},{"1":"1","2":"1","3":"57","4":"2","5":"Londrina","6":"3","7":"3","8":"Vendedora","9":"3","10":"9","11":"Internet","12":"1","13":"1","14":"Celular","15":"3","16":"4","17":"4","18":"4","19":"4","20":"4","21":"4","22":"4","23":"4","24":"4","25":"3.9","26":"0.3352930"},{"1":"1","2":"1","3":"67","4":"2","5":"Londrina","6":"3","7":"3","8":"Professora Municipal","9":"3","10":"9","11":"Internet","12":"1","13":"1","14":"Tablet, Celular","15":"4","16":"5","17":"4","18":"4","19":"4","20":"4","21":"4","22":"4","23":"4","24":"4","25":"4.1","26":"0.3352930"},{"1":"1","2":"1","3":"28","4":"2","5":"Faxinal","6":"2","7":"3","8":"Doméstica","9":"2","10":"1","11":"Internet","12":"1","13":"1","14":"Celular","15":"5","16":"5","17":"4","18":"4","19":"4","20":"4","21":"4","22":"4","23":"4","24":"4","25":"4.2","26":"0.3352930"},{"1":"2","2":"3","3":"30","4":"1","5":"Faxinal","6":"4","7":"2","8":"Professor e Técnico em enfermagem","9":"3","10":"9","11":"TV, Internet","12":"1","13":"1","14":"Celular","15":"5","16":"4","17":"3","18":"3","19":"3","20":"4","21":"4","22":"3","23":"4","24":"2","25":"3.5","26":"-0.3557985"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Estrutura do dataframe</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">dados</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>spc_tbl_ [431 × 26] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+ $ sexo        : num [1:431] 1 1 1 1 1 2 2 1 2 1 ...
+ $ etnia       : num [1:431] 1 1 1 1 1 3 1 1 1 1 ...
+ $ idade       : num [1:431] 30 39 57 67 28 30 37 32 45 26 ...
+ $ estcivil    : num [1:431] 2 2 2 2 2 1 2 1 2 2 ...
+ $ cidade      : chr [1:431] "Faxinal Pr" "Faxinal" "Londrina" "Londrina" ...
+ $ escolaridade: num [1:431] 5 5 3 3 2 4 4 5 4 2 ...
+ $ economia    : num [1:431] 3 3 3 3 3 2 4 2 1 2 ...
+ $ profissao   : chr [1:431] "Enfermeira" "Enfermeira" "Vendedora" "Professora Municipal" ...
+ $ renda       : num [1:431] 4 4 3 3 2 3 3 2 2 3 ...
+ $ beneficio   : num [1:431] 9 9 9 9 1 9 9 9 9 9 ...
+ $ comunicacao : chr [1:431] "Internet" "Internet" "Internet" "Internet" ...
+ $ celular     : num [1:431] 1 1 1 1 1 1 1 1 2 1 ...
+ $ internet    : num [1:431] 1 1 1 1 1 1 1 1 1 1 ...
+ $ acesso      : chr [1:431] "Computador, Celular" "Celular" "Celular" "Tablet, Celular" ...
+ $ L1          : num [1:431] 4 5 3 4 5 5 5 4 3 4 ...
+ $ L2          : num [1:431] 4 5 4 5 5 4 4 4 4 5 ...
+ $ L3          : num [1:431] 4 4 4 4 4 3 4 3 4 5 ...
+ $ L4          : num [1:431] 4 4 4 4 4 3 4 2 3 5 ...
+ $ L5          : num [1:431] 4 4 4 4 4 3 4 3 4 5 ...
+ $ L6          : num [1:431] 5 5 4 4 4 4 4 3 1 5 ...
+ $ L7          : num [1:431] 4 4 4 4 4 4 5 3 1 5 ...
+ $ L8          : num [1:431] 4 4 4 4 4 3 4 2 1 5 ...
+ $ L9          : num [1:431] 4 4 4 4 4 4 4 2 1 5 ...
+ $ L10         : num [1:431] 4 4 4 4 4 2 4 3 1 5 ...
+ $ literacia   : num [1:431] 4.1 4.3 3.9 4.1 4.2 3.5 4.2 2.9 2.3 4.9 ...
+ $ scores      : num [1:431] 0.586 0.586 0.335 0.335 0.335 ...
+ - attr(*, "spec")=
+  .. cols(
+  ..   sexo = col_double(),
+  ..   etnia = col_double(),
+  ..   idade = col_double(),
+  ..   estcivil = col_double(),
+  ..   cidade = col_character(),
+  ..   escolaridade = col_double(),
+  ..   economia = col_double(),
+  ..   profissao = col_character(),
+  ..   renda = col_double(),
+  ..   beneficio = col_double(),
+  ..   comunicacao = col_character(),
+  ..   celular = col_double(),
+  ..   internet = col_double(),
+  ..   acesso = col_character(),
+  ..   L1 = col_double(),
+  ..   L2 = col_double(),
+  ..   L3 = col_double(),
+  ..   L4 = col_double(),
+  ..   L5 = col_double(),
+  ..   L6 = col_double(),
+  ..   L7 = col_double(),
+  ..   L8 = col_double(),
+  ..   L9 = col_double(),
+  ..   L10 = col_double(),
+  ..   literacia = col_double(),
+  ..   scores = col_double()
+  .. )
+ - attr(*, "problems")=&lt;externalptr&gt; </code></pre>
+</div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Resumo estatístico</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">dados</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      sexo           etnia           idade          estcivil    
+ Min.   :1.000   Min.   :1.000   Min.   :15.00   Min.   :1.000  
+ 1st Qu.:1.000   1st Qu.:1.000   1st Qu.:27.00   1st Qu.:1.000  
+ Median :1.000   Median :1.000   Median :36.00   Median :2.000  
+ Mean   :1.332   Mean   :1.445   Mean   :36.75   Mean   :1.766  
+ 3rd Qu.:2.000   3rd Qu.:1.000   3rd Qu.:45.00   3rd Qu.:2.000  
+ Max.   :2.000   Max.   :4.000   Max.   :76.00   Max.   :4.000  
+    cidade           escolaridade     economia      profissao        
+ Length:431         Min.   :1.00   Min.   :1.000   Length:431        
+ Class :character   1st Qu.:3.00   1st Qu.:2.000   Class :character  
+ Mode  :character   Median :3.00   Median :3.000   Mode  :character  
+                    Mean   :3.65   Mean   :2.733                     
+                    3rd Qu.:5.00   3rd Qu.:4.000                     
+                    Max.   :5.00   Max.   :4.000                     
+     renda         beneficio     comunicacao           celular     
+ Min.   :1.000   Min.   :1.000   Length:431         Min.   :1.000  
+ 1st Qu.:2.000   1st Qu.:9.000   Class :character   1st Qu.:1.000  
+ Median :3.000   Median :9.000   Mode  :character   Median :1.000  
+ Mean   :2.673   Mean   :8.782                      Mean   :1.005  
+ 3rd Qu.:3.000   3rd Qu.:9.000                      3rd Qu.:1.000  
+ Max.   :5.000   Max.   :9.000                      Max.   :2.000  
+    internet        acesso                L1              L2       
+ Min.   :1.000   Length:431         Min.   :1.000   Min.   :1.000  
+ 1st Qu.:1.000   Class :character   1st Qu.:3.000   1st Qu.:4.000  
+ Median :1.000   Mode  :character   Median :4.000   Median :4.000  
+ Mean   :1.028                      Mean   :3.668   Mean   :4.204  
+ 3rd Qu.:1.000                      3rd Qu.:5.000   3rd Qu.:5.000  
+ Max.   :2.000                      Max.   :5.000   Max.   :5.000  
+       L3              L4              L5              L6             L7       
+ Min.   :1.000   Min.   :1.000   Min.   :1.000   Min.   :1.00   Min.   :1.000  
+ 1st Qu.:3.000   1st Qu.:3.000   1st Qu.:3.000   1st Qu.:3.00   1st Qu.:3.000  
+ Median :4.000   Median :4.000   Median :4.000   Median :4.00   Median :4.000  
+ Mean   :3.536   Mean   :3.661   Mean   :3.712   Mean   :3.64   Mean   :3.675  
+ 3rd Qu.:4.000   3rd Qu.:4.000   3rd Qu.:4.000   3rd Qu.:4.00   3rd Qu.:4.000  
+ Max.   :5.000   Max.   :5.000   Max.   :5.000   Max.   :5.00   Max.   :5.000  
+       L8              L9             L10          literacia    
+ Min.   :1.000   Min.   :1.000   Min.   :1.000   Min.   :1.600  
+ 1st Qu.:3.000   1st Qu.:3.000   1st Qu.:2.000   1st Qu.:3.300  
+ Median :4.000   Median :4.000   Median :3.000   Median :3.700  
+ Mean   :3.631   Mean   :3.603   Mean   :3.181   Mean   :3.651  
+ 3rd Qu.:4.000   3rd Qu.:4.000   3rd Qu.:4.000   3rd Qu.:4.100  
+ Max.   :5.000   Max.   :5.000   Max.   :5.000   Max.   :5.000  
+     scores         
+ Min.   :-1.838299  
+ 1st Qu.:-0.454011  
+ Median : 0.021178  
+ Mean   : 0.001026  
+ 3rd Qu.: 0.335293  
+ Max.   : 1.632261  </code></pre>
+</div>
 </div>
 </section><section id="convertendo-variáveis-categóricas" class="level3" data-number="6.2.3"><h3 data-number="6.2.3" class="anchored" data-anchor-id="convertendo-variáveis-categóricas">
 <span class="header-section-number">6.2.3</span> Convertendo Variáveis Categóricas</h3>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Converter variáveis qualitativas em fatores</span></span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Converter variáveis qualitativas em fatores</span></span>
 <span><span class="va">dados</span> <span class="op">&lt;-</span> <span class="va">dados</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sexo</span>, <span class="va">etnia</span>, <span class="va">estcivil</span>, <span class="va">escolaridade</span>, <span class="va">economia</span>,</span>
 <span>                  <span class="va">renda</span>, <span class="va">beneficio</span>, <span class="va">comunicacao</span>, <span class="va">celular</span>,</span>
@@ -355,17 +671,68 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span></span>
 <span><span class="co"># Verificar estrutura após conversão</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">dados</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [431 × 26] (S3: tbl_df/tbl/data.frame)
+ $ sexo        : Factor w/ 2 levels "1","2": 1 1 1 1 1 2 2 1 2 1 ...
+ $ etnia       : Factor w/ 4 levels "1","2","3","4": 1 1 1 1 1 3 1 1 1 1 ...
+ $ idade       : num [1:431] 30 39 57 67 28 30 37 32 45 26 ...
+ $ estcivil    : Factor w/ 4 levels "1","2","3","4": 2 2 2 2 2 1 2 1 2 2 ...
+ $ cidade      : chr [1:431] "Faxinal Pr" "Faxinal" "Londrina" "Londrina" ...
+ $ escolaridade: Factor w/ 5 levels "1","2","3","4",..: 5 5 3 3 2 4 4 5 4 2 ...
+ $ economia    : Factor w/ 4 levels "1","2","3","4": 3 3 3 3 3 2 4 2 1 2 ...
+ $ profissao   : chr [1:431] "Enfermeira" "Enfermeira" "Vendedora" "Professora Municipal" ...
+ $ renda       : Factor w/ 5 levels "1","2","3","4",..: 4 4 3 3 2 3 3 2 2 3 ...
+ $ beneficio   : Factor w/ 5 levels "1","2","3","4",..: 5 5 5 5 1 5 5 5 5 5 ...
+ $ comunicacao : Factor w/ 12 levels "Internet","Jornal Escrito e/ou Revistas",..: 1 1 1 1 1 10 10 1 9 1 ...
+ $ celular     : Factor w/ 2 levels "1","2": 1 1 1 1 1 1 1 1 2 1 ...
+ $ internet    : Factor w/ 2 levels "1","2": 1 1 1 1 1 1 1 1 1 1 ...
+ $ acesso      : Factor w/ 10 levels "Celular","Celular, Notebook",..: 4 1 1 9 1 1 4 2 3 1 ...
+ $ L1          : num [1:431] 4 5 3 4 5 5 5 4 3 4 ...
+ $ L2          : num [1:431] 4 5 4 5 5 4 4 4 4 5 ...
+ $ L3          : num [1:431] 4 4 4 4 4 3 4 3 4 5 ...
+ $ L4          : num [1:431] 4 4 4 4 4 3 4 2 3 5 ...
+ $ L5          : num [1:431] 4 4 4 4 4 3 4 3 4 5 ...
+ $ L6          : num [1:431] 5 5 4 4 4 4 4 3 1 5 ...
+ $ L7          : num [1:431] 4 4 4 4 4 4 5 3 1 5 ...
+ $ L8          : num [1:431] 4 4 4 4 4 3 4 2 1 5 ...
+ $ L9          : num [1:431] 4 4 4 4 4 4 4 2 1 5 ...
+ $ L10         : num [1:431] 4 4 4 4 4 2 4 3 1 5 ...
+ $ literacia   : num [1:431] 4.1 4.3 3.9 4.1 4.2 3.5 4.2 2.9 2.3 4.9 ...
+ $ scores      : num [1:431] 0.586 0.586 0.335 0.335 0.335 ...</code></pre>
+</div>
 </div>
 </section><section id="tratamento-de-dados-faltantes" class="level3" data-number="6.2.4"><h3 data-number="6.2.4" class="anchored" data-anchor-id="tratamento-de-dados-faltantes">
 <span class="header-section-number">6.2.4</span> Tratamento de Dados Faltantes</h3>
 <div class="cell">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Verificar quantidade de dados faltantes por coluna</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colSums</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">dados</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Proporção de dados faltantes (%)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colMeans</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">dados</span><span class="op">)</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span></span>
-<span></span>
-<span><span class="co"># Estratégias de tratamento:</span></span>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Verificar quantidade de dados faltantes por coluna</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colSums</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">dados</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        sexo        etnia        idade     estcivil       cidade escolaridade 
+           0            0            0            0            0            0 
+    economia    profissao        renda    beneficio  comunicacao      celular 
+           0            0            0            0            0            0 
+    internet       acesso           L1           L2           L3           L4 
+           0            0            0            0            0            0 
+          L5           L6           L7           L8           L9          L10 
+           0            0            0            0            0            0 
+   literacia       scores 
+           0            0 </code></pre>
+</div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Proporção de dados faltantes (%)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colMeans</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">dados</span><span class="op">)</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        sexo        etnia        idade     estcivil       cidade escolaridade 
+           0            0            0            0            0            0 
+    economia    profissao        renda    beneficio  comunicacao      celular 
+           0            0            0            0            0            0 
+    internet       acesso           L1           L2           L3           L4 
+           0            0            0            0            0            0 
+          L5           L6           L7           L8           L9          L10 
+           0            0            0            0            0            0 
+   literacia       scores 
+           0            0 </code></pre>
+</div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Estratégias de tratamento:</span></span>
 <span><span class="co"># 1. Exclusão listwise (casos completos)</span></span>
 <span><span class="va">dados_completo</span> <span class="op">&lt;-</span> <span class="va">dados</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/stats/complete.cases.html">complete.cases</a></span><span class="op">(</span><span class="va">dados</span><span class="op">)</span>, <span class="op">]</span></span>
 <span></span>
@@ -379,7 +746,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="calculando-e-visualizando-correlações" class="level3" data-number="6.3.1"><h3 data-number="6.3.1" class="anchored" data-anchor-id="calculando-e-visualizando-correlações">
 <span class="header-section-number">6.3.1</span> Calculando e Visualizando Correlações</h3>
 <div class="cell">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Selecionar itens da escala de literacia (L1 a L10) e idade</span></span>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Selecionar itens da escala de literacia (L1 a L10) e idade</span></span>
 <span><span class="va">dados_cor</span> <span class="op">&lt;-</span> <span class="va">dados</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">L1</span><span class="op">:</span><span class="va">L10</span>, <span class="va">idade</span><span class="op">)</span></span>
 <span></span>
@@ -391,16 +758,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>         method <span class="op">=</span> <span class="st">"circle"</span>,</span>
 <span>         type <span class="op">=</span> <span class="st">"upper"</span>,</span>
 <span>         tl.col <span class="op">=</span> <span class="st">"black"</span>,</span>
-<span>         tl.srt <span class="op">=</span> <span class="fl">45</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Visualização com números</span></span>
+<span>         tl.srt <span class="op">=</span> <span class="fl">45</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="psicometria_files/figure-html/matriz-correlacao-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Visualização com números</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/corrplot/man/corrplot.html">corrplot</a></span><span class="op">(</span><span class="va">matriz_cor</span>,</span>
 <span>         method <span class="op">=</span> <span class="st">"number"</span>,</span>
 <span>         type <span class="op">=</span> <span class="st">"upper"</span>,</span>
 <span>         tl.col <span class="op">=</span> <span class="st">"black"</span>,</span>
-<span>         tl.srt <span class="op">=</span> <span class="fl">45</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Visualização com cores e ordenação por clusters</span></span>
+<span>         tl.srt <span class="op">=</span> <span class="fl">45</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="psicometria_files/figure-html/matriz-correlacao-2.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Visualização com cores e ordenação por clusters</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/corrplot/man/corrplot.html">corrplot</a></span><span class="op">(</span><span class="va">matriz_cor</span>,</span>
 <span>         method <span class="op">=</span> <span class="st">"color"</span>,</span>
 <span>         type <span class="op">=</span> <span class="st">"upper"</span>,</span>
@@ -409,6 +786,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>         tl.col <span class="op">=</span> <span class="st">"black"</span>,</span>
 <span>         tl.srt <span class="op">=</span> <span class="fl">45</span>,</span>
 <span>         number.cex <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="psicometria_files/figure-html/matriz-correlacao-3.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
 </div>
 </section><section id="interpretação-da-matriz-de-correlação" class="level3" data-number="6.3.2"><h3 data-number="6.3.2" class="anchored" data-anchor-id="interpretação-da-matriz-de-correlação">
 <span class="header-section-number">6.3.2</span> Interpretação da Matriz de Correlação</h3>
@@ -432,10 +815,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul></section><section id="heatmap-de-correlação" class="level3" data-number="6.3.3"><h3 data-number="6.3.3" class="anchored" data-anchor-id="heatmap-de-correlação">
 <span class="header-section-number">6.3.3</span> Heatmap de Correlação</h3>
 <div class="cell">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Heatmap com cores</span></span>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Heatmap com cores</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/heatmap.html">heatmap</a></span><span class="op">(</span><span class="va">matriz_cor</span>,</span>
 <span>        col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"blue"</span>, <span class="st">"white"</span>, <span class="st">"red"</span><span class="op">)</span><span class="op">)</span><span class="op">(</span><span class="fl">20</span><span class="op">)</span>,</span>
 <span>        main <span class="op">=</span> <span class="st">"Heatmap de Correlações - Itens de Literacia"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="psicometria_files/figure-html/heatmap-correlacao-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
 </div>
 </section></section><section id="análise-de-redes" class="level2" data-number="6.4"><h2 data-number="6.4" class="anchored" data-anchor-id="análise-de-redes">
 <span class="header-section-number">6.4</span> Análise de Redes</h2>
@@ -443,7 +832,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="criando-a-rede" class="level3" data-number="6.4.1"><h3 data-number="6.4.1" class="anchored" data-anchor-id="criando-a-rede">
 <span class="header-section-number">6.4.1</span> Criando a Rede</h3>
 <div class="cell">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Selecionar itens da escala</span></span>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Selecionar itens da escala</span></span>
 <span><span class="va">dados_rede</span> <span class="op">&lt;-</span> <span class="va">dados</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">L1</span><span class="op">:</span><span class="va">L10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -463,6 +852,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>               edge.labels <span class="op">=</span> <span class="cn">TRUE</span>,      <span class="co"># Mostrar valores nas arestas</span></span>
 <span>               edge.label.cex <span class="op">=</span> <span class="fl">0.8</span>,    <span class="co"># Tamanho dos rótulos</span></span>
 <span>               title <span class="op">=</span> <span class="st">"Rede de Literacia Digital"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="psicometria_files/figure-html/analise-redes-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
 </div>
 </section><section id="interpretação-da-análise-de-redes" class="level3" data-number="6.4.2"><h3 data-number="6.4.2" class="anchored" data-anchor-id="interpretação-da-análise-de-redes">
 <span class="header-section-number">6.4.2</span> Interpretação da Análise de Redes</h3>
@@ -503,7 +898,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section><section id="calculando-o-alfa-de-cronbach" class="level4" data-number="6.5.1.2"><h4 data-number="6.5.1.2" class="anchored" data-anchor-id="calculando-o-alfa-de-cronbach">
 <span class="header-section-number">6.5.1.2</span> Calculando o Alfa de Cronbach</h4>
 <div class="cell">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Selecionar itens da escala</span></span>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Selecionar itens da escala</span></span>
 <span><span class="va">itens_escala</span> <span class="op">&lt;-</span> <span class="va">dados</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">L1</span><span class="op">:</span><span class="va">L10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -515,6 +910,59 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span></span>
 <span><span class="co"># Exibir resultados</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">alfa</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Reliability analysis   
+Call: psych::alpha(x = itens_escala, check.keys = TRUE, n.iter = 1000)
+
+  raw_alpha std.alpha G6(smc) average_r S/N    ase mean   sd median_r
+      0.88      0.89     0.9      0.44 7.8 0.0087  3.7 0.64     0.46
+
+    95% confidence boundaries 
+             lower alpha upper
+Feldt         0.86  0.88   0.9
+Duhachek      0.86  0.88   0.9
+bootstrapped  0.86  0.88   0.9
+
+ Reliability if an item is dropped:
+    raw_alpha std.alpha G6(smc) average_r S/N alpha se var.r med.r
+L1       0.89      0.89    0.90      0.47 8.1   0.0079 0.027  0.48
+L2       0.88      0.90    0.91      0.49 8.5   0.0085 0.021  0.48
+L3       0.87      0.88    0.90      0.44 7.1   0.0096 0.032  0.46
+L4       0.86      0.87    0.88      0.42 6.6   0.0099 0.026  0.43
+L5       0.86      0.87    0.88      0.42 6.6   0.0100 0.025  0.43
+L6       0.86      0.87    0.88      0.42 6.5   0.0103 0.026  0.44
+L7       0.86      0.86    0.88      0.42 6.4   0.0104 0.026  0.44
+L8       0.86      0.87    0.89      0.42 6.6   0.0101 0.028  0.43
+L9       0.87      0.88    0.90      0.45 7.3   0.0094 0.028  0.46
+L10      0.86      0.87    0.89      0.43 6.7   0.0102 0.031  0.44
+
+ Item statistics 
+      n raw.r std.r r.cor r.drop mean   sd
+L1  431  0.57  0.53  0.45   0.41  3.7 1.22
+L2  431  0.46  0.45  0.36   0.34  4.2 0.85
+L3  431  0.68  0.69  0.64   0.60  3.5 0.81
+L4  431  0.75  0.77  0.77   0.69  3.7 0.80
+L5  431  0.76  0.78  0.77   0.69  3.7 0.80
+L6  431  0.80  0.80  0.80   0.74  3.6 0.90
+L7  431  0.81  0.82  0.82   0.76  3.7 0.87
+L8  431  0.77  0.78  0.75   0.71  3.6 0.87
+L9  431  0.66  0.66  0.61   0.56  3.6 0.94
+L10 431  0.77  0.75  0.72   0.69  3.2 1.07
+
+Non missing response frequency for each item
+       1    2    3    4    5 miss
+L1  0.07 0.08 0.28 0.24 0.33    0
+L2  0.02 0.02 0.08 0.48 0.40    0
+L3  0.01 0.09 0.32 0.50 0.07    0
+L4  0.00 0.10 0.22 0.58 0.10    0
+L5  0.01 0.08 0.20 0.61 0.10    0
+L6  0.02 0.11 0.18 0.57 0.11    0
+L7  0.02 0.10 0.18 0.59 0.11    0
+L8  0.02 0.09 0.23 0.55 0.10    0
+L9  0.03 0.10 0.24 0.50 0.13    0
+L10 0.06 0.23 0.24 0.39 0.07    0</code></pre>
+</div>
 </div>
 </section><section id="interpretação-do-output" class="level4" data-number="6.5.1.3"><h4 data-number="6.5.1.3" class="anchored" data-anchor-id="interpretação-do-output">
 <span class="header-section-number">6.5.1.3</span> Interpretação do Output</h4>
@@ -537,7 +985,7 @@ lower alpha upper     95% confidence boundaries
 <strong>IC 95% [0,87; 0,91]</strong>: Intervalo de confiança do alfa</li>
 </ul>
 <p><strong>Critérios de interpretação:</strong></p>
-<table class="table">
+<table class="caption-top table">
 <thead><tr class="header">
 <th>Alfa de Cronbach</th>
 <th>Consistência Interna</th>
@@ -590,15 +1038,81 @@ lower alpha upper     95% confidence boundaries
 </section><section id="calculando-o-ômega-de-mcdonald" class="level4" data-number="6.5.2.2"><h4 data-number="6.5.2.2" class="anchored" data-anchor-id="calculando-o-ômega-de-mcdonald">
 <span class="header-section-number">6.5.2.2</span> Calculando o Ômega de McDonald</h4>
 <div class="cell">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Calcular Ômega de McDonald</span></span>
-<span><span class="va">omega_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/psych/man/omega.html">omega</a></span><span class="op">(</span><span class="va">itens_escala</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Exibir resultados</span></span>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Calcular Ômega de McDonald</span></span>
+<span><span class="va">omega_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/psych/man/omega.html">omega</a></span><span class="op">(</span><span class="va">itens_escala</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="psicometria_files/figure-html/omega-mcdonald-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Exibir resultados</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">omega_result</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Omega 
+Call: omegah(m = m, nfactors = nfactors, fm = fm, key = key, flip = flip, 
+    digits = digits, title = title, sl = sl, labels = labels, 
+    plot = plot, n.obs = n.obs, rotate = rotate, Phi = Phi, option = option, 
+    covar = covar)
+Alpha:                 0.89 
+G.6:                   0.9 
+Omega Hierarchical:    0.83 
+Omega H asymptotic:    0.9 
+Omega Total            0.92 
+
+Schmid Leiman Factor loadings greater than  0.2 
+       g   F1*   F2*   F3*    h2   h2   u2   p2  com
+L1  0.38              0.89  0.93 0.93 0.07 0.15 1.35
+L2  0.30              0.32       0.19 0.81 0.46 2.03
+L3  0.55        0.30        0.42 0.42 0.58 0.72 1.77
+L4  0.65        0.69        0.90 0.90 0.10 0.47 1.99
+L5  0.68        0.53        0.74 0.74 0.26 0.62 1.89
+L6  0.82                    0.68 0.68 0.32 1.00 1.00
+L7  0.86                    0.74 0.74 0.26 1.00 1.00
+L8  0.79                    0.62 0.62 0.38 1.00 1.01
+L9  0.63                    0.42 0.42 0.58 0.96 1.10
+L10 0.74                    0.55 0.55 0.45 0.98 1.04
+
+With Sums of squares  of:
+   g  F1*  F2*  F3*   h2 
+4.41 0.00 0.86 0.95 4.32 
+
+general/max  1.02   max/min =   Inf
+mean percent general =  0.74    with sd =  0.3 and cv of  0.41 
+Explained Common Variance of the general factor =  0.71 
+
+The degrees of freedom are 18  and the fit is  0.4 
+The number of observations was  431  with Chi Square =  169.31  with prob &lt;  0.000000000000000000000000012
+The root mean square of the residuals is  0.04 
+The df corrected root mean square of the residuals is  0.06
+RMSEA index =  0.14  and the 90 % confidence intervals are  0.121 0.159
+BIC =  60.12
+
+Compare this with the adequacy of just a general factor and no group factors
+The degrees of freedom for just the general factor are 35  and the fit is  1.21 
+The number of observations was  431  with Chi Square =  513.4  with prob &lt;  0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000023
+The root mean square of the residuals is  0.1 
+The df corrected root mean square of the residuals is  0.11 
+
+RMSEA index =  0.178  and the 90 % confidence intervals are  0.165 0.192
+BIC =  301.09 
+
+Measures of factor score adequacy             
+                                                 g F1*  F2*  F3*
+Correlation of scores with factors            0.95   0 0.89 0.96
+Multiple R square of scores with factors      0.91   0 0.80 0.92
+Minimum correlation of factor score estimates 0.81  -1 0.59 0.84
+
+ Total, General and Subset omega for each subset
+                                                 g F1*  F2*  F3*
+Omega total for total scores and subscales    0.92  NA 0.89 0.78
+Omega general for total scores and subscales  0.83  NA 0.75 0.67
+Omega group for total scores and subscales    0.07  NA 0.14 0.11</code></pre>
+</div>
 </div>
 </section></section><section id="comparação-alfa-vs.-ômega" class="level3" data-number="6.5.3"><h3 data-number="6.5.3" class="anchored" data-anchor-id="comparação-alfa-vs.-ômega">
 <span class="header-section-number">6.5.3</span> Comparação: Alfa vs.&nbsp;Ômega</h3>
-<table class="table">
+<table class="caption-top table">
 <colgroup>
 <col style="width: 30%">
 <col style="width: 33%">
@@ -661,13 +1175,15 @@ X = \Lambda F + \epsilon
 <span class="header-section-number">6.6.2.1</span> Teste KMO (Kaiser-Meyer-Olkin)</h4>
 <p>O <strong>KMO</strong> avalia a adequação da amostra para análise fatorial.</p>
 <div class="cell">
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Calcular KMO</span></span>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Calcular KMO</span></span>
 <span><span class="va">kmo_resultado</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/psych/man/KMO.html">KMO</a></span><span class="op">(</span><span class="va">itens_escala</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Imprimir KMO geral</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"KMO geral:"</span>, <span class="va">kmo_resultado</span><span class="op">$</span><span class="va">MSA</span>, <span class="st">"\n"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Interpretar resultado</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"KMO geral:"</span>, <span class="va">kmo_resultado</span><span class="op">$</span><span class="va">MSA</span>, <span class="st">"\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>KMO geral: 0.8706569 </code></pre>
+</div>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Interpretar resultado</span></span>
 <span><span class="kw">if</span> <span class="op">(</span><span class="va">kmo_resultado</span><span class="op">$</span><span class="va">MSA</span> <span class="op">&gt;=</span> <span class="fl">0.9</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"A adequação da amostra é excelente.\n"</span><span class="op">)</span></span>
 <span><span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">kmo_resultado</span><span class="op">$</span><span class="va">MSA</span> <span class="op">&gt;=</span> <span class="fl">0.8</span><span class="op">)</span> <span class="op">{</span></span>
@@ -681,9 +1197,12 @@ X = \Lambda F + \epsilon
 <span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"A adequação da amostra é inaceitável.\n"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>A adequação da amostra é boa.</code></pre>
+</div>
 </div>
 <p><strong>Critérios de interpretação:</strong></p>
-<table class="table">
+<table class="caption-top table">
 <thead><tr class="header">
 <th>KMO</th>
 <th>Adequação da Amostra</th>
@@ -730,11 +1249,20 @@ X = \Lambda F + \epsilon
 <span class="header-section-number">6.6.3.1</span> Análise Paralela</h4>
 <p>A <strong>análise paralela</strong> é o método mais confiável para determinar o número de fatores.</p>
 <div class="cell">
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Realizar análise paralela</span></span>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Realizar análise paralela</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.parallel.html">fa.parallel</a></span><span class="op">(</span><span class="va">itens_escala</span>,</span>
 <span>            fa <span class="op">=</span> <span class="st">"fa"</span>,          <span class="co"># Análise fatorial (não PCA)</span></span>
 <span>            n.iter <span class="op">=</span> <span class="fl">100</span>,       <span class="co"># Número de iterações</span></span>
 <span>            main <span class="op">=</span> <span class="st">"Análise Paralela - Scree Plot"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="psicometria_files/figure-html/analise-paralela-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Parallel analysis suggests that the number of factors =  4  and the number of components =  NA </code></pre>
+</div>
 </div>
 <p><strong>Interpretação:</strong></p>
 <ul>
@@ -750,13 +1278,19 @@ X = \Lambda F + \epsilon
 <span class="header-section-number">6.6.3.2</span> Regra de Kaiser (Autovalores &gt; 1)</h4>
 <p>Método tradicional, mas menos confiável que análise paralela.</p>
 <div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Scree plot simples</span></span>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Scree plot simples</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/VSS.scree.html">scree</a></span><span class="op">(</span><span class="va">itens_escala</span>, main <span class="op">=</span> <span class="st">"Scree Plot"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="psicometria_files/figure-html/scree-plot-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
 </div>
 </section></section><section id="realizando-a-efa" class="level3" data-number="6.6.4"><h3 data-number="6.6.4" class="anchored" data-anchor-id="realizando-a-efa">
 <span class="header-section-number">6.6.4</span> Realizando a EFA</h3>
 <div class="cell">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Determinar número de fatores (baseado em análise paralela)</span></span>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Determinar número de fatores (baseado em análise paralela)</span></span>
 <span><span class="va">n_fatores</span> <span class="op">&lt;-</span> <span class="fl">4</span>  <span class="co"># Ajustar baseado em análise paralela</span></span>
 <span></span>
 <span><span class="co"># Realizar EFA</span></span>
@@ -766,16 +1300,67 @@ X = \Lambda F + \epsilon
 <span>                    fm <span class="op">=</span> <span class="st">"ml"</span><span class="op">)</span>           <span class="co"># Máxima verossimilhança</span></span>
 <span></span>
 <span><span class="co"># Imprimir resultados</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">efa_resultado</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Visualizar diagrama de fatores</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">efa_resultado</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Factor Analysis using method =  ml
+Call: fa(r = itens_escala, nfactors = n_fatores, rotate = "varimax", 
+    fm = "ml")
+Standardized loadings (pattern matrix) based upon correlation matrix
+     ML3  ML1  ML4  ML2   h2   u2 com
+L1  0.07 0.10 0.11 0.89 0.81 0.19 1.1
+L2  0.13 0.16 0.06 0.41 0.21 0.79 1.6
+L3  0.46 0.17 0.31 0.33 0.44 0.56 3.0
+L4  0.82 0.23 0.30 0.14 0.84 0.16 1.5
+L5  0.78 0.34 0.23 0.14 0.80 0.20 1.6
+L6  0.34 0.76 0.26 0.22 0.81 0.19 1.9
+L7  0.28 0.77 0.33 0.24 0.84 0.16 1.9
+L8  0.30 0.40 0.61 0.17 0.65 0.35 2.4
+L9  0.26 0.17 0.76 0.04 0.67 0.33 1.4
+L10 0.22 0.39 0.51 0.31 0.56 0.44 3.1
+
+                       ML3  ML1  ML4  ML2
+SS loadings           1.92 1.75 1.64 1.33
+Proportion Var        0.19 0.18 0.16 0.13
+Cumulative Var        0.19 0.37 0.53 0.66
+Proportion Explained  0.29 0.26 0.25 0.20
+Cumulative Proportion 0.29 0.55 0.80 1.00
+
+Mean item complexity =  1.9
+Test of the hypothesis that 4 factors are sufficient.
+
+df null model =  45  with the objective function =  5.51 with Chi Square =  2344.82
+df of  the model are 11  and the objective function was  0.04 
+
+The root mean square of the residuals (RMSR) is  0.01 
+The df corrected root mean square of the residuals is  0.02 
+
+The harmonic n.obs is  431 with the empirical chi square  5.23  with prob &lt;  0.92 
+The total n.obs was  431  with Likelihood Chi Square =  15.62  with prob &lt;  0.16 
+
+Tucker Lewis Index of factoring reliability =  0.992
+RMSEA index =  0.031  and the 90 % confidence intervals are  0 0.064
+BIC =  -51.11
+Fit based upon off diagonal values = 1
+Measures of factor score adequacy             
+                                                   ML3  ML1  ML4  ML2
+Correlation of (regression) scores with factors   0.90 0.89 0.82 0.90
+Multiple R square of scores with factors          0.82 0.79 0.68 0.81
+Minimum correlation of possible factor scores     0.64 0.58 0.36 0.62</code></pre>
+</div>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Visualizar diagrama de fatores</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.diagram.html">fa.diagram</a></span><span class="op">(</span><span class="va">efa_resultado</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="psicometria_files/figure-html/efa-modelo-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
 </div>
 </section><section id="interpretação-das-cargas-fatoriais" class="level3" data-number="6.6.5"><h3 data-number="6.6.5" class="anchored" data-anchor-id="interpretação-das-cargas-fatoriais">
 <span class="header-section-number">6.6.5</span> Interpretação das Cargas Fatoriais</h3>
 <p>As <strong>cargas fatoriais (factor loadings)</strong> representam a correlação entre item e fator.</p>
 <p><strong>Critérios de interpretação:</strong></p>
-<table class="table">
+<table class="caption-top table">
 <thead><tr class="header">
 <th>Carga Fatorial</th>
 <th>Interpretação</th>
@@ -820,17 +1405,64 @@ X = \Lambda F + \epsilon
 <span class="header-section-number">6.6.7</span> EFA Unidimensional (Exemplo com Literacia)</h3>
 <p>Se a teoria sugere que o instrumento é unidimensional:</p>
 <div class="cell">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># EFA com 1 fator (modelo teórico unidimensional)</span></span>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># EFA com 1 fator (modelo teórico unidimensional)</span></span>
 <span><span class="va">efa_uni</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.html">fa</a></span><span class="op">(</span><span class="va">itens_escala</span>,</span>
 <span>              nfactors <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>              rotate <span class="op">=</span> <span class="st">"none"</span>,   <span class="co"># Sem rotação (1 fator)</span></span>
 <span>              fm <span class="op">=</span> <span class="st">"ml"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Resultados</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">efa_uni</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Diagrama</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">efa_uni</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Factor Analysis using method =  ml
+Call: fa(r = itens_escala, nfactors = 1, rotate = "none", fm = "ml")
+Standardized loadings (pattern matrix) based upon correlation matrix
+     ML1   h2   u2 com
+L1  0.40 0.16 0.84   1
+L2  0.32 0.11 0.89   1
+L3  0.61 0.37 0.63   1
+L4  0.75 0.56 0.44   1
+L5  0.77 0.59 0.41   1
+L6  0.83 0.69 0.31   1
+L7  0.84 0.71 0.29   1
+L8  0.75 0.57 0.43   1
+L9  0.61 0.37 0.63   1
+L10 0.71 0.50 0.50   1
+
+                ML1
+SS loadings    4.63
+Proportion Var 0.46
+
+Mean item complexity =  1
+Test of the hypothesis that 1 factor is sufficient.
+
+df null model =  45  with the objective function =  5.51 with Chi Square =  2344.82
+df of  the model are 35  and the objective function was  1.13 
+
+The root mean square of the residuals (RMSR) is  0.08 
+The df corrected root mean square of the residuals is  0.09 
+
+The harmonic n.obs is  431 with the empirical chi square  253.09  with prob &lt;  0.000000000000000000000000000000000072 
+The total n.obs was  431  with Likelihood Chi Square =  481.23  with prob &lt;  0.000000000000000000000000000000000000000000000000000000000000000000000000000000078 
+
+Tucker Lewis Index of factoring reliability =  0.75
+RMSEA index =  0.172  and the 90 % confidence intervals are  0.159 0.186
+BIC =  268.92
+Fit based upon off diagonal values = 0.97
+Measures of factor score adequacy             
+                                                   ML1
+Correlation of (regression) scores with factors   0.96
+Multiple R square of scores with factors          0.92
+Minimum correlation of possible factor scores     0.84</code></pre>
+</div>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Diagrama</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.diagram.html">fa.diagram</a></span><span class="op">(</span><span class="va">efa_uni</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="psicometria_files/figure-html/efa-unidimensional-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
 </div>
 </section></section><section id="análise-fatorial-confirmatória-cfa" class="level2" data-number="6.7"><h2 data-number="6.7" class="anchored" data-anchor-id="análise-fatorial-confirmatória-cfa">
 <span class="header-section-number">6.7</span> Análise Fatorial Confirmatória (CFA)</h2>
@@ -851,7 +1483,7 @@ X = \Lambda F + \epsilon
 <strong>Fatores correlacionados</strong>: Geralmente permite correlações entre fatores</li>
 </ol></section><section id="diferenças-efa-vs.-cfa" class="level4" data-number="6.7.1.2"><h4 data-number="6.7.1.2" class="anchored" data-anchor-id="diferenças-efa-vs.-cfa">
 <span class="header-section-number">6.7.1.2</span> Diferenças EFA vs.&nbsp;CFA</h4>
-<table class="table">
+<table class="caption-top table">
 <colgroup>
 <col style="width: 40%">
 <col style="width: 30%">
@@ -910,7 +1542,7 @@ X = \Lambda F + \epsilon
 </section><section id="exemplo-modelo-unidimensional" class="level4" data-number="6.7.2.2"><h4 data-number="6.7.2.2" class="anchored" data-anchor-id="exemplo-modelo-unidimensional">
 <span class="header-section-number">6.7.2.2</span> Exemplo: Modelo Unidimensional</h4>
 <div class="cell">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Carregar lavaan</span></span>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Carregar lavaan</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://lavaan.ugent.be">lavaan</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Especificar modelo unidimensional</span></span>
@@ -928,11 +1560,92 @@ X = \Lambda F + \epsilon
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">ajuste_cfa</span>,</span>
 <span>        fit.measures <span class="op">=</span> <span class="cn">TRUE</span>,    <span class="co"># Mostrar índices de ajuste</span></span>
 <span>        standardized <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>    <span class="co"># Mostrar coeficientes padronizados</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>lavaan 0.6-21 ended normally after 34 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                        20
+
+  Number of observations                           431
+
+Model Test User Model:
+                                                      
+  Test statistic                               487.836
+  Degrees of freedom                                35
+  P-value (Chi-square)                           0.000
+
+Model Test Baseline Model:
+
+  Test statistic                              2373.267
+  Degrees of freedom                                45
+  P-value                                        0.000
+
+User Model versus Baseline Model:
+
+  Comparative Fit Index (CFI)                    0.806
+  Tucker-Lewis Index (TLI)                       0.750
+
+Loglikelihood and Information Criteria:
+
+  Loglikelihood user model (H0)              -4737.734
+  Loglikelihood unrestricted model (H1)      -4493.816
+                                                      
+  Akaike (AIC)                                9515.468
+  Bayesian (BIC)                              9596.791
+  Sample-size adjusted Bayesian (SABIC)       9533.322
+
+Root Mean Square Error of Approximation:
+
+  RMSEA                                          0.173
+  90 Percent confidence interval - lower         0.160
+  90 Percent confidence interval - upper         0.187
+  P-value H_0: RMSEA &lt;= 0.050                    0.000
+  P-value H_0: RMSEA &gt;= 0.080                    1.000
+
+Standardized Root Mean Square Residual:
+
+  SRMR                                           0.073
+
+Parameter Estimates:
+
+  Standard errors                             Standard
+  Information                                 Expected
+  Information saturated (h1) model          Structured
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  Literacia =~                                                          
+    L1                1.000                               0.482    0.397
+    L2                0.570    0.107    5.335    0.000    0.275    0.324
+    L3                1.018    0.136    7.478    0.000    0.491    0.610
+    L4                1.245    0.156    8.000    0.000    0.600    0.747
+    L5                1.276    0.158    8.066    0.000    0.616    0.769
+    L6                1.555    0.189    8.235    0.000    0.750    0.833
+    L7                1.524    0.185    8.255    0.000    0.735    0.842
+    L8                1.357    0.169    8.024    0.000    0.655    0.755
+    L9                1.190    0.159    7.487    0.000    0.574    0.612
+    L10               1.560    0.198    7.865    0.000    0.752    0.706
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+   .L1                1.247    0.086   14.435    0.000    1.247    0.843
+   .L2                0.644    0.044   14.526    0.000    0.644    0.895
+   .L3                0.407    0.029   13.901    0.000    0.407    0.628
+   .L4                0.286    0.022   13.012    0.000    0.286    0.442
+   .L5                0.262    0.021   12.765    0.000    0.262    0.409
+   .L6                0.248    0.021   11.657    0.000    0.248    0.306
+   .L7                0.222    0.019   11.440    0.000    0.222    0.291
+   .L8                0.324    0.025   12.931    0.000    0.324    0.431
+   .L9                0.550    0.040   13.893    0.000    0.550    0.626
+   .L10               0.570    0.043   13.371    0.000    0.570    0.502
+    Literacia         0.233    0.056    4.120    0.000    1.000    1.000</code></pre>
+</div>
 </div>
 </section><section id="exemplo-modelo-bidimensional" class="level4" data-number="6.7.2.3"><h4 data-number="6.7.2.3" class="anchored" data-anchor-id="exemplo-modelo-bidimensional">
 <span class="header-section-number">6.7.2.3</span> Exemplo: Modelo Bidimensional</h4>
 <div class="cell">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Modelo com 2 fatores correlacionados</span></span>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Modelo com 2 fatores correlacionados</span></span>
 <span><span class="va">modelo_cfa_2f</span> <span class="op">&lt;-</span> <span class="st">'</span></span>
 <span><span class="st">  # Definição dos fatores</span></span>
 <span><span class="st">  Fator1 =~ L1 + L2 + L3 + L4 + L5</span></span>
@@ -944,6 +1657,94 @@ X = \Lambda F + \epsilon
 <span></span>
 <span><span class="co"># Resultados</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">ajuste_cfa_2f</span>, fit.measures <span class="op">=</span> <span class="cn">TRUE</span>, standardized <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>lavaan 0.6-21 ended normally after 41 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                        21
+
+  Number of observations                           431
+
+Model Test User Model:
+                                                      
+  Test statistic                               299.261
+  Degrees of freedom                                34
+  P-value (Chi-square)                           0.000
+
+Model Test Baseline Model:
+
+  Test statistic                              2373.267
+  Degrees of freedom                                45
+  P-value                                        0.000
+
+User Model versus Baseline Model:
+
+  Comparative Fit Index (CFI)                    0.886
+  Tucker-Lewis Index (TLI)                       0.849
+
+Loglikelihood and Information Criteria:
+
+  Loglikelihood user model (H0)              -4643.446
+  Loglikelihood unrestricted model (H1)      -4493.816
+                                                      
+  Akaike (AIC)                                9328.893
+  Bayesian (BIC)                              9414.281
+  Sample-size adjusted Bayesian (SABIC)       9347.639
+
+Root Mean Square Error of Approximation:
+
+  RMSEA                                          0.135
+  90 Percent confidence interval - lower         0.121
+  90 Percent confidence interval - upper         0.149
+  P-value H_0: RMSEA &lt;= 0.050                    0.000
+  P-value H_0: RMSEA &gt;= 0.080                    1.000
+
+Standardized Root Mean Square Residual:
+
+  SRMR                                           0.079
+
+Parameter Estimates:
+
+  Standard errors                             Standard
+  Information                                 Expected
+  Information saturated (h1) model          Structured
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  Fator1 =~                                                             
+    L1                1.000                               0.394    0.324
+    L2                0.622    0.139    4.469    0.000    0.245    0.289
+    L3                1.283    0.206    6.217    0.000    0.505    0.628
+    L4                1.809    0.273    6.632    0.000    0.712    0.886
+    L5                1.825    0.275    6.639    0.000    0.718    0.897
+  Fator2 =~                                                             
+    L6                1.000                               0.783    0.870
+    L7                0.992    0.041   24.300    0.000    0.777    0.890
+    L8                0.826    0.045   18.361    0.000    0.647    0.746
+    L9                0.707    0.053   13.289    0.000    0.554    0.591
+    L10               0.957    0.057   16.809    0.000    0.749    0.703
+
+Covariances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  Fator1 ~~                                                             
+    Fator2            0.238    0.041    5.838    0.000    0.773    0.773
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+   .L1                1.324    0.091   14.504    0.000    1.324    0.895
+   .L2                0.659    0.045   14.544    0.000    0.659    0.917
+   .L3                0.392    0.029   13.686    0.000    0.392    0.606
+   .L4                0.139    0.017    8.318    0.000    0.139    0.215
+   .L5                0.125    0.016    7.661    0.000    0.125    0.195
+   .L6                0.197    0.019   10.192    0.000    0.197    0.243
+   .L7                0.158    0.017    9.241    0.000    0.158    0.207
+   .L8                0.334    0.026   12.940    0.000    0.334    0.443
+   .L9                0.573    0.041   13.948    0.000    0.573    0.651
+   .L10               0.575    0.043   13.335    0.000    0.575    0.506
+    Fator1            0.155    0.047    3.294    0.001    1.000    1.000
+    Fator2            0.614    0.055   11.093    0.000    1.000    1.000</code></pre>
+</div>
 </div>
 </section></section><section id="índices-de-ajuste-do-modelo" class="level3" data-number="6.7.3"><h3 data-number="6.7.3" class="anchored" data-anchor-id="índices-de-ajuste-do-modelo">
 <span class="header-section-number">6.7.3</span> Índices de Ajuste do Modelo</h3>
@@ -1005,7 +1806,7 @@ X = \Lambda F + \epsilon
 <strong>Ajuste aceitável</strong>: SRMR ≤ 0,08</li>
 </ul></section></section><section id="tabela-resumo-de-critérios-de-ajuste" class="level3" data-number="6.7.4"><h3 data-number="6.7.4" class="anchored" data-anchor-id="tabela-resumo-de-critérios-de-ajuste">
 <span class="header-section-number">6.7.4</span> Tabela Resumo de Critérios de Ajuste</h3>
-<table class="table">
+<table class="caption-top table">
 <thead><tr class="header">
 <th><strong>Índice</strong></th>
 <th><strong>Bom Ajuste</strong></th>
@@ -1041,14 +1842,27 @@ X = \Lambda F + \epsilon
 </table></section><section id="interpretação-dos-resultados-da-cfa" class="level3" data-number="6.7.5"><h3 data-number="6.7.5" class="anchored" data-anchor-id="interpretação-dos-resultados-da-cfa">
 <span class="header-section-number">6.7.5</span> Interpretação dos Resultados da CFA</h3>
 <div class="cell">
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Exibir índices de ajuste</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/fitMeasures.html">fitMeasures</a></span><span class="op">(</span><span class="va">ajuste_cfa</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"chisq"</span>, <span class="st">"df"</span>, <span class="st">"pvalue"</span>, <span class="st">"cfi"</span>, <span class="st">"tli"</span>, <span class="st">"rmsea"</span>, <span class="st">"srmr"</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Exibir cargas fatoriais padronizadas</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/standardizedSolution.html">standardizedSolution</a></span><span class="op">(</span><span class="va">ajuste_cfa</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Exibir R² dos itens</span></span>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Exibir índices de ajuste</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/fitMeasures.html">fitMeasures</a></span><span class="op">(</span><span class="va">ajuste_cfa</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"chisq"</span>, <span class="st">"df"</span>, <span class="st">"pvalue"</span>, <span class="st">"cfi"</span>, <span class="st">"tli"</span>, <span class="st">"rmsea"</span>, <span class="st">"srmr"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  chisq      df  pvalue     cfi     tli   rmsea    srmr 
+487.836  35.000   0.000   0.806   0.750   0.173   0.073 </code></pre>
+</div>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Exibir cargas fatoriais padronizadas</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/standardizedSolution.html">standardizedSolution</a></span><span class="op">(</span><span class="va">ajuste_cfa</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["lhs"],"name":[1],"type":["chr"],"align":["left"]},{"label":["op"],"name":[2],"type":["chr"],"align":["left"]},{"label":["rhs"],"name":[3],"type":["chr"],"align":["left"]},{"label":["est.std"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["se"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["z"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["pvalue"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["ci.lower"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["ci.upper"],"name":[9],"type":["dbl"],"align":["right"]}],"data":[{"1":"Literacia","2":"=~","3":"L1","4":"0.3966292","5":"0.04273808","6":"9.280463","7":"0.0000000000000000000","8":"0.3128641","9":"0.4803943"},{"1":"Literacia","2":"=~","3":"L2","4":"0.3241738","5":"0.04523597","6":"7.166284","7":"0.0000000000007704948","8":"0.2355129","9":"0.4128347"},{"1":"Literacia","2":"=~","3":"L3","4":"0.6099020","5":"0.03250779","6":"18.761719","7":"0.0000000000000000000","8":"0.5461879","9":"0.6736160"},{"1":"Literacia","2":"=~","3":"L4","4":"0.7468714","5":"0.02376128","6":"31.432294","7":"0.0000000000000000000","8":"0.7003002","9":"0.7934427"},{"1":"Literacia","2":"=~","3":"L5","4":"0.7688565","5":"0.02221824","6":"34.604739","7":"0.0000000000000000000","8":"0.7253096","9":"0.8124035"},{"1":"Literacia","2":"=~","3":"L6","4":"0.8332862","5":"0.01755446","6":"47.468618","7":"0.0000000000000000000","8":"0.7988801","9":"0.8676923"},{"1":"Literacia","2":"=~","3":"L7","4":"0.8419371","5":"0.01692198","6":"49.754054","7":"0.0000000000000000000","8":"0.8087707","9":"0.8751036"},{"1":"Literacia","2":"=~","3":"L8","4":"0.7545650","5":"0.02322502","6":"32.489310","7":"0.0000000000000000000","8":"0.7090448","9":"0.8000852"},{"1":"Literacia","2":"=~","3":"L9","4":"0.6118004","5":"0.03239774","6":"18.884044","7":"0.0000000000000000000","8":"0.5483020","9":"0.6752988"},{"1":"Literacia","2":"=~","3":"L10","4":"0.7057812","5":"0.02655029","6":"26.582806","7":"0.0000000000000000000","8":"0.6537436","9":"0.7578188"},{"1":"L1","2":"~~","3":"L1","4":"0.8426853","5":"0.03390234","6":"24.856256","7":"0.0000000000000000000","8":"0.7762379","9":"0.9091326"},{"1":"L2","2":"~~","3":"L2","4":"0.8949113","5":"0.02932863","6":"30.513232","7":"0.0000000000000000000","8":"0.8374283","9":"0.9523944"},{"1":"L3","2":"~~","3":"L3","4":"0.6280196","5":"0.03965312","6":"15.837834","7":"0.0000000000000000000","8":"0.5503009","9":"0.7057383"},{"1":"L4","2":"~~","3":"L4","4":"0.4421830","5":"0.03549324","6":"12.458233","7":"0.0000000000000000000","8":"0.3726176","9":"0.5117485"},{"1":"L5","2":"~~","3":"L5","4":"0.4088596","5":"0.03416529","6":"11.967107","7":"0.0000000000000000000","8":"0.3418969","9":"0.4758223"},{"1":"L6","2":"~~","3":"L6","4":"0.3056341","5":"0.02925579","6":"10.446963","7":"0.0000000000000000000","8":"0.2482938","9":"0.3629744"},{"1":"L7","2":"~~","3":"L7","4":"0.2911419","5":"0.02849449","6":"10.217480","7":"0.0000000000000000000","8":"0.2352937","9":"0.3469900"},{"1":"L8","2":"~~","3":"L8","4":"0.4306316","5":"0.03504958","6":"12.286356","7":"0.0000000000000000000","8":"0.3619357","9":"0.4993275"},{"1":"L9","2":"~~","3":"L9","4":"0.6257003","5":"0.03964190","6":"15.783811","7":"0.0000000000000000000","8":"0.5480036","9":"0.7033970"},{"1":"L10","2":"~~","3":"L10","4":"0.5018729","5":"0.03747740","6":"13.391348","7":"0.0000000000000000000","8":"0.4284185","9":"0.5753272"},{"1":"Literacia","2":"~~","3":"Literacia","4":"1.0000000","5":"0.00000000","6":"NA","7":"NA","8":"1.0000000","9":"1.0000000"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Exibir R² dos itens</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/lavInspect.html">inspect</a></span><span class="op">(</span><span class="va">ajuste_cfa</span>, <span class="st">"r2"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   L1    L2    L3    L4    L5    L6    L7    L8    L9   L10 
+0.157 0.105 0.372 0.558 0.591 0.694 0.709 0.569 0.374 0.498 </code></pre>
+</div>
 </div>
 </section><section id="modificação-de-modelos" class="level3" data-number="6.7.6"><h3 data-number="6.7.6" class="anchored" data-anchor-id="modificação-de-modelos">
 <span class="header-section-number">6.7.6</span> Modificação de Modelos</h3>
@@ -1060,27 +1874,33 @@ X = \Lambda F + \epsilon
 <strong>Índices de modificação</strong>: Sugestões estatísticas do lavaan</li>
 </ol>
 <div class="cell">
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Índices de modificação</span></span>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Índices de modificação</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/modificationIndices.html">modindices</a></span><span class="op">(</span><span class="va">ajuste_cfa</span>, sort <span class="op">=</span> <span class="cn">TRUE</span>, maximum.number <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["lhs"],"name":[1],"type":["chr"],"align":["left"]},{"label":["op"],"name":[2],"type":["chr"],"align":["left"]},{"label":["rhs"],"name":[3],"type":["chr"],"align":["left"]},{"label":["mi"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["epc"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["sepc.lv"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["sepc.all"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["sepc.nox"],"name":[8],"type":["dbl"],"align":["right"]}],"data":[{"1":"L4","2":"~~","3":"L5","4":"184.69838","5":"0.21063902","6":"0.21063902","7":"0.7696112","8":"0.7696112","_rn_":"46"},{"1":"L6","2":"~~","3":"L7","4":"144.60971","5":"0.19382767","6":"0.19382767","7":"0.8267670","8":"0.8267670","_rn_":"57"},{"1":"L8","2":"~~","3":"L9","4":"46.67097","5":"0.15408937","6":"0.15408937","7":"0.3648405","8":"0.3648405","_rn_":"64"},{"1":"L1","2":"~~","3":"L2","4":"40.72302","5":"0.27922031","6":"0.27922031","7":"0.3117017","8":"0.3117017","_rn_":"22"},{"1":"L4","2":"~~","3":"L7","4":"36.15424","5":"-0.09303726","6":"-0.09303726","7":"-0.3694458","8":"-0.3694458","_rn_":"48"},{"1":"L4","2":"~~","3":"L6","4":"24.24911","5":"-0.07938049","6":"-0.07938049","7":"-0.2983801","8":"-0.2983801","_rn_":"47"},{"1":"L3","2":"~~","3":"L7","4":"23.73232","5":"-0.08408409","6":"-0.08408409","7":"-0.2798443","8":"-0.2798443","_rn_":"42"},{"1":"L6","2":"~~","3":"L9","4":"19.94421","5":"-0.09370903","6":"-0.09370903","7":"-0.2538009","8":"-0.2538009","_rn_":"59"},{"1":"L3","2":"~~","3":"L4","4":"19.37720","5":"0.07982339","6":"0.07982339","7":"0.2341109","8":"0.2341109","_rn_":"39"},{"1":"L5","2":"~~","3":"L10","4":"18.75957","5":"-0.09285285","6":"-0.09285285","7":"-0.2401218","8":"-0.2401218","_rn_":"56"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
 </div>
 <p><strong>Cuidado:</strong> Não realize modificações baseadas apenas em estatísticas - sempre justifique teoricamente.</p>
-</section><section id="visualização-do-modelo-com-sempaths" class="level3" data-number="6.7.7"><h3 data-number="6.7.7" class="anchored" data-anchor-id="visualização-do-modelo-com-sempaths">
-<span class="header-section-number">6.7.7</span> Visualização do Modelo com semPaths</h3>
+</section><section id="visualização-do-modelo-com-lavaanplot" class="level3" data-number="6.7.7"><h3 data-number="6.7.7" class="anchored" data-anchor-id="visualização-do-modelo-com-lavaanplot">
+<span class="header-section-number">6.7.7</span> Visualização do Modelo com lavaanPlot</h3>
 <div class="cell">
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/SachaEpskamp/semPlot">semPlot</a></span><span class="op">)</span></span>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/alishinski/lavaanPlot">lavaanPlot</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Plotar modelo CFA</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/semPlot/man/semPaths.html">semPaths</a></span><span class="op">(</span><span class="va">ajuste_cfa</span>,</span>
-<span>         what <span class="op">=</span> <span class="st">"std"</span>,             <span class="co"># Coeficientes padronizados</span></span>
-<span>         layout <span class="op">=</span> <span class="st">"tree2"</span>,         <span class="co"># Layout hierárquico</span></span>
-<span>         edge.label.cex <span class="op">=</span> <span class="fl">0.8</span>,     <span class="co"># Tamanho das etiquetas</span></span>
-<span>         sizeMan <span class="op">=</span> <span class="fl">8</span>,              <span class="co"># Tamanho dos nós observados</span></span>
-<span>         sizeLat <span class="op">=</span> <span class="fl">10</span>,             <span class="co"># Tamanho dos nós latentes</span></span>
-<span>         esize <span class="op">=</span> <span class="fl">1</span>,                <span class="co"># Tamanho das setas</span></span>
-<span>         residuals <span class="op">=</span> <span class="cn">TRUE</span>,         <span class="co"># Mostrar resíduos</span></span>
-<span>         intercepts <span class="op">=</span> <span class="cn">FALSE</span>,       <span class="co"># Não mostrar interceptos</span></span>
-<span>         title <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>         nCharNodes <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>           <span class="co"># Sem abreviação de nomes</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="http://alexlishinski.com/lavaanPlot/reference/lavaanPlot.html">lavaanPlot</a></span><span class="op">(</span>model <span class="op">=</span> <span class="va">ajuste_cfa</span>,</span>
+<span>           node_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="st">"box"</span>, fontname <span class="op">=</span> <span class="st">"Helvetica"</span><span class="op">)</span>,</span>
+<span>           edge_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span>,</span>
+<span>           coefs <span class="op">=</span> <span class="cn">TRUE</span>,           <span class="co"># Mostrar coeficientes</span></span>
+<span>           stand <span class="op">=</span> <span class="cn">TRUE</span>,           <span class="co"># Usar coeficientes padronizados</span></span>
+<span>           sig <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span>            <span class="co"># Destacar coeficientes significativos</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="grViz html-widget html-fill-item" id="htmlwidget-62b4ed64492123d0a641" style="width:100%;height:487px;"></div>
+<script type="application/json" data-for="htmlwidget-62b4ed64492123d0a641">{"x":{"diagram":" digraph plot { \n graph [ overlap = true, fontsize = 10 ] \n node [ shape = box, fontname = Helvetica ] \n node [shape = box] \n L1; L2; L3; L4; L5; L6; L7; L8; L9; L10 \n node [shape = oval] \n Literacia \n \n edge [ color = grey ] \n  Literacia->L1 [label = \"0.4\"] Literacia->L2 [label = \"0.32\"] Literacia->L3 [label = \"0.61\"] Literacia->L4 [label = \"0.75\"] Literacia->L5 [label = \"0.77\"] Literacia->L6 [label = \"0.83\"] Literacia->L7 [label = \"0.84\"] Literacia->L8 [label = \"0.75\"] Literacia->L9 [label = \"0.61\"] Literacia->L10 [label = \"0.71\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</div>
 </div>
 <p><strong>Elementos do diagrama:</strong></p>
 <ul>
@@ -1176,359 +1996,423 @@ X = \Lambda F + \epsilon
 
 
 </section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
     }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const disableStylesheet = (stylesheets) => {
-    for (let i=0; i < stylesheets.length; i++) {
-      const stylesheet = stylesheets[i];
-      stylesheet.rel = 'prefetch';
-    }
-  }
-  const enableStylesheet = (stylesheets) => {
-    for (let i=0; i < stylesheets.length; i++) {
-      const stylesheet = stylesheets[i];
-      stylesheet.rel = 'stylesheet';
-    }
-  }
-  const manageTransitions = (selector, allowTransitions) => {
-    const els = window.document.querySelectorAll(selector);
-    for (let i=0; i < els.length; i++) {
-      const el = els[i];
-      if (allowTransitions) {
-        el.classList.remove('notransition');
-      } else {
-        el.classList.add('notransition');
-      }
-    }
-  }
-  const toggleColorMode = (alternate) => {
-    // Switch the stylesheets
-    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
-    manageTransitions('#quarto-margin-sidebar .nav-link', false);
-    if (alternate) {
-      enableStylesheet(alternateStylesheets);
-      for (const sheetNode of alternateStylesheets) {
-        if (sheetNode.id === "quarto-bootstrap") {
-          toggleBodyColorMode(sheetNode);
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
         }
       }
-    } else {
-      disableStylesheet(alternateStylesheets);
-      toggleBodyColorPrimary();
-    }
-    manageTransitions('#quarto-margin-sidebar .nav-link', true);
-    // Switch the toggles
-    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
-    for (let i=0; i < toggles.length; i++) {
-      const toggle = toggles[i];
-      if (toggle) {
-        if (alternate) {
-          toggle.classList.add("alternate");     
-        } else {
-          toggle.classList.remove("alternate");
-        }
-      }
-    }
-    // Hack to workaround the fact that safari doesn't
-    // properly recolor the scrollbar when toggling (#1455)
-    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
-      manageTransitions("body", false);
-      window.scrollTo(0, 1);
-      setTimeout(() => {
-        window.scrollTo(0, 0);
-        manageTransitions("body", true);
-      }, 40);  
-    }
-  }
-  const isFileUrl = () => { 
-    return window.location.protocol === 'file:';
-  }
-  const hasAlternateSentinel = () => {  
-    let styleSentinel = getColorSchemeSentinel();
-    if (styleSentinel !== null) {
-      return styleSentinel === "alternate";
-    } else {
       return false;
     }
-  }
-  const setStyleSentinel = (alternate) => {
-    const value = alternate ? "alternate" : "default";
-    if (!isFileUrl()) {
-      window.localStorage.setItem("quarto-color-scheme", value);
-    } else {
-      localAlternateSentinel = value;
-    }
-  }
-  const getColorSchemeSentinel = () => {
-    if (!isFileUrl()) {
-      const storageValue = window.localStorage.getItem("quarto-color-scheme");
-      return storageValue != null ? storageValue : localAlternateSentinel;
-    } else {
-      return localAlternateSentinel;
-    }
-  }
-  let localAlternateSentinel = 'default';
-  // Dark / light mode switch
-  window.quartoToggleColorScheme = () => {
-    // Read the current dark / light value 
-    let toAlternate = !hasAlternateSentinel();
-    toggleColorMode(toAlternate);
-    setStyleSentinel(toAlternate);
-  };
-  // Ensure there is a toggle, if there isn't float one in the top right
-  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
-    const a = window.document.createElement('a');
-    a.classList.add('top-right');
-    a.classList.add('quarto-color-scheme-toggle');
-    a.href = "";
-    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
-    const i = window.document.createElement("i");
-    i.classList.add('bi');
-    a.appendChild(i);
-    window.document.body.appendChild(a);
-  }
-  // Switch to dark mode if need be
-  if (hasAlternateSentinel()) {
-    toggleColorMode(true);
-  } else {
-    toggleColorMode(false);
-  }
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
       }
-    }
-    return false;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
         }
-      }
-      return codeEl.innerText;
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
     }
-  });
-  clipboard.on('success', function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
     }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
-      }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  });
-  function tippyHover(el, contentFn) {
-    const config = {
-      allowHTML: true,
-      content: contentFn,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start'
-    };
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      return note.innerHTML;
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
     });
-  }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
     }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
           }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
       });
     }
-  }
-});
-</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
-      <a href="./regressao.html" class="pagination-link">
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./regressao.html" class="pagination-link" aria-label="Regressão Linear, Logística e Multinomial">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Regressão Linear, Logística e Multinomial</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./analise-texto.html" class="pagination-link">
+      <a href="./analise-texto.html" class="pagination-link" aria-label="Análise de Dados Textuais e Mineração de Texto">
         <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Análise de Dados Textuais e Mineração de Texto</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>

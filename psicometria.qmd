@@ -38,7 +38,7 @@ library(tidyverse)    # Manipulação de dados
 library(psych)        # Análise psicométrica (Alpha, Omega, EFA)
 library(corrplot)     # Visualização de correlações
 library(lavaan)       # Análise Fatorial Confirmatória (CFA)
-library(semPlot)      # Visualização de modelos SEM
+library(lavaanPlot)   # Visualização de modelos SEM
 library(qgraph)       # Análise de redes
 library(GGally)       # Gráficos de correlação
 
@@ -50,7 +50,6 @@ options(scipen = 999)
 
 ```{r}
 #| label: importar-dados-psicometria
-#| eval: false
 
 # Importar dados de literacia digital
 dados <- read_csv("data/literacia_data.csv")
@@ -69,7 +68,6 @@ summary(dados)
 
 ```{r}
 #| label: converter-fatores
-#| eval: false
 
 # Converter variáveis qualitativas em fatores
 dados <- dados %>%
@@ -85,7 +83,6 @@ str(dados)
 
 ```{r}
 #| label: dados-faltantes
-#| eval: false
 
 # Verificar quantidade de dados faltantes por coluna
 colSums(is.na(dados))
@@ -111,7 +108,6 @@ Antes de realizar análises fatoriais, é útil examinar a estrutura de correla�
 
 ```{r}
 #| label: matriz-correlacao
-#| eval: false
 
 # Selecionar itens da escala de literacia (L1 a L10) e idade
 dados_cor <- dados %>%
@@ -163,7 +159,6 @@ Para análise fatorial, esperamos:
 
 ```{r}
 #| label: heatmap-correlacao
-#| eval: false
 
 # Heatmap com cores
 heatmap(matriz_cor,
@@ -179,7 +174,6 @@ A **análise de redes** oferece uma perspectiva alternativa sobre as relações 
 
 ```{r}
 #| label: analise-redes
-#| eval: false
 
 # Selecionar itens da escala
 dados_rede <- dados %>%
@@ -243,7 +237,6 @@ Onde:
 
 ```{r}
 #| label: alfa-cronbach
-#| eval: false
 
 # Selecionar itens da escala
 itens_escala <- dados %>%
@@ -319,7 +312,6 @@ Onde:
 
 ```{r}
 #| label: omega-mcdonald
-#| eval: false
 
 # Calcular Ômega de McDonald
 omega_result <- omega(itens_escala)
@@ -372,7 +364,6 @@ O **KMO** avalia a adequação da amostra para análise fatorial.
 
 ```{r}
 #| label: teste-kmo
-#| eval: false
 
 # Calcular KMO
 kmo_resultado <- KMO(itens_escala)
@@ -423,7 +414,6 @@ A **análise paralela** é o método mais confiável para determinar o número d
 
 ```{r}
 #| label: analise-paralela
-#| eval: false
 
 # Realizar análise paralela
 fa.parallel(itens_escala,
@@ -445,7 +435,6 @@ Método tradicional, mas menos confiável que análise paralela.
 
 ```{r}
 #| label: scree-plot
-#| eval: false
 
 # Scree plot simples
 scree(itens_escala, main = "Scree Plot")
@@ -455,7 +444,6 @@ scree(itens_escala, main = "Scree Plot")
 
 ```{r}
 #| label: efa-modelo
-#| eval: false
 
 # Determinar número de fatores (baseado em análise paralela)
 n_fatores <- 4  # Ajustar baseado em análise paralela
@@ -503,7 +491,6 @@ Se a teoria sugere que o instrumento é unidimensional:
 
 ```{r}
 #| label: efa-unidimensional
-#| eval: false
 
 # EFA com 1 fator (modelo teórico unidimensional)
 efa_uni <- fa(itens_escala,
@@ -558,7 +545,6 @@ O pacote **lavaan** usa sintaxe intuitiva para especificar modelos CFA.
 
 ```{r}
 #| label: cfa-modelo-uni
-#| eval: false
 
 # Carregar lavaan
 library(lavaan)
@@ -584,7 +570,6 @@ summary(ajuste_cfa,
 
 ```{r}
 #| label: cfa-modelo-bi
-#| eval: false
 
 # Modelo com 2 fatores correlacionados
 modelo_cfa_2f <- '
@@ -659,7 +644,6 @@ Os **índices de ajuste (fit indices)** avaliam o quão bem o modelo teórico se
 
 ```{r}
 #| label: interpretar-cfa
-#| eval: false
 
 # Exibir índices de ajuste
 fitMeasures(ajuste_cfa, c("chisq", "df", "pvalue", "cfi", "tli", "rmsea", "srmr"))
@@ -680,7 +664,6 @@ Se o modelo não ajustar bem, considere modificações baseadas em:
 
 ```{r}
 #| label: indices-modificacao
-#| eval: false
 
 # Índices de modificação
 modindices(ajuste_cfa, sort = TRUE, maximum.number = 10)
@@ -688,26 +671,20 @@ modindices(ajuste_cfa, sort = TRUE, maximum.number = 10)
 
 **Cuidado:** Não realize modificações baseadas apenas em estatísticas - sempre justifique teoricamente.
 
-### Visualização do Modelo com semPaths
+### Visualização do Modelo com lavaanPlot
 
 ```{r}
-#| label: semplot-visualizacao
-#| eval: false
+#| label: lavaanplot-visualizacao
 
-library(semPlot)
+library(lavaanPlot)
 
 # Plotar modelo CFA
-semPaths(ajuste_cfa,
-         what = "std",             # Coeficientes padronizados
-         layout = "tree2",         # Layout hierárquico
-         edge.label.cex = 0.8,     # Tamanho das etiquetas
-         sizeMan = 8,              # Tamanho dos nós observados
-         sizeLat = 10,             # Tamanho dos nós latentes
-         esize = 1,                # Tamanho das setas
-         residuals = TRUE,         # Mostrar resíduos
-         intercepts = FALSE,       # Não mostrar interceptos
-         title = TRUE,
-         nCharNodes = 0)           # Sem abreviação de nomes
+lavaanPlot(model = ajuste_cfa,
+           node_options = list(shape = "box", fontname = "Helvetica"),
+           edge_options = list(color = "grey"),
+           coefs = TRUE,           # Mostrar coeficientes
+           stand = TRUE,           # Usar coeficientes padronizados
+           sig = 0.05)            # Destacar coeficientes significativos
 ```
 
 **Elementos do diagrama:**

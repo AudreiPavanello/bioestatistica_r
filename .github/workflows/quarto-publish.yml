@@ -62,14 +62,14 @@ jobs:
             repos = c(CRAN = "https://packagemanager.posit.co/cran/__linux__/noble/latest")
           )
           
-          # Instala pacotes como binários (semPlot/qgraph removidos - já estão no _freeze/)
+          # Instala pacotes como binários (semPlot substituído por lavaanPlot; qgraph na _freeze/)
           install.packages(c(
             "tidyverse", "readxl", "janitor", "openxlsx",
             "car", "FSA", "nnet", "lmtest",
-            "psych", "lavaan",
+            "psych", "lavaan", "lavaanPlot",
             "gtsummary", "broom.helpers", "officer", "flextable",
             "ggpubr", "vcd", "corrplot", "GGally", "sjPlot", "jtools",
-            "tidytext", "wordcloud", "quanteda", "lexiconPT", "tm", 
+            "tidytext", "wordcloud", "quanteda", "lexiconPT", "tm",
             "stopwords", "mall", "rmarkdown", "knitr", "downlit", "xml2"
           ), dependencies = TRUE)
         shell: Rscript {0}
