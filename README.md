@@ -8,7 +8,7 @@
 
 ## Sobre o Livro
 
-Este livro foi desenvolvido como material didático para o curso de pós-graduação em Bioestatística Aplicada à Saúde. Ele combina teoria estatística com aplicações práticas usando R, focando em dados reais da área da saúde.
+Este livro foi desenvolvido como material didático para o a disciplina de Bioestatística Aplicada à Saúde utilizando o software R ofertada para o Doutorado em Promoção da Saúde da Universidade Cesumar. Ele combina teoria estatística com aplicações práticas usando R, focando em dados reais da área da saúde.
 
 **Autores:**
 
@@ -45,20 +45,31 @@ Este livro foi desenvolvido como material didático para o curso de pós-gradua�
 ### Capítulo 3: Análise Exploratória de Dados
 
 - Visualização de dados com ggplot2
-- Estatística descritiva
-- Testes estatísticos
-  - Teste t de Student
-  - ANOVA
-  - Correlação
-  - Teste qui-quadrado
+- Estatística descritiva com gtsummary
 
-### Capítulo 4: Regressão Linear e Logística
+### Capítulo 4: Testes Estatísticos
+
+- Testes de hipóteses paramétricos e não-paramétricos
+- Teste t, ANOVA, Mann-Whitney, Kruskal-Wallis
+- Qui-quadrado, Fisher, e correlações
+
+### Capítulo 5: Regressão Linear, Logística e Multinomial
 
 - Regressão linear simples e múltipla
-- Regressão logística
-- Interpretação de coeficientes
-- Odds ratio
-- Diagnóstico de modelos
+- Regressão logística e multinomial
+- Interpretação de coeficientes e odds ratio
+
+### Capítulo 6: Análise Psicométrica
+
+- Confiabilidade (Alfa de Cronbach, Ômega de McDonald)
+- Análise Fatorial Exploratória e Confirmatória
+- Validação de escalas e instrumentos
+
+### Capítulo 7: Análise de Dados Textuais e Mineração de Texto
+
+- Tokenização e análise de frequência
+- Word clouds e análise de sentimento
+- Regressão multinomial para dados textuais
 
 ## Como Usar Este Livro
 
@@ -66,7 +77,6 @@ Este livro foi desenvolvido como material didático para o curso de pós-gradua�
 
 - **R** (versão 4.3 ou superior): [Download](https://cran.r-project.org/)
 - **RStudio** (recomendado): [Download](https://posit.co/download/rstudio-desktop/)
-- **Quarto** (para renderizar o livro): [Download](https://quarto.org/docs/get-started/)
 
 ### Instalação de Pacotes
 
@@ -75,45 +85,31 @@ Execute o seguinte código no R para instalar todos os pacotes necessários:
 ```r
 # Lista de pacotes necessários
 packages <- c(
-  "tidyverse",
-  "readxl",
-  "janitor",
-  "gtsummary",
-  "officer",
-  "flextable",
-  "jtools",
-  "car",
-  "sjPlot",
-  "vcd",
-  "lmtest",
-  "ggpubr"
+  # Básicos (Capítulos 1-3)
+  "tidyverse", "readxl", "janitor", "gtsummary",
+  "officer", "flextable", "ggpubr",
+  # Testes Estatísticos (Capítulo 4)
+  "car", "FSA", "vcd",
+  # Regressão (Capítulo 5)
+  "jtools", "sjPlot", "lmtest", "nnet",
+  # Análise Psicométrica (Capítulo 6)
+  "psych", "lavaan", "semPlot", "qgraph", "corrplot", "GGally",
+  # Análise de Texto (Capítulo 7)
+  "tidytext", "wordcloud", "quanteda", "lexiconPT", "tm", "stopwords"
 )
 
 # Instalar pacotes que não estão instalados
 install.packages(setdiff(packages, rownames(installed.packages())))
+
+# Para mall (análise de texto com LLMs) - opcional
+# install.packages("mall")
+# Requer instalação prévia do Ollama: https://ollama.com/download
 ```
 
 ### Visualizando o Livro Online
 
-**Acesse o livro publicado em**: [URL será adicionado após publicação no GitHub Pages]
+**Acesse o livro publicado em**: [https://audreipavanello.github.io/bioestatistica_r/]
 
-### Renderizando Localmente
-
-1. Clone este repositório:
-
-```bash
-git clone https://github.com/[usuario]/book-bioestatistica-r.git
-cd book-bioestatistica-r
-```
-
-2. Abra o RStudio e configure o projeto
-3. Renderize o livro:
-
-```bash
-quarto preview
-```
-
-O livro será aberto automaticamente no seu navegador padrão.
 
 ## Dados
 
@@ -121,42 +117,35 @@ Os dados utilizados neste livro são de **internações hospitalares em Maringá
 
 - **Arquivo**: `data/dados_internacoes_maringa_2024.xlsx`
 - **Fonte**: DATASUS
-- **Tratamento**: Dados anonimizados conforme LGPD
 
-## 🛠️ Estrutura do Projeto
+## Como Citar Este Livro
+
+Se você utilizar este material em sua pesquisa ou trabalho acadêmico, por favor cite da seguinte forma:
+
+**ABNT:**
 
 ```
-book-bioestatistica-r/
-├── .github/
-│   └── workflows/
-│       └── quarto-publish.yml    # GitHub Actions para publicação
-├── data/
-│   └── dados_internacoes_maringa_2024.xlsx
-├── pdfs/                         # PDFs das aulas originais
-├── scripts/                      # Scripts R originais
-├── _quarto.yml                   # Configuração do Quarto
-├── .gitignore
-├── index.qmd                     # Prefácio
-├── introducao-r.qmd              # Capítulo 1
-├── manipulacao-dados.qmd         # Capítulo 2
-├── analise-exploratoria.qmd      # Capítulo 3
-├── regressao.qmd                 # Capítulo 4
-├── references.qmd                # Referências
-├── styles.css                    # Estilos customizados
-└── README.md                     # Este arquivo
+PAVANELLO, A.; COSTA, K. M.; OLIVEIRA, L. P. Bioestatística Aplicada à Saúde usando R. Maringá: Universidade Cesumar, 2026. Disponível em: https://audreipavanello.github.io/bioestatistica_r/. 
 ```
 
-## Como Contribuir
+**APA 7th Edition:**
 
-Contribuições são bem-vindas! Se você encontrou um erro, tem sugestões ou quer adicionar conteúdo:
+```
+Pavanello, A., Costa, K. M., & Oliveira, L. P. (2026). Bioestatística Aplicada à Saúde usando R. Universidade Cesumar. https://audreipavanello.github.io/bioestatistica_r/
+```
 
-1. Faça um fork do repositório
-2. Crie uma branch para sua feature (`git checkout -b feature/MinhaContribuicao`)
-3. Commit suas mudanças (`git commit -m 'Adiciona nova feature'`)
-4. Push para a branch (`git push origin feature/MinhaContribuicao`)
-5. Abra um Pull Request
+**BibTeX:**
 
-Ou simplesmente abra uma [Issue](https://github.com/[usuario]/book-bioestatistica-r/issues) descrevendo o problema ou sugestão.
+```bibtex
+@book{pavanello2026bioestatistica,
+  title={Bioestatística Aplicada à Saúde usando R},
+  author={Pavanello, Audrei and Costa, Karina Miura and Oliveira, Leonardo Pestillo},
+  year={2026},
+  publisher={Universidade Cesumar},
+  address={Maringá, PR},
+  url={https://audreipavanello.github.io/bioestatistica_r/}
+}
+```
 
 ## Licença
 

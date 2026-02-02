@@ -132,6 +132,6 @@ Este material é disponibilizado para fins educacionais. Os dados utilizados sã
 
 ------------------------------------------------------------------------
 
-**Data de Publicação**: 2026-01-28 
+**Data de Publicação**: `r format(Sys.Date(), "%d/%m/%Y")`
 
-**Versão do R utilizada**: R version 4.4.3
+**Versão do R utilizada**: `r R.version.string`
