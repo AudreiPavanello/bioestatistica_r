@@ -376,11 +376,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li>
 <a href="#primeiros-passos-com-r" id="toc-primeiros-passos-com-r" class="nav-link" data-scroll-target="#primeiros-passos-com-r"><span class="header-section-number">1.3</span> Primeiros Passos com R</a>
   <ul class="collapse">
-<li><a href="#interface-do-rstudio-1" id="toc-interface-do-rstudio-1" class="nav-link" data-scroll-target="#interface-do-rstudio-1"><span class="header-section-number">1.3.1</span> Interface do RStudio</a></li>
-  <li><a href="#declarando-vari%C3%A1veis" id="toc-declarando-variáveis" class="nav-link" data-scroll-target="#declarando-vari%C3%A1veis"><span class="header-section-number">1.3.2</span> Declarando Variáveis</a></li>
-  <li><a href="#estruturas-de-dados" id="toc-estruturas-de-dados" class="nav-link" data-scroll-target="#estruturas-de-dados"><span class="header-section-number">1.3.3</span> Estruturas de Dados</a></li>
-  <li><a href="#tipos-de-dados-no-r" id="toc-tipos-de-dados-no-r" class="nav-link" data-scroll-target="#tipos-de-dados-no-r"><span class="header-section-number">1.3.4</span> Tipos de Dados no R</a></li>
-  <li><a href="#convertendo-tipos-de-dados" id="toc-convertendo-tipos-de-dados" class="nav-link" data-scroll-target="#convertendo-tipos-de-dados"><span class="header-section-number">1.3.5</span> Convertendo Tipos de Dados</a></li>
+<li><a href="#declarando-vari%C3%A1veis" id="toc-declarando-variáveis" class="nav-link" data-scroll-target="#declarando-vari%C3%A1veis"><span class="header-section-number">1.3.1</span> Declarando Variáveis</a></li>
+  <li><a href="#estruturas-de-dados" id="toc-estruturas-de-dados" class="nav-link" data-scroll-target="#estruturas-de-dados"><span class="header-section-number">1.3.2</span> Estruturas de Dados</a></li>
+  <li><a href="#tipos-de-dados-no-r" id="toc-tipos-de-dados-no-r" class="nav-link" data-scroll-target="#tipos-de-dados-no-r"><span class="header-section-number">1.3.3</span> Tipos de Dados no R</a></li>
+  <li><a href="#convertendo-tipos-de-dados" id="toc-convertendo-tipos-de-dados" class="nav-link" data-scroll-target="#convertendo-tipos-de-dados"><span class="header-section-number">1.3.4</span> Convertendo Tipos de Dados</a></li>
   </ul>
 </li>
   <li>
@@ -450,13 +449,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>O <strong>RStudio</strong> é um ambiente de desenvolvimento integrado (IDE) para R que facilita significativamente o trabalho com a linguagem. A interface do RStudio é dividida em quatro painéis principais:</p>
 <ol type="1">
 <li>
-<strong>Editor de Scripts</strong> (superior esquerdo): Onde você escreve e salva seus códigos</li>
+<p><strong>Editor de Scripts</strong> (superior esquerdo): Onde você escreve e salva seus códigos</p>
+<p><img src="images/canto_superior_esquerdo.png" class="img-fluid"></p>
+</li>
 <li>
-<strong>Console</strong> (inferior esquerdo): Onde os comandos são executados e os resultados aparecem</li>
+<p><strong>Console</strong> (inferior esquerdo): Onde os comandos são executados e os resultados aparecem</p>
+<p><img src="images/canto_inferior_esquerdo.png" class="img-fluid"></p>
+</li>
 <li>
-<strong>Environment/History</strong> (superior direito): Mostra objetos criados e histórico de comandos</li>
+<p><strong>Environment/History</strong> (superior direito): Mostra objetos criados e histórico de comandos</p>
+<p><img src="images/canto_superior_direito.png" class="img-fluid"></p>
+</li>
 <li>
-<strong>Files/Plots/Packages/Help</strong> (inferior direito): Gerenciamento de arquivos, visualização de gráficos, pacotes e ajuda</li>
+<p><strong>Files/Plots/Packages/Help</strong> (inferior direito): Gerenciamento de arquivos, visualização de gráficos, pacotes e ajuda</p>
+<p><img src="images/canto_inferior_direito.png" class="img-fluid"></p>
+</li>
 </ol>
 <section id="rstudio-projects" class="level3" data-number="1.2.1"><h3 data-number="1.2.1" class="anchored" data-anchor-id="rstudio-projects">
 <span class="header-section-number">1.2.1</span> RStudio Projects</h3>
@@ -470,16 +477,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Dica</strong>: Sempre use Projects para organizar suas análises!</p>
 </section></section><section id="primeiros-passos-com-r" class="level2" data-number="1.3"><h2 data-number="1.3" class="anchored" data-anchor-id="primeiros-passos-com-r">
 <span class="header-section-number">1.3</span> Primeiros Passos com R</h2>
-<section id="interface-do-rstudio-1" class="level3" data-number="1.3.1"><h3 data-number="1.3.1" class="anchored" data-anchor-id="interface-do-rstudio-1">
-<span class="header-section-number">1.3.1</span> Interface do RStudio</h3>
-<p>Bem-vindo à interface do RStudio! Nesta seção, vamos aprender os comandos básicos do R.</p>
+<p>Vamos aprender os comandos básicos do R.</p>
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># O uso de # no início de uma linha significa uma linha de comentário</span></span>
 <span><span class="co"># Essa linha não é executada pelo R</span></span>
 <span><span class="co"># Use comentários para documentar seu código!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="declarando-variáveis" class="level3" data-number="1.3.2"><h3 data-number="1.3.2" class="anchored" data-anchor-id="declarando-variáveis">
-<span class="header-section-number">1.3.2</span> Declarando Variáveis</h3>
+<section id="declarando-variáveis" class="level3" data-number="1.3.1"><h3 data-number="1.3.1" class="anchored" data-anchor-id="declarando-variáveis">
+<span class="header-section-number">1.3.1</span> Declarando Variáveis</h3>
 <p>No R, usamos o operador <code>&lt;-</code> para atribuir valores a variáveis.</p>
 <p><strong>Atalho útil</strong>: <code>Alt + -</code> (Windows) ou <code>Option + -</code> (Mac) insere automaticamente <code>&lt;-</code></p>
 <p><strong>Para executar código</strong>: <code>Ctrl + Enter</code> (Windows) ou <code>Cmd + Enter</code> (Mac)</p>
@@ -494,11 +499,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>[1] 3</code></pre>
 </div>
 </div>
-</section><section id="estruturas-de-dados" class="level3" data-number="1.3.3"><h3 data-number="1.3.3" class="anchored" data-anchor-id="estruturas-de-dados">
-<span class="header-section-number">1.3.3</span> Estruturas de Dados</h3>
+</section><section id="estruturas-de-dados" class="level3" data-number="1.3.2"><h3 data-number="1.3.2" class="anchored" data-anchor-id="estruturas-de-dados">
+<span class="header-section-number">1.3.2</span> Estruturas de Dados</h3>
 <p>O R possui diferentes estruturas para armazenar dados:</p>
-<section id="vetores" class="level4" data-number="1.3.3.1"><h4 data-number="1.3.3.1" class="anchored" data-anchor-id="vetores">
-<span class="header-section-number">1.3.3.1</span> Vetores</h4>
+<section id="vetores" class="level4" data-number="1.3.2.1"><h4 data-number="1.3.2.1" class="anchored" data-anchor-id="vetores">
+<span class="header-section-number">1.3.2.1</span> Vetores</h4>
 <p>Vetores são a estrutura mais simples, contendo elementos de um único tipo:</p>
 <div class="cell">
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Vetor numérico simples</span></span>
@@ -507,15 +512,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="co"># Vetor com múltiplos elementos</span></span>
 <span><span class="va">numeros</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="listas" class="level4" data-number="1.3.3.2"><h4 data-number="1.3.3.2" class="anchored" data-anchor-id="listas">
-<span class="header-section-number">1.3.3.2</span> Listas</h4>
+</section><section id="listas" class="level4" data-number="1.3.2.2"><h4 data-number="1.3.2.2" class="anchored" data-anchor-id="listas">
+<span class="header-section-number">1.3.2.2</span> Listas</h4>
 <p>Listas podem conter diferentes tipos de dados:</p>
 <div class="cell">
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Lista com diferentes tipos de dados</span></span>
 <span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="fl">1</span>, <span class="st">"b"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="data-frames" class="level4" data-number="1.3.3.3"><h4 data-number="1.3.3.3" class="anchored" data-anchor-id="data-frames">
-<span class="header-section-number">1.3.3.3</span> Data Frames</h4>
+</section><section id="data-frames" class="level4" data-number="1.3.2.3"><h4 data-number="1.3.2.3" class="anchored" data-anchor-id="data-frames">
+<span class="header-section-number">1.3.2.3</span> Data Frames</h4>
 <p>O <strong>data frame</strong> é a estrutura mais importante para análise de dados - é equivalente a uma planilha do Excel.</p>
 <div class="cell">
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Criando um data frame com informações de pacientes</span></span>
@@ -546,8 +551,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
                    </code></pre>
 </div>
 </div>
-</section><section id="acessando-colunas-de-um-data-frame" class="level4" data-number="1.3.3.4"><h4 data-number="1.3.3.4" class="anchored" data-anchor-id="acessando-colunas-de-um-data-frame">
-<span class="header-section-number">1.3.3.4</span> Acessando Colunas de um Data Frame</h4>
+</section><section id="acessando-colunas-de-um-data-frame" class="level4" data-number="1.3.2.4"><h4 data-number="1.3.2.4" class="anchored" data-anchor-id="acessando-colunas-de-um-data-frame">
+<span class="header-section-number">1.3.2.4</span> Acessando Colunas de um Data Frame</h4>
 <p>O símbolo <code>$</code> é usado para acessar colunas específicas de um data frame:</p>
 <div class="cell">
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Plotando a idade dos participantes</span></span>
@@ -564,11 +569,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section></section><section id="tipos-de-dados-no-r" class="level3" data-number="1.3.4"><h3 data-number="1.3.4" class="anchored" data-anchor-id="tipos-de-dados-no-r">
-<span class="header-section-number">1.3.4</span> Tipos de Dados no R</h3>
+</section></section><section id="tipos-de-dados-no-r" class="level3" data-number="1.3.3"><h3 data-number="1.3.3" class="anchored" data-anchor-id="tipos-de-dados-no-r">
+<span class="header-section-number">1.3.3</span> Tipos de Dados no R</h3>
 <p>Compreender os tipos de dados é fundamental para trabalhar com R:</p>
-<section id="numeric-double" class="level4" data-number="1.3.4.1"><h4 data-number="1.3.4.1" class="anchored" data-anchor-id="numeric-double">
-<span class="header-section-number">1.3.4.1</span> Numeric (Double)</h4>
+<section id="numeric-double" class="level4" data-number="1.3.3.1"><h4 data-number="1.3.3.1" class="anchored" data-anchor-id="numeric-double">
+<span class="header-section-number">1.3.3.1</span> Numeric (Double)</h4>
 <p>Valores numéricos decimais:</p>
 <div class="cell">
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
@@ -581,8 +586,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>[1] "numeric"</code></pre>
 </div>
 </div>
-</section><section id="integer" class="level4" data-number="1.3.4.2"><h4 data-number="1.3.4.2" class="anchored" data-anchor-id="integer">
-<span class="header-section-number">1.3.4.2</span> Integer</h4>
+</section><section id="integer" class="level4" data-number="1.3.3.2"><h4 data-number="1.3.3.2" class="anchored" data-anchor-id="integer">
+<span class="header-section-number">1.3.3.2</span> Integer</h4>
 <p>Valores numéricos inteiros (use <code>L</code> para especificar):</p>
 <div class="cell">
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fl">1L</span></span>
@@ -595,8 +600,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>[1] "integer"</code></pre>
 </div>
 </div>
-</section><section id="character" class="level4" data-number="1.3.4.3"><h4 data-number="1.3.4.3" class="anchored" data-anchor-id="character">
-<span class="header-section-number">1.3.4.3</span> Character</h4>
+</section><section id="character" class="level4" data-number="1.3.3.3"><h4 data-number="1.3.3.3" class="anchored" data-anchor-id="character">
+<span class="header-section-number">1.3.3.3</span> Character</h4>
 <p>Dados de texto (strings):</p>
 <div class="cell">
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="st">"1"</span></span>
@@ -609,8 +614,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>[1] "character"</code></pre>
 </div>
 </div>
-</section><section id="factor" class="level4" data-number="1.3.4.4"><h4 data-number="1.3.4.4" class="anchored" data-anchor-id="factor">
-<span class="header-section-number">1.3.4.4</span> Factor</h4>
+</section><section id="factor" class="level4" data-number="1.3.3.4"><h4 data-number="1.3.3.4" class="anchored" data-anchor-id="factor">
+<span class="header-section-number">1.3.3.4</span> Factor</h4>
 <p>Dados categóricos (nominais ou ordinais):</p>
 <div class="cell">
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="st">"1"</span></span>
@@ -621,8 +626,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Fatores são essenciais para análises estatísticas com variáveis categóricas.</p>
-</section><section id="logical-booleano" class="level4" data-number="1.3.4.5"><h4 data-number="1.3.4.5" class="anchored" data-anchor-id="logical-booleano">
-<span class="header-section-number">1.3.4.5</span> Logical (Booleano)</h4>
+</section><section id="logical-booleano" class="level4" data-number="1.3.3.5"><h4 data-number="1.3.3.5" class="anchored" data-anchor-id="logical-booleano">
+<span class="header-section-number">1.3.3.5</span> Logical (Booleano)</h4>
 <p>Valores lógicos <code>TRUE</code> (verdadeiro) ou <code>FALSE</code> (falso):</p>
 <div class="cell">
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
@@ -632,8 +637,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>[1] FALSE</code></pre>
 </div>
 </div>
-</section><section id="na-not-available" class="level4" data-number="1.3.4.6"><h4 data-number="1.3.4.6" class="anchored" data-anchor-id="na-not-available">
-<span class="header-section-number">1.3.4.6</span> NA (Not Available)</h4>
+</section><section id="na-not-available" class="level4" data-number="1.3.3.6"><h4 data-number="1.3.3.6" class="anchored" data-anchor-id="na-not-available">
+<span class="header-section-number">1.3.3.6</span> NA (Not Available)</h4>
 <p>Representa valores ausentes em um conjunto de dados:</p>
 <div class="cell">
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="cn">NA</span><span class="op">)</span></span>
@@ -646,8 +651,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>[1]  3  4 NA</code></pre>
 </div>
 </div>
-</section></section><section id="convertendo-tipos-de-dados" class="level3" data-number="1.3.5"><h3 data-number="1.3.5" class="anchored" data-anchor-id="convertendo-tipos-de-dados">
-<span class="header-section-number">1.3.5</span> Convertendo Tipos de Dados</h3>
+</section></section><section id="convertendo-tipos-de-dados" class="level3" data-number="1.3.4"><h3 data-number="1.3.4" class="anchored" data-anchor-id="convertendo-tipos-de-dados">
+<span class="header-section-number">1.3.4</span> Convertendo Tipos de Dados</h3>
 <p>Vamos aplicar o que aprendemos ao nosso data frame:</p>
 <div class="cell">
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Convertendo a variável Sexo para fator</span></span>

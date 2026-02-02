@@ -22,9 +22,20 @@ O **R** é uma linguagem de programação e ambiente de software livre para comp
 O **RStudio** é um ambiente de desenvolvimento integrado (IDE) para R que facilita significativamente o trabalho com a linguagem. A interface do RStudio é dividida em quatro painéis principais:
 
 1.  **Editor de Scripts** (superior esquerdo): Onde você escreve e salva seus códigos
+
+    ![](images/canto_superior_esquerdo.png)
+
 2.  **Console** (inferior esquerdo): Onde os comandos são executados e os resultados aparecem
+
+    ![](images/canto_inferior_esquerdo.png)
+
 3.  **Environment/History** (superior direito): Mostra objetos criados e histórico de comandos
+
+    ![](images/canto_superior_direito.png)
+
 4.  **Files/Plots/Packages/Help** (inferior direito): Gerenciamento de arquivos, visualização de gráficos, pacotes e ajuda
+
+    ![](images/canto_inferior_direito.png)
 
 ### RStudio Projects
 
@@ -39,9 +50,7 @@ Os **Projects** do RStudio são uma forma de organizar seu trabalho. Ao criar um
 
 ## Primeiros Passos com R
 
-### Interface do RStudio
-
-Bem-vindo à interface do RStudio! Nesta seção, vamos aprender os comandos básicos do R.
+Vamos aprender os comandos básicos do R.
 
 ```{r}
 #| label: comentarios
