@@ -830,9 +830,3 @@ d) Visualize os resultados
 e) Escreva uma conclusão em formato de artigo científico
 
 ---
-
-**Referências:**
-
-- Field, A., Miles, J., & Field, Z. (2012). *Discovering Statistics Using R*. SAGE Publications.
-- Motulsky, H. (2014). *Intuitive Biostatistics: A Nonmathematical Guide to Statistical Thinking*. Oxford University Press.
-- Whitlock, M. C., & Schluter, D. (2015). *The Analysis of Biological Data*. Roberts and Company Publishers.

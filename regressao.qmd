@@ -837,8 +837,3 @@ Neste capítulo, aprendemos sobre três tipos de regressão:
 
 2. **Regressão Logística**: Construa um modelo de regressão logística para predizer algum desfecho binário. Calcule e interprete os odds ratios. Compare modelos univariado e multivariado.
 
-3. **Regressão Multinomial**: Crie uma variável categórica com 3 categorias (ex: faixa de custo: baixo, médio, alto) e ajuste um modelo multinomial. Interprete os odds ratios e crie visualizações de probabilidades preditas.
-
-4. **Comparação de Modelos**: Para um mesmo desfecho, compare modelos com diferentes conjuntos de preditores. Use critérios de ajuste (AIC, BIC) para selecionar o melhor modelo.
-
-5. **Integração com Capítulo 7**: Após estudar o Capítulo 7, realize uma análise de sentimento completa e modele os resultados usando regressão multinomial com variáveis demográficas como preditores.

@@ -585,6 +585,3 @@ No próximo capítulo, você aprenderá a realizar **análises exploratórias de
 
 3.  Identifique as 10 especialidades médicas com maior número de internações
 
-4.  Calcule a taxa de mortalidade (%) por faixa etária (use intervalos de 10 anos)
-
-5.  Crie um data frame limpo contendo apenas internações de pacientes idosos (≥60 anos) com todas as variáveis categóricas recodificadas de forma descritiva

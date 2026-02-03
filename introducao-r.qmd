@@ -488,7 +488,3 @@ No próximo capítulo, você aprenderá a manipular dados de forma eficiente usa
 2.  Calcule o IMC (Índice de Massa Corporal) de cada paciente usando a fórmula: IMC = peso / altura²
 
 3.  Use `ifelse()` para classificar os pacientes em: "Baixo peso" (IMC \< 18.5), "Normal" (18.5 ≤ IMC \< 25), "Sobrepeso" (25 ≤ IMC \< 30), ou "Obesidade" (IMC ≥ 30)
-
-4.  Crie gráficos apropriados para visualizar a distribuição de idade e IMC dos pacientes
-
-5.  Use um loop para calcular e imprimir a idade de cada paciente daqui a 10 anos

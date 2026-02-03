@@ -828,22 +828,4 @@ c) Conte a frequência de cada tema
 d) Crie um gráfico de barras mostrando a distribuição
 e) Para cada tema, crie um word cloud das respostas classificadas naquele tema
 
-### Exercício 5: Aplicação em Saúde
-
-Escolha um cenário de saúde (satisfação do paciente, adesão a tratamento, percepção de risco):
-
-a) Crie um pequeno dataset simulado com 10-15 respostas textuais
-b) Realize análise completa: tokenização, word cloud, análise de sentimento
-c) Se apropriado, ajuste um modelo multinomial
-d) Interprete os resultados no contexto clínico
-e) Discuta limitações e considerações éticas
-
 ---
-
-**Referências:**
-
-- Silge, J., & Robinson, D. (2017). *Text Mining with R: A Tidy Approach*. O'Reilly Media.
-- Welbers, K., Van Atteveldt, W., & Benoit, K. (2017). Text analysis in R. *Communication Methods and Measures*, 11(4), 245-265.
-- Taboada, M., et al. (2011). Lexicon-based methods for sentiment analysis. *Computational Linguistics*, 37(2), 267-307.
-- Devlin, J., et al. (2019). BERT: Pre-training of deep bidirectional transformers for language understanding. *NAACL-HLT*.
-- Freire, T., et al. (2014). SENTILEX-PT: Principais características e potencialidades. *Oslo Studies in Language*, 6(1).
