@@ -1,10 +1,12 @@
 # Prefácio {.unnumbered}
 
-Este livro foi desenvolvido como material didático para o curso de **Bioestatística Aplicada à Saúde utilizando o Software R**, ministrado pelos professores:
+Este livro foi desenvolvido como material didático para a disciplina de Doutorado **Bioestatística Aplicada à Saúde utilizando o Software R**, do Programa de Pós-Graduação em Promoção da Saúde (PPGPS) da Universidade Cesumar ministrado pelos professores:
 
 -   **Prof. Dr. Audrei Pavanello**
 -   **Profa. Dra. Karina Miura Costa**
 -   **Prof. Dr. Leonardo Pestillo de Oliveira**
+
+[Página do PPGPS](https://www.unicesumar.edu.br/mestrado-e-doutorado/promocao-da-saude/)
 
 ## Sobre este Livro
 
@@ -134,13 +136,13 @@ Este material é disponibilizado para fins educacionais. Os dados utilizados sã
 
 **ABNT:**
 
-```
+```         
 PAVANELLO, A.; COSTA, K. M.; OLIVEIRA, L. P. Bioestatística Aplicada à Saúde usando R. Maringá: Universidade Cesumar, 2026. Disponível em: https://audreipavanello.github.io/bioestatistica_r/. DOI: 10.5281/zenodo.18458781.
 ```
 
 **APA 7th Edition:**
 
-```
+```         
 Pavanello, A., Costa, K. M., & Oliveira, L. P. (2026). Bioestatística Aplicada à Saúde usando R. Universidade Cesumar. https://doi.org/10.5281/zenodo.18458781
 ```
 
