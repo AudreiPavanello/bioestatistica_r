@@ -661,12 +661,12 @@ Nota sobre os Dados
 </div>
 </section><section id="recodificando-variáveis-com-case_when" class="level4" data-number="2.4.3.3"><h4 data-number="2.4.3.3" class="anchored" data-anchor-id="recodificando-variáveis-com-case_when">
 <span class="header-section-number">2.4.3.3</span> Recodificando Variáveis com case_when()</h4>
-<p>A função <code><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a></code> é útil para criar categorias baseadas em múltiplas condições:</p>
+<p>A função <code><a href="https://dplyr.tidyverse.org/reference/case-and-replace-when.html">case_when()</a></code> é útil para criar categorias baseadas em múltiplas condições:</p>
 <div class="cell">
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Recodificando códigos numéricos de raça/cor para texto descritivo</span></span>
 <span><span class="va">dados</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
 <span>  <span class="va">dados</span>,</span>
-<span>  RACA_COR <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span></span>
+<span>  RACA_COR <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case-and-replace-when.html">case_when</a></span><span class="op">(</span></span>
 <span>    <span class="va">RACA_COR</span> <span class="op">==</span> <span class="st">'01'</span> <span class="op">~</span> <span class="st">"Branca"</span>,</span>
 <span>    <span class="va">RACA_COR</span> <span class="op">==</span> <span class="st">"02"</span> <span class="op">~</span> <span class="st">"Preta"</span>,</span>
 <span>    <span class="va">RACA_COR</span> <span class="op">==</span> <span class="st">"03"</span> <span class="op">~</span> <span class="st">"Parda"</span>,</span>
@@ -675,12 +675,12 @@ Nota sobre os Dados
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Outros exemplos de <code><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a></code>:</p>
+<p>Outros exemplos de <code><a href="https://dplyr.tidyverse.org/reference/case-and-replace-when.html">case_when()</a></code>:</p>
 <div class="cell">
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Classificando faixas etárias</span></span>
 <span><span class="va">dados</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
 <span>  <span class="va">dados</span>,</span>
-<span>  faixa_etaria <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span></span>
+<span>  faixa_etaria <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case-and-replace-when.html">case_when</a></span><span class="op">(</span></span>
 <span>    <span class="va">IDADE</span> <span class="op">&lt;</span> <span class="fl">18</span> <span class="op">~</span> <span class="st">"Criança/Adolescente"</span>,</span>
 <span>    <span class="va">IDADE</span> <span class="op">&gt;=</span> <span class="fl">18</span> <span class="op">&amp;</span> <span class="va">IDADE</span> <span class="op">&lt;</span> <span class="fl">60</span> <span class="op">~</span> <span class="st">"Adulto"</span>,</span>
 <span>    <span class="va">IDADE</span> <span class="op">&gt;=</span> <span class="fl">60</span> <span class="op">~</span> <span class="st">"Idoso"</span></span>
@@ -690,7 +690,7 @@ Nota sobre os Dados
 <span><span class="co"># Classificando permanência hospitalar</span></span>
 <span><span class="va">dados</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
 <span>  <span class="va">dados</span>,</span>
-<span>  tempo_internacao <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span></span>
+<span>  tempo_internacao <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case-and-replace-when.html">case_when</a></span><span class="op">(</span></span>
 <span>    <span class="va">DIAS_PERM</span> <span class="op">&lt;=</span> <span class="fl">3</span> <span class="op">~</span> <span class="st">"Curta"</span>,</span>
 <span>    <span class="va">DIAS_PERM</span> <span class="op">&gt;</span> <span class="fl">3</span> <span class="op">&amp;</span> <span class="va">DIAS_PERM</span> <span class="op">&lt;=</span> <span class="fl">7</span> <span class="op">~</span> <span class="st">"Média"</span>,</span>
 <span>    <span class="va">DIAS_PERM</span> <span class="op">&gt;</span> <span class="fl">7</span> <span class="op">~</span> <span class="st">"Longa"</span></span>
@@ -816,7 +816,7 @@ Pipe Nativo vs.&nbsp;Pipe do magrittr
 <span>  <span class="co"># 5. Converter variáveis categóricas para fator</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">SEXO</span>, <span class="va">RACA_COR</span>, <span class="va">MORTE</span><span class="op">)</span>, <span class="va">as.factor</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="co"># 6. Recodificar raça/cor</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>RACA_COR <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>RACA_COR <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case-and-replace-when.html">case_when</a></span><span class="op">(</span></span>
 <span>    <span class="va">RACA_COR</span> <span class="op">==</span> <span class="st">'01'</span> <span class="op">~</span> <span class="st">"Branca"</span>,</span>
 <span>    <span class="va">RACA_COR</span> <span class="op">==</span> <span class="st">"02"</span> <span class="op">~</span> <span class="st">"Preta"</span>,</span>
 <span>    <span class="va">RACA_COR</span> <span class="op">==</span> <span class="st">"03"</span> <span class="op">~</span> <span class="st">"Parda"</span>,</span>
@@ -1387,7 +1387,36 @@ Pipe Nativo vs.&nbsp;Pipe do magrittr
       }
     }
   });
-  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+  </script><input type="hidden" id="giscus-base-theme" value="preferred_color_scheme"><input type="hidden" id="giscus-alt-theme" value="preferred_color_scheme"><script>
+  function loadGiscus() {
+    // Function to get the theme based on body class
+    const getTheme = () => {
+      let baseTheme = document.getElementById('giscus-base-theme').value;
+      let altTheme = document.getElementById('giscus-alt-theme').value;
+      if (authorPrefersDark) {
+          [baseTheme, altTheme] = [altTheme, baseTheme];
+      }
+      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+    };
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "AudreiPavanello/bioestatistica_r";
+    script.dataset.repoId = "R_kgDORDin4g";
+    script.dataset.category = "General";
+    script.dataset.categoryId = "DIC_kwDORDin4s4C11ZV";
+    script.dataset.mapping = "pathname";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "top";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "pt";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  }
+  loadGiscus();
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./introducao-r.html" class="pagination-link" aria-label="Introdução ao R e RStudio">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução ao R e RStudio</span></span>
       </a>          

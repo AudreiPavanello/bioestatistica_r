@@ -467,7 +467,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">sexo</span>, <span class="va">val_tot</span>, <span class="va">raca_cor</span>, <span class="va">idade</span>,       <span class="co"># Selecionar colunas relevantes</span></span>
 <span>         <span class="va">morte</span>, <span class="va">dias_perm</span>, <span class="va">mes_cmpt</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>                                       <span class="co"># Recodificar raça/cor</span></span>
-<span>    raca_cor <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span></span>
+<span>    raca_cor <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case-and-replace-when.html">case_when</a></span><span class="op">(</span></span>
 <span>      <span class="va">raca_cor</span> <span class="op">==</span> <span class="st">'01'</span> <span class="op">~</span> <span class="st">"Branca"</span>,</span>
 <span>      <span class="va">raca_cor</span> <span class="op">==</span> <span class="st">"02"</span> <span class="op">~</span> <span class="st">"Preta"</span>,</span>
 <span>      <span class="va">raca_cor</span> <span class="op">==</span> <span class="st">"03"</span> <span class="op">~</span> <span class="st">"Parda"</span>,</span>
@@ -1410,7 +1410,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       }
     }
   });
-  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+  </script><input type="hidden" id="giscus-base-theme" value="preferred_color_scheme"><input type="hidden" id="giscus-alt-theme" value="preferred_color_scheme"><script>
+  function loadGiscus() {
+    // Function to get the theme based on body class
+    const getTheme = () => {
+      let baseTheme = document.getElementById('giscus-base-theme').value;
+      let altTheme = document.getElementById('giscus-alt-theme').value;
+      if (authorPrefersDark) {
+          [baseTheme, altTheme] = [altTheme, baseTheme];
+      }
+      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+    };
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "AudreiPavanello/bioestatistica_r";
+    script.dataset.repoId = "R_kgDORDin4g";
+    script.dataset.category = "General";
+    script.dataset.categoryId = "DIC_kwDORDin4s4C11ZV";
+    script.dataset.mapping = "pathname";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "top";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "pt";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  }
+  loadGiscus();
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./manipulacao-dados.html" class="pagination-link" aria-label="Manipulação de Dados com Tidyverse">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Manipulação de Dados com Tidyverse</span></span>
       </a>          

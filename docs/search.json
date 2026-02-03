@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Bioestatística Aplicada à Saúde usando R",
     "section": "",
-    "text": "Prefácio\nEste livro foi desenvolvido como material didático para o curso de Bioestatística Aplicada à Saúde utilizando o Software R, ministrado pelos professores:",
+    "text": "Prefácio\nEste livro foi desenvolvido como material didático para a disciplina de Doutorado Bioestatística Aplicada à Saúde utilizando o Software R, do Programa de Pós-Graduação em Promoção da Saúde (PPGPS) da Universidade Cesumar ministrado pelos professores:\nPágina do PPGPS",
     "crumbs": [
       "Prefácio"
     ]
@@ -14,7 +14,7 @@
     "href": "index.html#sobre-este-livro",
     "title": "Bioestatística Aplicada à Saúde usando R",
     "section": "Sobre este Livro",
-    "text": "Sobre este Livro\nEste material combina teoria e prática, apresentando conceitos fundamentais de bioestatística aplicados a dados reais da área da saúde. Através de exemplos práticos e códigos executáveis em R, você aprenderá a manipular, analisar e visualizar dados de saúde pública.\nTodos os exemplos utilizam dados reais de internações hospitalares de Maringá-PR referentes ao ano de 2024, disponibilizados pelo Sistema de Informações Hospitalares (SIH) do SUS.",
+    "text": "Sobre este Livro\nEste material combina teoria e prática, apresentando conceitos fundamentais de bioestatística aplicados a dados reais da área da saúde. Por meio de exemplos práticos e códigos executáveis em R, você aprenderá a manipular, analisar e visualizar dados de saúde pública.\nTodos os exemplos utilizam dados reais de internações hospitalares de Maringá-PR referentes ao ano de 2024, disponibilizados pelo Sistema de Informações Hospitalares (SIH) do SUS.",
     "crumbs": [
       "Prefácio"
     ]
@@ -54,7 +54,17 @@
     "href": "index.html#licença",
     "title": "Bioestatística Aplicada à Saúde usando R",
     "section": "Licença",
-    "text": "Licença\nEste material é disponibilizado para fins educacionais. Os dados utilizados são de domínio público, provenientes do Sistema de Informações Hospitalares (SIH) do SUS.\n\nData de Publicação: 2026/02/02\nVersão do R utilizada: 4.4.3",
+    "text": "Licença\nEste material é disponibilizado para fins educacionais. Os dados utilizados são de domínio público, provenientes do Sistema de Informações Hospitalares (SIH) do SUS.",
+    "crumbs": [
+      "Prefácio"
+    ]
+  },
+  {
+    "objectID": "index.html#como-citar-esse-livro",
+    "href": "index.html#como-citar-esse-livro",
+    "title": "Bioestatística Aplicada à Saúde usando R",
+    "section": "Como citar esse livro",
+    "text": "Como citar esse livro\nABNT:\nPAVANELLO, A.; COSTA, K. M.; OLIVEIRA, L. P. Bioestatística Aplicada à Saúde usando R. Maringá: Universidade Cesumar, 2026. Disponível em: https://audreipavanello.github.io/bioestatistica_r/. DOI: 10.5281/zenodo.18458781.\nAPA 7th Edition:\nPavanello, A., Costa, K. M., & Oliveira, L. P. (2026). Bioestatística Aplicada à Saúde usando R. Universidade Cesumar. https://doi.org/10.5281/zenodo.18458781\nBibTeX:\n@book{pavanello2026bioestatistica,\n  title={Bioestatística Aplicada à Saúde usando R},\n  author={Pavanello, Audrei and Costa, Karina Miura and Oliveira, Leonardo Pestillo},\n  year={2026},\n  publisher={Universidade Cesumar},\n  address={Maringá, PR},\n  url={https://audreipavanello.github.io/bioestatistica_r/},\n  doi={10.5281/zenodo.18458781}\n}\n\nData de Publicação: 2026/02/02\nVersão do R utilizada: 4.4.3",
     "crumbs": [
       "Prefácio"
     ]

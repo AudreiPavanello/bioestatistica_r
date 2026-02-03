@@ -9,7 +9,7 @@
 <meta name="author" content="Prof.&nbsp;Dr.&nbsp;Audrei Pavanello">
 <meta name="author" content="Profa. Dra. Karina Miura Costa">
 <meta name="author" content="Prof.&nbsp;Dr.&nbsp;Leonardo Pestillo de Oliveira">
-<meta name="dcterms.date" content="2026-02-02">
+<meta name="dcterms.date" content="2026-02-03">
 
 <title>Bioestatística Aplicada à Saúde usando R</title>
 <style>
@@ -395,6 +395,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#pré-requisitos" id="toc-pré-requisitos" class="nav-link" data-scroll-target="#pré-requisitos">Pré-requisitos</a></li>
   <li><a href="#licença" id="toc-licença" class="nav-link" data-scroll-target="#licença">Licença</a></li>
+  <li><a href="#como-citar-esse-livro" id="toc-como-citar-esse-livro" class="nav-link" data-scroll-target="#como-citar-esse-livro">Como citar esse livro</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -424,7 +425,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 2, 2026</p>
+      <p class="date">February 3, 2026</p>
     </div>
   </div>
   
@@ -438,15 +439,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="prefácio" class="level1 unnumbered">
 <h1 class="unnumbered">Prefácio</h1>
-<p>Este livro foi desenvolvido como material didático para o curso de <strong>Bioestatística Aplicada à Saúde utilizando o Software R</strong>, ministrado pelos professores:</p>
+<p>Este livro foi desenvolvido como material didático para a disciplina de Doutorado <strong>Bioestatística Aplicada à Saúde utilizando o Software R</strong>, do Programa de Pós-Graduação em Promoção da Saúde (PPGPS) da Universidade Cesumar ministrado pelos professores:</p>
 <ul>
 <li><strong>Prof.&nbsp;Dr.&nbsp;Audrei Pavanello</strong></li>
 <li><strong>Profa. Dra. Karina Miura Costa</strong></li>
 <li><strong>Prof.&nbsp;Dr.&nbsp;Leonardo Pestillo de Oliveira</strong></li>
 </ul>
+<p><a href="https://www.unicesumar.edu.br/mestrado-e-doutorado/promocao-da-saude/">Página do PPGPS</a></p>
 <section id="sobre-este-livro" class="level2">
 <h2 class="anchored" data-anchor-id="sobre-este-livro">Sobre este Livro</h2>
-<p>Este material combina teoria e prática, apresentando conceitos fundamentais de bioestatística aplicados a dados reais da área da saúde. Através de exemplos práticos e códigos executáveis em R, você aprenderá a manipular, analisar e visualizar dados de saúde pública.</p>
+<p>Este material combina teoria e prática, apresentando conceitos fundamentais de bioestatística aplicados a dados reais da área da saúde. Por meio de exemplos práticos e códigos executáveis em R, você aprenderá a manipular, analisar e visualizar dados de saúde pública.</p>
 <p>Todos os exemplos utilizam dados reais de internações hospitalares de Maringá-PR referentes ao ano de 2024, disponibilizados pelo Sistema de Informações Hospitalares (SIH) do SUS.</p>
 </section>
 <section id="como-usar-este-livro" class="level2">
@@ -564,6 +566,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="licença" class="level2">
 <h2 class="anchored" data-anchor-id="licença">Licença</h2>
 <p>Este material é disponibilizado para fins educacionais. Os dados utilizados são de domínio público, provenientes do Sistema de Informações Hospitalares (SIH) do SUS.</p>
+</section>
+<section id="como-citar-esse-livro" class="level2">
+<h2 class="anchored" data-anchor-id="como-citar-esse-livro">Como citar esse livro</h2>
+<p><strong>ABNT:</strong></p>
+<pre><code>PAVANELLO, A.; COSTA, K. M.; OLIVEIRA, L. P. Bioestatística Aplicada à Saúde usando R. Maringá: Universidade Cesumar, 2026. Disponível em: https://audreipavanello.github.io/bioestatistica_r/. DOI: 10.5281/zenodo.18458781.</code></pre>
+<p><strong>APA 7th Edition:</strong></p>
+<pre><code>Pavanello, A., Costa, K. M., &amp; Oliveira, L. P. (2026). Bioestatística Aplicada à Saúde usando R. Universidade Cesumar. https://doi.org/10.5281/zenodo.18458781</code></pre>
+<p><strong>BibTeX:</strong></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bibtex code-with-copy"><code class="sourceCode bibtex"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="va">@book</span>{<span class="ot">pavanello2026bioestatistica</span>,</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">title</span>={Bioestatística Aplicada à Saúde usando R},</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">author</span>={Pavanello, Audrei and Costa, Karina Miura and Oliveira, Leonardo Pestillo},</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">year</span>={2026},</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">publisher</span>={Universidade Cesumar},</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">address</span>={Maringá, PR},</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">url</span>={https://audreipavanello.github.io/bioestatistica_r/},</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">doi</span>={10.5281/zenodo.18458781}</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <hr>
 <p><strong>Data de Publicação</strong>: 2026/02/02</p>
 <p><strong>Versão do R utilizada</strong>: 4.4.3</p>
@@ -985,6 +1004,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
   });
   </script>
+<input type="hidden" id="giscus-base-theme" value="preferred_color_scheme">
+<input type="hidden" id="giscus-alt-theme" value="preferred_color_scheme">
+<script>
+  function loadGiscus() {
+    // Function to get the theme based on body class
+    const getTheme = () => {
+      let baseTheme = document.getElementById('giscus-base-theme').value;
+      let altTheme = document.getElementById('giscus-alt-theme').value;
+      if (authorPrefersDark) {
+          [baseTheme, altTheme] = [altTheme, baseTheme];
+      }
+      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+    };
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "AudreiPavanello/bioestatistica_r";
+    script.dataset.repoId = "R_kgDORDin4g";
+    script.dataset.category = "General";
+    script.dataset.categoryId = "DIC_kwDORDin4s4C11ZV";
+    script.dataset.mapping = "pathname";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "top";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "pt";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  }
+  loadGiscus();
+</script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
   </div>

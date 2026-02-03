@@ -46,6 +46,16 @@ format:
     df-print: paged
     highlight-style: github
     css: styles.css
+    comments:
+      giscus:
+        repo: AudreiPavanello/bioestatistica_r
+        repo-id: R_kgDORDin4g
+        category: General
+        category-id: DIC_kwDORDin4s4C11ZV
+        mapping: pathname
+        reactions-enabled: true
+        theme: preferred_color_scheme
+        language: pt
 
 execute:
   freeze: auto
