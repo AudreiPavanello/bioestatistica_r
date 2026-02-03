@@ -10,7 +10,7 @@ Este livro foi desenvolvido como material didático para a disciplina de Doutora
 
 ## Sobre este Livro
 
-Este material combina teoria e prática, apresentando conceitos fundamentais de bioestatística aplicados a dados reais da área da saúde. Através de exemplos práticos e códigos executáveis em R, você aprenderá a manipular, analisar e visualizar dados de saúde pública.
+Este material combina teoria e prática, apresentando conceitos fundamentais de bioestatística aplicados a dados reais da área da saúde. Por meio de exemplos práticos e códigos executáveis em R, você aprenderá a manipular, analisar e visualizar dados de saúde pública.
 
 Todos os exemplos utilizam dados reais de internações hospitalares de Maringá-PR referentes ao ano de 2024, disponibilizados pelo Sistema de Informações Hospitalares (SIH) do SUS.
 
