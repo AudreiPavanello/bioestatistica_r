@@ -125,26 +125,6 @@ Se você utilizar este material em sua pesquisa ou trabalho acadêmico, por favo
 PAVANELLO, A.; da COSTA, K. M.; OLIVEIRA, L. P. Bioestatística Aplicada à Saúde usando R. Maringá: Universidade Cesumar, 2026. Disponível em: https://audreipavanello.github.io/bioestatistica_r/. DOI: 10.5281/zenodo.18458781.
 ```
 
-**APA 7th Edition:**
-
-```
-Pavanello, A., da Costa, K. M., & Oliveira, L. P. (2026). Bioestatística Aplicada à Saúde usando R. Universidade Cesumar. https://doi.org/10.5281/zenodo.18458781
-```
-
-**BibTeX:**
-
-``` bibtex
-@book{pavanello2026bioestatistica,
-  title={Bioestatística Aplicada à Saúde usando R},
-  author={Pavanello, Audrei and Costa, Karina Miura and Oliveira, Leonardo Pestillo},
-  year={2026},
-  publisher={Universidade Cesumar},
-  address={Maringá, PR},
-  url={https://audreipavanello.github.io/bioestatistica_r/},
-  doi={10.5281/zenodo.18458781}
-}
-```
-
 ## Licença
 
 **Conteúdo**: [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
