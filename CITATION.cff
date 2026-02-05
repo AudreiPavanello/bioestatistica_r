@@ -15,3 +15,19 @@ title: "Bioestatística Aplicada à Saúde usando R"
 doi: 10.5281/zenodo.1234
 date-released: 2026
 url: "https://github.com/AudreiPavanello/bioestatistica_r"
+preferred-citation:
+  type: book
+  authors:
+  - family-names: Pavanello
+    given-names: Audrei
+    orcid: 'https://orcid.org/0000-0003-3770-4493'
+  - family-names: Costa
+    given-names: Karina Miura
+    orcid: 'https://orcid.org/0009-0009-3447-3344'
+  - family-names: Oliveira
+    given-names: Leonardo Pestillo
+    orcid: 'https://orcid.org/0000-0001-5278-0676'
+  doi: "10.5281/zenodo.1234"
+  title: "Bioestatística Aplicada à Saúde usando R"
+  year: 2026
+  publisher: "Universidade Cesumar"
