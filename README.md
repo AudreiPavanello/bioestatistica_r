@@ -11,7 +11,7 @@ Este livro foi desenvolvido como material didático para o a disciplina de Bioes
 **Autores:**
 
 -   Prof. Dr. Audrei Pavanello
--   Profa. Dra. Karina Miura Costa
+-   Profa. Dra. Karina Miura da Costa
 -   Prof. Dr. Leonardo Pestillo de Oliveira
 
 ## Objetivos
@@ -122,13 +122,13 @@ Se você utilizar este material em sua pesquisa ou trabalho acadêmico, por favo
 **ABNT:**
 
 ```
-PAVANELLO, A.; COSTA, K. M.; OLIVEIRA, L. P. Bioestatística Aplicada à Saúde usando R. Maringá: Universidade Cesumar, 2026. Disponível em: https://audreipavanello.github.io/bioestatistica_r/. DOI: 10.5281/zenodo.18458781.
+PAVANELLO, A.; da COSTA, K. M.; OLIVEIRA, L. P. Bioestatística Aplicada à Saúde usando R. Maringá: Universidade Cesumar, 2026. Disponível em: https://audreipavanello.github.io/bioestatistica_r/. DOI: 10.5281/zenodo.18458781.
 ```
 
 **APA 7th Edition:**
 
 ```
-Pavanello, A., Costa, K. M., & Oliveira, L. P. (2026). Bioestatística Aplicada à Saúde usando R. Universidade Cesumar. https://doi.org/10.5281/zenodo.18458781
+Pavanello, A., da Costa, K. M., & Oliveira, L. P. (2026). Bioestatística Aplicada à Saúde usando R. Universidade Cesumar. https://doi.org/10.5281/zenodo.18458781
 ```
 
 **BibTeX:**
