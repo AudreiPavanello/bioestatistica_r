@@ -13,10 +13,6 @@ authors:
     given-names: Leonardo Pestillo
     orcid: "https://orcid.org/0000-0001-5278-0676"  
 year: 2026
-publisher:
-  name: "Universidade Cesumar"
-  city: "Maringá"
-  region: "PR"
-  country: "BR"
+publisher: "Universidade Cesumar"
 url: "https://audreipavanello.github.io/bioestatistica_r/"
 doi: 10.5281/zenodo.18458781
