@@ -1,18 +1,21 @@
 cff-version: 1.2.0
-message: "Se você usar este livro, por favor cite-o usando os metadados deste arquivo."
-type: book
-title: "Bioestatística Aplicada à Saúde usando R"
+title: Bioestatística Aplicada à Saúde usando R
+message: >-
+  Se você usar este livro, por favor cite-o usando os
+  metadados deste arquivo.
+type: software
 authors:
   - family-names: Pavanello
     given-names: Audrei
-    orcid: "https://orcid.org/0000-0003-3770-4493"  
+    orcid: 'https://orcid.org/0000-0003-3770-4493'
   - family-names: Costa
     given-names: Karina Miura
-    orcid: "https://orcid.org/0009-0009-3447-3344"  
+    orcid: 'https://orcid.org/0009-0009-3447-3344'
   - family-names: Oliveira
     given-names: Leonardo Pestillo
-    orcid: "https://orcid.org/0000-0001-5278-0676"  
-year: 2026
-publisher: "Universidade Cesumar"
-url: "https://audreipavanello.github.io/bioestatistica_r/"
-doi: "10.5281/zenodo.18458781"
+    orcid: 'https://orcid.org/0000-0001-5278-0676'
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.18458782
+url: 'https://audreipavanello.github.io/bioestatistica_r/'
+license: CC-BY-NC-SA-4.0
