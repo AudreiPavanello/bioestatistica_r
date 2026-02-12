@@ -387,7 +387,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
 <li><a href="#operadores-l%C3%B3gicos" id="toc-operadores-lógicos" class="nav-link" data-scroll-target="#operadores-l%C3%B3gicos"><span class="header-section-number">1.4.1</span> Operadores Lógicos</a></li>
   <li><a href="#condicionais-if-else-ifelse" id="toc-condicionais-if-else-ifelse" class="nav-link" data-scroll-target="#condicionais-if-else-ifelse"><span class="header-section-number">1.4.2</span> Condicionais: if, else, ifelse</a></li>
-  <li><a href="#loops-opera%C3%A7%C3%B5es-repetidas" id="toc-loops-operações-repetidas" class="nav-link" data-scroll-target="#loops-opera%C3%A7%C3%B5es-repetidas"><span class="header-section-number">1.4.3</span> Loops: Operações Repetidas</a></li>
+  <li><a href="#manipula%C3%A7%C3%A3o-de-dados-em-um-data.frame" id="toc-manipulação-de-dados-em-um-data.frame" class="nav-link" data-scroll-target="#manipula%C3%A7%C3%A3o-de-dados-em-um-data.frame"><span class="header-section-number">1.4.3</span> Manipulação de dados em um data.frame</a></li>
+  <li><a href="#loops-opera%C3%A7%C3%B5es-repetidas" id="toc-loops-operações-repetidas" class="nav-link" data-scroll-target="#loops-opera%C3%A7%C3%B5es-repetidas"><span class="header-section-number">1.4.4</span> Loops: Operações Repetidas</a></li>
   </ul>
 </li>
   <li>
@@ -494,9 +495,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
 <span></span>
 <span><span class="co"># Operações matemáticas</span></span>
-<span><span class="va">a</span> <span class="op">+</span> <span class="va">b</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">a</span> <span class="op">+</span> <span class="va">b</span> <span class="co"># soma</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3</code></pre>
+</div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">a</span> <span class="op">-</span> <span class="va">b</span> <span class="co"># subtração</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -1</code></pre>
+</div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">a</span> <span class="op">*</span> <span class="va">b</span> <span class="co"># multiplicação</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">a</span> <span class="op">/</span> <span class="va">b</span> <span class="co"># divisão</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5</code></pre>
+</div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">a</span><span class="op">^</span><span class="fl">2</span> <span class="co"># exponenciação</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1</code></pre>
 </div>
 </div>
 </section><section id="estruturas-de-dados" class="level3" data-number="1.3.2"><h3 data-number="1.3.2" class="anchored" data-anchor-id="estruturas-de-dados">
@@ -506,7 +523,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">1.3.2.1</span> Vetores</h4>
 <p>Vetores são a estrutura mais simples, contendo elementos de um único tipo:</p>
 <div class="cell">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Vetor numérico simples</span></span>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Vetor numérico simples</span></span>
 <span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
 <span></span>
 <span><span class="co"># Vetor com múltiplos elementos</span></span>
@@ -516,14 +533,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">1.3.2.2</span> Listas</h4>
 <p>Listas podem conter diferentes tipos de dados:</p>
 <div class="cell">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Lista com diferentes tipos de dados</span></span>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Lista com diferentes tipos de dados</span></span>
 <span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="fl">1</span>, <span class="st">"b"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section><section id="data-frames" class="level4" data-number="1.3.2.3"><h4 data-number="1.3.2.3" class="anchored" data-anchor-id="data-frames">
 <span class="header-section-number">1.3.2.3</span> Data Frames</h4>
 <p>O <strong>data frame</strong> é a estrutura mais importante para análise de dados - é equivalente a uma planilha do Excel.</p>
 <div class="cell">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Criando um data frame com informações de pacientes</span></span>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Criando um data frame com informações de pacientes</span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
 <span>  Nome <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"João"</span>, <span class="st">"José"</span>, <span class="st">"Maria"</span>, <span class="st">"Antônia"</span><span class="op">)</span>,</span>
 <span>  Idade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">65</span>, <span class="fl">60</span>, <span class="fl">22</span>, <span class="fl">28</span><span class="op">)</span>,</span>
@@ -555,17 +572,47 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">1.3.2.4</span> Acessando Colunas de um Data Frame</h4>
 <p>O símbolo <code>$</code> é usado para acessar colunas específicas de um data frame:</p>
 <div class="cell">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Plotando a idade dos participantes</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Idade</span>,</span>
-<span>     main <span class="op">=</span> <span class="st">"Idade dos Participantes"</span>,</span>
-<span>     ylab <span class="op">=</span> <span class="st">"Idade (anos)"</span>,</span>
-<span>     xlab <span class="op">=</span> <span class="st">"Índice"</span>,</span>
-<span>     col <span class="op">=</span> <span class="st">"navy"</span>,</span>
-<span>     pch <span class="op">=</span> <span class="fl">16</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># A função plot é utilizada para visualizar dados</span></span>
+<span></span>
+<span><span class="co"># Plotando a idade dos participantes</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Idade</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="introducao-r_files/figure-html/acessar-colunas-1.png" class="img-fluid figure-img" width="768"></p>
 <figcaption>Gráfico de dispersão da idade dos participantes</figcaption></figure>
+</div>
+</div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Podemos adicionar argumentos para uma função</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">Idade</span>,</span>
+<span>     main <span class="op">=</span> <span class="st">"Idade dos Participantes"</span>, <span class="co"># Título dos gráficos</span></span>
+<span>     ylab <span class="op">=</span> <span class="st">"Idade (anos)"</span>, <span class="co"># Título do eixo y</span></span>
+<span>     xlab <span class="op">=</span> <span class="st">"Indivíduos"</span>, <span class="co"># Título do eixo x</span></span>
+<span>     col <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="co"># Cor do gráfico</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="introducao-r_files/figure-html/acessar-colunas-2.png" class="img-fluid figure-img" width="768"></p>
+<figcaption>Gráfico de dispersão da idade dos participantes</figcaption></figure>
+</div>
+</div>
+</div>
+</section><section id="como-saber-os-argumentos-de-uma-função" class="level4" data-number="1.3.2.5"><h4 data-number="1.3.2.5" class="anchored" data-anchor-id="como-saber-os-argumentos-de-uma-função">
+<span class="header-section-number">1.3.2.5</span> Como saber os argumentos de uma função??</h4>
+<div class="cell">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op">?</span><span class="op">?</span><span class="va">plot</span> <span class="co"># F1 ajuda a ter ajuda direto</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="outros-estilos-de-gráfico" class="level4" data-number="1.3.2.6"><h4 data-number="1.3.2.6" class="anchored" data-anchor-id="outros-estilos-de-gráfico">
+<span class="header-section-number">1.3.2.6</span> Outros estilos de gráfico</h4>
+<div class="cell">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span><span class="op">(</span><span class="va">Idade</span> <span class="op">~</span> <span class="va">Sexo</span>, </span>
+<span>        data <span class="op">=</span> <span class="va">df</span>, </span>
+<span>        xlab <span class="op">=</span> <span class="st">"Sexo"</span>, </span>
+<span>        ylab <span class="op">=</span> <span class="st">"Idade (anos)"</span>, </span>
+<span>        col <span class="op">=</span> <span class="st">"navy"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="introducao-r_files/figure-html/exemplo-boxplot-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
 </div>
 </div>
 </div>
@@ -576,12 +623,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">1.3.3.1</span> Numeric (Double)</h4>
 <p>Valores numéricos decimais:</p>
 <div class="cell">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
 <span><span class="va">a</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1</code></pre>
 </div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "numeric"</code></pre>
 </div>
@@ -590,12 +637,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">1.3.3.2</span> Integer</h4>
 <p>Valores numéricos inteiros (use <code>L</code> para especificar):</p>
 <div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fl">1L</span></span>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fl">1L</span></span>
 <span><span class="va">a</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1</code></pre>
 </div>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "integer"</code></pre>
 </div>
@@ -604,12 +651,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">1.3.3.3</span> Character</h4>
 <p>Dados de texto (strings):</p>
 <div class="cell">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="st">"1"</span></span>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="st">"1"</span></span>
 <span><span class="va">a</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "1"</code></pre>
 </div>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "character"</code></pre>
 </div>
@@ -618,7 +665,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">1.3.3.4</span> Factor</h4>
 <p>Dados categóricos (nominais ou ordinais):</p>
 <div class="cell">
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="st">"1"</span></span>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="st">"1"</span></span>
 <span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -630,7 +677,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">1.3.3.5</span> Logical (Booleano)</h4>
 <p>Valores lógicos <code>TRUE</code> (verdadeiro) ou <code>FALSE</code> (falso):</p>
 <div class="cell">
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
 <span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
 <span><span class="va">a</span> <span class="op">==</span> <span class="va">b</span>  <span class="co"># Retorna FALSE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -641,12 +688,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">1.3.3.6</span> NA (Not Available)</h4>
 <p>Representa valores ausentes em um conjunto de dados:</p>
 <div class="cell">
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="cn">NA</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="cn">NA</span><span class="op">)</span></span>
 <span><span class="va">a</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  1  2 NA</code></pre>
 </div>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">a</span> <span class="op">+</span> <span class="fl">2</span>  <span class="co"># O NA se propaga nas operações</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">a</span> <span class="op">+</span> <span class="fl">2</span>  <span class="co"># O NA se propaga nas operações</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  3  4 NA</code></pre>
 </div>
@@ -655,7 +702,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">1.3.4</span> Convertendo Tipos de Dados</h3>
 <p>Vamos aplicar o que aprendemos ao nosso data frame:</p>
 <div class="cell">
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Convertendo a variável Sexo para fator</span></span>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Convertendo a variável Sexo para fator</span></span>
 <span><span class="va">df</span><span class="op">$</span><span class="va">Sexo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Sexo</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Agora conseguimos criar um boxplot adequado</span></span>
@@ -710,39 +757,39 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <div class="cell">
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Exemplos de operadores lógicos</span></span>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Exemplos de operadores lógicos</span></span>
 <span><span class="fl">1</span> <span class="op">&gt;</span> <span class="fl">2</span>   <span class="co"># FALSE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] FALSE</code></pre>
 </div>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">1</span> <span class="op">&lt;</span> <span class="fl">2</span>   <span class="co"># TRUE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">1</span> <span class="op">&lt;</span> <span class="fl">2</span>   <span class="co"># TRUE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">1</span> <span class="op">&lt;=</span> <span class="fl">2</span>  <span class="co"># TRUE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">1</span> <span class="op">&lt;=</span> <span class="fl">2</span>  <span class="co"># TRUE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">1</span> <span class="op">&gt;=</span> <span class="fl">2</span>  <span class="co"># FALSE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">1</span> <span class="op">&gt;=</span> <span class="fl">2</span>  <span class="co"># FALSE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] FALSE</code></pre>
 </div>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">1</span> <span class="op">!=</span> <span class="fl">2</span>  <span class="co"># TRUE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">1</span> <span class="op">!=</span> <span class="fl">2</span>  <span class="co"># TRUE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">2</span> <span class="op">==</span> <span class="fl">2</span>  <span class="co"># TRUE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">2</span> <span class="op">==</span> <span class="fl">2</span>  <span class="co"># TRUE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
 </div>
 <p>Podemos aplicar operadores lógicos a colunas inteiras:</p>
 <div class="cell">
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span><span class="op">$</span><span class="va">Idade</span> <span class="op">&gt;</span> <span class="fl">50</span>  <span class="co"># Quais idades são maiores que 50?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span><span class="op">$</span><span class="va">Idade</span> <span class="op">&gt;</span> <span class="fl">50</span>  <span class="co"># Quais idades são maiores que 50?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  TRUE  TRUE FALSE FALSE</code></pre>
 </div>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span><span class="op">$</span><span class="va">Idade</span> <span class="op">&gt;=</span> <span class="fl">60</span>  <span class="co"># Quais são idosos (&gt;=60 anos)?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span><span class="op">$</span><span class="va">Idade</span> <span class="op">&gt;=</span> <span class="fl">60</span>  <span class="co"># Quais são idosos (&gt;=60 anos)?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  TRUE  TRUE FALSE FALSE</code></pre>
 </div>
@@ -752,7 +799,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="estrutura-if-else" class="level4" data-number="1.4.2.1"><h4 data-number="1.4.2.1" class="anchored" data-anchor-id="estrutura-if-else">
 <span class="header-section-number">1.4.2.1</span> Estrutura if-else</h4>
 <div class="cell">
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fl">200</span></span>
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fl">200</span></span>
 <span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
 <span></span>
 <span><span class="kw">if</span> <span class="op">(</span><span class="va">a</span> <span class="op">&gt;</span> <span class="va">b</span><span class="op">)</span> <span class="op">{</span></span>
@@ -768,7 +815,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">1.4.2.2</span> Função ifelse</h4>
 <p>A função <code><a href="https://rdrr.io/r/base/ifelse.html">ifelse()</a></code> é útil para vetorização de condições:</p>
 <div class="cell">
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Classificando idades em adultos e crianças</span></span>
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Classificando idades em adultos e crianças</span></span>
 <span><span class="va">idades</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">7</span>, <span class="fl">8</span>, <span class="fl">9</span>, <span class="fl">10</span>, <span class="fl">21</span>, <span class="fl">25</span>, <span class="fl">38</span>, <span class="fl">48</span>, <span class="fl">54</span><span class="op">)</span></span>
 <span><span class="va">classificacao</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">idades</span> <span class="op">&gt;=</span> <span class="fl">10</span>, <span class="st">"Adulto"</span>, <span class="st">"Criança"</span><span class="op">)</span></span>
 <span><span class="va">classificacao</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -780,20 +827,86 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Aplicando ao nosso data frame:</p>
 <div class="cell">
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Classificando participantes como idosos ou adultos</span></span>
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Classificando participantes como idosos ou adultos</span></span>
 <span><span class="va">classificacao_idade</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Idade</span> <span class="op">&gt;=</span> <span class="fl">60</span>, <span class="st">"Idoso"</span>, <span class="st">"Adulto"</span><span class="op">)</span></span>
 <span><span class="va">classificacao_idade</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Idoso"  "Idoso"  "Adulto" "Adulto"</code></pre>
 </div>
 </div>
-</section></section><section id="loops-operações-repetidas" class="level3" data-number="1.4.3"><h3 data-number="1.4.3" class="anchored" data-anchor-id="loops-operações-repetidas">
-<span class="header-section-number">1.4.3</span> Loops: Operações Repetidas</h3>
-<p>Loops são úteis para realizar operações repetidas de forma automática.</p>
-<section id="loop-for-básico" class="level4" data-number="1.4.3.1"><h4 data-number="1.4.3.1" class="anchored" data-anchor-id="loop-for-básico">
-<span class="header-section-number">1.4.3.1</span> Loop for básico</h4>
+</section></section><section id="manipulação-de-dados-em-um-data.frame" class="level3" data-number="1.4.3"><h3 data-number="1.4.3" class="anchored" data-anchor-id="manipulação-de-dados-em-um-data.frame">
+<span class="header-section-number">1.4.3</span> Manipulação de dados em um data.frame</h3>
+<section id="adicionando-uma-nova-coluna" class="level4" data-number="1.4.3.1"><h4 data-number="1.4.3.1" class="anchored" data-anchor-id="adicionando-uma-nova-coluna">
+<span class="header-section-number">1.4.3.1</span> Adicionando uma nova coluna</h4>
+<p>Podemos adicionar uma nova coluna usando o $</p>
 <div class="cell">
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Imprimindo números de 1 a 10</span></span>
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Data.frame original - 5 colunas no total</span></span>
+<span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>Nome <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"João"</span>, <span class="st">"José"</span>, <span class="st">"Maria"</span>, <span class="st">"Antônia"</span><span class="op">)</span>,</span>
+<span>                 Idade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">65</span>, <span class="fl">60</span>, <span class="fl">22</span>, <span class="fl">28</span><span class="op">)</span>,</span>
+<span>                 Sexo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Masculino"</span>, <span class="st">"Masculino"</span>, <span class="st">"Feminino"</span>, <span class="st">"Feminino"</span><span class="op">)</span>,</span>
+<span>                 CEP <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">85802159</span>,<span class="fl">87945632</span>,<span class="fl">89745632</span>,<span class="fl">85706984</span><span class="op">)</span>,</span>
+<span>                 Curso <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Nutrição"</span>, <span class="st">"Educação Física"</span>, <span class="st">"Fisioterapia"</span>, <span class="st">"Medicina"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">df</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["Nome"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Idade"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Sexo"],"name":[3],"type":["chr"],"align":["left"]},{"label":["CEP"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Curso"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"João","2":"65","3":"Masculino","4":"85802159","5":"Nutrição"},{"1":"José","2":"60","3":"Masculino","4":"87945632","5":"Educação Física"},{"1":"Maria","2":"22","3":"Feminino","4":"89745632","5":"Fisioterapia"},{"1":"Antônia","2":"28","3":"Feminino","4":"85706984","5":"Medicina"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Adicionando a coluna peso</span></span>
+<span></span>
+<span><span class="va">df</span><span class="op">$</span><span class="va">peso</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">60</span>,<span class="fl">90</span>,<span class="fl">120</span>,<span class="fl">40</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">df</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["Nome"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Idade"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Sexo"],"name":[3],"type":["chr"],"align":["left"]},{"label":["CEP"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Curso"],"name":[5],"type":["chr"],"align":["left"]},{"label":["peso"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"João","2":"65","3":"Masculino","4":"85802159","5":"Nutrição","6":"60"},{"1":"José","2":"60","3":"Masculino","4":"87945632","5":"Educação Física","6":"90"},{"1":"Maria","2":"22","3":"Feminino","4":"89745632","5":"Fisioterapia","6":"120"},{"1":"Antônia","2":"28","3":"Feminino","4":"85706984","5":"Medicina","6":"40"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section><section id="adicionando-uma-nova-coluna-baseado-nos-dados-usando-ifelse" class="level4" data-number="1.4.3.2"><h4 data-number="1.4.3.2" class="anchored" data-anchor-id="adicionando-uma-nova-coluna-baseado-nos-dados-usando-ifelse">
+<span class="header-section-number">1.4.3.2</span> Adicionando uma nova coluna baseado nos dados usando ifelse</h4>
+<p>A estrutura do ifelse é útil para classificar os dados.</p>
+<div class="cell">
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Vamos adicionar uma coluna peso</span></span>
+<span><span class="va">df</span><span class="op">$</span><span class="va">classificacao_peso</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">peso</span> <span class="op">&lt;</span> <span class="fl">50</span>, <span class="st">"Magro"</span>,</span>
+<span>                                <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">peso</span> <span class="op">&lt;</span> <span class="fl">80</span>, <span class="st">"Normal"</span>,</span>
+<span>                                       <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">peso</span> <span class="op">&lt;</span> <span class="fl">100</span>, <span class="st">"Sobrepeso"</span>, <span class="st">"Obeso"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">df</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["Nome"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Idade"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Sexo"],"name":[3],"type":["chr"],"align":["left"]},{"label":["CEP"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Curso"],"name":[5],"type":["chr"],"align":["left"]},{"label":["peso"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["classificacao_peso"],"name":[7],"type":["chr"],"align":["left"]}],"data":[{"1":"João","2":"65","3":"Masculino","4":"85802159","5":"Nutrição","6":"60","7":"Normal"},{"1":"José","2":"60","3":"Masculino","4":"87945632","5":"Educação Física","6":"90","7":"Sobrepeso"},{"1":"Maria","2":"22","3":"Feminino","4":"89745632","5":"Fisioterapia","6":"120","7":"Obeso"},{"1":"Antônia","2":"28","3":"Feminino","4":"85706984","5":"Medicina","6":"40","7":"Magro"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Também podemos operações nas colunas usando o $</span></span>
+<span></span>
+<span><span class="va">df</span><span class="op">$</span><span class="va">peso_gramas</span> <span class="op">&lt;-</span> <span class="va">df</span><span class="op">$</span><span class="va">peso</span> <span class="op">*</span> <span class="fl">1000</span></span>
+<span></span>
+<span><span class="va">df</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["Nome"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Idade"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Sexo"],"name":[3],"type":["chr"],"align":["left"]},{"label":["CEP"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Curso"],"name":[5],"type":["chr"],"align":["left"]},{"label":["peso"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["classificacao_peso"],"name":[7],"type":["chr"],"align":["left"]},{"label":["peso_gramas"],"name":[8],"type":["dbl"],"align":["right"]}],"data":[{"1":"João","2":"65","3":"Masculino","4":"85802159","5":"Nutrição","6":"60","7":"Normal","8":"60000"},{"1":"José","2":"60","3":"Masculino","4":"87945632","5":"Educação Física","6":"90","7":"Sobrepeso","8":"90000"},{"1":"Maria","2":"22","3":"Feminino","4":"89745632","5":"Fisioterapia","6":"120","7":"Obeso","8":"120000"},{"1":"Antônia","2":"28","3":"Feminino","4":"85706984","5":"Medicina","6":"40","7":"Magro","8":"40000"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section></section><section id="loops-operações-repetidas" class="level3" data-number="1.4.4"><h3 data-number="1.4.4" class="anchored" data-anchor-id="loops-operações-repetidas">
+<span class="header-section-number">1.4.4</span> Loops: Operações Repetidas</h3>
+<p>Loops são úteis para realizar operações repetidas de forma automática.</p>
+<section id="loop-for-básico" class="level4" data-number="1.4.4.1"><h4 data-number="1.4.4.1" class="anchored" data-anchor-id="loop-for-básico">
+<span class="header-section-number">1.4.4.1</span> Loop for básico</h4>
+<div class="cell">
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Imprimindo números de 1 a 10</span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">i</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -810,11 +923,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 [1] 10</code></pre>
 </div>
 </div>
-</section><section id="loop-for-com-condicionais" class="level4" data-number="1.4.3.2"><h4 data-number="1.4.3.2" class="anchored" data-anchor-id="loop-for-com-condicionais">
-<span class="header-section-number">1.4.3.2</span> Loop for com condicionais</h4>
+</section><section id="loop-for-com-condicionais" class="level4" data-number="1.4.4.2"><h4 data-number="1.4.4.2" class="anchored" data-anchor-id="loop-for-com-condicionais">
+<span class="header-section-number">1.4.4.2</span> Loop for com condicionais</h4>
 <p>Exemplo avançado: criando gráficos automaticamente para cada coluna do data frame:</p>
 <div class="cell">
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Loop para gerar gráficos de todas as colunas</span></span>
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Loop para gerar gráficos de todas as colunas</span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">col</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">is.numeric</a></span><span class="op">(</span><span class="va">df</span><span class="op">[[</span><span class="va">col</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="co"># Se a coluna for numérica, cria gráfico de dispersão</span></span>
@@ -853,6 +966,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <figcaption>Gráficos automáticos para cada variável do data frame</figcaption></figure>
 </div>
 </div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="introducao-r_files/figure-html/loop-graficos-4.png" class="img-fluid figure-img" width="768"></p>
+<figcaption>Gráficos automáticos para cada variável do data frame</figcaption></figure>
+</div>
+</div>
 </div>
 </section></section></section><section id="boas-práticas-de-formatação-de-código" class="level2" data-number="1.5"><h2 data-number="1.5" class="anchored" data-anchor-id="boas-práticas-de-formatação-de-código">
 <span class="header-section-number">1.5</span> Boas Práticas de Formatação de Código</h2>
@@ -867,7 +986,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">1.5.1</span> Uso de Espaços</h3>
 <p><strong>Sempre use espaços</strong> ao redor de operadores para melhorar a legibilidade:</p>
 <div class="cell">
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># ✓ CORRETO - Código legível</span></span>
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># ✓ CORRETO - Código legível</span></span>
 <span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
 <span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">+</span> <span class="fl">2</span> <span class="op">*</span> <span class="fl">3</span></span>
 <span></span>
@@ -878,7 +997,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">1.5.2</span> Formatação de Data Frames</h3>
 <p>Compare as duas formas de criar o mesmo data frame:</p>
 <div class="cell">
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># ✓ CORRETO - Cada argumento em uma linha, bem espaçado</span></span>
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># ✓ CORRETO - Cada argumento em uma linha, bem espaçado</span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
 <span>  Nome <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"João"</span>, <span class="st">"José"</span>, <span class="st">"Maria"</span>, <span class="st">"Antônia"</span><span class="op">)</span>,</span>
 <span>  Idade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">65</span>, <span class="fl">60</span>, <span class="fl">22</span>, <span class="fl">28</span><span class="op">)</span>,</span>
@@ -888,7 +1007,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># ✗ ERRADO - Tudo em poucas linhas, difícil de ler</span></span>
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># ✗ ERRADO - Tudo em poucas linhas, difícil de ler</span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>Nome<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"João"</span>,<span class="st">"José"</span>,<span class="st">"Maria"</span>,<span class="st">"Antônia"</span><span class="op">)</span>,Idade<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">65</span>,<span class="fl">60</span>,<span class="fl">22</span>,<span class="fl">28</span><span class="op">)</span>,</span>
 <span>                 Sexo<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Masculino"</span>,<span class="st">"Masculino"</span>,<span class="st">"Feminino"</span>,<span class="st">"Feminino"</span><span class="op">)</span>,</span>
 <span>                 CEP<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">85802159</span>,<span class="fl">87945632</span>,<span class="fl">89745632</span>,<span class="fl">85706984</span><span class="op">)</span>,</span>
@@ -898,36 +1017,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">1.5.3</span> Convenções de Nomenclatura</h3>
 <p>Use <strong>snake_case</strong> (minúsculas com underline) para nomear variáveis e objetos:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ✗ ERRADO - Nome com espaço (causa erro)</span></span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>tabela <span class="dv">1</span> <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ✗ ERRADO - Mistura de maiúsculas e espaço</span></span>
-<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>tabelA <span class="dv">1</span> <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a><span class="co"># ✓ CORRETO - snake_case</span></span>
-<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>tabela_1 <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a>dados_pacientes <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
-<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a>modelo_final <span class="ot">&lt;-</span> <span class="fu">lm</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ✗ ERRADO - Nome com espaço (causa erro)</span></span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>tabela <span class="dv">1</span> <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ✗ ERRADO - Mistura de maiúsculas e espaço</span></span>
+<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a>tabelA <span class="dv">1</span> <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb73-6"><a href="#cb73-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-7"><a href="#cb73-7" aria-hidden="true" tabindex="-1"></a><span class="co"># ✓ CORRETO - snake_case</span></span>
+<span id="cb73-8"><a href="#cb73-8" aria-hidden="true" tabindex="-1"></a>tabela_1 <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb73-9"><a href="#cb73-9" aria-hidden="true" tabindex="-1"></a>dados_pacientes <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
+<span id="cb73-10"><a href="#cb73-10" aria-hidden="true" tabindex="-1"></a>modelo_final <span class="ot">&lt;-</span> <span class="fu">lm</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section><section id="documentação-com-comentários" class="level3" data-number="1.5.4"><h3 data-number="1.5.4" class="anchored" data-anchor-id="documentação-com-comentários">
 <span class="header-section-number">1.5.4</span> Documentação com Comentários</h3>
 <p><strong>Sempre documente seu código</strong> com comentários explicativos:</p>
-<div class="cell">
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Carregando dados de internações hospitalares</span></span>
-<span><span class="va">dados</span> <span class="op">&lt;-</span> <span class="fu">read_excel</span><span class="op">(</span><span class="st">"dados_internacoes_maringa_2024.xlsx"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Filtrando apenas pacientes adultos (&gt;= 18 anos)</span></span>
-<span><span class="va">dados_adultos</span> <span class="op">&lt;-</span> <span class="va">dados</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">idade</span> <span class="op">&gt;=</span> <span class="fl">18</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Calculando estatísticas descritivas por sexo</span></span>
-<span><span class="va">resumo</span> <span class="op">&lt;-</span> <span class="va">dados_adultos</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">sexo</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">summarise</span><span class="op">(</span></span>
-<span>    idade_media <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">idade</span><span class="op">)</span>,</span>
-<span>    idade_dp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">idade</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 </section></section><section id="resumo-do-capítulo" class="level2" data-number="1.6"><h2 data-number="1.6" class="anchored" data-anchor-id="resumo-do-capítulo">
 <span class="header-section-number">1.6</span> Resumo do Capítulo</h2>
 <p>Neste capítulo, você aprendeu:</p>
@@ -953,7 +1056,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section><section id="exercícios-práticos" class="level2" data-number="1.7"><h2 data-number="1.7" class="anchored" data-anchor-id="exercícios-práticos">
 <span class="header-section-number">1.7</span> Exercícios Práticos</h2>
 <ol type="1">
-<li><p>Crie um data frame com dados de 5 pacientes, incluindo variáveis: nome, idade, peso, altura e diagnóstico</p></li>
+<li><p>Crie um data frame com dados de 10 pacientes, incluindo as seguintes variáveis: nome, idade, peso, altura e diagnóstico</p></li>
 <li><p>Calcule o IMC (Índice de Massa Corporal) de cada paciente usando a fórmula: IMC = peso / altura²</p></li>
 <li><p>Use <code><a href="https://rdrr.io/r/base/ifelse.html">ifelse()</a></code> para classificar os pacientes em: “Baixo peso” (IMC &lt; 18.5), “Normal” (18.5 ≤ IMC &lt; 25), “Sobrepeso” (25 ≤ IMC &lt; 30), ou “Obesidade” (IMC ≥ 30)</p></li>
 </ol>

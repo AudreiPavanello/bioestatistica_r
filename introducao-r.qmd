@@ -77,7 +77,11 @@ a <- 1
 b <- 2
 
 # Operações matemáticas
-a + b
+a + b # soma
+a - b # subtração
+a * b # multiplicação
+a / b # divisão
+a^2 # exponenciação
 ```
 
 ### Estruturas de Dados
@@ -136,15 +140,42 @@ O símbolo `$` é usado para acessar colunas específicas de um data frame:
 ```{r}
 #| label: acessar-colunas
 #| fig-cap: "Gráfico de dispersão da idade dos participantes"
+# A função plot é utilizada para visualizar dados
 
 # Plotando a idade dos participantes
-plot(df$Idade,
-     main = "Idade dos Participantes",
-     ylab = "Idade (anos)",
-     xlab = "Índice",
-     col = "navy",
-     pch = 16)
+
+plot(df$Idade)
+
+# Podemos adicionar argumentos para uma função
+plot(x = df$Idade,
+     main = "Idade dos Participantes", # Título dos gráficos
+     ylab = "Idade (anos)", # Título do eixo y
+     xlab = "Indivíduos", # Título do eixo x
+     col = "red") # Cor do gráfico
 ```
+
+
+#### Como saber os argumentos de uma função??
+
+```{r}
+#| label: argumentos-função
+
+??plot # F1 ajuda a ter ajuda direto
+```
+
+#### Outros estilos de gráfico
+
+```{r}
+#| label: exemplo-boxplot
+
+boxplot(Idade ~ Sexo, 
+        data = df, 
+        xlab = "Sexo", 
+        ylab = "Idade (anos)", 
+        col = "navy")
+
+```
+
 
 ### Tipos de Dados no R
 
@@ -320,6 +351,55 @@ classificacao_idade <- ifelse(df$Idade >= 60, "Idoso", "Adulto")
 classificacao_idade
 ```
 
+### Manipulação de dados em um data.frame
+
+#### Adicionando uma nova coluna
+
+Podemos adicionar uma nova coluna usando o $
+
+```{r}
+#| label: adicionar-nova-coluna
+
+# Data.frame original - 5 colunas no total
+
+df <- data.frame(Nome = c("João", "José", "Maria", "Antônia"),
+                 Idade = c(65, 60, 22, 28),
+                 Sexo = c("Masculino", "Masculino", "Feminino", "Feminino"),
+                 CEP = c(85802159,87945632,89745632,85706984),
+                 Curso = c("Nutrição", "Educação Física", "Fisioterapia", "Medicina")
+)
+
+df 
+
+# Adicionando a coluna peso
+
+df$peso <- c(60,90,120,40)
+
+df
+```
+
+#### Adicionando uma nova coluna baseado nos dados usando ifelse
+
+A estrutura do ifelse é útil para classificar os dados.
+
+```{r}
+#| label: ifelse-data.frame-adicionar-coluna-classificacao
+
+# Vamos adicionar uma coluna peso
+df$classificacao_peso <- ifelse(df$peso < 50, "Magro",
+                                ifelse(df$peso < 80, "Normal",
+                                       ifelse(df$peso < 100, "Sobrepeso", "Obeso")))
+
+df
+
+# Também podemos operações nas colunas usando o $
+
+df$peso_gramas <- df$peso * 1000
+
+df
+
+```
+
 ### Loops: Operações Repetidas
 
 Loops são úteis para realizar operações repetidas de forma automática.
@@ -446,26 +526,6 @@ modelo_final <- lm()
 
 **Sempre documente seu código** com comentários explicativos:
 
-```{r}
-#| label: comentarios-bons
-#| eval: false
-
-# Carregando dados de internações hospitalares
-dados <- read_excel("dados_internacoes_maringa_2024.xlsx")
-
-# Filtrando apenas pacientes adultos (>= 18 anos)
-dados_adultos <- dados |>
-  filter(idade >= 18)
-
-# Calculando estatísticas descritivas por sexo
-resumo <- dados_adultos |>
-  group_by(sexo) |>
-  summarise(
-    idade_media = mean(idade),
-    idade_dp = sd(idade)
-  )
-```
-
 ## Resumo do Capítulo
 
 Neste capítulo, você aprendeu:
@@ -483,7 +543,7 @@ No próximo capítulo, você aprenderá a manipular dados de forma eficiente usa
 
 ## Exercícios Práticos
 
-1.  Crie um data frame com dados de 5 pacientes, incluindo variáveis: nome, idade, peso, altura e diagnóstico
+1.  Crie um data frame com dados de 10 pacientes, incluindo as seguintes variáveis: nome, idade, peso, altura e diagnóstico
 
 2.  Calcule o IMC (Índice de Massa Corporal) de cada paciente usando a fórmula: IMC = peso / altura²
 
