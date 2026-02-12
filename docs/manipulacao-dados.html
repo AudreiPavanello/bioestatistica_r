@@ -451,7 +451,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>
 <strong>tidyr</strong>: Organização e limpeza de dados</li>
 <li>
-<strong>readr</strong>: Leitura rápida de dados retangulares (CSV, TSV)</li>
+<strong>readr</strong>: Leitura rápida de dados tabulares (CSV, TSV)</li>
 <li>
 <strong>purrr</strong>: Programação funcional</li>
 <li>
@@ -466,13 +466,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>
 <strong>Código mais legível</strong>: Sintaxe intuitiva e consistente</li>
 <li>
-<strong>Pipe operator</strong>: Encadeamento de operações de forma natural</li>
+<strong>Pipe operator</strong>: Encadeamento de operações de forma natural |&gt; ou %&gt;%</li>
 <li>
 <strong>Eficiência</strong>: Otimizado para grandes volumes de dados</li>
 <li>
 <strong>Comunidade</strong>: Ampla documentação e suporte</li>
 <li>
-<strong>Integração</strong>: Pacotes funcionam perfeitamente juntos</li>
+<strong>Integração</strong>: Pacotes desenvolvidos com funcionalidade integrada</li>
 </ul></section></section><section id="instalação-e-carregamento-de-pacotes" class="level2" data-number="2.2"><h2 data-number="2.2" class="anchored" data-anchor-id="instalação-e-carregamento-de-pacotes">
 <span class="header-section-number">2.2</span> Instalação e Carregamento de Pacotes</h2>
 <section id="instalando-pacotes" class="level3" data-number="2.2.1"><h3 data-number="2.2.1" class="anchored" data-anchor-id="instalando-pacotes">
@@ -509,11 +509,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Nota sobre os Dados
+Sobre o diretório de trabalho
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Os dados utilizados neste livro são de internações hospitalares de Maringá-PR referentes ao ano de 2024, disponibilizados pelo Sistema de Informações Hospitalares (SIH) do SUS. O arquivo <code>dados_internacoes_maringa_2024.xlsx</code> deve estar na pasta <code>data/</code> do seu projeto.</p>
+<p><strong>Importante</strong>: Sempre verifique se você está no diretório correto. Coloque os scripts e dados para análise em um mesmo diretório.</p>
+<p><img src="images/working_directory.png" class="img-fluid"></p>
+<p>O R só reconhece arquivos que está pasta do diretório de trabalho.</p>
+<p>Para selecionar essa pasta, clique nos … na imagem, selecione a pasta com os scripts e dados e clique em <strong>Set as working directory</strong>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Organização das pastas no diretório de trabalho
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Organize os dados e os scripts em pastas, para todos os arquivos ficarem organizados.<br><br>
+Sugestão de organização:</p>
+<ul>
+<li><p>Pasta data, com os dados brutos e filtrados/analisados</p></li>
+<li><p>Pasta scripts, com os scripts utilizados na análise</p></li>
+<li><p>Pasta figuras, com as figuras geradas</p></li>
+<li><p>Pasta tabelas, com as tabelas geradas</p></li>
+<li><p>Pasta manuscrito, se utilizar o R para escrita científica</p></li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Sobre os dados utilizados nesse livro.
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Os dados utilizados neste livro são de internações hospitalares de Maringá-PR referentes ao ano de 2024, disponibilizados pelo Sistema de Informações Hospitalares (SIH) do SUS. Os dados são anonimizados e de domínio público.</p>
+<p>O arquivo <code>dados_internacoes_maringa_2024.xlsx</code> deve estar na pasta <code>data/</code> do seu projeto.</p>
 </div>
 </div>
 </section><section id="explorando-os-dados-importados" class="level3" data-number="2.3.2"><h3 data-number="2.3.2" class="anchored" data-anchor-id="explorando-os-dados-importados">
@@ -746,7 +784,7 @@ Nota sobre os Dados
 </div>
 </section></section></section><section id="o-operador-pipe" class="level2" data-number="2.5"><h2 data-number="2.5" class="anchored" data-anchor-id="o-operador-pipe">
 <span class="header-section-number">2.5</span> O Operador Pipe |&gt;</h2>
-<p>O <strong>pipe operator</strong> <code>|&gt;</code> é uma das características mais poderosas do tidyverse. Ele permite encadear múltiplas operações de forma legível.</p>
+<p>O <strong>pipe operator</strong> <code>|&gt;</code> é uma das ferramentas mais úteis do tidyverse. Ele permite encadear múltiplas operações de forma legível.</p>
 <section id="como-ler-o-pipe" class="level3" data-number="2.5.1"><h3 data-number="2.5.1" class="anchored" data-anchor-id="como-ler-o-pipe">
 <span class="header-section-number">2.5.1</span> Como Ler o Pipe</h3>
 <p>O símbolo <code>|&gt;</code> pode ser lido como <strong>“E ENTÃO”</strong> ou <strong>“PASSE PARA”</strong>.</p>
@@ -794,7 +832,7 @@ Pipe Nativo vs.&nbsp;Pipe do magrittr
 <li>
 <code>%&gt;%</code> - Pipe do pacote magrittr</li>
 </ul>
-<p>Ambos funcionam de forma similar. Usamos <code>|&gt;</code> por ser nativo e não requerer pacotes adicionais.</p>
+<p>Ambos funcionam de forma similar. Usamos <code>|&gt;</code> por ser a implementação oficial e não requerer pacotes adicionais.</p>
 </div>
 </div>
 </section></section><section id="encadeamento-de-operações" class="level2" data-number="2.6"><h2 data-number="2.6" class="anchored" data-anchor-id="encadeamento-de-operações">

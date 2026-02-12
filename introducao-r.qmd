@@ -353,9 +353,11 @@ classificacao_idade
 
 ### Manipulação de dados em um data.frame
 
+Existem várias formas de manipular dados em um data.frame, vamos abordar algumas.
+
 #### Adicionando uma nova coluna
 
-Podemos adicionar uma nova coluna usando o $
+Podemos adicionar uma nova coluna usando o operador $.
 
 ```{r}
 #| label: adicionar-nova-coluna
@@ -380,7 +382,7 @@ df
 
 #### Adicionando uma nova coluna baseado nos dados usando ifelse
 
-A estrutura do ifelse é útil para classificar os dados.
+A estrutura do ifelse pode ser utilizada para classificar dados de uma coluna em uma outra coluna por meio de um teste lógico.
 
 ```{r}
 #| label: ifelse-data.frame-adicionar-coluna-classificacao
@@ -524,7 +526,7 @@ modelo_final <- lm()
 
 ### Documentação com Comentários
 
-**Sempre documente seu código** com comentários explicativos:
+**Sempre documente seu código** com comentários explicativos, isso servirá para quando você utilizar o código novamente no futuro.
 
 ## Resumo do Capítulo
 

@@ -836,9 +836,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section></section><section id="manipulação-de-dados-em-um-data.frame" class="level3" data-number="1.4.3"><h3 data-number="1.4.3" class="anchored" data-anchor-id="manipulação-de-dados-em-um-data.frame">
 <span class="header-section-number">1.4.3</span> Manipulação de dados em um data.frame</h3>
+<p>Existem várias formas de manipular dados em um data.frame, vamos abordar algumas.</p>
 <section id="adicionando-uma-nova-coluna" class="level4" data-number="1.4.3.1"><h4 data-number="1.4.3.1" class="anchored" data-anchor-id="adicionando-uma-nova-coluna">
 <span class="header-section-number">1.4.3.1</span> Adicionando uma nova coluna</h4>
-<p>Podemos adicionar uma nova coluna usando o $</p>
+<p>Podemos adicionar uma nova coluna usando o operador $.</p>
 <div class="cell">
 <div class="sourceCode" id="cb63"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Data.frame original - 5 colunas no total</span></span>
 <span></span>
@@ -872,7 +873,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section><section id="adicionando-uma-nova-coluna-baseado-nos-dados-usando-ifelse" class="level4" data-number="1.4.3.2"><h4 data-number="1.4.3.2" class="anchored" data-anchor-id="adicionando-uma-nova-coluna-baseado-nos-dados-usando-ifelse">
 <span class="header-section-number">1.4.3.2</span> Adicionando uma nova coluna baseado nos dados usando ifelse</h4>
-<p>A estrutura do ifelse é útil para classificar os dados.</p>
+<p>A estrutura do ifelse pode ser utilizada para classificar dados de uma coluna em uma outra coluna por meio de um teste lógico.</p>
 <div class="cell">
 <div class="sourceCode" id="cb65"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Vamos adicionar uma coluna peso</span></span>
 <span><span class="va">df</span><span class="op">$</span><span class="va">classificacao_peso</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">peso</span> <span class="op">&lt;</span> <span class="fl">50</span>, <span class="st">"Magro"</span>,</span>
@@ -1030,7 +1031,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section><section id="documentação-com-comentários" class="level3" data-number="1.5.4"><h3 data-number="1.5.4" class="anchored" data-anchor-id="documentação-com-comentários">
 <span class="header-section-number">1.5.4</span> Documentação com Comentários</h3>
-<p><strong>Sempre documente seu código</strong> com comentários explicativos:</p>
+<p><strong>Sempre documente seu código</strong> com comentários explicativos, isso servirá para quando você utilizar o código novamente no futuro.</p>
 </section></section><section id="resumo-do-capítulo" class="level2" data-number="1.6"><h2 data-number="1.6" class="anchored" data-anchor-id="resumo-do-capítulo">
 <span class="header-section-number">1.6</span> Resumo do Capítulo</h2>
 <p>Neste capítulo, você aprendeu:</p>
